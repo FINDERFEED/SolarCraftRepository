@@ -5,7 +5,7 @@ import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.misc_things.PhantomInventory;
 import com.finderfeed.solarcraft.content.recipe_types.infusing_new.InfusingRecipe;
-import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
+import com.finderfeed.solarcraft.registries.recipe_types.SCRecipeTypes;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 
@@ -18,6 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import org.joml.Matrix4f;
 
 import java.util.ArrayList;
@@ -70,7 +71,7 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserContainer> {
     @Override
     public void render(GuiGraphics graphics, int rouseX, int rouseY, float partialTicks){
 
-        this.renderBackground(graphics);
+        this.renderBackground(graphics,rouseX,rouseY,partialTicks);
 
         super.render(graphics,rouseX,rouseY,partialTicks);
         this.renderTooltip(graphics,rouseX,rouseY);
@@ -105,7 +106,7 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserContainer> {
 //        renderItemAndTooltip(tile.getItem(6),relX+45+a,relY+97,x,y,matrices);
 //        renderItemAndTooltip(tile.getItem(7),relX+84+a,relY+111,x,y,matrices);
 //        renderItemAndTooltip(tile.getItem(8),relX+123+a,relY+97,x,y,matrices);
-        Optional<InfusingRecipe> recipe = minecraft.level.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.INFUSING.get(),new PhantomInventory(tile.getInventory()),minecraft.level);
+        Optional<RecipeHolder<InfusingRecipe>> recipe = minecraft.level.getRecipeManager().getRecipeFor(SCRecipeTypes.INFUSING.get(),new PhantomInventory(tile.getInventory()),minecraft.level);
 
 //        if (recipe.isPresent()){
 //            renderItemAndTooltip(recipe.get().output,relX+159+a,relY+2,x,y,matrices);
@@ -117,7 +118,7 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserContainer> {
             float percent = (float) tile.solarEnergy / tile.getMaxSolarEnergy()*33;
 
             if (recipe.isPresent()) {
-                float percentNeeded = (float) recipe.get().requriedSolarEnergy / (float)tile.getMaxSolarEnergy() * 33;
+                float percentNeeded = (float) recipe.get().value().requriedSolarEnergy / (float)tile.getMaxSolarEnergy() * 33;
                 RenderingTools.fill(matrices,relX + 11 + a,relY + 80,relX + 21 + a,relY + (int)(80 - percentNeeded),1,1,0,0.5f);
             }
             if (RenderingTools.isMouseInBorders(x,y,relX + 11 + a,relY + 80 - 33,relX + 21 + a,relY + 80)){
@@ -127,12 +128,12 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserContainer> {
             }
             RenderingTools.fill(matrices,relX + 11 + a,relY + 80,relX + 21 + a,relY + (int)(80 - percent),1,1,0,1);
         }
-
+        matrices.pushPose();
         if (tier == InfuserTileEntity.Tier.RUNIC_ENERGY || tier == InfuserTileEntity.Tier.SOLAR_ENERGY ) {
-            matrices.pushPose();
+
 
             if (recipe.isPresent()) {
-                InfusingRecipe recipe1 = recipe.get();
+                InfusingRecipe recipe1 = recipe.get().value();
                 List<Component> components = RenderingTools.renderRunicEnergyGui(graphics,relX - 74 + a +offs,relY - 8,x,y,tile.getRunicEnergyContainer(),recipe1.RUNIC_ENERGY_COST, (float) tile.getRunicEnergyLimit());
 
                 for (Component component : components){
@@ -162,7 +163,7 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserContainer> {
         renderItemAndTooltip(tile.getItem(12),relX +  7 + a + offs + 126,   relY - 8 + a + 112,x,y,graphics);
 
         if (recipe.isPresent()){
-            renderItemAndTooltip(recipe.get().output.copy(),relX+159+a + offs + 3,relY+2,x,y,graphics);
+            renderItemAndTooltip(recipe.get().value().output.copy(),relX+159+a + offs + 3,relY+2,x,y,graphics);
 
         }
 

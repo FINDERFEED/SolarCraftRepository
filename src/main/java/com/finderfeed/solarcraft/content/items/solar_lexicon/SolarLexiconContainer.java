@@ -2,7 +2,8 @@ package com.finderfeed.solarcraft.content.items.solar_lexicon;
 
 import com.finderfeed.solarcraft.content.items.AncientFragmentItem;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
-import com.finderfeed.solarcraft.registries.containers.SolarcraftContainers;
+import com.finderfeed.solarcraft.registries.SCAttachmentTypes;
+import com.finderfeed.solarcraft.registries.containers.SCContainers;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -10,11 +11,12 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+
+import net.neoforged.neoforge.attachment.AttachmentType;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -29,9 +31,9 @@ public class SolarLexiconContainer extends AbstractContainerMenu {
     private final List<SlotItemHandler> scrollableSlots = new ArrayList<>();
     private int maxRows = 0;
     public SolarLexiconContainer(int p_i50105_2_, Inventory inv, ItemStack stack) {
-        super(SolarcraftContainers.SOLAR_LEXICON_CONTAINER.get(), p_i50105_2_);
+        super(SCContainers.SOLAR_LEXICON_CONTAINER.get(), p_i50105_2_);
         this.stack = stack;
-        this.inventory = stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+        this.inventory = stack.getData(SCAttachmentTypes.LEXICON_INVENTORY);
         int amount = 0;
         int row = 1;
         int id = 0;

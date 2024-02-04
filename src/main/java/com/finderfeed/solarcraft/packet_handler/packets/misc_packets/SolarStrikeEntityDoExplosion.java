@@ -2,39 +2,49 @@ package com.finderfeed.solarcraft.packet_handler.packets.misc_packets;
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.misc_things.AbstractPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.NetworkEvent;
-
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
-public class SolarStrikeEntityDoExplosion extends AbstractPacket {
+@Packet("solar_strike_entity_do_explosion_packet")
+public class SolarStrikeEntityDoExplosion extends FDPacket {
 
-    private final Vec3 speed;
+    private Vec3 speed;
 
 
     public SolarStrikeEntityDoExplosion(Vec3 speed){
         this.speed = speed;
     }
 
-    public SolarStrikeEntityDoExplosion(FriendlyByteBuf buf){
+    public SolarStrikeEntityDoExplosion(FriendlyByteBuf buf) {
         speed = new Vec3(buf.readDouble(),buf.readDouble(),buf.readDouble());
+
     }
 
-    @Override
+
     public void toBytes(FriendlyByteBuf buf) {
         buf.writeDouble(speed.x);
         buf.writeDouble(speed.y);
         buf.writeDouble(speed.z);
     }
 
+//    public void handle(PlayPayloadContext ctx) {
+//
+//            ClientHelpers.doSolarStrikeExplosion(speed);
+//
+//
+//    }
+
     @Override
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(()->{
-            ClientHelpers.doSolarStrikeExplosion(speed);
-        });
-        ctx.get().setPacketHandled(true);
+    public void clientPlayHandle(PlayPayloadContext ctx) {
+        ClientHelpers.doSolarStrikeExplosion(speed);
     }
 
-
+    @Override
+    public void write(FriendlyByteBuf friendlyByteBuf) {
+        this.toBytes(friendlyByteBuf);
+    }
 }

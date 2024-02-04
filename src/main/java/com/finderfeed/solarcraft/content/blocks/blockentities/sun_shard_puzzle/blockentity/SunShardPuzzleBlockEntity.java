@@ -7,15 +7,16 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.p
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.sun_shard_puzzle.SunShardPuzzleOpenScreen;
 import com.finderfeed.solarcraft.registries.ConfigRegistry;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.network.NetworkDirection;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ public class SunShardPuzzleBlockEntity extends PuzzleBlockEntity {
     private Puzzle puzzle;
 
     public SunShardPuzzleBlockEntity(BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.SUN_SHARD_PUZZLE_TILE.get(), p_155229_, p_155230_);
+        super(SCTileEntities.SUN_SHARD_PUZZLE_TILE.get(), p_155229_, p_155230_);
     }
 
     public void onPutTile(ServerPlayer player,PuzzleTile tile,int x,int y){
@@ -68,11 +69,12 @@ public class SunShardPuzzleBlockEntity extends PuzzleBlockEntity {
                 PuzzlePatternsConfig config = ConfigRegistry.PUZZLE_PATTERNS;
                 List<String> templates = new ArrayList<>(config.getAllTemplates());
                 templates.remove("template_null");
-                String template = templates.get(player.level.random.nextInt(templates.size()));
+                String template = templates.get(player.level().random.nextInt(templates.size()));
                 puzzle = new Puzzle(template);
             }
-            SCPacketHandler.INSTANCE.sendTo(new SunShardPuzzleOpenScreen(puzzle,getBlockPos()),
-                    ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+            FDPacketUtil.sendToPlayer((ServerPlayer) player,new SunShardPuzzleOpenScreen(puzzle,getBlockPos()));
+//            SCPacketHandler.INSTANCE.sendTo(new SunShardPuzzleOpenScreen(puzzle,getBlockPos()),
+//                    ((ServerPlayer)player).connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
         }
     }
 

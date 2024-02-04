@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.content.entities;
 
 import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvent;
@@ -67,6 +67,9 @@ public class ShadowZombie extends Monster implements PowerableMob {
         if (src == SCDamageSources.RUNIC_MAGIC || src.is(DamageTypeTags.BYPASSES_ARMOR) ||
                 src == level.damageSources().fellOutOfWorld() ||
                 src == level.damageSources().genericKill()) {
+            if (!level.isClientSide) {
+                System.out.println(this.getHealth());
+            }
             return super.hurt(src, amount);
         }else{
             return super.hurt(src,0);
@@ -87,12 +90,12 @@ public class ShadowZombie extends Monster implements PowerableMob {
 
     @Override
     protected SoundEvent getHurtSound(DamageSource p_33034_) {
-        return SolarcraftSounds.SHADOW_ZOMBIE_HURT.get();
+        return SCSounds.SHADOW_ZOMBIE_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SolarcraftSounds.SHADOW_ZOMBIE_HURT.get();
+        return SCSounds.SHADOW_ZOMBIE_HURT.get();
     }
 
     protected void registerGoals() {

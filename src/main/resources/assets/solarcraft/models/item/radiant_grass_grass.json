@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures" : {
-    "layer0": "solarcraft:block/radiant_grass_grass"
+    "layer0": "solarcraft:custom/block/radiant_grass_grass"
   }
 }

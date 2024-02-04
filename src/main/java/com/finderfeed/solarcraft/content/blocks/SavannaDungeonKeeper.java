@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.content.blocks;
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.SavannaDungeonKeeperTile;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -27,7 +27,7 @@ public class SavannaDungeonKeeper extends Block implements EntityBlock{
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return SolarcraftTileEntityTypes.SAVANNA_DUNGEON_KEEPER.get().create(pos,state);
+        return SCTileEntities.SAVANNA_DUNGEON_KEEPER.get().create(pos,state);
     }
     @Nullable
     @Override

@@ -6,7 +6,7 @@ import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarcraft.local_library.helpers.CompoundNBTHelper;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
@@ -26,7 +26,7 @@ public class SolarEnergyCoreTile extends SolarcraftBlockEntity implements SolarE
     private int solarEnergy = 0;
 
     public SolarEnergyCoreTile( BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.SOLAR_CORE_TILE.get(), p_155229_, p_155230_);
+        super(SCTileEntities.SOLAR_CORE_TILE.get(), p_155229_, p_155230_);
     }
 
 
@@ -123,10 +123,7 @@ public class SolarEnergyCoreTile extends SolarcraftBlockEntity implements SolarE
         return bindedTiles;
     }
 
-    @Override
-    public AABB getRenderBoundingBox() {
-        return Helpers.createAABBWithRadius(Helpers.getBlockCenter(this.worldPosition),16,16);
-    }
+
 
     @Override
     public boolean bind(BlockPos pos) {

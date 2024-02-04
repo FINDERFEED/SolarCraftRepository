@@ -1,0 +1,7 @@
+{
+  "parent": "block/cross",
+  "textures": {
+    "cross": "solarcraft:block/solar_flower_0"
+  },
+  "render_type": "cutout"
+}

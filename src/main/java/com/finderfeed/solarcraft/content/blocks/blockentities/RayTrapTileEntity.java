@@ -5,7 +5,7 @@ import com.finderfeed.solarcraft.content.blocks.RayTrapBlock;
 import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.UpdateLaserTrapTile;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -16,10 +16,9 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraftforge.network.PacketDistributor;
-
-
 import java.util.List;
 
 public class RayTrapTileEntity extends BlockEntity  {
@@ -28,10 +27,10 @@ public class RayTrapTileEntity extends BlockEntity  {
     public String direction = "up";
     public int attackTick = 0;
     public boolean activated = false;
-    public int CLIENT_TRIGGER_INTEGER = 0;
+    public int clientTicker = 0;
 
     public RayTrapTileEntity( BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.RAY_TRAP_TILE_ENTITY.get(), p_155229_, p_155230_);
+        super(SCTileEntities.RAY_TRAP_TILE_ENTITY.get(), p_155229_, p_155230_);
     }
 
 
@@ -54,7 +53,7 @@ public class RayTrapTileEntity extends BlockEntity  {
                     }
 
                   if (tile.attackTick >= tile.getAttackWhen()){
-                      SCPacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(),tile.worldPosition.getY(),tile.worldPosition.getZ(),20,tile.level.dimension())),
+                      PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(),tile.worldPosition.getY(),tile.worldPosition.getZ(),20,tile.level.dimension()).get()).send(
                               new UpdateLaserTrapTile(1,tile.worldPosition));
 //                      Helpers.getBlockPositionsByDirection(Direction.byName(direction),worldPosition,5).forEach((pos)->{
 //                          ((ServerWorld)level).sendParticles(ParticlesList.SMALL_SOLAR_STRIKE_PARTICLE.get(),pos.getX()+0.5,pos.getY()+0.5,pos.getZ()+0.5,1,0,0,0,0);
@@ -77,12 +76,12 @@ public class RayTrapTileEntity extends BlockEntity  {
             }
         }
         if (tile.level.isClientSide) {
-            if (tile.CLIENT_TRIGGER_INTEGER >= 1){
+            if (tile.clientTicker >= 1){
 
-                tile.CLIENT_TRIGGER_INTEGER++;
+                tile.clientTicker++;
             }
-            if (tile.CLIENT_TRIGGER_INTEGER >= 30){
-                tile.CLIENT_TRIGGER_INTEGER = 0;
+            if (tile.clientTicker >= 30){
+                tile.clientTicker = 0;
             }
         }
     }
@@ -101,19 +100,19 @@ public class RayTrapTileEntity extends BlockEntity  {
     private AABB getBoxByDirection(){
         Direction dir = Direction.byName(direction);
 
+        Vec3 pos = Helpers.posToVec(worldPosition);
         if (dir.equals(Direction.UP)){
-
-            return new AABB(worldPosition,worldPosition.offset(1,5,1));
+            return new AABB(pos,pos.add(1,5,1));
         }else if (dir.equals(Direction.DOWN)){
-            return new AABB(worldPosition,worldPosition.offset(1,-5,1));
+            return new AABB(pos,pos.add(1,-5,1));
         }else if (dir.equals(Direction.NORTH)) {
-            return new AABB(worldPosition, worldPosition.offset(1, 1, -5));
+            return new AABB(pos, pos.add(1, 1, -5));
         }else if (dir.equals(Direction.SOUTH)){
-            return new AABB(worldPosition,worldPosition.offset(1,1,5));
+            return new AABB(pos,pos.add(1,1,5));
         }else if (dir.equals(Direction.EAST)){
-            return new AABB(worldPosition,worldPosition.offset(5,1,1));
+            return new AABB(pos,pos.add(5,1,1));
         }else{
-            return new AABB(worldPosition,worldPosition.offset(1,5,1));
+            return new AABB(pos,pos.add(1,5,1));
         }
 
 
@@ -134,8 +133,4 @@ public class RayTrapTileEntity extends BlockEntity  {
     }
 
 
-    @Override
-    public AABB getRenderBoundingBox() {
-        return new AABB(worldPosition.offset(-6,-6,-6),worldPosition.offset(6,6,6));
-    }
 }

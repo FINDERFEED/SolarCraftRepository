@@ -32,6 +32,7 @@ import net.minecraft.client.Minecraft;
 
 
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipPositioner;
 import net.minecraft.client.gui.screens.inventory.tooltip.TooltipRenderUtil;
@@ -67,10 +68,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.model.data.ModelData;
-import net.minecraftforge.common.MinecraftForge;
-import org.joml.Matrix4f;
-
+import net.neoforged.neoforge.client.model.data.ModelData;
+import net.neoforged.neoforge.common.NeoForge;
 import java.lang.Math;
 import java.util.*;
 import java.util.Random;
@@ -678,7 +677,7 @@ public class RenderingTools {
                 }
             }
 
-            mdl = net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(matrices, mdl, ctx, idk);
+            mdl = net.neoforged.neoforge.client.ClientHooks.handleCameraTransforms(matrices, mdl, ctx, idk);
             matrices.translate(-0.5F, -0.5F, -0.5F);
             if (!mdl.isCustomRenderer() && (!stack.is(Items.TRIDENT) || flag)) {
                 boolean flag1;
@@ -717,7 +716,7 @@ public class RenderingTools {
                     }
                 }
             } else {
-                net.minecraftforge.client.extensions.common.IClientItemExtensions.of(stack).getCustomRenderer().renderByItem(stack, ctx, matrices, src, x, y);
+                net.neoforged.neoforge.client.extensions.common.IClientItemExtensions.of(stack).getCustomRenderer().renderByItem(stack, ctx, matrices, src, x, y);
             }
 
             matrices.popPose();
@@ -1210,7 +1209,7 @@ public class RenderingTools {
             g.drawManaged(() -> {
 //                net.minecraftforge.client.event.RenderTooltipEvent.Color colorEvent = net.minecraftforge.client.ForgeHooksClient.onRenderTooltipColor(this.tooltipStack, this, l, i1, preEvent.getFont(), components);
                 MyColorEvent event = new MyColorEvent(Items.AIR.getDefaultInstance(), g.pose(), l, i1, Minecraft.getInstance().font,components,tooltip);
-                MinecraftForge.EVENT_BUS.post(event);
+                NeoForge.EVENT_BUS.post(event);
                 TooltipRenderUtil.renderTooltipBackground(g, l, i1, i2, j2, 400, event.getBackgroundStart(), event.getBackgroundEnd(), event.getBorderStart(), event.getBorderEnd());
             });
             g.pose().translate(0.0F, 0.0F, 400.0F);
@@ -1232,7 +1231,7 @@ public class RenderingTools {
 
             g.pose().popPose();
             PostColorEvent event = new PostColorEvent(g.pose(), l, i1, Minecraft.getInstance().font,components,i,j,tooltip);
-            MinecraftForge.EVENT_BUS.post(event);
+            NeoForge.EVENT_BUS.post(event);
         }
     }
 
@@ -1472,7 +1471,7 @@ public class RenderingTools {
                     }
                 }
 
-                mdl = net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(matrices, mdl, ctx, idk);
+                mdl = net.neoforged.neoforge.client.ClientHooks.handleCameraTransforms(matrices, mdl, ctx, idk);
                 matrices.translate(-0.5F, -0.5F, -0.5F);
                 if (!mdl.isCustomRenderer() && (!stack.is(Items.TRIDENT) || flag)) {
                     boolean flag1;
@@ -1511,7 +1510,7 @@ public class RenderingTools {
                         }
                     }
                 } else {
-                    net.minecraftforge.client.extensions.common.IClientItemExtensions.of(stack).getCustomRenderer().renderByItem(stack, ctx, matrices, src, x, y);
+                    net.neoforged.neoforge.client.extensions.common.IClientItemExtensions.of(stack).getCustomRenderer().renderByItem(stack, ctx, matrices, src, x, y);
                 }
 
                 matrices.popPose();
@@ -1737,6 +1736,10 @@ public class RenderingTools {
             matrices.popPose();
         }
 
+    }
+
+    public static WidgetSprites singleWidgetSprite(ResourceLocation location){
+        return new WidgetSprites(location,location,location,location);
     }
 
 }

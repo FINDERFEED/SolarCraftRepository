@@ -1,8 +1,9 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities.containers.misc;
 
+import com.finderfeed.solarcraft.helpers.Helpers;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class TESlotItemHandler extends SlotItemHandler {
 
@@ -22,5 +23,6 @@ public class TESlotItemHandler extends SlotItemHandler {
     public void setChanged() {
         super.setChanged();
         this.tile.setChanged();
+        Helpers.updateTile(tile);
     }
 }

@@ -7,7 +7,7 @@ import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.packet_handler.packets.misc_packets.ExplosionParticlesPacket;
 import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundSource;
@@ -69,7 +69,7 @@ public class MagicMissile extends AbstractHurtingProjectile implements CrystalBo
                     this.kill();
                 }else{
                     if (!level.isClientSide) {
-                        level.playSound(null,this.getX(),this.getY(),this.getZ(), SolarcraftSounds.SOLAR_EXPLOSION.get(), SoundSource.AMBIENT,level.random.nextFloat()*0.5f+0.5f,1f);
+                        level.playSound(null,this.getX(),this.getY(),this.getZ(), SCSounds.SOLAR_EXPLOSION.get(), SoundSource.AMBIENT,level.random.nextFloat()*0.5f+0.5f,1f);
                         ExplosionParticlesPacket.send(level, position().add(getDeltaMovement()));
                         if (Helpers.isVulnerable(hit.getEntity())){
                             hit.getEntity().hurt(SCDamageSources.RUNIC_MAGIC,damage != null ? damage : 3);
@@ -93,7 +93,7 @@ public class MagicMissile extends AbstractHurtingProjectile implements CrystalBo
 
     private void explode(){
         if (!this.level.isClientSide){
-            level.playSound(null,this.getX(),this.getY(),this.getZ(), SolarcraftSounds.SOLAR_EXPLOSION.get(), SoundSource.AMBIENT,level.random.nextFloat()*0.5f+0.5f,1f);
+            level.playSound(null,this.getX(),this.getY(),this.getZ(), SCSounds.SOLAR_EXPLOSION.get(), SoundSource.AMBIENT,level.random.nextFloat()*0.5f+0.5f,1f);
             this.level.getEntitiesOfClass(LivingEntity.class,new AABB(this.position().add(-1.5,-1.5,-1.5),this.position().add(1.5,1.5,1.5)),(living)->{
                 return !(living instanceof CrystalBossBuddy);
             }).forEach((entity)->{

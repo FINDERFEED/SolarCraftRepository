@@ -1,17 +1,17 @@
 package com.finderfeed.solarcraft.packet_handler.packets;
 
 import com.finderfeed.solarcraft.events.my_events.ClientsideBlockBreakEvent;
-import com.finderfeed.solarcraft.events.my_events.ClientsideBlockPlaceEvent;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.network.NetworkEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 
-import java.util.function.Supplier;
-
-public class BlockBreakPacket {
+@Packet("block_break_packet")
+public class BlockBreakPacket extends FDPacket {
 
     private int id;
     private BlockPos pos;
@@ -21,7 +21,7 @@ public class BlockBreakPacket {
         this.id = Block.getId(state);
     }
 
-    public BlockBreakPacket(FriendlyByteBuf buf){
+    public BlockBreakPacket(FriendlyByteBuf buf) {
         this.id = buf.readInt();
         this.pos = buf.readBlockPos();
     }
@@ -31,10 +31,19 @@ public class BlockBreakPacket {
         buf.writeBlockPos(pos);
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(()->{
-            MinecraftForge.EVENT_BUS.post(new ClientsideBlockBreakEvent(Block.stateById(id),pos));
-        });
-        ctx.get().setPacketHandled(true);
+//    public static void handle(BlockBreakPacket packet, PlayPayloadContext ctx) {
+//        NeoForge.EVENT_BUS.post(new ClientsideBlockBreakEvent(Block.stateById(packet.id),packet.pos));
+//    }
+
+
+    @Override
+    public void clientPlayHandle(PlayPayloadContext ctx) {
+        super.clientPlayHandle(ctx);
+        NeoForge.EVENT_BUS.post(new ClientsideBlockBreakEvent(Block.stateById(id),pos));
+    }
+
+    @Override
+    public void write(FriendlyByteBuf friendlyByteBuf) {
+        this.toBytes(friendlyByteBuf);
     }
 }

@@ -20,8 +20,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.*;
-import net.minecraftforge.network.NetworkHooks;
-
 
 import java.util.List;
 import java.util.UUID;
@@ -148,10 +146,10 @@ public class CrystalBossAttackHoldingMissile extends OwnedProjectile implements 
         return false;
     }
 
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
+//    @Override
+//    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+//        return NetworkHooks.getEntitySpawningPacket(this);
+//    }
 
     @Override
     protected ParticleOptions getTrailParticle() {

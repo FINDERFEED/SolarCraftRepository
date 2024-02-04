@@ -1,10 +1,18 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "A": {"item": "solarcraft:solar_god_bow"},
-    "B": {"item": "solarcraft:charged_qualadium_ingot"},
-    "C": {"item": "solarcraft:energy_dust"},
-    "D": {"item": "solarcraft:blue_gem_enriched"}
+    "A": {
+      "item": "solarcraft:solar_god_bow"
+    },
+    "B": {
+      "item": "solarcraft:charged_qualadium_ingot"
+    },
+    "C": {
+      "item": "solarcraft:energy_dust"
+    },
+    "D": {
+      "item": "solarcraft:blue_gem_enriched"
+    }
   },
   "pattern": [
     " B ",
@@ -19,8 +27,10 @@
   "time": 500,
   "fragment": "solar_god_bow_upgrade",
   "tag": "yes",
-  "energy" : 10000,
-  "ardo": 2500,
-  "urba": 1500,
-  "catalysts":"G    GG    G"
+  "energy": 10000,
+  "catalysts": "G    GG    G",
+  "re_cost": {
+    "ardo": 2500,
+    "urba": 1500
+  }
 }

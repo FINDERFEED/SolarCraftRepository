@@ -4,7 +4,7 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.PuzzleBlockEntity;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.ray_puzzle.BeamData;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.BlockState;
@@ -17,7 +17,7 @@ public class BeamGenerator extends PuzzleBlockEntity {
     public int targetsNeeded = 1;
 
     public BeamGenerator(BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.BEAM_GENERATOR.get(), p_155229_, p_155230_);
+        super(SCTileEntities.BEAM_GENERATOR.get(), p_155229_, p_155230_);
     }
 
 
@@ -50,10 +50,6 @@ public class BeamGenerator extends PuzzleBlockEntity {
         }
     }
 
-    @Override
-    public AABB getRenderBoundingBox() {
-        return Helpers.createAABBWithRadius(Helpers.getBlockCenter(getBlockPos()),30,30);
-    }
 
     @Override
     protected void saveAdditional(CompoundTag tag) {

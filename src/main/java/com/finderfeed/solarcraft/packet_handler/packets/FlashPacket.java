@@ -3,13 +3,15 @@ package com.finderfeed.solarcraft.packet_handler.packets;
 import com.finderfeed.solarcraft.client.particles.SolarcraftParticle;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.packet_handler.ClientPacketHandles;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.network.NetworkEvent;
-
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
-public class FlashPacket {
+@Packet("flash_packet")
+public class FlashPacket extends FDPacket {
 
     private int inTime;
     private int stayTime;
@@ -21,7 +23,7 @@ public class FlashPacket {
         this.outTime = outTime;
     }
 
-    public FlashPacket(FriendlyByteBuf buf){
+    public FlashPacket(FriendlyByteBuf buf) {
         this.inTime = buf.readInt();
         this.stayTime = buf.readInt();
         this.outTime = buf.readInt();
@@ -33,11 +35,18 @@ public class FlashPacket {
         buf.writeInt(outTime);
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(()->{
-            ClientPacketHandles.handleFlashPacket(inTime,stayTime,outTime);
-        });
-        ctx.get().setPacketHandled(true);
+/*    public static void handle(FlashPacket packet,PlayPayloadContext ctx) {
+        ClientPacketHandles.handleFlashPacket(packet.inTime,packet.stayTime,packet.outTime);
+    }*/
+
+    @Override
+    public void clientPlayHandle(PlayPayloadContext ctx) {
+        ClientPacketHandles.handleFlashPacket(inTime,stayTime,outTime);
+    }
+
+    @Override
+    public void write(FriendlyByteBuf friendlyByteBuf) {
+        this.toBytes(friendlyByteBuf);
     }
 
 }

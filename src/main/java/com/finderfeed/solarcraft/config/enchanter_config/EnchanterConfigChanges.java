@@ -2,9 +2,9 @@ package com.finderfeed.solarcraft.config.enchanter_config;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class EnchanterConfigChanges {
 
@@ -21,7 +21,7 @@ public class EnchanterConfigChanges {
             JsonObject object = element.getAsJsonObject();
             if (!object.has(EnchanterConfig.MAX_LEVEL)){
                 String eID = object.get(EnchanterConfig.ENCHANTMENT_ID).getAsString();
-                Enchantment enchantment = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(eID));
+                Enchantment enchantment = BuiltInRegistries.ENCHANTMENT.get(new ResourceLocation(eID));
                 if (enchantment != null){
                     object.addProperty(EnchanterConfig.MAX_LEVEL,enchantment.getMaxLevel());
                 }

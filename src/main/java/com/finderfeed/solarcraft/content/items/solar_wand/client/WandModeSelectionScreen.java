@@ -7,6 +7,7 @@ import com.finderfeed.solarcraft.local_library.client.screens.DefaultScreen;
 import com.finderfeed.solarcraft.local_library.client.screens.RadialMenu;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.CastWandActionPacket;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.platform.Window;
@@ -40,7 +41,8 @@ public class WandModeSelectionScreen extends DefaultScreen {
         for (WandAction<?> action : SolarWandItem.getAllActions()){
             RadialMenu.RadialMenuSection section = new RadialMenu.RadialMenuSection(
                     ()->{
-                        SCPacketHandler.INSTANCE.sendToServer(new CastWandActionPacket(action.getRegistryName()));
+                        FDPacketUtil.sendToServer(new CastWandActionPacket(action.getRegistryName()));
+//                        SCPacketHandler.INSTANCE.sendToServer(new CastWandActionPacket(action.getRegistryName()));
                     },
                     (graphics, x, y) -> {
                         RenderingTools.renderScaledGuiItemCentered(graphics,action.getIcon(),x,y,1,10);

@@ -11,7 +11,7 @@ import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
@@ -41,7 +41,7 @@ public class RunicEnergyCoreTile extends AbstractRunicEnergyContainer implements
             .set(RunicEnergy.Type.ULTIMA, (float) getRunicEnergyLimit());
 
     public RunicEnergyCoreTile( BlockPos pos, BlockState state) {
-        super(SolarcraftTileEntityTypes.RUNIC_ENERGY_CORE.get(), pos, state);
+        super(SCTileEntities.RUNIC_ENERGY_CORE.get(), pos, state);
     }
 
 
@@ -110,7 +110,7 @@ public class RunicEnergyCoreTile extends AbstractRunicEnergyContainer implements
     //IREWandDrainable
     @Override
     public float drainEnergy(RunicEnergy.Type type,Player player, float amount) {
-        if (!player.level.isClientSide){
+        if (!player.level().isClientSide){
             float current = getRunicEnergy(type);
             float toReturn = Math.min(current,amount);
             this.giveEnergy(type,-toReturn);
@@ -121,7 +121,7 @@ public class RunicEnergyCoreTile extends AbstractRunicEnergyContainer implements
 
     @Override
     public float returnEnergy(RunicEnergy.Type type,Player player, float amount) {
-        if (!player.level.isClientSide){
+        if (!player.level().isClientSide){
             float current = this.getRunicEnergy(type);
             float r = current + amount - (float)getRunicEnergyLimit();
             this.giveEnergy(type,amount);
@@ -151,7 +151,7 @@ public class RunicEnergyCoreTile extends AbstractRunicEnergyContainer implements
     //IWandable
     @Override
     public void onWandUse(BlockPos usePos, Player user) {
-        if (!user.level.isClientSide){
+        if (!user.level().isClientSide){
             user.sendSystemMessage(Component.literal("Draining Energy: " + !isDrainingEnergy()));
             setDrainingEnergy(!isDrainingEnergy());
         }

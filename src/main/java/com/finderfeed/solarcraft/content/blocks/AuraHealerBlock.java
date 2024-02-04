@@ -2,13 +2,15 @@ package com.finderfeed.solarcraft.content.blocks;
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.AuraHealerTile;
 import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.ItemStack;
 
@@ -19,9 +21,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
@@ -68,7 +67,7 @@ public class AuraHealerBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return SolarcraftTileEntityTypes.AURA_HEALER_TILE.get().create(blockPos,blockState);
+        return SCTileEntities.AURA_HEALER_TILE.get().create(blockPos,blockState);
     }
 
     @Nullable

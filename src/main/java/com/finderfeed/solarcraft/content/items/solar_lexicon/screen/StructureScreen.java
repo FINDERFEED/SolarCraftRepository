@@ -4,23 +4,22 @@ import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.ItemStackTabButton;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
-import com.finderfeed.solarcraft.events.other_events.event_handler.ClientEventsHandler;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.client.screens.ThreeDStructureViewScreen;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.local_library.client.screens.buttons.FDImageButton;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
+import com.finderfeed.solarcraft.misc_things.SCLocations;
 import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.Screen;
 
 import net.minecraft.client.gui.components.ImageButton;
+import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
@@ -30,8 +29,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
-import net.minecraftforge.items.IItemHandler;
-
+import net.neoforged.neoforge.items.IItemHandler;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,47 +68,38 @@ public class StructureScreen extends LexiconScreen {
         structHeightAndPageCount = structure.pattern.length;
         structWidth = structure.pattern[0].length / 2;
 
-        addRenderableWidget(new ImageButton(relX+216,relY+16,16,16,0,0,0,BUTTONS,16,32,(button)->{
+        addRenderableWidget(new FDImageButton(relX+216,relY+16,16,16,
+                RenderingTools.singleWidgetSprite(SCLocations.NEXT_PAGE),(button)->{
             if ((currentPage+1 <= structHeightAndPageCount) ){
                 currentPage+=1;
             }
-        }){
+        },null){
             @Override
             public void playDownSound(SoundManager p_93665_) {
-                p_93665_.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
+                p_93665_.play(SimpleSoundInstance.forUI(SCSounds.BUTTON_PRESS2.get(),1,1));
             }
         });
-        addRenderableWidget(new ImageButton(relX+216,relY+32,16,16,0,16,0,BUTTONS,16,32,(button)->{
+        addRenderableWidget(new FDImageButton(relX+216,relY+32,16,16,
+                RenderingTools.singleWidgetSprite(SCLocations.PREV_PAGE),(button)->{
             if ((currentPage-1 > 0)){
                 currentPage-=1;
             }
-        }){
+        },null){
             @Override
             public void playDownSound(SoundManager p_93665_) {
-                p_93665_.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
+                p_93665_.play(SimpleSoundInstance.forUI(SCSounds.BUTTON_PRESS2.get(),1,1));
             }
         });
-        addRenderableWidget(new FDImageButton(relX+216,relY,16,16,0,0,0,THREEDSCREENBTN,16,16,(button)->{
+        addRenderableWidget(new FDImageButton(relX+216,relY,16,16,RenderingTools.singleWidgetSprite(THREEDSCREENBTN),(button)->{
             Minecraft.getInstance().setScreen(new ThreeDStructureViewScreen(fragment,structure));
         },(btn,graphics,mx,my)->{
             graphics.renderTooltip(font,Component.literal("3D View"),mx,my);
-        },Component.literal("3D")) {
+        }) {
             @Override
             public void playDownSound(SoundManager p_93665_) {
-                p_93665_.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(), 1, 1));
+                p_93665_.play(SimpleSoundInstance.forUI(SCSounds.BUTTON_PRESS2.get(), 1, 1));
             }
         });
-
-//        addRenderableWidget(new ItemStackTabButton(relX+217,relY+52,17,17,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,
-//                (buttons, graphics, b, c) -> {
-//                    graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.recipes_screen"), b, c);
-//                }));
-//        addRenderableWidget(new ItemStackTabButton(relX+217,relY+52 + 18,17,17,(button)->{
-//            ClientEventsHandler.SOLAR_LEXICON_SCREEN_HANDLER.memorizeAndClose();
-//
-//        }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f,(buttons, graphics, b, c) -> {
-//            graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.memorize_page"), b, c);
-//        }));
 
 
 

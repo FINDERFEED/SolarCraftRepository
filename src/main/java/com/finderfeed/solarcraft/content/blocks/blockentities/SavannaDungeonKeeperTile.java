@@ -5,7 +5,7 @@ import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -21,12 +21,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.event.level.ExplosionEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.level.ExplosionEvent;
 import java.util.List;
 
 public class SavannaDungeonKeeperTile extends SolarcraftBlockEntity {
@@ -51,7 +50,7 @@ public class SavannaDungeonKeeperTile extends SolarcraftBlockEntity {
 
 
     public SavannaDungeonKeeperTile(BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.SAVANNA_DUNGEON_KEEPER.get(), p_155229_, p_155230_);
+        super(SCTileEntities.SAVANNA_DUNGEON_KEEPER.get(), p_155229_, p_155230_);
     }
 
 
@@ -164,10 +163,7 @@ public class SavannaDungeonKeeperTile extends SolarcraftBlockEntity {
         super.load(tag);
     }
 
-    @Override
-    public AABB getRenderBoundingBox() {
-        return Helpers.createAABBWithRadius(Helpers.posToVec(this.getBlockPos()),10,10);
-    }
+
 
     @Mod.EventBusSubscriber(modid = SolarCraft.MOD_ID,bus = Mod.EventBusSubscriber.Bus.FORGE)
     public static class LocalEventHandler{
@@ -175,8 +171,8 @@ public class SavannaDungeonKeeperTile extends SolarcraftBlockEntity {
         @SubscribeEvent
         public static void detectChestOpening(PlayerInteractEvent.RightClickBlock event){
             Player player = event.getEntity();
-            if (!player.level.isClientSide){
-                SavannaDungeonKeeperTile keeper = searchKeeper(player.level,event.getPos(),4);
+            if (!player.level().isClientSide){
+                SavannaDungeonKeeperTile keeper = searchKeeper(player.level(),event.getPos(),4);
                 if (keeper != null){
                     keeper.trigger();
                     player.swing(event.getHand());
@@ -187,8 +183,8 @@ public class SavannaDungeonKeeperTile extends SolarcraftBlockEntity {
 
         @SubscribeEvent
         public static void detectBlockPlacing(BlockEvent.EntityPlaceEvent event){
-            if (event.getEntity() instanceof Player player && !player.level.isClientSide){
-                SavannaDungeonKeeperTile keeper = searchKeeper(player.level,event.getPos(),4);
+            if (event.getEntity() instanceof Player player && !player.level().isClientSide){
+                SavannaDungeonKeeperTile keeper = searchKeeper(player.level(),event.getPos(),4);
                 if (keeper != null){
                     keeper.trigger();
                     event.setCanceled(true);
@@ -198,8 +194,8 @@ public class SavannaDungeonKeeperTile extends SolarcraftBlockEntity {
         @SubscribeEvent
         public static void detectBlockBreaking(BlockEvent.BreakEvent event){
             Player player = event.getPlayer();
-            if (!player.level.isClientSide){
-                SavannaDungeonKeeperTile keeper = searchKeeper(player.level,event.getPos(),4);
+            if (!player.level().isClientSide){
+                SavannaDungeonKeeperTile keeper = searchKeeper(player.level(),event.getPos(),4);
                 if (keeper != null){
                     keeper.trigger();
                     event.setCanceled(true);
@@ -210,7 +206,7 @@ public class SavannaDungeonKeeperTile extends SolarcraftBlockEntity {
         public static void detectTNT(ExplosionEvent.Start event){
             Level world = event.getLevel();
             if (!world.isClientSide){
-                SavannaDungeonKeeperTile keeper = searchKeeper(world,Helpers.vecToPos(event.getExplosion().getPosition()),10);
+                SavannaDungeonKeeperTile keeper = searchKeeper(world,Helpers.vecToPos(event.getExplosion().center()),10);
                 if (keeper != null){
                     keeper.trigger();
                     event.setCanceled(true);

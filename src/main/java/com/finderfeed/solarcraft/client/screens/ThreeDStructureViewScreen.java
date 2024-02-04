@@ -10,28 +10,18 @@ import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockVisualizer;
-import com.finderfeed.solarcraft.local_library.client.screens.buttons.FDImageButton;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.ItemStackTabButton;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.SolarLexiconRecipesScreen;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.StructureScreen;
-import com.finderfeed.solarcraft.misc_things.IScrollable;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
-import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.resources.sounds.SimpleSoundInstance;
-import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.ColorResolver;
 import net.minecraft.world.level.LightLayer;
@@ -39,8 +29,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.lighting.LevelLightEngine;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraftforge.items.IItemHandler;
-import org.lwjgl.glfw.GLFW;
+import net.neoforged.neoforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -148,13 +137,13 @@ public class ThreeDStructureViewScreen extends ScrollableLexiconScreen {
     }
 
     @Override
-    public boolean mouseScrolled(double p_94686_, double p_94687_, double delta) {
-        double d = Math.ceil(delta);
+    public boolean mouseScrolled(double p_94686_, double p_94687_, double delta,double deltaY) {
+        double d = Math.ceil(deltaY);
         if (structScale + d*0.05  >= 0) {
             this.structScale += d * 0.05;
         }
 
-        return super.mouseScrolled(p_94686_, p_94687_, delta);
+        return super.mouseScrolled(p_94686_, p_94687_, delta,deltaY);
     }
 
     @Override
@@ -183,10 +172,6 @@ public class ThreeDStructureViewScreen extends ScrollableLexiconScreen {
     }
 
 
-    @Override
-    public void renderBackground(GuiGraphics p_96557_) {
-        super.renderBackground(p_96557_);
-    }
 
     @Override
     public void render(GuiGraphics graphics, int p_96563_, int p_96564_, float partialTicks) {

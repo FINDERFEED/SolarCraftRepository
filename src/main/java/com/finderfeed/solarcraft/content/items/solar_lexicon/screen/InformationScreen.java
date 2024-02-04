@@ -1,7 +1,6 @@
 package com.finderfeed.solarcraft.content.items.solar_lexicon.screen;
 
 import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.ItemStackButton;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.ItemStackTabButton;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
@@ -10,14 +9,13 @@ import com.finderfeed.solarcraft.content.recipe_types.infusing_new.InfusingRecip
 import com.finderfeed.solarcraft.content.recipe_types.solar_smelting.SolarSmeltingRecipe;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 
-import com.finderfeed.solarcraft.local_library.client.screens.DefaultScreen;
 import com.finderfeed.solarcraft.local_library.client.screens.screen_coomponents.ScissoredTextBox;
 import com.finderfeed.solarcraft.local_library.custom_registries.RegistryDelegate;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.registries.SolarCraftClientRegistries;
 import com.finderfeed.solarcraft.registries.items.SCItems;
-import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
+import com.finderfeed.solarcraft.registries.recipe_types.SCRecipeTypes;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 
@@ -32,8 +30,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.IItemHandler;
-
+import net.neoforged.neoforge.items.IItemHandler;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
@@ -156,25 +153,25 @@ public class InformationScreen extends LexiconScreen {
             case ITEMS -> {
                 Level world = Minecraft.getInstance().level;
                 RecipeType<?> type = fragment.getRecipeType();
-                if (type == SolarcraftRecipeTypes.INFUSING.get()){
+                if (type == SCRecipeTypes.INFUSING.get()){
                     List<InfusingRecipe> recipes = new ArrayList<>();
                     for (AncientFragment.ItemWithRecipe i : fragment.getStacks()){
-                        recipes.add((InfusingRecipe) world.getRecipeManager().byKey(i.getRecipeLocation()).orElseThrow());
+                        recipes.add((InfusingRecipe) world.getRecipeManager().byKey(i.getRecipeLocation()).orElseThrow().value());
                     }
                     return new InformationScreen(fragment,new InfusingRecipeScreen(recipes));
-                }else if (type == SolarcraftRecipeTypes.INFUSING_CRAFTING.get()){
+                }else if (type == SCRecipeTypes.INFUSING_CRAFTING.get()){
                     List<InfusingCraftingRecipe> recipes = new ArrayList<>();
                     for (AncientFragment.ItemWithRecipe i : fragment.getStacks()){
-                        recipes.add((InfusingCraftingRecipe) world.getRecipeManager().byKey(i.getRecipeLocation()).orElseThrow());
+                        recipes.add((InfusingCraftingRecipe) world.getRecipeManager().byKey(i.getRecipeLocation()).orElseThrow().value());
                     }
                     return new InformationScreen(fragment,new InfusingCraftingRecipeScreen(recipes));
-                }else if (type == SolarcraftRecipeTypes.SMELTING.get()){
-                    SolarSmeltingRecipe r =  (SolarSmeltingRecipe)world.getRecipeManager().byKey(fragment.getStacks().get(0).getRecipeLocation()).orElseThrow();
+                }else if (type == SCRecipeTypes.SMELTING.get()){
+                    SolarSmeltingRecipe r =  (SolarSmeltingRecipe)world.getRecipeManager().byKey(fragment.getStacks().get(0).getRecipeLocation()).orElseThrow().value();
                     return new SmeltingRecipeScreen(r);
                 }else if (type == RecipeType.CRAFTING){
                     List<CraftingRecipe> recipes = new ArrayList<>();
                     for (AncientFragment.ItemWithRecipe i : fragment.getStacks()){
-                        recipes.add((CraftingRecipe) world.getRecipeManager().byKey(i.getRecipeLocation()).orElseThrow());
+                        recipes.add((CraftingRecipe) world.getRecipeManager().byKey(i.getRecipeLocation()).orElseThrow().value());
                     }
                     return new InformationScreen(fragment,new CraftingRecipeScreen(recipes));
                 }

@@ -58,11 +58,11 @@ public class DungeonOnePieces {
          */
         public static class Piece extends TemplateStructurePiece {
             public Piece( StructureTemplateManager p_163662_, ResourceLocation p_163663_,  Rotation rot, BlockPos p_163666_) {
-                super(StructurePieces.DUNGEON_ONE_PIECE, 0, p_163662_, p_163663_, p_163663_.toString(), makeSettings(rot,p_163663_), makePosition(p_163663_,p_163666_,0));
+                super(StructurePieces.DUNGEON_ONE_PIECE.get(), 0, p_163662_, p_163663_, p_163663_.toString(), makeSettings(rot,p_163663_), makePosition(p_163663_,p_163666_,0));
             }
 
             public Piece(  StructurePieceSerializationContext p_163670_,CompoundTag tagCompound) {
-                super(StructurePieces.DUNGEON_ONE_PIECE, tagCompound, p_163670_.structureTemplateManager(), (loc)->{
+                super(StructurePieces.DUNGEON_ONE_PIECE.get(), tagCompound, p_163670_.structureTemplateManager(), (loc)->{
                     return makeSettings(Rotation.valueOf(tagCompound.getString("Rot")),loc);
                 });
             }

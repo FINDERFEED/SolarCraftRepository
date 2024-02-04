@@ -41,6 +41,12 @@ public class AnimationTicker {
         this.animation = animation;
     }
 
+    public AnimationTicker(AnimationTicker ticker){
+        this.replaceable = ticker.replaceable;
+        this.innerTicker = ticker.innerTicker;
+        this.animation = ticker.animation;
+        this.toNullAnimTime = ticker.toNullAnimTime;
+    }
 
     public void tick(){
         int maxtime = animation.tickLength();

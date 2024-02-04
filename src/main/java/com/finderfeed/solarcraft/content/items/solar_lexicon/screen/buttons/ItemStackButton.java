@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons;
 
 import com.finderfeed.solarcraft.local_library.client.screens.buttons.FDButton;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
@@ -69,7 +69,7 @@ public class ItemStackButton extends FDButton {
 
     @Override
     public void playDownSound(SoundManager manager) {
-        manager.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
+        manager.play(SimpleSoundInstance.forUI(SCSounds.BUTTON_PRESS2.get(),1,1));
     }
 
 }

@@ -2,14 +2,16 @@ package com.finderfeed.solarcraft.packet_handler.packets;
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.packet_handler.ClientPacketHandles;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraftforge.network.NetworkEvent;
-
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
-public class UpdateItemTagInItemEntityPacket {
+@Packet("uodate_item_tag_in_item_entity_packet")
+public class UpdateItemTagInItemEntityPacket extends FDPacket {
 
     public int entityId;
     public CompoundTag itemStackTag;
@@ -20,9 +22,9 @@ public class UpdateItemTagInItemEntityPacket {
     }
 
 
-    public UpdateItemTagInItemEntityPacket(FriendlyByteBuf buf){
+    public UpdateItemTagInItemEntityPacket(FriendlyByteBuf buf) {
         this.entityId = buf.readInt();
-        this.itemStackTag = buf.readAnySizeNbt();
+        this.itemStackTag = buf.readNbt();
     }
 
     public void toBytes(FriendlyByteBuf buf){
@@ -30,11 +32,20 @@ public class UpdateItemTagInItemEntityPacket {
         buf.writeNbt(itemStackTag);
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(() -> {
-            ClientPacketHandles.handleUpdateItemEntityPacket(entityId,itemStackTag);
-        });
-        ctx.get().setPacketHandled(true);
+//    public void handle(PlayPayloadContext ctx) {
+//
+//            ClientPacketHandles.handleUpdateItemEntityPacket(entityId,itemStackTag);
+//
+//
+//    }
+
+    @Override
+    public void clientPlayHandle(PlayPayloadContext ctx) {
+        ClientPacketHandles.handleUpdateItemEntityPacket(entityId,itemStackTag);
     }
 
+    @Override
+    public void write(FriendlyByteBuf friendlyByteBuf) {
+        this.toBytes(friendlyByteBuf);
+    }
 }

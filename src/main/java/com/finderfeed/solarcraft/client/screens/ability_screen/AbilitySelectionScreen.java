@@ -10,6 +10,7 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.SolarLexicon
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.AbilityIndexSetPacket;
 import com.finderfeed.solarcraft.packet_handler.packets.BuyAbilityPacket;
 import com.finderfeed.solarcraft.packet_handler.packets.RequestAbilityScreenPacket;
@@ -82,11 +83,12 @@ public class AbilitySelectionScreen extends SolarCraftScreen {
                     100,100,
                     (btn)->{
                         if (btn instanceof AbilityScreenButton b && b.isBindingMode() && selectedAbilityId > 0 && selectedAbilityId < 5){
-                            SCPacketHandler.INSTANCE.sendToServer(new AbilityIndexSetPacket(selectedAbilityId,b.ability.id));
+                            FDPacketUtil.sendToServer(new AbilityIndexSetPacket(selectedAbilityId,b.ability.id),new RequestAbilityScreenPacket(true));
+//                            SCPacketHandler.INSTANCE.sendToServer(new AbilityIndexSetPacket(selectedAbilityId,b.ability.id));
                             for (AbilityScreenButton button1 : btns){
                                 button1.setBindingMode(false);
                             }
-                            SCPacketHandler.INSTANCE.sendToServer(new RequestAbilityScreenPacket(true));
+//                            SCPacketHandler.INSTANCE.sendToServer(new RequestAbilityScreenPacket(true));
                         }
                     });
 
@@ -112,8 +114,9 @@ public class AbilitySelectionScreen extends SolarCraftScreen {
         SolarCraftButton b = new SolarCraftButton(winX - 107,
                 winY - 40,65,15,Component.translatable("ability.buy_ability"),(button)->{
             if (selectedAbility != null) {
-                SCPacketHandler.INSTANCE.sendToServer(new BuyAbilityPacket(selectedAbility.id));
-                SCPacketHandler.INSTANCE.sendToServer(new RequestAbilityScreenPacket(true));
+                FDPacketUtil.sendToServer(new BuyAbilityPacket(selectedAbility.id),new RequestAbilityScreenPacket(true));
+//                SCPacketHandler.INSTANCE.sendToServer(new BuyAbilityPacket(selectedAbility.id));
+//                SCPacketHandler.INSTANCE.sendToServer(new RequestAbilityScreenPacket(true));
             }
         });
         InfoButton info = new InfoButton(135,27,12,12,(but,graphics,mx,my)->{
@@ -156,9 +159,10 @@ public class AbilitySelectionScreen extends SolarCraftScreen {
     }
 
 
+
     @Override
-    public boolean mouseScrolled(double mousePosX, double mousePosY, double delta) {
-        if (delta > 0){
+    public boolean mouseScrolled(double mousePosX, double mousePosY, double delta,double deltaY) {
+        if (deltaY > 0){
             currentShift = Mth.clamp(currentShift - 150,0,(btns.size()-1) * 150);
             currentSelectedAbilityIndex = Mth.clamp(currentSelectedAbilityIndex - 1,0,btns.size()-1);
             value.setNewValue(currentShift);
@@ -169,7 +173,7 @@ public class AbilitySelectionScreen extends SolarCraftScreen {
         }
         ticker = 0;
         selectedAbility = btns.get(currentSelectedAbilityIndex).ability;
-        return super.mouseScrolled(mousePosX, mousePosY, delta);
+        return super.mouseScrolled(mousePosX, mousePosY, delta,deltaY);
     }
 
     @Override

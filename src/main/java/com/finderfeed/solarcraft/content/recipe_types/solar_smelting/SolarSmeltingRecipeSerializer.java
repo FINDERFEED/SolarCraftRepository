@@ -4,8 +4,14 @@ import com.finderfeed.solarcraft.SolarCraft;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.Ingredient;
 
@@ -13,7 +19,6 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.Level;
 
 
@@ -26,20 +31,55 @@ public class SolarSmeltingRecipeSerializer  implements RecipeSerializer<SolarSme
 //        this.setRegistryName(new ResourceLocation("solarcraft","solar_smelting"));
     }
     //ShapedRecipe.itemFromJson(
+
+
     @Override
-    public SolarSmeltingRecipe fromJson(ResourceLocation loc, JsonObject file) {
-//        NonNullList<Ingredient> nonnulllist = itemsFromJson(GsonHelper.getAsJsonArray(file, "ingredients"));
-//        SolarCraft.LOGGER.log(Level.ERROR,"Smelting recipe: " + file.toString());
+    public Codec<SolarSmeltingRecipe> codec() {
+        return CODEC;
+    }
+
+//    public static final Codec<SolarSmeltingRecipe> CODEC = ExtraCodecs.FLAT_JSON.flatXmap(json->{
+//        SolarSmeltingRecipe recipe = fromJson(json.getAsJsonObject());
+//        return DataResult.success(recipe);
+//    },res->{
+//        throw new RuntimeException("Serialization for Solar Smelting recipe is not implemented");
+//    });
+
+    public static final Codec<ItemStack> SMELTING_ITEM = RecordCodecBuilder.create(p->p.group(
+            BuiltInRegistries.ITEM.holderByNameCodec().fieldOf("smelting_item").forGetter(stack->stack.getItemHolder()),
+            ExtraCodecs.strictOptionalField(Codec.INT,"count",1).forGetter(stack->stack.getCount())
+    ).apply(p,ItemStack::new));
+
+    public static final Codec<List<ItemStack>> NONEMPTY_STACK_LIST = Codec.list(SMELTING_ITEM).comapFlatMap(l->{
+        if (l.size() == 0) return DataResult.error(()->"Size of item list cannot be zero.");
+        return DataResult.success(l);
+        },l->l);
+
+    public static final Codec<ItemStack> RESULT_ITEM = Codec.STRING.flatXmap(str->{
+        Item item = BuiltInRegistries.ITEM.get(new ResourceLocation(str));
+        if (item == Items.AIR) return DataResult.error(()->"Couldn't find item: " + str);
+        return DataResult.success(new ItemStack(item));
+    },item->{
+        return DataResult.success(BuiltInRegistries.ITEM.getKey(item.getItem()).toString());
+    });
+
+    public static final Codec<SolarSmeltingRecipe> CODEC = RecordCodecBuilder.create(p->p.group(
+            NONEMPTY_STACK_LIST.fieldOf("ingredients").forGetter(recipe->recipe.stacks),
+            RESULT_ITEM.fieldOf("result").forGetter(recipe->recipe.output),
+            Codec.INT.fieldOf("time").forGetter(recipe-> recipe.smeltingTime)
+    ).apply(p,SolarSmeltingRecipe::new));
+
+    //@Override
+    public static SolarSmeltingRecipe fromJson(JsonObject file) {
+
         List<ItemStack> stacks = new ArrayList<>();
         JsonArray array = file.getAsJsonArray("ingredients");
 
         for (JsonElement element : array){
             JsonObject obj = element.getAsJsonObject();
-//            Item item = GsonHelper.getAsItem(obj,"item");
-
             String s = obj.get("smelting_item").getAsString();
 
-            Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(s));
+            Item item = BuiltInRegistries.ITEM.get(new ResourceLocation(s));
 
             int count;
             JsonElement e = obj.get("count");
@@ -55,16 +95,15 @@ public class SolarSmeltingRecipeSerializer  implements RecipeSerializer<SolarSme
         }
 
 
-        ItemStack output = GsonHelper.getAsItem(file, "result").getDefaultInstance();
+        ItemStack output = GsonHelper.getAsItem(file, "result").value().getDefaultInstance();
         int infusingTime = GsonHelper.getAsInt(file, "time", 20);
-//        String child = GsonHelper.getAsString(file,"requires");
-//        String category = GsonHelper.getAsString(file,"category");
-        return new SolarSmeltingRecipe(loc,stacks,output,infusingTime);
+        return new SolarSmeltingRecipe(stacks,output,infusingTime);
     }
+
 
     @Nullable
     @Override
-    public SolarSmeltingRecipe fromNetwork(ResourceLocation loc, FriendlyByteBuf buf) {
+    public SolarSmeltingRecipe fromNetwork( FriendlyByteBuf buf) {
 
         int size = buf.readInt();
         List<ItemStack> stacks = new ArrayList<>();
@@ -76,7 +115,7 @@ public class SolarSmeltingRecipeSerializer  implements RecipeSerializer<SolarSme
         int infusingTime = buf.readVarInt();
 //        String child = buf.readUtf();
 //        String category = buf.readUtf();
-        return new SolarSmeltingRecipe(loc,stacks,output,infusingTime);
+        return new SolarSmeltingRecipe(stacks,output,infusingTime);
     }
 
     @Override
@@ -86,7 +125,7 @@ public class SolarSmeltingRecipeSerializer  implements RecipeSerializer<SolarSme
             buf.writeItem(stack);
         }
 
-        buf.writeItemStack(recipeType.output, true);
+        buf.writeItem(recipeType.output);
         buf.writeVarInt(recipeType.smeltingTime);
 //        buf.writeUtf(recipeType.child);
 //        buf.writeUtf(recipeType.category);
@@ -109,7 +148,7 @@ public class SolarSmeltingRecipeSerializer  implements RecipeSerializer<SolarSme
         if (ingr.equals("minecraft:air")){
             return Ingredient.EMPTY;
         }else {
-            return Ingredient.fromJson(element);
+            return Ingredient.fromJson(element,true);
         }
     }
 }

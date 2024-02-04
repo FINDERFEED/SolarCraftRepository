@@ -77,11 +77,11 @@ public abstract class DefaultContainerScreen<T extends AbstractContainerMenu> ex
     }
 
     @Override
-    public boolean mouseScrolled(double mousePosX, double mousePosY, double delta) {
+    public boolean mouseScrolled(double mousePosX, double mousePosY, double delta,double what) {
         for (FDScreenComponent component : components.values()) {
-            component.mouseScrolled(mousePosX - component.x, mousePosY - component.y, delta);
+            component.mouseScrolled(mousePosX - component.x, mousePosY - component.y, what);
         }
-        return super.mouseScrolled(mousePosX, mousePosY, delta);
+        return super.mouseScrolled(mousePosX, mousePosY, delta,what);
     }
 
     public void renderComponents(GuiGraphics graphics, int mx, int my, float pticks, String... ids) {

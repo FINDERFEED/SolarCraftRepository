@@ -5,6 +5,7 @@ import com.finderfeed.solarcraft.content.blocks.primitive.RunicEnergySaverBlock;
 import com.finderfeed.solarcraft.content.items.SolarNetworkBinder;
 import com.finderfeed.solarcraft.content.items.solar_wand.SolarWandItem;
 import com.finderfeed.solarcraft.misc_things.SolarcraftDebugStick;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.Block;
@@ -23,10 +24,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.network.NetworkHooks;
-
 import java.util.function.Consumer;
 
 
@@ -86,7 +86,7 @@ public class InfuserBlock extends RunicEnergySaverBlock implements EntityBlock {
                         Consumer<FriendlyByteBuf> cons = x -> {
                             x.writeBlockPos(pos);
                         };
-                        NetworkHooks.openScreen((ServerPlayer) user, new InfuserContainer.Provider(pos), cons);
+                        ((ServerPlayer) user).openMenu( new InfuserContainer.Provider(pos), cons);
 
                     }
                 }else{
@@ -123,7 +123,7 @@ public class InfuserBlock extends RunicEnergySaverBlock implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return SolarCraft.INFUSING_STAND_BLOCKENTITY.get().create(blockPos,blockState);
+        return SCTileEntities.INFUSING_STAND_BLOCKENTITY.get().create(blockPos,blockState);
     }
 }
 

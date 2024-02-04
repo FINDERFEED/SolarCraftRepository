@@ -1,19 +1,15 @@
 package com.finderfeed.solarcraft.content.items.solar_lexicon.screen;
 
 import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.ItemStackTabButton;
-import com.finderfeed.solarcraft.events.other_events.event_handler.ClientEventsHandler;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarcraft.content.recipe_types.infusing_crafting.InfusingCraftingRecipe;
 import com.finderfeed.solarcraft.local_library.client.screens.buttons.FDImageButton;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.local_library.other.ItemRator;
+import com.finderfeed.solarcraft.misc_things.SCLocations;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.ImageButton;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
@@ -21,17 +17,20 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class InfusingCraftingRecipeScreen extends LexiconScreen {
-    public final ResourceLocation BUTTONS = new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/page_buttons.png");
+
 
     private static final ResourceLocation MAIN_SCREEN = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/solar_lexicon_crafting_recipe_screen.png");
 
 
     private final List<InfusingCraftingRecipe> recipes;
+
+    public ItemRator[][] itemRators;
 
 
     public InfusingCraftingRecipeScreen(InfusingCraftingRecipe recipe) {
@@ -51,38 +50,30 @@ public class InfusingCraftingRecipeScreen extends LexiconScreen {
         super.init();
         int xoffs = 111;
         if (this.getPagesCount() != 1) {
-            addRenderableWidget(new FDImageButton(relX + 180 - 10, relY + 36, 16, 16, 0, 0, 0, BUTTONS, 16, 32, (button) -> {
+            addRenderableWidget(new FDImageButton(relX + 180 - 10, relY + 36, 16, 16,
+                    RenderingTools.singleWidgetSprite(SCLocations.NEXT_PAGE), (button) -> {
                 this.nextPage();
             },(button,graphics,mousex,mousey)->{
                 graphics.renderTooltip(font,Component.literal("Next recipe"),mousex,mousey);
-            },Component.literal("")){
+            }){
                 @Override
                 public void playDownSound(SoundManager manager) {
-                    manager.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
+                    manager.play(SimpleSoundInstance.forUI(SCSounds.BUTTON_PRESS2.get(),1,1));
                 }
             });
-            addRenderableWidget(new FDImageButton(relX + 164 - 10, relY + 36, 16, 16, 0, 16, 0, BUTTONS, 16, 32, (button) -> {
+            addRenderableWidget(new FDImageButton(relX + 164 - 10, relY + 36, 16, 16,
+                    RenderingTools.singleWidgetSprite(SCLocations.PREV_PAGE), (button) -> {
                 this.previousPage();
             },(button,graphics,mousex,mousey)->{
                 graphics.renderTooltip(font,Component.literal("Previous recipe"),mousex,mousey);
-            },Component.literal("")){
+            }){
                 @Override
                 public void playDownSound(SoundManager manager) {
-                    manager.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
+                    manager.play(SimpleSoundInstance.forUI(SCSounds.BUTTON_PRESS2.get(),1,1));
                 }
             });
         }
-//        addRenderableWidget(new ItemStackTabButton(relX+97+xoffs,relY+26,17,17,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,
-//                (buttons, graphics, b, c) -> {
-//                    graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.recipes_screen"), b, c);
-//                }));
-//        addRenderableWidget(new ItemStackTabButton(relX+97+xoffs,relY+26 + 19,17,17,(button)->{
-//            ClientEventsHandler.SOLAR_LEXICON_SCREEN_HANDLER.memorizeAndClose();
-//
-//        }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f,(buttons, graphics, b, c) -> {
-//            graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.memorize_page"), b, c);
-//        }));
-
+        this.itemRators = dissolvePattern(recipes.get(this.currentPage));
     }
 
     @Override
@@ -108,13 +99,13 @@ public class InfusingCraftingRecipeScreen extends LexiconScreen {
         RenderingTools.blitWithBlend(matrices, relX, relY, 0, 0, 256, 256, 256, 256,0,1f);
         InfusingCraftingRecipe currentRecipe = recipes.get(currentPage);
         if (currentRecipe != null){
-            Item[][] r = dissolvePattern(currentRecipe);
+            ItemRator[][] r = this.itemRators;
             int iteratorHeight = 0;
-            for (Item[] arr : r){
+            for (ItemRator[] arr : r){
                 int iteratorLength = 0;
-                for (Item item : arr){
+                for (ItemRator item : arr){
                     if (item != null) {
-                        RenderingTools.renderItemAndTooltip(item.getDefaultInstance(),graphics, relX + iteratorLength * 18 + 20, relY + iteratorHeight * 18 + 16, mousex, mousey,100);
+                        RenderingTools.renderItemAndTooltip(item.getCurrentStack(),graphics, relX + iteratorLength * 18 + 20, relY + iteratorHeight * 18 + 16, mousex, mousey,100);
                     }
                     iteratorLength++;
                 }
@@ -123,20 +114,21 @@ public class InfusingCraftingRecipeScreen extends LexiconScreen {
             }
             ItemStack item = currentRecipe.getOutput().copy();
             item.setCount(currentRecipe.getOutputCount());
-            RenderingTools.renderItemAndTooltip(currentRecipe.getOutput(),graphics,relX+81,relY+34,mousex,mousey,100);
+            RenderingTools.renderItemAndTooltip(item,graphics,relX+81,relY+34,mousex,mousey,100);
 
             List<Item> uniqueItems = new ArrayList<>();
             Integer[] counts = new Integer[9];
             for (int i = 0 ; i < 3; i ++){
                 for (int g = 0 ; g < 3; g ++){
-                    Item t = r[i][g];
+                    ItemRator t = r[i][g];
                     if (t != null) {
-                        if (t != Items.AIR && !uniqueItems.contains(t)) {
-                            uniqueItems.add(t);
-                            int index = uniqueItems.indexOf(t);
+                        Item it = t.getCurrentStack().getItem();
+                        if (t.getCurrentStack().getItem() != Items.AIR && !uniqueItems.contains(it)) {
+                            uniqueItems.add(t.getCurrentStack().getItem());
+                            int index = uniqueItems.indexOf(it);
                             counts[index] = 1;
-                        } else if (uniqueItems.contains(t)) {
-                            int index = uniqueItems.indexOf(t);
+                        } else if (uniqueItems.contains(it)) {
+                            int index = uniqueItems.indexOf(it);
                             counts[index]++;
                         }
                     }
@@ -153,14 +145,16 @@ public class InfusingCraftingRecipeScreen extends LexiconScreen {
 
 
         }
-
-
-
-
         super.render(graphics, mousex, mousey, partialTicks);
     }
 
-    private void renderItemAndTooltip(GuiGraphics graphics,ItemStack toRender, int place1, int place2, int mousex, int mousey, PoseStack matrices, boolean last){
+    @Override
+    public void onPageChanged(int newPage) {
+        InfusingCraftingRecipe recipe = recipes.get(newPage);
+        this.itemRators = dissolvePattern(recipe);
+    }
+
+    private void renderItemAndTooltip(GuiGraphics graphics, ItemStack toRender, int place1, int place2, int mousex, int mousey, PoseStack matrices, boolean last){
         if (!last) {
             graphics.renderItem(toRender, place1, place2);
         }else{
@@ -179,16 +173,18 @@ public class InfusingCraftingRecipeScreen extends LexiconScreen {
     }
 
 
-    private Item[][] dissolvePattern(InfusingCraftingRecipe recipe){
+    private ItemRator[][] dissolvePattern(InfusingCraftingRecipe recipe){
         String[] pat = recipe.getPattern();
         int rows = pat.length;
         int cols = pat[0].length();
-        Item[][] r = new Item[3][3];
+        ItemRator[][] r = new ItemRator[3][3];
 
         for (int i = 0; i < 3; i ++ ){
             for (int g = 0; g < 3 ; g++){
                 if (i < rows && g < cols){
-                    r[i][g] = recipe.getDefinitions().get(pat[i].charAt(g));
+                    Ingredient ingredient = recipe.getDefinitions().get(pat[i].charAt(g));
+                    ItemRator itemRator = new ItemRator(ingredient);
+                    r[i][g] = itemRator;
                 }else{
                     r[i][g] = null;
                 }
@@ -197,5 +193,20 @@ public class InfusingCraftingRecipeScreen extends LexiconScreen {
         return r;
     }
 
+    private int i;
 
+    @Override
+    public void tick() {
+        super.tick();
+        i++;
+        if (itemRators != null){
+            for (ItemRator[] itemRators : itemRators){
+                for (ItemRator itemRator : itemRators){
+                    if (i % 30 == 0) {
+                        itemRator.next();
+                    }
+                }
+            }
+        }
+    }
 }

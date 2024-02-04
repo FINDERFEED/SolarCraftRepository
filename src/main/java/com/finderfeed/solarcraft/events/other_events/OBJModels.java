@@ -3,14 +3,12 @@ package com.finderfeed.solarcraft.events.other_events;
 
 
 import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.client.model_loaders.SolarCraftModelLoader;
+import com.finderfeed.solarcraft.client.model_loaders.ProgressionOreModelLoader;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-
-
-import net.minecraftforge.client.event.ModelEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.client.event.ModelEvent;
 
 
 
@@ -41,12 +39,12 @@ public class OBJModels {
 
 
 
-    public static final SolarCraftModelLoader LOADER = new SolarCraftModelLoader();
+    public static final ProgressionOreModelLoader PROGRESSION_ORE_LOADER = new ProgressionOreModelLoader();
 
 
     @SubscribeEvent
     public static void registerLoaders(ModelEvent.RegisterGeometryLoaders event){
-        event.register("progression_ore_loader",LOADER);
+        event.register(new ResourceLocation(SolarCraft.MOD_ID,"progression_ore_loader"), PROGRESSION_ORE_LOADER);
     }
 
     @SubscribeEvent

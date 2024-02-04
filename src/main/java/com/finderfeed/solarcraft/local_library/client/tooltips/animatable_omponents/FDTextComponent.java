@@ -9,6 +9,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.util.FormattedCharSequence;
 
 import java.util.Comparator;
 import java.util.List;
@@ -17,7 +18,7 @@ public class FDTextComponent extends BaseComponent{
 
     private static final int TEXT_HEIGHT = 9;
 
-    private List<String> text;
+    private List<FormattedCharSequence> text;
     private int textColor;
 
     public FDTextComponent(ContentAlignment alignment,int xSize, int ySize) {
@@ -38,7 +39,7 @@ public class FDTextComponent extends BaseComponent{
             MultiBufferSource.BufferSource source = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
 
             font.drawInBatch(text.get(i),xy[0],xy[1] + yOffset,0xffffff,true,matrices.last().pose(),source, Font.DisplayMode.NORMAL,
-                    0, 15728880,font.isBidirectional());
+                    0, 15728880);
             source.endBatch();
         }
         matrices.popPose();
@@ -47,23 +48,26 @@ public class FDTextComponent extends BaseComponent{
 
     public FDTextComponent setText(Component component,int textColor){
         this.textColor = textColor;
-        this.text = RenderingTools.splitString(component.getString(),this.getXSize());
+//        this.text = RenderingTools.splitString(component.getString(),this.getXSize());
+        this.text = Minecraft.getInstance().font.split(component,this.getXSize());
         this.setYSize(this.text.size()*TEXT_HEIGHT + this.getInnerBorder()*2);
-        this.setXSize(Minecraft.getInstance().font.width(this.text.stream().max(Comparator.comparingInt(String::length)).get()) + this.getInnerBorder()*2);
+        this.setXSize(Minecraft.getInstance().font.width(this.text.stream().max(Comparator.comparingInt(Minecraft.getInstance().font::width)).get()) + this.getInnerBorder()*2);
         return this;
     }
 
     public FDTextComponent setText(MutableComponent component,int textColor){
         this.textColor = textColor;
-        this.text = RenderingTools.splitString(component.getString(),this.getXSize());
+//        this.text = RenderingTools.splitString(component.getString(),this.getXSize());
+        this.text = Minecraft.getInstance().font.split(component,this.getXSize());
         this.setYSize(this.text.size()*TEXT_HEIGHT + this.getInnerBorder()*2);
-        this.setXSize(Minecraft.getInstance().font.width(this.text.stream().max(Comparator.comparingInt(String::length)).get()) + this.getInnerBorder()*2);
+        this.setXSize(Minecraft.getInstance().font.width(this.text.stream().max(Comparator.comparingInt(Minecraft.getInstance().font::width)).get()) + this.getInnerBorder()*2);
         return this;
     }
 
     public FDTextComponent setText(Component component,int forceX, int textColor){
         this.textColor = textColor;
-        this.text = RenderingTools.splitString(component.getString(),this.getXSize());
+//        this.text = RenderingTools.splitString(component.getString(),this.getXSize());
+        this.text = Minecraft.getInstance().font.split(component,this.getXSize());
         this.setYSize(this.text.size()*TEXT_HEIGHT + this.getInnerBorder()*2);
         this.setXSize(forceX * 5 + this.getInnerBorder()*2);
         return this;
@@ -71,7 +75,8 @@ public class FDTextComponent extends BaseComponent{
 
     public FDTextComponent setText(MutableComponent component, int forceX, int textColor){
         this.textColor = textColor;
-        this.text = RenderingTools.splitString(component.getString(),this.getXSize());
+//        this.text = RenderingTools.splitString(component.getString(),this.getXSize());
+        this.text = Minecraft.getInstance().font.split(component,this.getXSize());
         this.setYSize(this.text.size()*TEXT_HEIGHT + this.getInnerBorder()*2);
         this.setXSize(forceX * 5 + this.getInnerBorder()*2);
         return this;

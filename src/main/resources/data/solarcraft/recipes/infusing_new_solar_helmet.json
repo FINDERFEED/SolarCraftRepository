@@ -1,9 +1,15 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "A": {"item": "minecraft:diamond_helmet"},
-    "B": {"item": "minecraft:gold_ingot"},
-    "C": {"item": "solarcraft:solar_dust"}
+    "A": {
+      "item": "minecraft:diamond_helmet"
+    },
+    "B": {
+      "item": "minecraft:gold_ingot"
+    },
+    "C": {
+      "item": "solarcraft:solar_dust"
+    }
   },
   "pattern": [
     " B ",

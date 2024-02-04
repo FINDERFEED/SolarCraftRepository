@@ -1,4 +1,4 @@
 {
-  "loader": "forge:obj",
+  "loader": "neoforge:obj",
   "model": "solarcraft:objmodels/solar_core_model.obj"
 }

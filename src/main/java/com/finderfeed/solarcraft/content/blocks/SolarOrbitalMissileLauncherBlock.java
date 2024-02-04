@@ -4,14 +4,13 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.SolarOrbitalMissil
 import com.finderfeed.solarcraft.content.blocks.primitive.RunicEnergySaverBlock;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -48,7 +47,7 @@ public class SolarOrbitalMissileLauncherBlock extends RunicEnergySaverBlock impl
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return SolarcraftTileEntityTypes.ORBITAL_MISSILE_LAUNCHER.get().create(pos,state);
+        return SCTileEntities.ORBITAL_MISSILE_LAUNCHER.get().create(pos,state);
     }
 
     @Nullable

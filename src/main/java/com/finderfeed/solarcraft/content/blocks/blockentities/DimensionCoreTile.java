@@ -9,7 +9,7 @@ import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 
 import net.minecraft.network.chat.Component;
@@ -30,7 +30,7 @@ public class DimensionCoreTile extends BlockEntity implements IStructureOwner {
 
 
     public DimensionCoreTile(BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.DIMENSION_CORE_TILE.get(), p_155229_, p_155230_);
+        super(SCTileEntities.DIMENSION_CORE_TILE.get(), p_155229_, p_155230_);
     }
 
 
@@ -104,7 +104,7 @@ public class DimensionCoreTile extends BlockEntity implements IStructureOwner {
             world.getEntitiesOfClass(Entity.class, box, Entity::canChangeDimensions).forEach((entity) -> {
                 if (world.getServer() != null) {
                     ServerLevel destination;
-                    if (entity.level.dimension() == Level.OVERWORLD) {
+                    if (entity.level().dimension() == Level.OVERWORLD) {
                         destination = world.getServer().getLevel(SCEventHandler.RADIANT_LAND_KEY);
                     } else {
                         destination = world.getServer().getLevel(Level.OVERWORLD);
@@ -153,10 +153,6 @@ public class DimensionCoreTile extends BlockEntity implements IStructureOwner {
         return structureCorrect;
     }
 
-    @Override
-    public AABB getRenderBoundingBox() {
-        return Helpers.createAABBWithRadius(Helpers.getBlockCenter(worldPosition).add(0,3,0),3,3);
-    }
 
     @Override
     public List<MultiblockStructure> getMultiblocks() {

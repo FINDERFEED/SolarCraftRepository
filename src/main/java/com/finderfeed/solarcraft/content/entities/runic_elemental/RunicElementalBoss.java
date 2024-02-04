@@ -19,7 +19,7 @@ import com.finderfeed.solarcraft.registries.data_serializers.FDEntityDataSeriali
 import com.finderfeed.solarcraft.registries.effects.SCEffects;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import com.finderfeed.solarcraft.registries.items.SCItems;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -47,11 +47,11 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -544,7 +544,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SolarcraftSounds.CRYSTAL_HIT.get();
+        return SCSounds.CRYSTAL_HIT.get();
     }
 
     @Override
@@ -569,7 +569,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     }
 
     @Override
-    public boolean ignoreExplosion() {
+    public boolean ignoreExplosion(Explosion explosion) {
         return true;
     }
 
@@ -676,10 +676,10 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         super.load(tag);
     }
 
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
+//    @Override
+//    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+//        return NetworkHooks.getEntitySpawningPacket(this);
+//    }
 
     @Override
     public void checkDespawn() {

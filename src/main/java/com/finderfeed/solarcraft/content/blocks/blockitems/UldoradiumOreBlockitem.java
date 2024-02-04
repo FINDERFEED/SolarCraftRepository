@@ -2,14 +2,11 @@ package com.finderfeed.solarcraft.content.blocks.blockitems;
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import net.minecraft.world.level.block.Block;
-
+import net.neoforged.fml.util.thread.EffectiveSide;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 
 import net.minecraft.network.chat.Component;
-
-
-import net.minecraftforge.fml.util.thread.EffectiveSide;
 
 public class UldoradiumOreBlockitem extends BlockItem {
 

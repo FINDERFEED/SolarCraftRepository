@@ -4,7 +4,7 @@ import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.entities.CrystalBossEntity;
 import com.finderfeed.solarcraft.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -18,10 +18,10 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 
-import net.minecraftforge.network.NetworkHooks;
 
 public class MineEntityCrystalBoss extends PathfinderMob implements CrystalBossBuddy {
 
@@ -73,7 +73,7 @@ public class MineEntityCrystalBoss extends PathfinderMob implements CrystalBossB
             createExplosionParticles();
         }
         if (!this.level.isClientSide){
-            level.playSound(null,this.getX(),this.getY(),this.getZ(), SolarcraftSounds.SOLAR_EXPLOSION.get(), SoundSource.AMBIENT,level.random.nextFloat()*0.5f+0.5f,1f);
+            level.playSound(null,this.getX(),this.getY(),this.getZ(), SCSounds.SOLAR_EXPLOSION.get(), SoundSource.AMBIENT,level.random.nextFloat()*0.5f+0.5f,1f);
             level.getEntitiesOfClass(LivingEntity.class,new AABB(-1.5,-1.0,-1.5,1.5,2,1.5).move(position()),(ent)->{
                 return !(ent instanceof CrystalBossBuddy);
             }).forEach((living)->{
@@ -111,10 +111,10 @@ public class MineEntityCrystalBoss extends PathfinderMob implements CrystalBossB
         return false;
     }
 
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
+//    @Override
+//    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+//        return NetworkHooks.getEntitySpawningPacket(this);
+//    }
     @Override
     protected void doPush(Entity pEntity) {
     }
@@ -147,7 +147,7 @@ public class MineEntityCrystalBoss extends PathfinderMob implements CrystalBossB
     }
 
     @Override
-    public boolean ignoreExplosion() {
+    public boolean ignoreExplosion(Explosion e) {
         return true;
     }
 

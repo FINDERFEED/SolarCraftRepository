@@ -1,25 +1,21 @@
 package com.finderfeed.solarcraft.content.items.solar_lexicon.screen;
 
-import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.ItemStackTabButton;
-import com.finderfeed.solarcraft.events.other_events.event_handler.ClientEventsHandler;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarcraft.local_library.client.screens.buttons.FDImageButton;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.local_library.other.ItemRator;
 import com.finderfeed.solarcraft.misc_things.PhantomInventory;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.misc_things.SCLocations;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.ImageButton;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
-import net.minecraft.recipebook.PlaceRecipe;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -31,8 +27,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class CraftingRecipeScreen extends LexiconScreen implements PlaceRecipe<Ingredient> {
-    public final ResourceLocation BUTTONS = new ResourceLocation("solarcraft","textures/misc/page_buttons.png");
+public class CraftingRecipeScreen extends LexiconScreen {
 
     private static final ResourceLocation MAIN_SCREEN = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/solar_lexicon_crafting_recipe_screen.png");
 
@@ -62,45 +57,30 @@ public class CraftingRecipeScreen extends LexiconScreen implements PlaceRecipe<I
         this.prepareSlots();
         this.setupGhostRecipe(recipes.get(0));
         if (this.getPagesCount() != 1) {
-            addRenderableWidget(new FDImageButton(relX + 180 - 10, relY + 36, 16, 16, 0, 0, 0, BUTTONS, 16, 32, (button) -> {
+            addRenderableWidget(new FDImageButton(relX + 180 - 10, relY + 36, 16, 16,
+                    RenderingTools.singleWidgetSprite(SCLocations.NEXT_PAGE), (button) -> {
                 this.nextPage();
-                //                if ((currentPage + 1 <= maxPages)) {
-//                    currentPage += 1;
-//                }
-//                this.setupGhostRecipe(recipes.get(currentPage));
             },(button,graphics,mousex,mousey)->{
                 graphics.renderTooltip(font,Component.literal("Next recipe"),mousex,mousey);
-            },Component.literal("")){
+            }){
                 @Override
                 public void playDownSound(SoundManager manager) {
-                    manager.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
+                    manager.play(SimpleSoundInstance.forUI(SCSounds.BUTTON_PRESS2.get(),1,1));
                 }
             });
-            addRenderableWidget(new FDImageButton(relX + 164 - 10, relY + 36, 16, 16, 0, 16, 0, BUTTONS, 16, 32, (button) -> {
+            addRenderableWidget(new FDImageButton(relX + 164 - 10, relY + 36, 16, 16,
+                    RenderingTools.singleWidgetSprite(SCLocations.PREV_PAGE), (button) -> {
                 this.previousPage();
-                //                if ((currentPage - 1 >= 0)) {
-//                    currentPage -= 1;
-//                }
-//                this.setupGhostRecipe(recipes.get(currentPage));
             },(button,graphics,mousex,mousey)->{
                 graphics.renderTooltip(font,Component.literal("Previous recipe"),mousex,mousey);
-            },Component.literal("")){
+            }){
                 @Override
                 public void playDownSound(SoundManager manager) {
-                    manager.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
+                    manager.play(SimpleSoundInstance.forUI(SCSounds.BUTTON_PRESS2.get(),1,1));
                 }
             });
         }
-//        addRenderableWidget(new ItemStackTabButton(relX+97+xoffs,relY+29 - 3,17,17,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,
-//                (buttons, graphics, b, c) -> {
-//                    graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.recipes_screen"), b, c);
-//                }));
-//        addRenderableWidget(new ItemStackTabButton(relX+97+xoffs,relY+29 - 3 + 19,17,17,(button)->{
-//            ClientEventsHandler.SOLAR_LEXICON_SCREEN_HANDLER.memorizeAndClose();
-//
-//        }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f,(buttons, graphics, b, c) -> {
-//            graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.memorize_page"), b, c);
-//        }));
+
 
     }
 
@@ -173,7 +153,7 @@ public class CraftingRecipeScreen extends LexiconScreen implements PlaceRecipe<I
         this.placeRecipe(3,3, Integer.MAX_VALUE, recipe, recipe.getIngredients().iterator(), 0);
     }
 
-    @Override
+
     public void addItemToSlot(Iterator<Ingredient> iter, int slotIdx, int notUsed, int notUsed1, int notUsed2) {
         Ingredient ingredient = iter.next();
         if (!ingredient.isEmpty()) {
@@ -223,4 +203,56 @@ public class CraftingRecipeScreen extends LexiconScreen implements PlaceRecipe<I
     public void onPageChanged(int newPage) {
         this.setupGhostRecipe(recipes.get(newPage));
     }
+
+
+    //PlaceRecipe class
+    void placeRecipe(int p_135409_, int p_135410_, int p_135411_, Recipe<?> recipe, Iterator<Ingredient> p_135413_, int p_135414_) {
+        int i = p_135409_;
+        int j = p_135410_;
+
+        if (recipe instanceof net.neoforged.neoforge.common.crafting.IShapedRecipe shapedrecipe) {
+            i = shapedrecipe.getRecipeWidth();
+            j = shapedrecipe.getRecipeHeight();
+        }
+
+        int k1 = 0;
+
+        for(int k = 0; k < p_135410_; ++k) {
+            if (k1 == p_135411_) {
+                ++k1;
+            }
+
+            boolean flag = (float)j < (float)p_135410_ / 2.0F;
+            int l = Mth.floor((float)p_135410_ / 2.0F - (float)j / 2.0F);
+            if (flag && l > k) {
+                k1 += p_135409_;
+                ++k;
+            }
+
+            for(int i1 = 0; i1 < p_135409_; ++i1) {
+                if (!p_135413_.hasNext()) {
+                    return;
+                }
+
+                flag = (float)i < (float)p_135409_ / 2.0F;
+                l = Mth.floor((float)p_135409_ / 2.0F - (float)i / 2.0F);
+                int j1 = i;
+                boolean flag1 = i1 < i;
+                if (flag) {
+                    j1 = l + i;
+                    flag1 = l <= i1 && i1 < l + i;
+                }
+
+                if (flag1) {
+                    this.addItemToSlot(p_135413_, k1, p_135414_, k, i1);
+                } else if (j1 == i1) {
+                    k1 += p_135409_ - i1;
+                    break;
+                }
+
+                ++k1;
+            }
+        }
+    }
+
 }

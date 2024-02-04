@@ -2,7 +2,6 @@ package com.finderfeed.solarcraft.content.items.solar_lexicon.screen;
 
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.ItemStackTabButton;
-import com.finderfeed.solarcraft.events.other_events.event_handler.ClientEventsHandler;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.client.screens.buttons.FDImageButton;
@@ -12,20 +11,18 @@ import com.finderfeed.solarcraft.content.blocks.infusing_table_things.InfuserTil
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 
-import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarcraft.content.recipe_types.infusing_new.InfusingRecipe;
+import com.finderfeed.solarcraft.misc_things.SCLocations;
 import com.finderfeed.solarcraft.registries.Tags;
 import com.finderfeed.solarcraft.registries.items.SCItems;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -36,7 +33,6 @@ import java.util.List;
 import java.util.Locale;
 
 public class InfusingRecipeScreen extends LexiconScreen {
-    public final ResourceLocation BUTTONS = new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/page_buttons.png");
     public final ResourceLocation MAIN_SCREEN_OPENED = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/solar_lexicon_infusing_recipe_with_catalysts_new.png");
     public final ResourceLocation MAIN_SCREEN_UNOPENED = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/solar_lexicon_infusing_recipe_without_catalysts_new.png");
     //60*6
@@ -89,24 +85,26 @@ public class InfusingRecipeScreen extends LexiconScreen {
         this.catalystsUnlocked = Helpers.hasPlayerCompletedProgression(Progression.CATALYSTS,Minecraft.getInstance().player);
         fillItemRators();
         if (this.getPagesCount() != 1) {
-            addRenderableWidget(new FDImageButton(relX + 193 + 19, relY + 55 + 14  , 16, 16, 0, 0, 0, BUTTONS, 16, 32, (button) -> {
+            addRenderableWidget(new FDImageButton(relX + 193 + 19, relY + 55 + 14  , 16, 16,
+                    RenderingTools.singleWidgetSprite(SCLocations.NEXT_PAGE), (button) -> {
                 this.nextPage();
             },(button,graphics,mousex,mousey)->{
                 graphics.renderTooltip(font,Component.literal("Next recipe"),mousex,mousey);
-            },Component.literal("")){
+            }){
                 @Override
                 public void playDownSound(SoundManager manager) {
-                    manager.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
+                    manager.play(SimpleSoundInstance.forUI(SCSounds.BUTTON_PRESS2.get(),1,1));
                 }
             });
-            addRenderableWidget(new FDImageButton(relX + 193 + 19, relY + 16 + 55 + 14 , 16, 16, 0, 16, 0, BUTTONS, 16, 32, (button) -> {
+            addRenderableWidget(new FDImageButton(relX + 193 + 19, relY + 16 + 55 + 14 , 16, 16,
+                    RenderingTools.singleWidgetSprite(SCLocations.PREV_PAGE), (button) -> {
                 this.previousPage();
             },(button,graphics,mousex,mousey)->{
                 graphics.renderTooltip(font ,Component.literal("Previous recipe"),mousex,mousey);
-            },Component.literal("")){
+            }){
                 @Override
                 public void playDownSound(SoundManager manager) {
-                    manager.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
+                    manager.play(SimpleSoundInstance.forUI(SCSounds.BUTTON_PRESS2.get(),1,1));
                 }
             });
         }

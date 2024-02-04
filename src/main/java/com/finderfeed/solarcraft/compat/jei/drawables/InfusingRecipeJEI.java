@@ -40,6 +40,16 @@ public class InfusingRecipeJEI implements IDrawable {
         matrices.popPose();
     }
 
+    @Override
+    public void draw(GuiGraphics guiGraphics) {
+        PoseStack matrices = guiGraphics.pose();
+        matrices.pushPose();
+        ClientHelpers.bindText(LOC);
+        RenderingTools.blitWithBlend(matrices,0,0,0,0,161,141,161,141,0,1f);
+
+        matrices.popPose();
+    }
+
 //    @Override
 //    public void draw(PoseStack matrices, int x, int y) {
 //        matrices.pushPose();

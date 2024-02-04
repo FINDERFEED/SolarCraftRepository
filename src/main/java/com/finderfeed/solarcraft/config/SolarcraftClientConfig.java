@@ -1,14 +1,14 @@
 package com.finderfeed.solarcraft.config;
 
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public final class SolarcraftClientConfig {
 
 
-    public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
-    public static final ForgeConfigSpec SPEC;
+    public static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
+    public static final ModConfigSpec SPEC;
 
-    public static final ForgeConfigSpec.ConfigValue<Boolean> SHADERS_ENABLED;
+    public static final ModConfigSpec.ConfigValue<Boolean> SHADERS_ENABLED;
 
     static {
         BUILDER.push("SolarCraft client config");

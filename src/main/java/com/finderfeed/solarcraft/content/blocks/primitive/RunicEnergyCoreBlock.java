@@ -1,11 +1,9 @@
 package com.finderfeed.solarcraft.content.blocks.primitive;
 
-import com.finderfeed.solarcraft.content.blocks.blockentities.BonemealerTileEntity;
 import com.finderfeed.solarcraft.content.blocks.blockentities.RunicEnergyCoreTile;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -22,7 +20,7 @@ public class RunicEnergyCoreBlock extends RunicEnergySaverBlock implements Entit
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return SolarcraftTileEntityTypes.RUNIC_ENERGY_CORE.get().create(pos,state);
+        return SCTileEntities.RUNIC_ENERGY_CORE.get().create(pos,state);
     }
 
     @Nullable

@@ -5,7 +5,7 @@ import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -27,9 +27,9 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
@@ -148,7 +148,7 @@ public class ExplosiveCrystal extends Mob implements CrystalBossBuddy {
     }
 
     @Override
-    public boolean ignoreExplosion() {
+    public boolean ignoreExplosion(Explosion e) {
         return true;
     }
 
@@ -159,12 +159,12 @@ public class ExplosiveCrystal extends Mob implements CrystalBossBuddy {
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource p_21239_) {
-        return SolarcraftSounds.CRYSTAL_HIT.get();
+        return SCSounds.CRYSTAL_HIT.get();
     }
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SolarcraftSounds.CRYSTAL_HIT.get();
+        return SCSounds.CRYSTAL_HIT.get();
     }
 
     @Override
@@ -185,10 +185,10 @@ public class ExplosiveCrystal extends Mob implements CrystalBossBuddy {
         this.entityData.define(ACTIVATION_SECONDS_REMAINING,(byte)30);
     }
 
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
+//    @Override
+//    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+//        return NetworkHooks.getEntitySpawningPacket(this);
+//    }
 
     @Override
     public void load(CompoundTag tag) {

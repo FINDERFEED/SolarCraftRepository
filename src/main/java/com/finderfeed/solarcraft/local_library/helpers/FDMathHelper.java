@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
 
 import java.util.List;
 import java.util.Random;
@@ -44,6 +45,9 @@ public class FDMathHelper {
 
     public static boolean isBetweenValues(float value,float val1,float val2){
         return value >= val1 && value <= val2;
+    }
+    public static boolean isBetweenValuesBeginInclusive(float value,float val1,float val2){
+        return value >= val1 && value < val2;
     }
 
     public static boolean isInEllipse(float x,float y,float z,float ellipseRad,float ellipseDepth){
@@ -189,7 +193,7 @@ public class FDMathHelper {
 
 
         if (between.length() <= radius) {
-            ClipContext ctx = new ClipContext(startPos.add(between.normalize().x,between.normalize().y,between.normalize().z), tileEntityPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, null);
+            ClipContext ctx = new ClipContext(startPos.add(between.normalize().x,between.normalize().y,between.normalize().z), tileEntityPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, CollisionContext.empty());
             BlockHitResult res = start.getLevel().clip(ctx);
             if (equalsBlockPos(tile.getBlockPos(), res.getBlockPos())) {
                 return true;
@@ -200,8 +204,8 @@ public class FDMathHelper {
     public static boolean canSeeBlock(BlockPos tile, Player player){
         Vec3 playerHeadPos = player.position().add(0,player.getStandingEyeHeight(player.getPose(),player.getDimensions(player.getPose())),0);
         Vec3 tileEntityPos = new Vec3(tile.getX()+0.5,tile.getY()+0.5,tile.getZ()+0.5);
-        ClipContext ctx = new ClipContext(playerHeadPos,tileEntityPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,null);
-        BlockHitResult res = player.level.clip(ctx);
+        ClipContext ctx = new ClipContext(playerHeadPos,tileEntityPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,CollisionContext.empty());
+        BlockHitResult res = player.level().clip(ctx);
         if (equalsBlockPos(tile,res.getBlockPos())){
             return true;
         }
@@ -217,7 +221,7 @@ public class FDMathHelper {
 
 
         if (between.length() <= radius) {
-            ClipContext ctx = new ClipContext(startPos.add(between.normalize().x,between.normalize().y,between.normalize().z), tileEntityPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, null);
+            ClipContext ctx = new ClipContext(startPos.add(between.normalize().x,between.normalize().y,between.normalize().z), tileEntityPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,CollisionContext.empty());
             BlockHitResult res = world.clip(ctx);
             if (equalsBlockPos(tile, res.getBlockPos())) {
                 return true;
@@ -233,7 +237,7 @@ public class FDMathHelper {
 
 
         if (between.length() <= radius) {
-            ClipContext ctx = new ClipContext(startPos.add(between.normalize().x,between.normalize().y,between.normalize().z), tileEntityPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, null);
+            ClipContext ctx = new ClipContext(startPos.add(between.normalize().x,between.normalize().y,between.normalize().z), tileEntityPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,CollisionContext.empty());
             BlockHitResult res = world.clip(ctx);
             if (equalsBlockPos(tile, res.getBlockPos())) {
                 return true;
@@ -246,8 +250,8 @@ public class FDMathHelper {
     public static boolean canSeeTileEntity(BlockEntity tile, Player player){
         Vec3 playerHeadPos = player.position().add(0,player.getStandingEyeHeight(player.getPose(),player.getDimensions(player.getPose())),0);
         Vec3 tileEntityPos = new Vec3(tile.getBlockPos().getX()+0.5,tile.getBlockPos().getY()+0.5,tile.getBlockPos().getZ()+0.5);
-        ClipContext ctx = new ClipContext(playerHeadPos,tileEntityPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,null);
-        BlockHitResult res = player.level.clip(ctx);
+        ClipContext ctx = new ClipContext(playerHeadPos,tileEntityPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,CollisionContext.empty());
+        BlockHitResult res = player.level().clip(ctx);
         if (equalsBlockPos(tile.getBlockPos(),res.getBlockPos())){
             return true;
         }
@@ -277,12 +281,86 @@ public class FDMathHelper {
         return i + (e - i) * f;
     }
 
+    public static float lerpThroughBoundaries(float bVal,float tVal,float percent,float bottom,float top){
+        float fullDist = (bVal - bottom) + (top - tVal);
+        float dist = fullDist * percent;
+        float diff = dist - bVal;
+        if (diff > 0){
+            float d = top - diff;
+            return d;
+        }else{
+            return bVal - dist;
+        }
+    }
+
     public static Vec3 lerpv3(Vec3 init,Vec3 end,float i){
         return new Vec3(
                 lerp(init.x,end.x,i),
                 lerp(init.y,end.y,i),
                 lerp(init.z,end.z,i)
         );
+    }
+
+    public static float[] rgbToHsv(int[] rgb){
+        return rgbToHsv(rgb[0]/255f,rgb[1]/255f,rgb[2]/255f);
+    }
+
+    public static float[] rgbToHsv(int rgb){
+        int r = rgb & 0xff0000 >> 16;
+        int g = rgb & 0x00ff00 >> 8;
+        int b = rgb & 0x0000ff;
+        return rgbToHsv(r/255f,g/255f,b/255f);
+    }
+
+    public static float[] rgbToHsv(float r,float g,float b){
+       float max = Math.max(r,Math.max(g,b));
+       float min = Math.min(r,Math.min(g,b));
+       float delta = max - min;
+       float h;
+       if (delta == 0){
+           h = 0;
+       }else if (max == r){
+           h = 60 * ((g-b) / delta % 6);
+       }else if (max == g){
+           h = 60 * ((b-r) / delta + 2);
+       }else {
+           h = 60 * ((r-g) / delta + 4);
+       }
+       if (h < 0) h += 360;
+       float s = max == 0 ? 0 : delta/max;
+       return new float[]{h,s,max};
+    }
+
+    public static int[] hsvToRgb(float[] hsv){
+        return hsvToRgb(hsv[0],hsv[1],hsv[2]);
+    }
+
+    public static int[] hsvToRgb(float h,float s,float v){
+        float c = v * s;
+        float x = c * (1 - Math.abs((h/60) % 2 - 1));
+        float m = v - c;
+        float r;
+        float g;
+        float b;
+        if (h >= 0 && h < 60){
+            r = c;g = x;b = 0;
+        }else if (h >= 60 && h < 120){
+            r = x;g = c;b = 0;
+        }else if (h >= 120 && h < 180){
+            r = 0;g = c;b = x;
+        }else if (h >= 180 && h < 240){
+            r = 0;g = x;b = c;
+        }else if (h >= 240 && h < 300){
+            r = x;g = 0;b = c;
+        }else {
+            r = c;g = 0;b = x;
+        }
+
+        return new int[]{
+                Math.round((r + m) * 255),
+                Math.round((g + m) * 255),
+                Math.round((b + m) * 255)
+        };
     }
 
 

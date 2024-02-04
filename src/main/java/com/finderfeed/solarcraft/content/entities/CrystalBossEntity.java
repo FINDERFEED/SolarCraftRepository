@@ -26,7 +26,7 @@ import com.finderfeed.solarcraft.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import com.finderfeed.solarcraft.registries.items.SCItems;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -47,16 +47,16 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Abilities;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.event.level.ExplosionEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.event.entity.living.LivingHurtEvent;
+import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.level.ExplosionEvent;
 import javax.annotation.Nullable;
 import java.util.List;
 
@@ -107,7 +107,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
 
     public CrystalBossEntity(EntityType<? extends Mob> p_21368_, Level level) {
         super(p_21368_, level);
-        switch (level.getDifficulty()){
+        switch (level().getDifficulty()){
             case PEACEFUL -> maxShieldingCrystalsCount = 15;
             case EASY -> maxShieldingCrystalsCount = 30;
             case NORMAL -> maxShieldingCrystalsCount = 45;
@@ -121,7 +121,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     public void tick() {
         preventFlying();
         super.tick();
-        if (!level.isClientSide){
+        if (!level().isClientSide){
             if (this.entityData.get(GET_OFF_ME)){
                 this.entityData.set(GET_OFF_ME,false);
             }
@@ -130,7 +130,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
             if (this.hasEnemiesNearby(false)) {
                 ATTACK_CHAIN.tick();
             }else{
-                if (level.getGameTime() % 20 == 0) {
+                if (level().getGameTime() % 20 == 0) {
                     if (this.tickCount % 20 == 0) {
                         this.heal(20);
                     }
@@ -143,9 +143,9 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
                 this.getEnemiesNearby(false).forEach((player -> Helpers.fireProgressionEvent(player, Progression.KILL_CRYSTAL_BOSS)));
             }
         }
-        if (level.isClientSide){
+        if (level().isClientSide){
             rayparticlesvalue.tick();
-            this.entitiesAroundClient = level.getEntitiesOfClass(ShieldingCrystalCrystalBoss.class,
+            this.entitiesAroundClient = level().getEntitiesOfClass(ShieldingCrystalCrystalBoss.class,
                     new AABB(-16,-16,-16,16,16,16).move(position()),(cr)->{
                         return (cr.distanceTo(this) <= 16 ) ;
                     });
@@ -172,19 +172,19 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     public void throwRandomEffects(){
         for (int i = 0 ; i < 5; i ++){
             Vec3 vec = new Vec3(16,0,0)
-                    .zRot((float)Math.toRadians(45 + (level.random.nextInt(70)-35)))
-                    .yRot((float)Math.toRadians(level.random.nextInt(360)))
+                    .zRot((float)Math.toRadians(45 + (level().random.nextInt(70)-35)))
+                    .yRot((float)Math.toRadians(level().random.nextInt(360)))
                     .normalize();
             RandomBadEffectProjectile proj = new RandomBadEffectProjectile(this.position().x,this.position().y + this.getBbHeight()/2+0.3f,this.position().z,
-                    vec.x,vec.y,vec.z,level);
-            level.addFreshEntity(proj);
+                    vec.x,vec.y,vec.z,level());
+            level().addFreshEntity(proj);
         }
     }
 
     private void chargingUpClient(){
         for (int i = 0;i < 5;i++) {
             Vec3 vec = Helpers.randomVector().multiply(3,3,3);
-            level.addParticle(SCParticleTypes.SOLAR_EXPLOSION_PARTICLE.get(),
+            level().addParticle(SCParticleTypes.SOLAR_EXPLOSION_PARTICLE.get(),
                     this.position().x + vec.x,this.position().y + vec.y + this.getBbHeight()/2,this.position().z + vec.z,
                     -vec.x*0.05,-vec.y*0.05,-vec.z*0.05);
         }
@@ -206,7 +206,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
 
 
     public void getOffMEEE(){
-        level.getEntitiesOfClass(LivingEntity.class,
+        level().getEntitiesOfClass(LivingEntity.class,
                 new AABB(-5,-5,-5,5,5,5).move(position().add(0,this.getBbHeight()/2,0)),
                 (ent)-> !(ent instanceof CrystalBossBuddy)).forEach((entity)->{
                     Vec3 speed = entity.position().add(0,entity.getBbHeight()/2,0).subtract(this.position()).normalize().add(0,0.3,0);
@@ -220,7 +220,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     }
 
     public boolean isBlockingDamage(){
-        return !(level.getEntitiesOfClass(ShieldingCrystalCrystalBoss.class,
+        return !(level().getEntitiesOfClass(ShieldingCrystalCrystalBoss.class,
                 new AABB(-16,-16,-16,16,16,16).move(position()),(cr)->{
                     return (cr.distanceTo(this) <= 16 ) && !cr.isDeploying();
                 }).isEmpty());
@@ -245,7 +245,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
             } else {
                 Vec3 firstPos = this.position().add(0, 0.5, 0);
                 Vec3 secondPos = firstPos.add(new Vec3(RAY_LENGTH, 0, 0).yRot((float) Math.toRadians(state)));
-                EntityHitResult res = Helpers.getHitResult(level, firstPos, secondPos, (entity -> {
+                EntityHitResult res = Helpers.getHitResult(level(), firstPos, secondPos, (entity -> {
                     return Helpers.isVulnerable(entity) && !(entity instanceof CrystalBossBuddy);
                 }));
                 if (res != null) {
@@ -254,7 +254,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
                 }
 
                 secondPos = firstPos.add(new Vec3(RAY_LENGTH, 0, 0).yRot((float) Math.toRadians(state+180)));
-                res = Helpers.getHitResult(level, firstPos, secondPos,  (entity -> {
+                res = Helpers.getHitResult(level(), firstPos, secondPos,  (entity -> {
                     return Helpers.isVulnerable(entity) && !(entity instanceof CrystalBossBuddy);
                 }));
                 if (res != null) {
@@ -279,14 +279,14 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
             if (rounded != RAY_NOT_ACTIVE){
                 if (rounded == RAY_PREPARING){
 
-                    double[] coords = FDMathHelper.polarToCartesian(0.4,Math.toRadians(level.getGameTime()*30));
-                    level.addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                    double[] coords = FDMathHelper.polarToCartesian(0.4,Math.toRadians(level().getGameTime()*30));
+                    level().addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                             this.position().x+
                                     rayparticlesvalue.getValue(),
                             this.position().y+1.6+coords[0],
                             this.position().z+coords[1],
                             0,0,0);
-                    level.addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                    level().addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                             this.position().x-
                                     rayparticlesvalue.getValue(),
                             this.position().y+1.6+coords[0],
@@ -295,17 +295,17 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
                 }else{
                     float firstangle = (float)Math.toRadians(state);
                     float secondangle = (float)Math.toRadians(state+180);
-                    double[] coords = FDMathHelper.polarToCartesian(0.4,Math.toRadians(level.getGameTime()*30));
+                    double[] coords = FDMathHelper.polarToCartesian(0.4,Math.toRadians(level().getGameTime()*30));
                     Vec3 vec1 = new Vec3(rayparticlesvalue.getValue(),0,coords[0]).yRot(firstangle);
                     Vec3 vec2 = new Vec3(rayparticlesvalue.getValue(),0,coords[0]).yRot(secondangle);
 
-                    level.addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                    level().addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                                 this.position().x +vec1.x,
                                 this.position().y+1.6+coords[1],
                                 this.position().z + vec1.z,
                                 0,0,0);
 
-                    level.addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                    level().addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                                 this.position().x  +vec2.x,
                                 this.position().y+1.6 +coords[1],
                                 this.position().z  + vec2.z,
@@ -320,44 +320,44 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
 
     public void airStrike(){
         for (int i = 0;i < 6;i++){
-            double x = (level.random.nextDouble()*SIDE_SPEED_MULTIPLIER_AIR_STRIKE+0.01)* FDMathHelper.randomPlusMinus();
-            double z = (level.random.nextDouble()*SIDE_SPEED_MULTIPLIER_AIR_STRIKE+0.01)* FDMathHelper.randomPlusMinus();
-            MagicMissile star = new MagicMissile(level,x,UP_SPEED_MULTIPLIER_AIR_STRIKE,z);
+            double x = (level().random.nextDouble()*SIDE_SPEED_MULTIPLIER_AIR_STRIKE+0.01)* FDMathHelper.randomPlusMinus();
+            double z = (level().random.nextDouble()*SIDE_SPEED_MULTIPLIER_AIR_STRIKE+0.01)* FDMathHelper.randomPlusMinus();
+            MagicMissile star = new MagicMissile(level(),x,UP_SPEED_MULTIPLIER_AIR_STRIKE,z);
             star.setPos(this.position().add(0,this.getBbHeight()*0.7,0));
-            level.addFreshEntity(star);
+            level().addFreshEntity(star);
         }
     }
 
     public void throwRipRayGenerators(){
         for (int i = 0; i < 4;i++){
-            Vec3 vec = Helpers.randomVector().multiply(2+level.random.nextDouble()*9,0,1+2+level.random.nextDouble()*9);
-            RipRayGenerator gen = new RipRayGenerator(SCEntityTypes.RIP_RAY_GENERATOR.get(),level);
+            Vec3 vec = Helpers.randomVector().multiply(2+level().random.nextDouble()*9,0,1+2+level().random.nextDouble()*9);
+            RipRayGenerator gen = new RipRayGenerator(SCEntityTypes.RIP_RAY_GENERATOR.get(),level());
             gen.setPos(this.position().add(vec.x,this.getBbHeight()/2,vec.z));
 
-            level.addFreshEntity(gen);
+            level().addFreshEntity(gen);
         }
     }
 
     public void spawnMines(){
-        List<Vec3> positions = Helpers.findRandomGroundPositionsAround(level,position(),20,15);
+        List<Vec3> positions = Helpers.findRandomGroundPositionsAround(level(),position(),20,15);
         for (Vec3 pos : positions){
-            MineEntityCrystalBoss mine = new MineEntityCrystalBoss(SCEntityTypes.CRYSTAL_BOSS_MINE.get(),level);
+            MineEntityCrystalBoss mine = new MineEntityCrystalBoss(SCEntityTypes.CRYSTAL_BOSS_MINE.get(),level());
             mine.setPos(pos);
-            level.addFreshEntity(mine);
+            level().addFreshEntity(mine);
         }
     }
 
     public void spawnShieldingCrystals(){
         if (currentCrystals < maxShieldingCrystalsCount) {
-            List<ShieldingCrystalCrystalBoss> crystals = this.level.getEntitiesOfClass(ShieldingCrystalCrystalBoss.class, new AABB(-10, -10, -10, 10, 10, 10).move(position()));
+            List<ShieldingCrystalCrystalBoss> crystals = this.level().getEntitiesOfClass(ShieldingCrystalCrystalBoss.class, new AABB(-10, -10, -10, 10, 10, 10).move(position()));
             for (int i = 0; i < 4; i++) {
                 if (crystals.size() + i > 8) {
                     break;
                 }
-                ShieldingCrystalCrystalBoss crystal = new ShieldingCrystalCrystalBoss(SCEntityTypes.CRYSTAL_BOSS_SHIELDING_CRYSTAL.get(), level);
-                Vec3 positon = this.position().add((level.random.nextDouble() * 4.5 + 3) * FDMathHelper.randomPlusMinus(), 0, (level.random.nextDouble() * 4.5 + 3) * FDMathHelper.randomPlusMinus());
+                ShieldingCrystalCrystalBoss crystal = new ShieldingCrystalCrystalBoss(SCEntityTypes.CRYSTAL_BOSS_SHIELDING_CRYSTAL.get(), level());
+                Vec3 positon = this.position().add((level().random.nextDouble() * 4.5 + 3) * FDMathHelper.randomPlusMinus(), 0, (level().random.nextDouble() * 4.5 + 3) * FDMathHelper.randomPlusMinus());
                 crystal.setPos(positon);
-                level.addFreshEntity(crystal);
+                level().addFreshEntity(crystal);
                 currentCrystals++;
 
             }
@@ -366,7 +366,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
 
 
     public void holdingMissilesAttack(){
-        List<Player> possibleTargets = level.getEntitiesOfClass(Player.class,new AABB(this.position().add(-20,-8,-20),this.position().add(20,8,20)),
+        List<Player> possibleTargets = level().getEntitiesOfClass(Player.class,new AABB(this.position().add(-20,-8,-20),this.position().add(20,8,20)),
                 (pl)->{
                     return !pl.isCreative() && !pl.isSpectator();
                 });
@@ -375,28 +375,28 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
             for (int i = 0; i < 7*possibleTargets.size();i++){
                 Vec3 vec= Helpers.randomVector();
 
-                CrystalBossAttackHoldingMissile missile = new CrystalBossAttackHoldingMissile.Builder(level)
+                CrystalBossAttackHoldingMissile missile = new CrystalBossAttackHoldingMissile.Builder(level())
                         .setHoldingTime(1+timeOffset)
-                        .setTarget(possibleTargets.get(level.random.nextInt(possibleTargets.size())).getUUID())
+                        .setTarget(possibleTargets.get(level().random.nextInt(possibleTargets.size())).getUUID())
                         .setInitialSpeed(vec.multiply(1,0.2,1).normalize())
                         .setPosition(this.position().add(0,this.getBbHeight()/2,0))
                         .build();
                 missile.setOwner(this);
-                level.addFreshEntity(missile);
+                level().addFreshEntity(missile);
                 timeOffset+=0.1;
             }
         }
     }
 
     public boolean hasEnemiesNearby(boolean includeCreative){
-        return !level.getEntitiesOfClass(Player.class,new AABB(this.position().add(-13,-8,-13),this.position().add(14,8,14)),
+        return !level().getEntitiesOfClass(Player.class,new AABB(this.position().add(-13,-8,-13),this.position().add(14,8,14)),
                 (pl)->{
                     return (!pl.isCreative() || includeCreative) && !pl.isSpectator() && (this.distanceTo(pl) <= 13);
                 }).isEmpty();
     }
 
     public List<Player> getEnemiesNearby(boolean includeCreative){
-        return level.getEntitiesOfClass(Player.class,new AABB(this.position().add(-13,-8,-13),this.position().add(14,8,14)),
+        return level().getEntitiesOfClass(Player.class,new AABB(this.position().add(-13,-8,-13),this.position().add(14,8,14)),
                 (pl)->{
                     return (!pl.isCreative() || includeCreative) && !pl.isSpectator() && (this.distanceTo(pl) <= 13);
                 });
@@ -404,7 +404,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
 
 
     public List<LivingEntity> getAlliesNearby(){
-        return level.getEntitiesOfClass(LivingEntity.class,new AABB(this.position().add(-13,-8,-13),this.position().add(14,8,14)),
+        return level().getEntitiesOfClass(LivingEntity.class,new AABB(this.position().add(-13,-8,-13),this.position().add(14,8,14)),
                 (pl)->{
             return pl instanceof CrystalBossBuddy;
                 });
@@ -474,7 +474,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     }
     @Override
     public void checkDespawn() {
-        if (this.level.getDifficulty() == Difficulty.PEACEFUL && this.shouldDespawnInPeaceful()) {
+        if (this.level().getDifficulty() == Difficulty.PEACEFUL && this.shouldDespawnInPeaceful()) {
             this.discard();
         } else {
             this.noActionTime = 0;
@@ -516,7 +516,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource p_21239_) {
-        return SolarcraftSounds.CRYSTAL_HIT.get();
+        return SCSounds.CRYSTAL_HIT.get();
     }
 
     @Override
@@ -543,7 +543,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SolarcraftSounds.CRYSTAL_HIT.get();
+        return SCSounds.CRYSTAL_HIT.get();
     }
 
     @Override
@@ -557,7 +557,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     }
 
     @Override
-    public boolean ignoreExplosion() {
+    public boolean ignoreExplosion(Explosion e) {
         return true;
     }
 
@@ -567,7 +567,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     }
 
     private void preventFlying(){
-        if (this.level.getGameTime() % 5 == 0) {
+        if (this.level().getGameTime() % 5 == 0) {
             for (Player pl : this.getEnemiesNearby(false)){
                 Abilities ab = pl.getAbilities();
                 if (ab.mayfly){
@@ -588,9 +588,9 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
     @Override
     protected void dropAllDeathLoot(DamageSource p_21192_) {
         super.dropAllDeathLoot(p_21192_);
-        LegendaryItem item = new LegendaryItem(level, new ItemStack(SCItems.CRYSTALLITE_CORE.get(),1));
+        LegendaryItem item = new LegendaryItem(level(), new ItemStack(SCItems.CRYSTALLITE_CORE.get(),1));
         item.setPos(this.position().add(0,this.getBbHeight()/2,0));
-        level.addFreshEntity(item);
+        level().addFreshEntity(item);
     }
 }
 
@@ -620,8 +620,8 @@ class AntiCheat{
     @SubscribeEvent
     public static void cancelBlockBreak(BlockEvent.BreakEvent event){
         Player pl = event.getPlayer();
-        if (pl.level.dimension()  == SCEventHandler.RADIANT_LAND_KEY){
-            if (!pl.level.getEntitiesOfClass(LivingEntity.class,CHECK_AABB.move(pl.position()),
+        if (pl.level().dimension()  == SCEventHandler.RADIANT_LAND_KEY){
+            if (!pl.level().getEntitiesOfClass(LivingEntity.class,CHECK_AABB.move(pl.position()),
                     (l)-> l instanceof CrystalBossEntity || l instanceof RunicElementalBoss).isEmpty()){
                 pl.sendSystemMessage(Component.translatable("player.boss_cant_break_block").withStyle(ChatFormatting.RED));
                 event.setCanceled(true);
@@ -633,8 +633,8 @@ class AntiCheat{
     public static void cancelBlockPlace(BlockEvent.EntityPlaceEvent event){
         Entity pl = event.getEntity();
         if (pl != null) {
-            if (pl.level.dimension() == SCEventHandler.RADIANT_LAND_KEY) {
-                if (!pl.level.getEntitiesOfClass(LivingEntity.class, CHECK_AABB.move(pl.position()),
+            if (pl.level().dimension() == SCEventHandler.RADIANT_LAND_KEY) {
+                if (!pl.level().getEntitiesOfClass(LivingEntity.class, CHECK_AABB.move(pl.position()),
                         (l)-> l instanceof CrystalBossEntity || l instanceof RunicElementalBoss).isEmpty()) {
                     pl.sendSystemMessage(Component.translatable("player.boss_cant_place_block").withStyle(ChatFormatting.RED));
                     event.setCanceled(true);
@@ -646,8 +646,8 @@ class AntiCheat{
     public static void cancelAbilities(AbilityUseEvent event){
         ServerPlayer player = event.getPlayer();
         AbstractAbility ability = event.getAbility();
-        if ((player.level.dimension() == SCEventHandler.RADIANT_LAND_KEY) && SCEventHandler.ALLOWED_ABILITIES_DURING_BOSSFIGHT.contains(ability)) {
-            if (!player.level.getEntitiesOfClass(LivingEntity.class, CHECK_AABB_BIGGER.move(player.position()),
+        if ((player.level().dimension() == SCEventHandler.RADIANT_LAND_KEY) && SCEventHandler.ALLOWED_ABILITIES_DURING_BOSSFIGHT.contains(ability)) {
+            if (!player.level().getEntitiesOfClass(LivingEntity.class, CHECK_AABB_BIGGER.move(player.position()),
                     (l)-> l instanceof CrystalBossEntity || l instanceof RunicElementalBoss).isEmpty()) {
                 player.sendSystemMessage(Component.translatable("player.cant_use_ability_near_boss").withStyle(ChatFormatting.RED));
                 event.setCanceled(true);
@@ -660,7 +660,7 @@ class AntiCheat{
     public static void cancelExplosions(ExplosionEvent.Detonate event){
 
             if (event.getLevel().dimension() == SCEventHandler.RADIANT_LAND_KEY) {
-                if (!event.getLevel().getEntitiesOfClass(LivingEntity.class, CHECK_AABB.move(event.getExplosion().getPosition()),
+                if (!event.getLevel().getEntitiesOfClass(LivingEntity.class, CHECK_AABB.move(event.getExplosion().center()),
                         (l)-> l instanceof CrystalBossEntity || l instanceof RunicElementalBoss).isEmpty()) {
 
 //                    if (ent != null) {

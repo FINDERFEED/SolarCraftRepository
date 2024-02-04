@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.content.blocks.render;
 
 import com.finderfeed.solarcraft.SolarCraft;
+import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.content.blocks.blockentities.ExplosionBlockerBlockEntity;
 import com.finderfeed.solarcraft.content.blocks.render.abstracts.TileEntityRenderer;
@@ -11,6 +12,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.AABB;
 import org.joml.Matrix4f;
 
 public class ExplosionBlockerRenderer extends TileEntityRenderer<ExplosionBlockerBlockEntity> {
@@ -54,4 +56,10 @@ public class ExplosionBlockerRenderer extends TileEntityRenderer<ExplosionBlocke
         return true;
     }
 
+    @Override
+    public AABB getRenderBoundingBox(ExplosionBlockerBlockEntity blockEntity) {
+        return new AABB(-40,-40,-40,40,40,40).move(Helpers.getBlockCenter(
+                blockEntity.getBlockPos()
+        ));
+    }
 }

@@ -2,6 +2,7 @@ package com.finderfeed.solarcraft.content.blocks.solar_forge_block;
 
 import com.finderfeed.solarcraft.SolarCraft;
 
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.RenderShape;
@@ -17,14 +18,11 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
+
 import net.minecraft.world.level.Level;
 
 
 import java.util.function.Consumer;
-
-import net.minecraftforge.network.NetworkHooks;
-
-
 import javax.annotation.Nullable;
 
 public class SolarForgeBlock extends Block implements EntityBlock {
@@ -64,7 +62,7 @@ public class SolarForgeBlock extends Block implements EntityBlock {
             if (entity instanceof SolarForgeBlockEntity) {
                 Consumer<FriendlyByteBuf> cons = x -> { x.writeBlockPos(pos);
                 };
-                NetworkHooks.openScreen((ServerPlayer) user, (SolarForgeBlockEntity) entity, cons);
+                ((ServerPlayer) user).openMenu( (SolarForgeBlockEntity) entity, cons);
 
 
             };
@@ -86,7 +84,7 @@ public class SolarForgeBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return SolarCraft.SOLAR_FORGE_BLOCKENTITY.get().create(blockPos,blockState);
+        return SCTileEntities.SOLAR_FORGE_BLOCKENTITY.get().create(blockPos,blockState);
     }
 
     @Nullable

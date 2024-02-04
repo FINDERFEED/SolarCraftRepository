@@ -42,7 +42,7 @@ ChargingStationStructure extends Structure {
 
     @Override
     public StructureType<?> type() {
-        return SolarcraftStructureTypes.CHARGING_STATION;
+        return SolarcraftStructureTypes.CHARGING_STATION.get();
     }
 
     @Override

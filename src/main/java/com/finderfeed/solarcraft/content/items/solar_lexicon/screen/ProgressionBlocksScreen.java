@@ -10,10 +10,9 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +49,7 @@ public class ProgressionBlocksScreen extends ScrollableLexiconScreen{
             if (isUnlocked){
                 item = block.getUnlockedBlock().asItem().getDefaultInstance();
                 cmp = Component.translatable("solarcraft.screens.buttons.progression_block." +
-                        ForgeRegistries.BLOCKS.getKey(block.getUnlockedBlock()).getPath());
+                        BuiltInRegistries.BLOCK.getKey(block.getUnlockedBlock()).getPath());
             }else{
                 item = block.getLockedBlock().asItem().getDefaultInstance();
                 cmp = Component.translatable("solarcraft.screens.buttons.progression_block.not_unlocked")
@@ -88,8 +87,8 @@ public class ProgressionBlocksScreen extends ScrollableLexiconScreen{
 
         RenderingTools.scissor(relX,relY,this.getScreenWidth(),this.getScreenHeight());
         for (AbstractWidget w : progressionBlocks){
-            graphics.fill(w.x, w.y,w.x + w.getWidth(),w.y + w.getHeight(),0xff000000);
-            RenderingTools.drawFancyBorder(matrices, w.x - 8, w.y - 8,w.getWidth() + 16,w.getHeight() + 16,0);
+            graphics.fill(w.getX(), w.getY(),w.getX() + w.getWidth(),w.getY() + w.getHeight(),0xff000000);
+            RenderingTools.drawFancyBorder(matrices, w.getX() - 8, w.getY() - 8,w.getWidth() + 16,w.getHeight() + 16,0);
             w.render(graphics,mx,my,pticks);
         }
         RenderSystem.disableScissor();

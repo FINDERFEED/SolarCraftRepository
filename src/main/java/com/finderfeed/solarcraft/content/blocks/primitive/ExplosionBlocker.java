@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.content.blocks.primitive;
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.ExplosionBlockerBlockEntity;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -20,7 +20,7 @@ public class ExplosionBlocker extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return SolarcraftTileEntityTypes.EXPLOSTION_BLOCKER.get().create(pos,state);
+        return SCTileEntities.EXPLOSTION_BLOCKER.get().create(pos,state);
     }
 
     @Nullable

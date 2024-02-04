@@ -6,7 +6,7 @@ import com.finderfeed.solarcraft.local_library.other.CyclingInterpolatedValue;
 import com.finderfeed.solarcraft.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -21,6 +21,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 
@@ -174,7 +175,7 @@ public class RipRayGenerator extends PathfinderMob implements CrystalBossBuddy{
     }
 
     @Override
-    public boolean ignoreExplosion() {
+    public boolean ignoreExplosion(Explosion e) {
         return true;
     }
 
@@ -187,13 +188,13 @@ public class RipRayGenerator extends PathfinderMob implements CrystalBossBuddy{
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SolarcraftSounds.CRYSTAL_HIT.get();
+        return SCSounds.CRYSTAL_HIT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource p_21239_) {
-        return SolarcraftSounds.CRYSTAL_HIT.get();
+        return SCSounds.CRYSTAL_HIT.get();
     }
 
     @Override

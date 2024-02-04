@@ -3,7 +3,7 @@ package com.finderfeed.solarcraft.content.entities.not_alive;
 import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.packet_handler.packets.misc_packets.BallLightningSpawnLightningParticles;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -18,7 +18,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.NetworkHooks;
 
 import java.util.List;
 
@@ -96,7 +95,7 @@ public class BallLightningProjectile extends AbstractHurtingProjectile {
     private void doExplosion(Vec3 position){
         List<LivingEntity> living = this.level.getEntitiesOfClass(LivingEntity.class,BOX.move(position),(l)->!(l instanceof Player));
         BallLightningSpawnLightningParticles.sendToServer(level,position);
-        this.level.playSound(null,this.getX(),this.getY(),this.getZ(), SolarcraftSounds.BALL_LIGHTNING_BLOW.get(), SoundSource.PLAYERS,10,1);
+        this.level.playSound(null,this.getX(),this.getY(),this.getZ(), SCSounds.BALL_LIGHTNING_BLOW.get(), SoundSource.PLAYERS,10,1);
         for (LivingEntity ent : living){
             if (ent.distanceTo(this) <= 10){
                 ent.hurt(level.damageSources().lightningBolt(),10);
@@ -116,8 +115,8 @@ public class BallLightningProjectile extends AbstractHurtingProjectile {
         return 1f;
     }
 
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
+//    @Override
+//    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+//        return NetworkHooks.getEntitySpawningPacket(this);
+//    }
 }

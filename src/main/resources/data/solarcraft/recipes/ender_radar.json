@@ -18,7 +18,6 @@
   },
   "output": {
     "item": "solarcraft:ender_radar"
-
   },
   "fragment": "ender_radar",
   "time": 300

@@ -12,7 +12,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 import org.lwjgl.glfw.GLFW;
 
 public class SolarLexiconContScreen extends AbstractContainerScreen<SolarLexiconContainer> implements IScrollable {
@@ -79,7 +79,7 @@ public class SolarLexiconContScreen extends AbstractContainerScreen<SolarLexicon
 
     @Override
     public void render(GuiGraphics graphics, int p_230430_2_, int p_230430_3_, float p_230430_4_) {
-        this.renderBackground(graphics);
+        this.renderBackground(graphics,p_230430_2_,p_230430_3_,p_230430_4_);
 
         super.render(graphics, p_230430_2_, p_230430_3_, p_230430_4_);
         this.renderTooltip(graphics,p_230430_2_,p_230430_3_);

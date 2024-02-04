@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.content.world_generation.structures.blocks;
 
 import com.finderfeed.solarcraft.content.world_generation.structures.blocks.tile_entities.KeyLockStructureTile;
 import com.finderfeed.solarcraft.registries.items.SCItems;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -26,7 +26,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class KeyLockBlock extends GlazedTerracottaBlock implements EntityBlock {
 
     public KeyLockBlock() {
-        super(BlockBehaviour.Properties.copy(Blocks.BEDROCK).pushReaction(PushReaction.IGNORE));
+        super(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK).pushReaction(PushReaction.IGNORE));
     }
 
 
@@ -54,7 +54,7 @@ public class KeyLockBlock extends GlazedTerracottaBlock implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return SolarcraftTileEntityTypes.KEY_LOCK_TILE.get().create(blockPos,blockState);
+        return SCTileEntities.KEY_LOCK_TILE.get().create(blockPos,blockState);
     }
 
     @Nullable

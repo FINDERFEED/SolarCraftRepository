@@ -9,7 +9,7 @@ import com.finderfeed.solarcraft.content.entities.projectiles.UltraCrossbowProje
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
@@ -40,7 +40,7 @@ public class UltraCrossbowItem extends RareSolarcraftItem implements IRunicEnerg
     public void onUseTick(Level level, LivingEntity living, ItemStack stack, int count) {
         if (!living.level.isClientSide && (living instanceof Player player) ) {
             if (count % 20 == 0){
-                player.level.playSound(null,player, SolarcraftSounds.CROSSBOW_CHARGING.get(), SoundSource.AMBIENT,1f,1f);
+                player.level.playSound(null,player, SCSounds.CROSSBOW_CHARGING.get(), SoundSource.AMBIENT,1f,1f);
             }
 
             if ((float)(72000-count)/20*DAMAGE_PER_SECOND < 120) {
@@ -64,7 +64,7 @@ public class UltraCrossbowItem extends RareSolarcraftItem implements IRunicEnerg
             UltraCrossbowProjectile proj = new UltraCrossbowProjectile(SCEntityTypes.ULTRA_CROSSBOW_SHOT.get(),world);
             proj.setOwner(pl);
             proj.setPos(player.getX() + player.getLookAngle().x,player.getY()+1.5f+player.getLookAngle().y,player.getZ()+player.getLookAngle().z);
-            player.level.playSound(null,player, SolarcraftSounds.CROSSBOW_SHOOT_SOUND.get(), SoundSource.AMBIENT,1,1);
+            player.level.playSound(null,player, SCSounds.CROSSBOW_SHOOT_SOUND.get(), SoundSource.AMBIENT,1,1);
 
 
             proj.setDamage(Mth.clamp((float) (72000 - remainingSeconds) / 20 * DAMAGE_PER_SECOND,0,120));

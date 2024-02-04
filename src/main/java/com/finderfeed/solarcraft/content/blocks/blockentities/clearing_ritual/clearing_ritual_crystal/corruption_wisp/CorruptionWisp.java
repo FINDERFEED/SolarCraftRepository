@@ -4,7 +4,7 @@ import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.ClearingRitualCrystalTile;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
@@ -111,13 +111,13 @@ public class CorruptionWisp extends FlyingMob implements PowerableMob {
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SolarcraftSounds.CORRUPTION_WISP_HIT.get();
+        return SCSounds.CORRUPTION_WISP_HIT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource src) {
-        return SolarcraftSounds.CORRUPTION_WISP_HIT.get();
+        return SCSounds.CORRUPTION_WISP_HIT.get();
     }
 
     @Override

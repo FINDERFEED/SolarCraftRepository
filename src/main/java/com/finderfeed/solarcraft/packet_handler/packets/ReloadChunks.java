@@ -1,13 +1,14 @@
 package com.finderfeed.solarcraft.packet_handler.packets;
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent;
-
-
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
-public class ReloadChunks {
+@Packet("reload_chunks_packet")
+public class ReloadChunks extends FDPacket {
 
     public ReloadChunks() {
 
@@ -21,8 +22,18 @@ public class ReloadChunks {
 
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(ClientHelpers::reloadChunks);
-        ctx.get().setPacketHandled(true);
+//    public void handle(PlayPayloadContext ctx) {
+//        ctx.enqueueWork(ClientHelpers::reloadChunks);
+//
+//    }
+
+    @Override
+    public void clientPlayHandle(PlayPayloadContext ctx) {
+        ClientHelpers.reloadChunks();
+    }
+
+    @Override
+    public void write(FriendlyByteBuf friendlyByteBuf) {
+
     }
 }

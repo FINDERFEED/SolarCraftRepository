@@ -44,7 +44,7 @@ public class DungeonOne extends Structure {
 
     @Override
     public StructureType<?> type() {
-        return SolarcraftStructureTypes.DUNGEON_KEY_LOCK;
+        return SolarcraftStructureTypes.DUNGEON_KEY_LOCK.get();
     }
 
 

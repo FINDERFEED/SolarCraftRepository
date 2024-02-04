@@ -1,5 +1,8 @@
 {
   "variants": {
-    "": { "model": "solarcraft:block/void_lily" }
+    "age=0": { "model": "solarcraft:block/void_lily_growing" },
+    "age=1": { "model": "solarcraft:block/void_lily_growing" },
+    "age=2": { "model": "solarcraft:block/void_lily_growing" },
+    "age=3": { "model": "solarcraft:block/void_lily" }
   }
 }

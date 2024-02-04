@@ -2,19 +2,19 @@ package com.finderfeed.solarcraft.content.blocks.infusing_table_things.infusing_
 
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.blocks.blockentities.ItemStackHandlerTile;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.SCAttachmentTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.state.BlockState;
+
+import net.neoforged.neoforge.attachment.AttachmentType;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.ItemStackHandler;
-
-
 import javax.annotation.Nullable;
+import java.util.function.Supplier;
 
 
 public class InfusingStandTileEntity extends ItemStackHandlerTile {
@@ -24,23 +24,10 @@ public class InfusingStandTileEntity extends ItemStackHandlerTile {
 
 
     public InfusingStandTileEntity(BlockPos p_155630_, BlockState p_155631_) {
-        super(SolarcraftTileEntityTypes.INFUSING_POOL_BLOCKENTITY.get(), p_155630_, p_155631_);
+        super(SCTileEntities.INFUSING_POOL_BLOCKENTITY.get(), p_155630_, p_155631_);
     }
 
-    public ItemStackHandler getInventory(){
-        return (ItemStackHandler) this.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
-    }
 
-    public ItemStack getStackInSlot(int i){
-        ItemStackHandler inv = getInventory();
-        if (inv == null) return ItemStack.EMPTY;
-        return inv.getStackInSlot(i);
-    }
-    public void setStackInSlot(int i, ItemStack stack){
-        ItemStackHandler inv = getInventory();
-        if (inv == null)return;
-        inv.setStackInSlot(i,stack);
-    }
 
     public void shouldRenderItem(boolean e){
         this.shouldRenderItem = e;
@@ -69,6 +56,11 @@ public class InfusingStandTileEntity extends ItemStackHandlerTile {
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         CompoundTag tag = saveWithFullMetadata();
         return Helpers.createTilePacket(this,tag);
+    }
+
+    @Override
+    public Supplier<AttachmentType<ItemStackHandler>> getAttachmentType() {
+        return SCAttachmentTypes.INVENTORY_1;
     }
 
     @Override

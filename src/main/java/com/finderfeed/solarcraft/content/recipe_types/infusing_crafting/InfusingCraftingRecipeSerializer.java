@@ -1,69 +1,86 @@
 package com.finderfeed.solarcraft.content.recipe_types.infusing_crafting;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.world.item.crafting.ShapedRecipePattern;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class InfusingCraftingRecipeSerializer  implements RecipeSerializer<InfusingCraftingRecipe> {
 
 
 
     public InfusingCraftingRecipeSerializer(){
-//        this.setRegistryName(new ResourceLocation("solarcraft","infusing_crafting"));
-
     }
+
 
     @Override
-    public InfusingCraftingRecipe fromJson(ResourceLocation rl, JsonObject json) {
-
-        JsonArray arr = json.getAsJsonArray("pattern");
-        int arrsize = arr.size();
-        String[] pattern = new String[arrsize];
-        for (int i = 0; i < arrsize;i++){
-            pattern[i] = arr.get(i).getAsString();
-        }
-
-
-        JsonObject keys = json.getAsJsonObject("keys");
-        Map<Character, Item> ingredientMap = new HashMap<>();
-        keys.entrySet().forEach((entry)->{
-            ingredientMap.put(entry.getKey().charAt(0),GsonHelper.getAsItem(entry.getValue().getAsJsonObject(),"item"));
-        });
-
-        ItemStack output = GsonHelper.getAsItem(json.getAsJsonObject("output"),"item").getDefaultInstance();
-        int time = json.getAsJsonPrimitive("time").getAsInt();
-        int c = GsonHelper.getAsInt(json,"count",1);
-        String s = json.getAsJsonPrimitive("fragment").getAsString();
-
-
-        return new InfusingCraftingRecipe(rl,pattern,ingredientMap,output,time,c,s);
+    public Codec<InfusingCraftingRecipe> codec() {
+        return CODEC;
     }
+
+    public static final Codec<Character> SYMBOL_CODEC = Codec.STRING.comapFlatMap((p_312250_) -> {
+        if (p_312250_.length() != 1) {
+            return DataResult.error(() -> {
+                return "Invalid key entry: '" + p_312250_ + "' is an invalid symbol (must be 1 character only).";
+            });
+        } else {
+            return " ".equals(p_312250_) ? DataResult.error(() -> {
+                return "Invalid key entry: ' ' is a reserved symbol.";
+            }) : DataResult.success(p_312250_.charAt(0));
+        }
+    }, String::valueOf);
+
+
+    public static Codec<String[]> STRING_ARRAY = Codec.STRING.listOf().xmap((i)->{
+        return i.toArray(new String[0]);
+    },(i)->{
+        return new ArrayList<>(List.of(i));
+    });
+
+    public static final Codec<InfusingCraftingRecipe> CODEC = RecordCodecBuilder.create(shit-> {
+        return shit.group(
+                STRING_ARRAY.fieldOf("pattern").forGetter(InfusingCraftingRecipe::getPattern),
+                ExtraCodecs.strictUnboundedMap(SYMBOL_CODEC,Ingredient.CODEC_NONEMPTY).fieldOf("keys").forGetter(InfusingCraftingRecipe::getDefinitions),
+                ItemStack.ITEM_WITH_COUNT_CODEC.fieldOf("output").forGetter(InfusingCraftingRecipe::getOutput),
+                Codec.INT.fieldOf("time").forGetter(InfusingCraftingRecipe::getTime),
+                ExtraCodecs.strictOptionalField(Codec.INT,"count",1).forGetter(InfusingCraftingRecipe::getOutputCount),
+                Codec.STRING.fieldOf("fragment").forGetter(InfusingCraftingRecipe::getFragmentID)
+        ).apply(shit,InfusingCraftingRecipe::new);
+    });
+
 
     @Nullable
     @Override
-    public InfusingCraftingRecipe fromNetwork(ResourceLocation rl, FriendlyByteBuf buf) {
+    public InfusingCraftingRecipe fromNetwork(FriendlyByteBuf buf) {
 
         int size = buf.readInt();
-        List<Item> ingrs = new ArrayList<>();
+        List<Ingredient> ingrs = new ArrayList<>();
         List<Character> chars = new ArrayList<>();
         for (int i = 0;i < size;i++){
-            ingrs.add(buf.readItem().getItem());
+            Ingredient ir = Ingredient.fromNetwork(buf);
+//            ingrs.add(buf.readItem().getItem());
+            ingrs.add(ir);
         }
         for (int i = 0;i < size;i++){
             chars.add(buf.readChar());
         }
-        Map<Character, Item> ingredientMap = new HashMap<>();
+        Map<Character, Ingredient> ingredientMap = new HashMap<>();
         for (int i = 0;i < ingrs.size();i++){
             ingredientMap.put(chars.get(i),ingrs.get(i));
         }
@@ -90,16 +107,16 @@ public class InfusingCraftingRecipeSerializer  implements RecipeSerializer<Infus
         int time = buf.readInt();
         int count = buf.readInt();
         String s = buf.readUtf();
-        return new InfusingCraftingRecipe(rl,pattern,ingredientMap,output,time,count,s);
+        return new InfusingCraftingRecipe(pattern,ingredientMap,output,time,count,s);
     }
 
     @Override
     public void toNetwork(FriendlyByteBuf buf, InfusingCraftingRecipe recipe) {
-        Map<Character, Item> ingredientMap = recipe.getDefinitions();
+        Map<Character, Ingredient> ingredientMap = recipe.getDefinitions();
         String[] pattern = recipe.getPattern();
 
         buf.writeInt(ingredientMap.values().size());
-        ingredientMap.values().forEach((ingre)->buf.writeItem(ingre.getDefaultInstance()));
+        ingredientMap.values().forEach((ingre)->ingre.toNetwork(buf));
         ingredientMap.keySet().forEach(buf::writeChar);
 
         buf.writeInt(pattern.length);

@@ -1,9 +1,8 @@
 package com.finderfeed.solarcraft.config;
 
-import net.minecraftforge.common.ForgeConfigSpec;
-
 import java.util.ArrayList;
 import java.util.List;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 
 
@@ -11,22 +10,22 @@ public final class SolarcraftConfig {
     public static final String CUSTOM_CONFIGS_FOLDER = "solarcraft_custom_configs";
     public static final String CUSTOM_BLOCKS_CONFIGS = "block_configs";
 
-    public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
-    public static final ForgeConfigSpec SPEC;
+    public static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
+    public static final ModConfigSpec SPEC;
 
-    public static final ForgeConfigSpec.ConfigValue<List<String>> PICKAXE_TREASURES;
-    public static final ForgeConfigSpec.ConfigValue<Double> SOLAR_STRIKE_DAMAGE;
-    public static final ForgeConfigSpec.ConfigValue<Integer> AUTOHEAL_CHANCE;
-    public static final ForgeConfigSpec.ConfigValue<Integer> BLESSED_CHANCE;
-    public static final ForgeConfigSpec.ConfigValue<Integer> DISARM_CHANCE_MODULE;
-    public static final ForgeConfigSpec.ConfigValue<Double> RUNIC_ENERGY_PER_TICK_PYLON;
-    public static final ForgeConfigSpec.ConfigValue<Double> RUNIC_ENERGY_PER_TICK_UPGRADE;
-    public static final ForgeConfigSpec.ConfigValue<Double> RUNIC_ENERGY_PER_RUNE_CHARGER;
-    public static final ForgeConfigSpec.ConfigValue<Integer> ENERGY_PYLON_SPAWN_CHANCE;
-    public static final ForgeConfigSpec.ConfigValue<Boolean> SHOULD_ULDERA_CRYSTAL_REGENERATE;
-    public static final ForgeConfigSpec.ConfigValue<List<String>> ISLAND_ORES;
+    public static final ModConfigSpec.ConfigValue<List<String>> PICKAXE_TREASURES;
+    public static final ModConfigSpec.ConfigValue<Double> SOLAR_STRIKE_DAMAGE;
+    public static final ModConfigSpec.ConfigValue<Integer> AUTOHEAL_CHANCE;
+    public static final ModConfigSpec.ConfigValue<Integer> BLESSED_CHANCE;
+    public static final ModConfigSpec.ConfigValue<Integer> DISARM_CHANCE_MODULE;
+    public static final ModConfigSpec.ConfigValue<Double> RUNIC_ENERGY_PER_TICK_PYLON;
+    public static final ModConfigSpec.ConfigValue<Double> RUNIC_ENERGY_PER_TICK_UPGRADE;
+    public static final ModConfigSpec.ConfigValue<Double> RUNIC_ENERGY_PER_RUNE_CHARGER;
+    public static final ModConfigSpec.ConfigValue<Integer> ENERGY_PYLON_SPAWN_CHANCE;
+    public static final ModConfigSpec.ConfigValue<Boolean> SHOULD_ULDERA_CRYSTAL_REGENERATE;
+    public static final ModConfigSpec.ConfigValue<List<String>> ISLAND_ORES;
 
-    public static final ForgeConfigSpec.ConfigValue<Boolean> IS_ORBITAL_MISSILE_LAUNCHER_ALLOWED;
+    public static final ModConfigSpec.ConfigValue<Boolean> IS_ORBITAL_MISSILE_LAUNCHER_ALLOWED;
     static {
         BUILDER.push("SolarCraft config");
 

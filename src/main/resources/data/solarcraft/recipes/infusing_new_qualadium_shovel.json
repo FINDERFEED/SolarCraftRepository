@@ -1,9 +1,15 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "A": {"item": "solarcraft:illidium_shovel"},
-    "B": {"item": "solarcraft:geminium_ingot"},
-    "C": {"item": "solarcraft:qualadium_ingot"}
+    "A": {
+      "item": "solarcraft:illidium_shovel"
+    },
+    "B": {
+      "item": "solarcraft:geminium_ingot"
+    },
+    "C": {
+      "item": "solarcraft:qualadium_ingot"
+    }
   },
   "pattern": [
     " B ",
@@ -17,6 +23,8 @@
   },
   "time": 1500,
   "fragment": "qualadium_shovel",
-  "kelda": 2500,
-  "catalysts": "   K K   K K"
+  "catalysts": "   K K   K K",
+  "re_cost": {
+    "kelda": 2500
+  }
 }

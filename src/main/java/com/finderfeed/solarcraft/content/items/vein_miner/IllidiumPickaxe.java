@@ -9,8 +9,7 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.Ancient
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-
-
+import net.neoforged.neoforge.common.Tags;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -28,7 +27,6 @@ import java.util.function.Supplier;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
-import net.minecraftforge.common.Tags;
 
 public class IllidiumPickaxe extends RareSolarcraftPickaxe implements IRunicEnergyUser {
 

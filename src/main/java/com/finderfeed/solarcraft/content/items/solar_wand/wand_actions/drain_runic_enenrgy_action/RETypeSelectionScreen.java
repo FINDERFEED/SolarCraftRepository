@@ -7,6 +7,7 @@ import com.finderfeed.solarcraft.local_library.client.screens.RadialMenu;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.SetREDrainTypePacket;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -41,7 +42,8 @@ public class RETypeSelectionScreen extends DefaultScreen {
 
             RadialMenu.RadialMenuSection section = new RadialMenu.RadialMenuSection(
                     ()->{
-                        SCPacketHandler.INSTANCE.sendToServer(new SetREDrainTypePacket(type));
+                        FDPacketUtil.sendToServer(new SetREDrainTypePacket(type));
+//                        SCPacketHandler.INSTANCE.sendToServer(new SetREDrainTypePacket(type));
                     },
                     (matrices, x, y) -> {
                         ClientHelpers.bindText(ALL_ELEMENTS_ID_ORDERED);

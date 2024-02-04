@@ -2,17 +2,26 @@ package com.finderfeed.solarcraft.content.blocks.primitive;
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DeadBushBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class VoidLily extends DeadBushBlock {
+public class VoidLily extends GrowableBush {
 
     public VoidLily(Properties p_52417_) {
         super(p_52417_);
+    }
+
+    @Override
+    public ItemStack getDroppedItem(RandomSource source) {
+        ItemStack itemStack = SCItems.VOID_DUST.get().getDefaultInstance();
+        itemStack.setCount(source.nextInt(3) + 2);
+        return itemStack;
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.finderfeed.solarcraft.content.items.solar_lexicon.screen;
 
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.InfoButton;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.ItemStackTabButton;
+import com.finderfeed.solarcraft.events.other_events.event_handler.SCClientModEventHandler;
 import com.finderfeed.solarcraft.local_library.client.screens.DefaultScreenWithPages;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -40,10 +41,15 @@ public abstract class LexiconScreen extends DefaultScreenWithPages {
         this.renderEscapeText(graphics);
     }
 
+    @Override
+    public void renderBackground(GuiGraphics p_283688_, int p_296369_, int p_296477_, float p_294317_) {
+
+    }
+
     public void renderEscapeText(GuiGraphics graphics){
         PoseStack matrices = graphics.pose();
         matrices.pushPose();
-        Minecraft mc = minecraft;
+        Minecraft mc = Minecraft.getInstance();
         int color = 0xccffffff;
 
         int y = mc.font.lineHeight / 2;
@@ -51,11 +57,11 @@ public abstract class LexiconScreen extends DefaultScreenWithPages {
         graphics.drawString(mc.font,Component.literal("ESC - ")
                         .append(Component.translatable("solarcraft.screens.lexicon_screen.esc")),
                 y,mc.font.lineHeight * 2 + y,color);
-        graphics.drawString(mc.font,Component.literal("X + ESC - ")
-                        .append(Component.translatable("solarcraft.screens.lexicon_screen.x_esc")),
+        graphics.drawString(mc.font,SCClientModEventHandler.CLOSE_ALL_PAGES.getTranslatedKeyMessage().copy().append(Component.literal(" + ESC - ")
+                        .append(Component.translatable("solarcraft.screens.lexicon_screen.x_esc"))),
                 y,mc.font.lineHeight + y,color);
-        graphics.drawString(mc.font,Component.literal("C + ESC - ")
-                        .append(Component.translatable("solarcraft.screens.lexicon_screen.c_esc")),
+        graphics.drawString(mc.font,SCClientModEventHandler.MEMORIZE_AND_CLOSE.getTranslatedKeyMessage().copy().append(Component.literal(" + ESC - ")
+                        .append(Component.translatable("solarcraft.screens.lexicon_screen.c_esc"))),
                 y,0 + y,color);
         matrices.popPose();
     }

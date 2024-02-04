@@ -10,13 +10,12 @@ import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
+
 import net.minecraft.world.level.Level;
-import net.minecraftforge.network.NetworkHooks;
-
-
 import java.util.function.Consumer;
 
 public class TurretProjectile extends OwnedProjectile {
@@ -42,10 +41,10 @@ public class TurretProjectile extends OwnedProjectile {
 
     @Override
     protected void onHitEntity(EntityHitResult ctx) {
-        if (!level.isClientSide) {
-            ctx.getEntity().hurt(level.damageSources().magic(), damage);
+        if (!level().isClientSide) {
+            ctx.getEntity().hurt(level().damageSources().magic(), damage);
             if (explosionPower > 0) {
-                level.explode(null, ctx.getLocation().x, ctx.getLocation().y, ctx.getLocation().z, explosionPower,true, Level.ExplosionInteraction.BLOCK);
+                level().explode(null, ctx.getLocation().x, ctx.getLocation().y, ctx.getLocation().z, explosionPower,true, Level.ExplosionInteraction.BLOCK);
             }
         }
 
@@ -54,9 +53,9 @@ public class TurretProjectile extends OwnedProjectile {
 
     @Override
     protected void onHitBlock(BlockHitResult result) {
-        if (!level.isClientSide) {
+        if (!level().isClientSide) {
             if (explosionPower > 0) {
-                level.explode(null, result.getLocation().x, result.getLocation().y, result.getLocation().z, explosionPower,true, Level.ExplosionInteraction.BLOCK);
+                level().explode(null, result.getLocation().x, result.getLocation().y, result.getLocation().z, explosionPower,true, Level.ExplosionInteraction.BLOCK);
             }
         }
 
@@ -75,15 +74,15 @@ public class TurretProjectile extends OwnedProjectile {
 
     @Override
     public void tick(){
-        if (level.isClientSide) {
-            level.addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), true, position().x, position().y + 0.15, position().z, 0, 0, 0);
+        if (level().isClientSide) {
+            level().addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), true, position().x, position().y + 0.15, position().z, 0, 0, 0);
         }
         super.tick();
 
     }
 
     @Override
-    public boolean ignoreExplosion() {
+    public boolean ignoreExplosion(Explosion explosion) {
         return true;
     }
 
@@ -100,10 +99,10 @@ public class TurretProjectile extends OwnedProjectile {
     public boolean hurt(DamageSource p_70097_1_, float p_70097_2_) {
         return false;
     }
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
+//    @Override
+//    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+//        return NetworkHooks.getEntitySpawningPacket(this);
+//    }
 
     
 

@@ -26,9 +26,11 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.Ancient
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.RunePattern;
 import com.finderfeed.solarcraft.misc_things.*;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.RequestAbilityScreenPacket;
+import com.finderfeed.solarcraft.registries.SCAttachmentTypes;
 import com.finderfeed.solarcraft.registries.items.SCItems;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.google.gson.JsonObject;
@@ -59,11 +61,11 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
+
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.IItemHandler;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
@@ -174,31 +176,10 @@ public class ClientHelpers {
         }
     }
 
-    public static void handleBallLightningProjectileParticles(Vec3 pos){
-        Level level = Minecraft.getInstance().level;
-        if (level != null) {
-            Helpers.createSmallSolarStrikeParticleExplosion(
-                    level,pos,2,0.07f,1.0f
-            );
-            List<LivingEntity> living = level.getEntitiesOfClass(LivingEntity.class, BallLightningProjectile.BOX.move(pos), (l) -> !(l instanceof Player));
-            for (LivingEntity ent : living) {
-                double vecLen = ent.position().subtract(pos).length();
-                if (vecLen <= 10) {
-                    int maxDots = (int) Math.floor(vecLen / 1.5) + 2;
-                    LightningBoltPath path = LightningBoltPath.create(pos, ent.position().add(0,ent.getBbHeight()/2,0), maxDots);
-                    path.setMaxOffset(0.75);
-                    for (int i = 0; i < maxDots - 1; i++) {
-                        Vec3 iPos = path.getPos(i);
-                        Vec3 ePos = path.getPos(i + 1);
-                        Particles.line(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), iPos, ePos,
-                                0.20, () -> 220+level.random.nextInt(36), () -> 220+level.random.nextInt(36), () -> 0, 0.25f);
-                    }
-                }
-            }
-        }
-    }
+
 
     public static boolean doClientPlayerHasFragment(AncientFragment fragment){
+        if (getClientPlayer() == null) return false;
         return AncientFragmentHelper.doPlayerHasFragment(getClientPlayer(),fragment);
     }
 
@@ -294,7 +275,7 @@ public class ClientHelpers {
     }
 
     public static void addEnergyTypeToast(String id){
-        playSound(SolarcraftSounds.PROGRESSION_GAIN.get(),1,1);
+        playSound(SCSounds.PROGRESSION_GAIN.get(),1,1);
         UnlockedEnergyTypeToast.addOrUpdate(Minecraft.getInstance().getToasts(), RunicEnergy.Type.byId(id));
     }
 
@@ -304,13 +285,6 @@ public class ClientHelpers {
         particle.setLifetime((int)Math.round(vel.length()/vel.normalize().length())*5/2 );
     }
 
-    public static void updateEnergyTypeOnClient(BlockPos pos,String id){
-        BlockEntity tile = Minecraft.getInstance().level.getBlockEntity(pos);
-        if (tile instanceof RuneEnergyPylonTile){
-            RuneEnergyPylonTile pylon = (RuneEnergyPylonTile) tile;
-            pylon.setType(RunicEnergy.Type.byId(id));
-        }
-    }
 
 
 
@@ -330,7 +304,7 @@ public class ClientHelpers {
 
 
     public static void playSoundAtPos(BlockPos pos,int soundID,float pitch, float volume){
-        Level world = Minecraft.getInstance().player.level;
+        Level world = Minecraft.getInstance().player.level();
 
 
         world.playSound(Minecraft.getInstance().player,pos.getX()+0.5,pos.getY()+0.5,pos.getZ()+0.5,getSoundByID(soundID),
@@ -340,9 +314,9 @@ public class ClientHelpers {
 
     public static SoundEvent getSoundByID(int id){
         if (id == 1){
-            return SolarcraftSounds.SOLAR_MORTAR_SHOOT.get();
+            return SCSounds.SOLAR_MORTAR_SHOOT.get();
         }else if(id == 2){
-            return SolarcraftSounds.SOLAR_MORTAR_PROJECTILE.get();
+            return SCSounds.SOLAR_MORTAR_PROJECTILE.get();
         }
         return null;
     }
@@ -354,7 +328,7 @@ public class ClientHelpers {
     public static void updateIntegerLASERTRAP(BlockPos pos, int i){
         BlockEntity tile = Minecraft.getInstance().level.getBlockEntity(pos);
         if (tile instanceof RayTrapTileEntity){
-            ((RayTrapTileEntity) tile).CLIENT_TRIGGER_INTEGER = 1;
+            ((RayTrapTileEntity) tile).clientTicker = 1;
         }
     }
 
@@ -383,7 +357,7 @@ public class ClientHelpers {
     public static void updateLexiconInventory(ItemStack[] stacks){
         ItemStack stack = Minecraft.getInstance().player.getMainHandItem();
         if ((stack.getItem() instanceof SolarLexicon)){
-            IItemHandler handler = stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+            IItemHandler handler = stack.getData(SCAttachmentTypes.LEXICON_INVENTORY);
             if (handler != null){
                 for (int i = 0; i < stacks.length;i++){
                     handler.insertItem(i,stacks[i],false);
@@ -394,7 +368,7 @@ public class ClientHelpers {
     }
 
     public static void requestAbilityScreen(boolean dontOpen){
-        SCPacketHandler.INSTANCE.sendToServer(new RequestAbilityScreenPacket(dontOpen));
+        FDPacketUtil.sendToServer(new RequestAbilityScreenPacket(dontOpen));
     }
 
     public static void triggerProgressionUnlockShader(){

@@ -5,8 +5,7 @@ import com.finderfeed.solarcraft.content.items.isters.EnergyPylonISTER;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
-
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import java.util.function.Consumer;
 
 public class PylonItemPlaceholder extends Item {

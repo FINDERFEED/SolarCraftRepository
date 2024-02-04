@@ -1,12 +1,24 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "B": {"item": "minecraft:iron_block"},
-    "C": {"item": "solarcraft:amethyst_core"},
-    "D": {"item": "solarcraft:kelda_crystal"},
-    "F": {"item": "solarcraft:urba_crystal"},
-    "G": {"item": "minecraft:diamond"},
-    "Q": {"item": "solarcraft:illidium_block"}
+    "B": {
+      "item": "minecraft:iron_block"
+    },
+    "C": {
+      "item": "solarcraft:amethyst_core"
+    },
+    "D": {
+      "item": "solarcraft:kelda_crystal"
+    },
+    "F": {
+      "item": "solarcraft:urba_crystal"
+    },
+    "G": {
+      "item": "minecraft:diamond"
+    },
+    "Q": {
+      "item": "solarcraft:illidium_block"
+    }
   },
   "pattern": [
     " F ",
@@ -15,12 +27,13 @@
     "QQ",
     " F "
   ],
-
   "result": {
     "item": "solarcraft:blessed_module"
   },
   "time": 700,
   "fragment": "modules",
-  "urba": 2000,
-  "kelda": 2000
+  "re_cost": {
+    "urba": 2000,
+    "kelda": 2000
+  }
 }

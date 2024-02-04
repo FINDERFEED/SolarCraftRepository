@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.content.blocks.infusing_table_things.infusing_pool;
 
 import com.finderfeed.solarcraft.SolarCraft;
+import com.finderfeed.solarcraft.registries.containers.SCContainers;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.Container;
@@ -18,7 +19,7 @@ public class InfusingStandContainer extends AbstractContainerMenu {
 
 
     public InfusingStandContainer(final int windowId, final Inventory playerInv, final InfusingStandTileEntity te) {
-        super(SolarCraft.INFUSING_TABLE_CONTAINER.get(), windowId);
+        super(SCContainers.INFUSING_TABLE_CONTAINER.get(), windowId);
         this.te = te;
 
 

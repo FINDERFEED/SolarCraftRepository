@@ -28,6 +28,7 @@ public abstract class FDButton extends Button {
         super.renderWidget(graphics, mx, my, pticks);
     }
 
+
     @Override
     public void render(GuiGraphics graphics, int mx, int my, float pticks) {
         if (this.visible) {

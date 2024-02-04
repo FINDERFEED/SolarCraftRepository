@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.content.blocks.render;
 
 import com.finderfeed.solarcraft.events.other_events.OBJModels;
+import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.content.blocks.blockentities.WormholeTileEntity;
@@ -15,6 +16,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
 
@@ -83,5 +85,10 @@ public class WormholeRenderer implements BlockEntityRenderer<WormholeTileEntity>
         }else{
             RenderingTools.addActivePostShader(tile.toString(),uniforms,SHADER);
         }
+    }
+
+    @Override
+    public AABB getRenderBoundingBox(WormholeTileEntity blockEntity) {
+        return new AABB(Helpers.posToVec(blockEntity.getBlockPos()),Helpers.posToVec(blockEntity.getBlockPos().offset(1,1,1)));
     }
 }

@@ -13,6 +13,7 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.world.damagesource.DamageSource;
 
 import net.minecraft.world.phys.Vec3;
+
 import net.minecraft.world.level.Level;
 
 
@@ -21,7 +22,6 @@ import java.util.List;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraftforge.network.NetworkHooks;
 
 
 public class SolarDiscProjectile extends AbstractHurtingProjectile {
@@ -101,10 +101,10 @@ public class SolarDiscProjectile extends AbstractHurtingProjectile {
     public boolean hurt(DamageSource p_70097_1_, float p_70097_2_) {
         return false;
     }
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
+//    @Override
+//    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+//        return NetworkHooks.getEntitySpawningPacket(this);
+//    }
 
     @Override
     protected ParticleOptions getTrailParticle() {

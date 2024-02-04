@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.content.entities.not_alive;
 
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.misc_things.CrystalBossBuddy;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -16,6 +16,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
@@ -87,7 +88,7 @@ public class ShieldingCrystalCrystalBoss extends Mob implements CrystalBossBuddy
     }
 
     @Override
-    public boolean ignoreExplosion() {
+    public boolean ignoreExplosion(Explosion explosion) {
         return true;
     }
 
@@ -154,12 +155,12 @@ public class ShieldingCrystalCrystalBoss extends Mob implements CrystalBossBuddy
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource p_21239_) {
-        return SolarcraftSounds.CRYSTAL_HIT.get();
+        return SCSounds.CRYSTAL_HIT.get();
     }
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SolarcraftSounds.CRYSTAL_HIT.get();
+        return SCSounds.CRYSTAL_HIT.get();
     }
 
     @Override

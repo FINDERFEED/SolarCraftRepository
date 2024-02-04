@@ -20,8 +20,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.PacketDistributor;
-
+import net.neoforged.neoforge.network.PacketDistributor;
 import java.util.UUID;
 
 public class UlderaLightningEntity extends Entity {
@@ -74,8 +73,8 @@ public class UlderaLightningEntity extends Entity {
                     .setPhysics(false)
                     .build();
             for (int i = 0; i < c; i++){
-                double x = Math.sin(angle * i);
-                double z = Math.cos(angle * i);
+                double x = Math.sin(angle * i + random.nextFloat() * angle);
+                double z = Math.cos(angle * i + random.nextFloat() * angle);
                 Vec3 ppos = p.add(x * radius,0,z * radius);
                 Vec3 speed = new Vec3(0.05 * -x,0.1,0.05 * -z);
                 level.addParticle(options,ppos.x,ppos.y,ppos.z,
@@ -133,9 +132,9 @@ public class UlderaLightningEntity extends Entity {
             }
         }
         Vec3 c = this.position();
-        SCPacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(()->new PacketDistributor.TargetPoint(
+        PacketDistributor.NEAR.with(new PacketDistributor.TargetPoint(
                 c.x,c.y,c.z,10,this.level().dimension()
-        )),new CameraShakePacket(0,10,10,0.35f));
+        )).send(new CameraShakePacket(0,10,10,0.35f));
     }
 
     public void setHeight(float h){

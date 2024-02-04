@@ -4,7 +4,7 @@ import com.finderfeed.solarcraft.client.particles.ball_particle.BallParticleOpti
 import com.finderfeed.solarcraft.client.particles.server_data.shapes.SendShapeParticlesPacket;
 import com.finderfeed.solarcraft.client.particles.server_data.shapes.instances.GroundLingeringCircleParticleShape;
 import com.finderfeed.solarcraft.content.entities.projectiles.UElectricShockProjectile;
-import com.finderfeed.solarcraft.packet_handler.PacketHelper;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
@@ -48,7 +48,7 @@ public class ElectricRainEntity extends AttackEffectEntity {
 
 
     private void sendParticles(){
-        PacketHelper.sendToPlayersTrackingEntity(this,new SendShapeParticlesPacket(
+        FDPacketUtil.sendToTrackingEntity(this,new SendShapeParticlesPacket(
                 new GroundLingeringCircleParticleShape(radius,(int)(radius * 7)),
                 BallParticleOptions.Builder.begin()
                         .setLifetime(60)

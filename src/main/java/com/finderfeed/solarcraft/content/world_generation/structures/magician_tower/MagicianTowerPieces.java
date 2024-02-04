@@ -55,11 +55,11 @@ public class MagicianTowerPieces {
 
 
         public Piece( StructureTemplateManager p_163662_, ResourceLocation p_163663_, Rotation rot, BlockPos p_163666_) {
-            super(StructurePieces.MAGICIAN_TOWER, 0, p_163662_, p_163663_, p_163663_.toString(), makeSettings(rot,DUNGEON_PIECE), makePosition(DUNGEON_PIECE,p_163666_,0));
+            super(StructurePieces.MAGICIAN_TOWER.get(), 0, p_163662_, p_163663_, p_163663_.toString(), makeSettings(rot,DUNGEON_PIECE), makePosition(DUNGEON_PIECE,p_163666_,0));
         }
 
         public Piece( StructurePieceSerializationContext p_163670_, CompoundTag tagCompound) {
-            super(StructurePieces.MAGICIAN_TOWER, tagCompound, p_163670_.structureTemplateManager(), (loc)->{
+            super(StructurePieces.MAGICIAN_TOWER.get(), tagCompound, p_163670_.structureTemplateManager(), (loc)->{
                 return makeSettings(Rotation.valueOf(tagCompound.getString("Rot")),loc);
             });
         }

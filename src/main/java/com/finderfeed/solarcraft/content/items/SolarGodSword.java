@@ -59,15 +59,15 @@ public class SolarGodSword extends RareSolarcraftSword implements IUpgradable {
 
 
 
-
-    @Override
-    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if ((getItemLevel(stack) >= 1) && (attacker instanceof Player player)){
-            target.invulnerableTime = 0;
-            target.hurt(SCDamageSources.playerArmorPierce(player),5);
-        }
-        return super.hurtEnemy(stack, target, attacker);
-    }
+//living entity mixin
+//    @Override
+//    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+//        if ((getItemLevel(stack) >= 1) && (attacker instanceof Player player)){
+//            target.invulnerableTime = 0;
+//            target.hurt(SCDamageSources.playerArmorPierce(player),player.getAttackStrengthScale(0) * 5);
+//        }
+//        return super.hurtEnemy(stack, target, attacker);
+//    }
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> text, TooltipFlag flag) {

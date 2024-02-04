@@ -7,6 +7,7 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.Item
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.structure.Book;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
+import com.finderfeed.solarcraft.registries.SCAttachmentTypes;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
@@ -18,13 +19,11 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+
+import net.neoforged.neoforge.items.IItemHandler;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.IItemHandler;
-
 import java.util.*;
-import java.util.List;
 
 public class SolarLexiconRecipesScreen extends ScrollableLexiconScreen {
     public final ResourceLocation MAIN_SCREEN = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/solar_lexicon_recipes_page_new.png");
@@ -155,8 +154,6 @@ public class SolarLexiconRecipesScreen extends ScrollableLexiconScreen {
 
 
         RenderingTools.scissor(relX ,relY,this.getScreenWidth(),this.getScreenHeight());
-//        ClientHelpers.bindText(MAIN_SCREEN_SCROLLABLE);
-//        RenderingTools.blitWithBlend(matrices,relX,relY,0,0,256,256,256,256,0,1f);
 
         RenderingTools.renderBasicLexiconPageBackground(matrices,relX,relY,this.getScreenWidth(),this.getScreenHeight());
 
@@ -171,16 +168,13 @@ public class SolarLexiconRecipesScreen extends ScrollableLexiconScreen {
         RenderSystem.disableScissor();
 
 
-//        ClientHelpers.bindText(MAIN_SCREEN);
 
         matrices.pushPose();
         matrices.translate(0,0,400);
         RenderingTools.renderBasicLexiconPageOutline(matrices,relX,relY,this.getScreenWidth(),this.getScreenHeight());
-//        RenderingTools.blitWithBlend(matrices,relX,relY,0,0,256,256,256,256,0,1f);
         matrices.popPose();
 
-//        goBack.render(graphics,mousex,mousey,partialTicks,300);
-//        nothing.render(graphics,mousex,mousey,partialTicks,300);
+
         infoButton.render(graphics,mousex,mousey,partialTicks);
 
         this.renderables.forEach((widget)->{
@@ -192,10 +186,7 @@ public class SolarLexiconRecipesScreen extends ScrollableLexiconScreen {
                 }
 
         });
-//        goBack.active = true;
-//        nothing.active = true;
-//        goBack.visible = true;
-//        nothing.visible = true;
+
         infoButton.visible = true;
         infoButton.active = true;
 
@@ -210,7 +201,7 @@ public class SolarLexiconRecipesScreen extends ScrollableLexiconScreen {
     }
 
     public static IItemHandler getLexiconInventory(){
-        return Minecraft.getInstance().player.getMainHandItem().getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+        return Minecraft.getInstance().player.getMainHandItem().getData(SCAttachmentTypes.LEXICON_INVENTORY);
     }
 
 }

@@ -19,11 +19,11 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.AABB;
 import org.joml.Matrix4f;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.Vec3;
 import static com.finderfeed.solarcraft.local_library.helpers.RenderingTools.*;
-import net.minecraftforge.client.model.data.ModelData;
 
 import java.util.List;
 import java.util.Random;
@@ -111,28 +111,22 @@ public class SolarCoreRenderer implements BlockEntityRenderer<SolarEnergyCoreTil
                     matrices.popPose();
 
             }
-//            matrices.pushPose();
-//            matrices.scale(0.5f, 0.5f, 0.5f);
-//            matrices.translate(1, 1, 1);
-//            matrices.mulPose(Vector3f.YP.rotationDegrees((entity.getLevel().getGameTime() + partialTicks) % 360));
-//            RenderingTools.renderObjModel(OBJModels.SOLAR_CORE_MODEL,matrices,buffer,1f,1f,1f,LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
-//
-//            matrices.popPose();
-//            List<BakedQuad> list = Minecraft.getInstance().getModelManager().getModel(OBJModels.SOLAR_CORE_MODEL)
-//                    .getQuads(null, null, RandomSource.create(), ModelData.EMPTY,RenderType.solid());
-//            for (BakedQuad a : list) {
+
                 matrices.pushPose();
                 matrices.scale(0.5f, 0.5f, 0.5f);
                 matrices.translate(1, 1, 1);
-//                matrices.mulPose(Vector3f.YP.rotationDegrees((entity.getLevel().getGameTime() + partialTicks) % 360));
                 matrices.mulPose(rotationDegrees(YP(),(entity.getLevel().getGameTime() + partialTicks) % 360));
-//                buffer.getBuffer(RenderType.solid()).putBulkData(matrices.last(), a, 1, 1, 1, light1, light2);
                 RenderingTools.renderBlockObjModel(OBJModels.SOLAR_CORE_MODEL,matrices,buffer,1,1,1,LightTexture.FULL_BRIGHT,light2);
                 matrices.popPose();
 //            }
 //            }
 
         }
+    }
+
+    @Override
+    public AABB getRenderBoundingBox(SolarEnergyCoreTile blockEntity) {
+        return Helpers.createAABBWithRadius(Helpers.getBlockCenter(blockEntity.getBlockPos()),16,16);
     }
 
     @Override

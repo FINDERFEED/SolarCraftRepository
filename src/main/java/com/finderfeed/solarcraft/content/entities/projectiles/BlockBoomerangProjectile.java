@@ -26,10 +26,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
+
 import net.minecraft.world.level.Level;
-import net.minecraftforge.network.NetworkHooks;
-
-
 import java.util.UUID;
 
 public class BlockBoomerangProjectile extends AbstractHurtingProjectile {
@@ -155,10 +153,10 @@ public class BlockBoomerangProjectile extends AbstractHurtingProjectile {
         return false;
     }
 
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
+//    @Override
+//    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+//        return NetworkHooks.getEntitySpawningPacket(this);
+//    }
 
     @Override
     protected ParticleOptions getTrailParticle() {

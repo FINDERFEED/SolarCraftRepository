@@ -11,7 +11,7 @@ import com.finderfeed.solarcraft.content.items.primitive.solacraft_item_classes.
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.packet_handler.PacketHelper;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.CameraShakePacket;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.ChatFormatting;
@@ -101,18 +101,18 @@ public class CorruptedShardItem extends SolarcraftItem {
         Vec3 c = Helpers.getBlockCenter(spawnPos);
         ((ServerLevel)level).playSound(null,c.x,c.y,c.z, SoundEvents.GENERIC_EXPLODE, SoundSource.HOSTILE,10,0.5f);
         Helpers.spawnUlderaLightning(level,c,10,0,100);
-        PacketHelper.sendToPlayersCloseToSpot(level,c,40,new SendShapeParticlesPacket(
+        FDPacketUtil.sendToPlayersCloseToSpot(level,c,40,new SendShapeParticlesPacket(
                 new SphereParticleShape(0.5,0.6f,5,true,true,1f),
                 new BallParticleOptions.Builder().setRGB(90,0,186).setPhysics(false)
                         .setShouldShrink(true).setSize(0.5f).build(),
                 c.x,c.y,c.z,0,0,0
         ));
-        PacketHelper.sendToPlayersCloseToSpot(level,c,40,new SendShapeParticlesPacket(
+        FDPacketUtil.sendToPlayersCloseToSpot(level,c,40,new SendShapeParticlesPacket(
                 new SphereParticleShape(0.5,0.6f,3,true,true,1f),
                 new LightningParticleOptions(2f,90,0,186,-1,60,false),
                 c.x,c.y,c.z,0,0,0
         ));
-        PacketHelper.sendToPlayersCloseToSpot(level,c,10,new CameraShakePacket(0,20,20,0.5f));
+        FDPacketUtil.sendToPlayersCloseToSpot(level,c,10,new CameraShakePacket(0,20,20,0.5f));
     }
 
 

@@ -10,6 +10,7 @@ import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.local_library.client.screens.DefaultScreen;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.sun_shard_puzzle.SunShardPuzzlePutTilePacket;
 import com.finderfeed.solarcraft.packet_handler.packets.sun_shard_puzzle.SunShardPuzzleTakeTilePacket;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -111,7 +112,8 @@ public class SunShardPuzzleScreen extends DefaultScreen {
 
                 localPuzzle.setTileAtPos(null,xi,yi);
                 if (!EDITOR_MODE) {
-                    SCPacketHandler.INSTANCE.sendToServer(new SunShardPuzzleTakeTilePacket(this.tilePos, xi, yi));
+                    FDPacketUtil.sendToServer(new SunShardPuzzleTakeTilePacket(this.tilePos, xi, yi));
+//                    SCPacketHandler.INSTANCE.sendToServer(new SunShardPuzzleTakeTilePacket(this.tilePos, xi, yi));
                 }
                 this.reinitPuzzle();
             }
@@ -131,7 +133,8 @@ public class SunShardPuzzleScreen extends DefaultScreen {
                     yi >= 0 && yi < Puzzle.PUZZLE_SIZE) {
                 if (localPuzzle.putTileAtPos(heldTile, xi, yi)) {
                     if (!EDITOR_MODE) {
-                        SCPacketHandler.INSTANCE.sendToServer(new SunShardPuzzlePutTilePacket(this.tilePos, heldTile, xi, yi));
+                        FDPacketUtil.sendToServer(new SunShardPuzzlePutTilePacket(this.tilePos, heldTile, xi, yi));
+//                        SCPacketHandler.INSTANCE.sendToServer(new SunShardPuzzlePutTilePacket(this.tilePos, heldTile, xi, yi));
                     }
                     heldTile = null;
                     this.reinitPuzzle();
@@ -176,7 +179,7 @@ public class SunShardPuzzleScreen extends DefaultScreen {
         this.mx = mx;
         this.my = my;
         PoseStack matrices = graphics.pose();
-        renderBackground(graphics);
+        renderBackground(graphics,mx,my,pticks);
         ClientHelpers.bindText(BACKGROUND);
         RenderingTools.blitWithBlend(matrices,relX-11,relY-11,0,0,214,214,214,214,0,1f);
         this.renderPuzzle(matrices,mx,my,pticks);

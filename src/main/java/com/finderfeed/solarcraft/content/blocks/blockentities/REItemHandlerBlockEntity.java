@@ -1,15 +1,23 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities;
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.runic_energy.AbstractRunicEnergyContainer;
+import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.misc_things.PhantomInventory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.ItemStackHandler;
+
+import net.neoforged.neoforge.attachment.AttachmentType;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.items.ItemStackHandler;
+
+import javax.annotation.Nullable;
+import java.util.function.Supplier;
 
 /**
  * ONLY FOR ItemStackHandler!
@@ -22,7 +30,7 @@ public abstract class REItemHandlerBlockEntity extends AbstractRunicEnergyContai
 
 
     public ItemStackHandler getInventory(){
-        return (ItemStackHandler) this.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+        return this.getData(this.getAttachmentType());
     }
 
 
@@ -30,6 +38,7 @@ public abstract class REItemHandlerBlockEntity extends AbstractRunicEnergyContai
         ItemStackHandler handler = getInventory();
         if (handler == null) return;
         this.getInventory().setStackInSlot(i,stack);
+        this.setChanged();
     }
 
     public Container wrapInContainer(){
@@ -51,6 +60,18 @@ public abstract class REItemHandlerBlockEntity extends AbstractRunicEnergyContai
     }
 
     @Override
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        super.onDataPacket(net, pkt);
+    }
+
+    @Nullable
+    @Override
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        CompoundTag tag = saveWithFullMetadata();
+        return Helpers.createTilePacket(this,tag);
+    }
+
+    @Override
     public CompoundTag getUpdateTag() {
         CompoundTag tag = super.getUpdateTag();
         ItemStackHandler g = this.getInventory();
@@ -67,5 +88,8 @@ public abstract class REItemHandlerBlockEntity extends AbstractRunicEnergyContai
         if (h != null){
             h.deserializeNBT(tag);
         }
+        this.setChanged();
     }
+
+    public abstract Supplier<AttachmentType<ItemStackHandler>> getAttachmentType();
 }

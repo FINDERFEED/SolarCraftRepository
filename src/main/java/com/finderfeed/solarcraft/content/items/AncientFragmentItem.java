@@ -17,9 +17,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
-
-
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Consumer;

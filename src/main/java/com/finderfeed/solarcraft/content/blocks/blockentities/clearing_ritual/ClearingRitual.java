@@ -12,7 +12,7 @@ import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.misc_things.RadiantTeleporter;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -164,7 +164,7 @@ public class ClearingRitual {
         }
 
         if (ClearingRitual.MAX_TIME - tile.ritual.getCurrentTime() == RAY_ANIMATION_TICKS){
-            ClientHelpers.playsoundInEars(SolarcraftSounds.RITUAL_TILE_STRIKE.get(),1f,1f);
+            ClientHelpers.playsoundInEars(SCSounds.RITUAL_TILE_STRIKE.get(),1f,1f);
         }
 
 
@@ -182,7 +182,7 @@ public class ClearingRitual {
 
             RadiantLandCleanedData data = ((ServerLevel)level).getServer().overworld()
                     .getDataStorage()
-                    .computeIfAbsent(RadiantLandCleanedData::load,()->new RadiantLandCleanedData(false),"is_radiant_land_cleaned");
+                    .computeIfAbsent(RadiantLandCleanedData.factory(false),"is_radiant_land_cleaned");
             if (!data.isCleaned()){
                 List<ServerPlayer> players = ((ServerLevel) level).getPlayers((p)->p.level().dimension() == SCEventHandler.RADIANT_LAND_KEY);
                 List<ServerPlayer> allPlayers = ((ServerLevel) level).getPlayers((p)->true);
@@ -211,7 +211,7 @@ public class ClearingRitual {
         }
         RadiantLandCleanedData data = level.getServer().overworld()
                 .getDataStorage()
-                .computeIfAbsent(RadiantLandCleanedData::load,()->new RadiantLandCleanedData(false),"is_radiant_land_cleaned");
+                .computeIfAbsent(RadiantLandCleanedData.factory(false),"is_radiant_land_cleaned");
         data.setCleaned(cleaned);
         data.setDirty();
     }
@@ -219,7 +219,7 @@ public class ClearingRitual {
     public static boolean getRLState(ServerLevel level){
         RadiantLandCleanedData data = level.getServer().overworld()
                 .getDataStorage()
-                .computeIfAbsent(RadiantLandCleanedData::load,()->new RadiantLandCleanedData(false),"is_radiant_land_cleaned");
+                .computeIfAbsent(RadiantLandCleanedData.factory(false),"is_radiant_land_cleaned");
         return data.isCleaned();
     }
 

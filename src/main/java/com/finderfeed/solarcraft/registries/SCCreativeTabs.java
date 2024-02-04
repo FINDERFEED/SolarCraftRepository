@@ -15,8 +15,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
+
 
 
 public class SCCreativeTabs {
@@ -25,14 +26,14 @@ public class SCCreativeTabs {
     public static final ResourceLocation TABS = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/solar_items_tabs.png");
 
     public static final DeferredRegister<CreativeModeTab> REGISTRY = DeferredRegister.create(Registries.CREATIVE_MODE_TAB,SolarCraft.MOD_ID);
-    public static RegistryObject<CreativeModeTab> SOLAR_GROUP_COPY;
-    public static RegistryObject<CreativeModeTab> SOLAR_GROUP_BLOCKS_COPY;
-    public static RegistryObject<CreativeModeTab> SOLAR_GROUP_WEAPONS_COPY;
-    public static RegistryObject<CreativeModeTab> SOLAR_GROUP_TOOLS_COPY;
-    public static RegistryObject<CreativeModeTab> SOLAR_GROUP_MATERIALS_COPY;
-    public static RegistryObject<CreativeModeTab> SOLAR_GROUP_FRAGMENTS_COPY;
+    public static DeferredHolder<CreativeModeTab,CreativeModeTab> SOLAR_GROUP_COPY;
+    public static DeferredHolder<CreativeModeTab,CreativeModeTab> SOLAR_GROUP_BLOCKS_COPY;
+    public static DeferredHolder<CreativeModeTab,CreativeModeTab> SOLAR_GROUP_WEAPONS_COPY;
+    public static DeferredHolder<CreativeModeTab,CreativeModeTab> SOLAR_GROUP_TOOLS_COPY;
+    public static DeferredHolder<CreativeModeTab,CreativeModeTab> SOLAR_GROUP_MATERIALS_COPY;
+    public static DeferredHolder<CreativeModeTab,CreativeModeTab> SOLAR_GROUP_FRAGMENTS_COPY;
 
-    public static final RegistryObject<CreativeModeTab> SOLAR_GROUP = REGISTRY.register("main_group",()->CreativeModeTab.builder()
+    public static final DeferredHolder<CreativeModeTab,CreativeModeTab> SOLAR_GROUP = REGISTRY.register("main_group",()->CreativeModeTab.builder()
             .icon(()-> SCItems.SOLAR_SHARD.get().getDefaultInstance())
             .title(Component.translatable("itemGroup.solar_forge_group"))
             .withTabsImage(TABS)
@@ -52,7 +53,7 @@ public class SCCreativeTabs {
 
 
 
-    public static final RegistryObject<CreativeModeTab> SOLAR_GROUP_BLOCKS = REGISTRY.register("blocks_group",()->CreativeModeTab.builder()
+    public static final DeferredHolder<CreativeModeTab,CreativeModeTab> SOLAR_GROUP_BLOCKS = REGISTRY.register("blocks_group",()->CreativeModeTab.builder()
             .icon(()-> SCItems.MAGISTONE_BRICKS.get().getDefaultInstance())
             .title(Component.translatable("itemGroup.solar_forge_group_blocks"))
             .withTabsImage(TABS)
@@ -66,7 +67,7 @@ public class SCCreativeTabs {
 
 
 //    public static final CreativeModeTab SOLAR_GROUP_TOOLS = new SolarGroupTools("solar_forge_group_tools");
-    public static final RegistryObject<CreativeModeTab> SOLAR_GROUP_TOOLS = REGISTRY.register("tools_group",()->CreativeModeTab.builder()
+    public static final DeferredHolder<CreativeModeTab,CreativeModeTab> SOLAR_GROUP_TOOLS = REGISTRY.register("tools_group",()->CreativeModeTab.builder()
             .icon(()-> SCItems.SOLAR_NETWORK_BINDER.get().getDefaultInstance())
             .title(Component.translatable("itemGroup.solar_forge_group_tools"))
             .withTabsImage(TABS)
@@ -86,7 +87,7 @@ public class SCCreativeTabs {
 
 
 //    public static final CreativeModeTab SOLAR_GROUP_MATERIALS = new SolarGroupThemed("solar_group_materials", SolarcraftItems.ILLIDIUM_INGOT);
-    public static final RegistryObject<CreativeModeTab> SOLAR_GROUP_MATERIALS = REGISTRY.register("materials_group",()->CreativeModeTab.builder()
+    public static final DeferredHolder<CreativeModeTab,CreativeModeTab> SOLAR_GROUP_MATERIALS = REGISTRY.register("materials_group",()->CreativeModeTab.builder()
             .icon(()-> SCItems.ILLIDIUM_INGOT.get().getDefaultInstance())
             .title(Component.translatable("itemGroup.solar_group_materials"))
             .withTabsImage(TABS)
@@ -100,7 +101,7 @@ public class SCCreativeTabs {
 
 
 //    public static final CreativeModeTab SOLAR_GROUP_WEAPONS = new SolarGroupThemed("solar_group_weapons", SolarcraftItems.ILLIDIUM_SWORD);
-    public static final RegistryObject<CreativeModeTab> SOLAR_GROUP_WEAPONS = REGISTRY.register("weapons_group",()->CreativeModeTab.builder()
+    public static final DeferredHolder<CreativeModeTab,CreativeModeTab> SOLAR_GROUP_WEAPONS = REGISTRY.register("weapons_group",()->CreativeModeTab.builder()
             .icon(()-> SCItems.ILLIDIUM_SWORD.get().getDefaultInstance())
             .title(Component.translatable("itemGroup.solar_group_weapons"))
             .withTabsImage(TABS)
@@ -126,7 +127,7 @@ public class SCCreativeTabs {
             .build());
 
 //    public static final CreativeModeTab SOLAR_GROUP_FRAGMENTS = new SolarGroupFragments("solar_forge_group_fragments");
-    public static final RegistryObject<CreativeModeTab> SOLAR_GROUP_FRAGMENTS = REGISTRY.register("fragments_group",()->CreativeModeTab.builder()
+    public static final DeferredHolder<CreativeModeTab,CreativeModeTab> SOLAR_GROUP_FRAGMENTS = REGISTRY.register("fragments_group",()->CreativeModeTab.builder()
             .icon(()-> SCItems.INFO_FRAGMENT.get().getDefaultInstance())
             .title(Component.translatable("itemGroup.solar_forge_group_fragments"))
             .withTabsImage(TABS)

@@ -9,8 +9,10 @@ import com.finderfeed.solarcraft.config.enchanter_config.EnchanterConfigInit;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.SCAttachmentTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -24,11 +26,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.attachment.AttachmentType;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 
 public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
 
@@ -40,7 +44,7 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
     private int procesingEnchantmentLevel = 0;
 
     public EnchanterBlockEntity(BlockPos pos, BlockState state) {
-        super(SolarcraftTileEntityTypes.ENCHANTER.get(), pos, state);
+        super(SCTileEntities.ENCHANTER.get(), pos, state);
     }
 
 
@@ -155,7 +159,7 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
         tag.putInt("enchanting_ticks",enchantingTicks);
         tag.putBoolean("in_progress",enchantingInProgress);
         if (processingEnchantment != null) {
-            tag.putString("enchantment",ForgeRegistries.ENCHANTMENTS.getKey(processingEnchantment.enchantment()).toString());
+            tag.putString("enchantment", BuiltInRegistries.ENCHANTMENT.getKey(processingEnchantment.enchantment()).toString());
         }else{
             tag.putString("enchantment","null");
         }
@@ -169,7 +173,7 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
         enchantingInProgress = tag.getBoolean("in_progress");
         String enchantment = tag.getString("enchantment");
         if (!enchantment.equals("null")){
-            this.processingEnchantment = SERVERSIDE_CONFIG.getConfigEntryByEnchantment(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(enchantment)));
+            this.processingEnchantment = SERVERSIDE_CONFIG.getConfigEntryByEnchantment(BuiltInRegistries.ENCHANTMENT.get(new ResourceLocation(enchantment)));
         }else{
             processingEnchantment = null;
         }
@@ -179,20 +183,6 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
         }
     }
 
-    @Nullable
-    @Override
-    public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        CompoundTag tag1 = saveWithFullMetadata();
-        CompoundTag tag = super.getUpdatePacket().getTag();
-        tag1.merge(tag);
-        return Helpers.createTilePacket(this,tag1);
-    }
-
-    @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        super.onDataPacket(net, pkt);
-        this.load(pkt.getTag());
-    }
 
     @Override
     public float getREPerTickInput() {
@@ -230,19 +220,9 @@ public class EnchanterBlockEntity extends REItemHandlerBlockEntity {
     }
 
     @Override
-    public AABB getRenderBoundingBox() {
-        return new AABB(-getMaxRange(),-getMaxRange(),-getMaxRange(),getMaxRange(),getMaxRange(),getMaxRange()).move(worldPosition);
+    public Supplier<AttachmentType<ItemStackHandler>> getAttachmentType() {
+        return SCAttachmentTypes.INVENTORY_1;
     }
 
-    public static class RunicEnergyCostConstructor{
 
-        public Map<RunicEnergy.Type,Double> COSTS=new HashMap<>();
-
-        public RunicEnergyCostConstructor(){}
-
-        public RunicEnergyCostConstructor addRunicEnergy(RunicEnergy.Type type, double amount){
-            COSTS.put(type,amount);
-            return this;
-        }
-    }
 }

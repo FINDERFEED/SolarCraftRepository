@@ -2,11 +2,12 @@ package com.finderfeed.solarcraft.config;
 
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.SendFragmentsToClientPacket;
 import com.google.gson.*;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.fml.loading.FMLPaths;
-import net.minecraftforge.network.NetworkDirection;
+import net.neoforged.fml.loading.FMLPaths;
+
 import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nullable;
@@ -214,7 +215,8 @@ public class JsonFragmentsHelper {
         }else{
             o = SERVERSIDE_FRAGMENTS_JSON;
         }
-        SCPacketHandler.INSTANCE.sendTo(new SendFragmentsToClientPacket(o),serverPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+        FDPacketUtil.sendToPlayer(serverPlayer,new SendFragmentsToClientPacket(o));
+//        SCPacketHandler.INSTANCE.sendTo(new SendFragmentsToClientPacket(o),serverPlayer.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
 
     }
 

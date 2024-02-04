@@ -45,7 +45,7 @@ public class DimensionalShardStructure extends Structure {
 
     @Override
     public StructureType<?> type() {
-        return SolarcraftStructureTypes.DIMENSIONAL_SHARD_STRUCTURE_STRUCTURE_TYPE;
+        return SolarcraftStructureTypes.DIMENSIONAL_SHARD_STRUCTURE_STRUCTURE_TYPE.get();
     }
 
 

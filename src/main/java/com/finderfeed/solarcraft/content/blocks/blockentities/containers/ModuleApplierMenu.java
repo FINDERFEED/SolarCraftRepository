@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.content.blocks.blockentities.containers;
 
 import com.finderfeed.solarcraft.content.blocks.ModuleStation;
 import com.finderfeed.solarcraft.content.items.ModuleItem;
-import com.finderfeed.solarcraft.registries.containers.SolarcraftContainers;
+import com.finderfeed.solarcraft.registries.containers.SCContainers;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -17,14 +17,14 @@ public class ModuleApplierMenu extends ItemCombinerMenu {
     private boolean valid;
 
     public ModuleApplierMenu( int p_39774_, Inventory p_39775_, ContainerLevelAccess p_39776_) {
-        super(SolarcraftContainers.MODULE_APPLIER_CONTAINER.get(), p_39774_, p_39775_, p_39776_);
+        super(SCContainers.MODULE_APPLIER_CONTAINER.get(), p_39774_, p_39775_, p_39776_);
 
 
     }
 
 
     public ModuleApplierMenu( int p_39774_, Inventory p_39775_, FriendlyByteBuf buf) {
-        super(SolarcraftContainers.MODULE_APPLIER_CONTAINER.get(), p_39774_, p_39775_, ContainerLevelAccess.create(p_39775_.player.level,buf.readBlockPos()));
+        super(SCContainers.MODULE_APPLIER_CONTAINER.get(), p_39774_, p_39775_, ContainerLevelAccess.create(p_39775_.player.level,buf.readBlockPos()));
     }
 
     @Override

@@ -5,8 +5,10 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.containers.RunicTa
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.RunePattern;
 import com.finderfeed.solarcraft.misc_things.PhantomInventory;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.UpdateRunePattern;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
@@ -19,13 +21,12 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
+
+
 import net.minecraft.world.level.Level;
 
 
 import javax.annotation.Nullable;
-
-import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkHooks;
 
 
 public class RunicTableBlock extends Block implements EntityBlock {
@@ -58,10 +59,11 @@ public class RunicTableBlock extends Block implements EntityBlock {
                 pattern.save(pe);
             }
 
-            SCPacketHandler.INSTANCE.sendTo(new UpdateRunePattern(pe,false),serverPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+            FDPacketUtil.sendToPlayer(serverPlayer,new UpdateRunePattern(pe,false));
+//            SCPacketHandler.INSTANCE.sendTo(new UpdateRunePattern(pe,false),serverPlayer.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
             boolean b = AncientFragmentHelper.getAllUnlockableFragments(pe) == null ;
 
-            NetworkHooks.openScreen((ServerPlayer) pe, new RunicTableContainer.Provider(tile,b),
+            serverPlayer.openMenu(new RunicTableContainer.Provider(tile,b),
                     (buf) -> {
                 buf.writeBlockPos(pos);
                 buf.writeBoolean(b);
@@ -75,7 +77,7 @@ public class RunicTableBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return SolarcraftTileEntityTypes.RUNIC_TABLE_TILE.get().create(blockPos,blockState);
+        return SCTileEntities.RUNIC_TABLE_TILE.get().create(blockPos,blockState);
     }
 
 

@@ -10,14 +10,13 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.entity.player.Player;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.client.event.RenderHandEvent;
+import net.neoforged.neoforge.client.event.RenderPlayerEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
-
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderHandEvent;
-import net.minecraftforge.client.event.RenderPlayerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 
 
 
@@ -67,7 +66,7 @@ public class RenderSolarGodShieldPlayer {
     }
 
     @SubscribeEvent
-    public static void RenderPlayer(final RenderPlayerEvent event){
+    public static void RenderPlayer(final RenderPlayerEvent.Post event){
         Player playerEntity = Minecraft.getInstance().player;
         if ((playerEntity.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof ShieldOfSolarGod) || (playerEntity.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof ShieldOfSolarGod) ) {
             if  ( playerEntity.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof ShieldOfSolarGod &&

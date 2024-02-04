@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.events.my_events;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.eventbus.api.Event;
+import net.neoforged.bus.api.Event;
 
 public class ClientsideBlockPlaceEvent extends Event {
 

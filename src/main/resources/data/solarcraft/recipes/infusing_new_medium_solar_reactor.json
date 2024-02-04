@@ -1,9 +1,15 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "A": {"item": "solarcraft:small_solar_reactor"},
-    "B": {"item": "solarcraft:energetic_ingot"},
-    "C": {"item": "solarcraft:qualadium_ingot"}
+    "A": {
+      "item": "solarcraft:small_solar_reactor"
+    },
+    "B": {
+      "item": "solarcraft:energetic_ingot"
+    },
+    "C": {
+      "item": "solarcraft:qualadium_ingot"
+    }
   },
   "pattern": [
     " B ",
@@ -17,7 +23,9 @@
   },
   "time": 3000,
   "fragment": "medium_solar_reactor",
-  "ardo": 2000,
-  "fira": 3000,
-  "kelda": 2000
+  "re_cost": {
+    "ardo": 2000,
+    "kelda": 2000,
+    "fira": 3000
+  }
 }

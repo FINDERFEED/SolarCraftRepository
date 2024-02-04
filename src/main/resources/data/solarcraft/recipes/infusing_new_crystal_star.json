@@ -1,9 +1,15 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "A": {"item": "minecraft:nether_star"},
-    "B": {"item": "solarcraft:crystal_core"},
-    "C": {"item": "minecraft:diamond"}
+    "A": {
+      "item": "minecraft:nether_star"
+    },
+    "B": {
+      "item": "solarcraft:crystal_core"
+    },
+    "C": {
+      "item": "minecraft:diamond"
+    }
   },
   "pattern": [
     " B ",
@@ -12,7 +18,6 @@
     "CC",
     " B "
   ],
-
   "result": {
     "item": "solarcraft:crystal_star"
   },

@@ -3,6 +3,7 @@ package com.finderfeed.solarcraft.content.blocks.solar_forge_block;
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.content.blocks.solar_forge_block.solar_forge_screen.SolarForgeContainer;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -25,7 +26,7 @@ public class SolarForgeBlockEntity extends RandomizableContainerBlockEntity  {
     public NonNullList<ItemStack> items = NonNullList.withSize(2,ItemStack.EMPTY);
 
     public SolarForgeBlockEntity(BlockPos p_155630_, BlockState p_155631_) {
-        super(SolarCraft.SOLAR_FORGE_BLOCKENTITY.get(), p_155630_, p_155631_);
+        super(SCTileEntities.SOLAR_FORGE_BLOCKENTITY.get(), p_155630_, p_155631_);
     }
 
 
@@ -123,11 +124,11 @@ public class SolarForgeBlockEntity extends RandomizableContainerBlockEntity  {
 
     }
 
-    @Override
-    public AABB getRenderBoundingBox(){
-        return new AABB(getBlockPos().offset(-1,0,-1),getBlockPos().offset(1,100,1));
-    }
-
+//    @Override
+//    public AABB getRenderBoundingBox(){
+//        return new AABB(getBlockPos().offset(-1,0,-1),getBlockPos().offset(1,100,1));
+//    }
+//
 
 }
 

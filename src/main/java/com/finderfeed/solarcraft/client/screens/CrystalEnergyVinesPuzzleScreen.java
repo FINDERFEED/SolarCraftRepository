@@ -9,6 +9,7 @@ import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.local_library.other.EaseInOut;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.CrystalEnergyVinesTile;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.crystal_energy_vines_puzzle.PuzzleActionPacket;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -74,7 +75,8 @@ public class CrystalEnergyVinesPuzzleScreen extends SolarCraftScreen {
     }
 
     private void sendMovementPacket(int moveType){
-        SCPacketHandler.INSTANCE.sendToServer(new PuzzleActionPacket(moveType,tile.getBlockPos()));
+        FDPacketUtil.sendToServer(new PuzzleActionPacket(moveType,tile.getBlockPos()));
+//        SCPacketHandler.INSTANCE.sendToServer(new PuzzleActionPacket(moveType,tile.getBlockPos()));
     }
 
     private static final float[][] NODE_COLORS = {

@@ -1,9 +1,15 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "B": {"item": "solarcraft:small_solar_reactor"},
-    "C": {"item": "solarcraft:blue_gem_enriched"},
-    "D": {"item": "minecraft:amethyst_shard"}
+    "B": {
+      "item": "solarcraft:small_solar_reactor"
+    },
+    "C": {
+      "item": "solarcraft:blue_gem_enriched"
+    },
+    "D": {
+      "item": "minecraft:amethyst_shard"
+    }
   },
   "pattern": [
     " C ",
@@ -12,7 +18,6 @@
     "DD",
     " C "
   ],
-
   "result": {
     "item": "solarcraft:amethyst_core"
   },

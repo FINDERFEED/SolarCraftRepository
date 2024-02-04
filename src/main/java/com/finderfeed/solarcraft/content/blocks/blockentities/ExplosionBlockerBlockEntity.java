@@ -6,7 +6,7 @@ import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
@@ -21,7 +21,7 @@ public class ExplosionBlockerBlockEntity extends SolarcraftBlockEntity implement
     private boolean shouldRenderShield = true;
 
     public ExplosionBlockerBlockEntity( BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.EXPLOSTION_BLOCKER.get(), p_155229_, p_155230_);
+        super(SCTileEntities.EXPLOSTION_BLOCKER.get(), p_155229_, p_155230_);
     }
 
 
@@ -62,16 +62,8 @@ public class ExplosionBlockerBlockEntity extends SolarcraftBlockEntity implement
     public void load(CompoundTag tag) {
         super.load(tag);
         shouldRenderShield = tag.getBoolean("shouldRenderShield");
-//        if (level != null){
-//            this.setChanged();
-//            level.sendBlockUpdated(worldPosition,getBlockState(),getBlockState(),3);
-//        }
     }
 
-    @Override
-    public AABB getRenderBoundingBox() {
-        return new AABB(-40,-40,-40,40,40,40).move(Helpers.getBlockCenter(worldPosition));
-    }
 
 
     public boolean isFunctioning(){

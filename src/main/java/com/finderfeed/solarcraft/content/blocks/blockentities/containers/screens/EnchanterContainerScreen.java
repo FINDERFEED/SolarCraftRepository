@@ -14,6 +14,7 @@ import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.SolarLexiconScreen;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.EnchanterPacket;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -112,7 +113,8 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
                 }
                 if (compatible) {
                     if (!menu.tile.enchantingInProgress()) {
-                        SCPacketHandler.INSTANCE.sendToServer(new EnchanterPacket(menu.tile.getBlockPos(), selectedEnchantment.enchantment(), selectedLevel));
+                        FDPacketUtil.sendToServer(new EnchanterPacket(menu.tile.getBlockPos(), selectedEnchantment.enchantment(), selectedLevel));
+//                        SCPacketHandler.INSTANCE.sendToServer(new EnchanterPacket(menu.tile.getBlockPos(), selectedEnchantment.enchantment(), selectedLevel));
                     } else {
                         Minecraft.getInstance().player.displayClientMessage(Component.literal("Enchanting is already in progress!"), false);
                     }
@@ -137,7 +139,7 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
 
         PoseStack matrices = graphics.pose();
 
-        super.renderBackground(graphics);
+//        super.renderBackground(graphics,mousex,mousey,pticks);
         ClientHelpers.bindText(MAIN_SCREEN);
         int scale = (int) minecraft.getWindow().getGuiScale();
         int a = 1;
@@ -253,18 +255,18 @@ public class EnchanterContainerScreen extends AbstractScrollableContainerScreen<
 
 
     @Override
-    public boolean mouseScrolled(double p_94686_, double p_94687_, double delta) {
+    public boolean mouseScrolled(double p_94686_, double p_94687_, double delta,double deltaY) {
 
         for (SolarCraftButton b : postRender){
-            if (currentMouseScroll + delta*getScrollValue() >= -getMaxYDownScrollValue() && currentMouseScroll + delta*getScrollValue() <= 0) {
-                b.y = b.y + (int) delta * getScrollValue();
+            if (currentMouseScroll + deltaY*getScrollValue() >= -getMaxYDownScrollValue() && currentMouseScroll + deltaY*getScrollValue() <= 0) {
+                b.y = b.y + (int) deltaY * getScrollValue();
 
             }
         }
-        if (currentMouseScroll + delta*getScrollValue() >= -getMaxYDownScrollValue() && currentMouseScroll + delta*getScrollValue() <= 0) {
-            currentMouseScroll += delta * getScrollValue();
+        if (currentMouseScroll + deltaY*getScrollValue() >= -getMaxYDownScrollValue() && currentMouseScroll + deltaY*getScrollValue() <= 0) {
+            currentMouseScroll += deltaY * getScrollValue();
         }
-        return super.mouseScrolled(p_94686_, p_94687_, delta);
+        return super.mouseScrolled(p_94686_, p_94687_, delta,deltaY);
     }
 
     @Override

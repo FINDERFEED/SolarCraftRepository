@@ -3,11 +3,11 @@ package com.finderfeed.solarcraft.content.recipe_types.infusing_new;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.InfuserTileEntity;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
-import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
+import com.finderfeed.solarcraft.registries.recipe_types.SCRecipeTypes;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -15,6 +15,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class InfusingRecipe implements Recipe<Container> {
@@ -22,7 +23,7 @@ public class InfusingRecipe implements Recipe<Container> {
 
 
     private final InfuserTileEntity.Tier tier;
-    public final ResourceLocation id;
+//    public final ResourceLocation id;
     public final Map<Character,Ingredient> INGR_MAP;
     public final String oneRowPattern;
     public final String[] fiveRowPattern;
@@ -36,12 +37,13 @@ public class InfusingRecipe implements Recipe<Container> {
     private final String catalysts;
     private final Block[] deserializedCatalysts;
 //    public static final InfusingRecipeSerializer serializer = new InfusingRecipeSerializer();
-    public InfusingRecipe(ResourceLocation id,Map<Character,Ingredient> ingredientMap,String[] fiveRowPattern,String catalysts, ItemStack output, int infusingTime,String fragmentID
+    public InfusingRecipe(Map<Character,Ingredient> ingredientMap,String[] fiveRowPattern,String catalysts, ItemStack output, int infusingTime,String fragmentID
             ,int requriedEnergy,String tag,RunicEnergyCost costs) {
-        this.INGR_MAP = ingredientMap;
+        this.INGR_MAP = new HashMap<>(ingredientMap);
+        this.INGR_MAP.put(' ',Ingredient.of(Items.AIR));
         this.fiveRowPattern = fiveRowPattern;
         this.oneRowPattern = fiveRowPattern[0] + fiveRowPattern[1] + fiveRowPattern[2] + fiveRowPattern[3] + fiveRowPattern[4];
-        this.id = id;
+//        this.id = id;
         this.catalysts = catalysts;
         this.deserializedCatalysts = deserializeCatalysts();
         this.output = output;
@@ -94,19 +96,19 @@ public class InfusingRecipe implements Recipe<Container> {
         return this.output;
     }
 
-    @Override
-    public ResourceLocation getId() {
-        return this.id;
-    }
+//    @Override
+//    public ResourceLocation getId() {
+//        return this.id;
+//    }
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return SolarcraftRecipeTypes.INFUSING_SERIALIZER.get();
+        return SCRecipeTypes.INFUSING_SERIALIZER.get();
     }
 
     @Override
     public RecipeType<?> getType() {
-        return SolarcraftRecipeTypes.INFUSING.get();
+        return SCRecipeTypes.INFUSING.get();
     }
 
     public InfuserTileEntity.Tier getTier() {
@@ -153,7 +155,7 @@ public class InfusingRecipe implements Recipe<Container> {
                     bl[i] = block;
                 } else {
                     if (c != ' '){
-                        throw new RuntimeException("Incorrect symbol: "+ c + " in catalysts. Recipe: " + this.id);
+                        throw new RuntimeException("Incorrect symbol: "+ c + " in catalysts.");
                     }
                     bl[i] = null;
                 }

@@ -70,6 +70,7 @@ public enum Progression {
 
     public final Component pretext;
     public final Component afterText;
+    public final Component spoilerText;
     Progression(String id, int tier, Item icon) {
         this.str = id;
         this.tier = tier;
@@ -77,6 +78,7 @@ public enum Progression {
         this.translation = Component.translatable("ach." + id);
         this.pretext =  Component.translatable("pre." + id);
         this.afterText = Component.translatable("aft." + id);
+        this.spoilerText = Component.translatable("spoiler." + id);
     }
 
     public String getProgressionCode(){
@@ -102,5 +104,9 @@ public enum Progression {
 
     public Component getAfterText() {
         return afterText.copy();
+    }
+
+    public Component getSpoilerText() {
+        return spoilerText.copy();
     }
 }

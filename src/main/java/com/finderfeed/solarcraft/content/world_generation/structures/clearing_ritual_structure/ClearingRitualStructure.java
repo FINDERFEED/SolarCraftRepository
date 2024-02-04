@@ -45,6 +45,6 @@ public class ClearingRitualStructure extends Structure {
 
     @Override
     public StructureType<?> type() {
-        return SolarcraftStructureTypes.CLEARING_RITUAL_STRUCTURE_STRUCTURE_TYPE;
+        return SolarcraftStructureTypes.CLEARING_RITUAL_STRUCTURE_STRUCTURE_TYPE.get();
     }
 }

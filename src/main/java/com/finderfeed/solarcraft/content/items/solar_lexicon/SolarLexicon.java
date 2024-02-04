@@ -6,6 +6,9 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.Ancient
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.packets.OpenScreenPacket;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.packets.UpdateInventoryPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
+import com.finderfeed.solarcraft.registries.SCAttachmentTypes;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -17,11 +20,8 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.level.Level;
 
-
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,17 +37,22 @@ public class SolarLexicon extends Item {
     public InteractionResultHolder<ItemStack> use(Level world, Player pe, InteractionHand hand) {
         if (!world.isClientSide && hand.equals(InteractionHand.MAIN_HAND)){
             this.givePlayerFragmentIfNecessary(pe,AncientFragment.LEXICON,AncientFragment.FRAGMENT,AncientFragment.RUNIC_TABLE);
-
+            ItemStack lexicon = pe.getMainHandItem();
+            lexicon.getData(SCAttachmentTypes.LEXICON_INVENTORY);
             Helpers.updateFragmentsOnClient((ServerPlayer) pe);
-            updateInventory(pe.getMainHandItem(),pe);
+            //updateInventory(pe.getMainHandItem(),pe);
             if (!pe.isCrouching()) {
                 Helpers.updateProgressionsOnClient((ServerPlayer) pe);
-                SCPacketHandler.INSTANCE.sendTo(new OpenScreenPacket(), ((ServerPlayer) pe).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                FDPacketUtil.sendToPlayer((ServerPlayer) pe,new OpenScreenPacket());
+//                SCPacketHandler.INSTANCE.sendTo(new OpenScreenPacket(), ((ServerPlayer) pe).connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
 
             }else{
-                NetworkHooks.openScreen((ServerPlayer) pe,new SolarLexiconContainer.Provider(pe.getItemInHand(hand)),(buf)->{
+                ((ServerPlayer)pe).openMenu(new SolarLexiconContainer.Provider(lexicon),(buf)->{
                     buf.writeItem(pe.getItemInHand(hand));
                 });
+//                NetworkHooks.openScreen((ServerPlayer) pe,new SolarLexiconContainer.Provider(pe.getItemInHand(hand)),(buf)->{
+//                    buf.writeItem(pe.getItemInHand(hand));
+//                });
             }
 
         }
@@ -73,14 +78,15 @@ public class SolarLexicon extends Item {
 
     public void updateInventory(ItemStack stack,Player ent){
         if (stack.getItem() instanceof SolarLexicon){
-            IItemHandler handler = stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+            IItemHandler handler = stack.getData(SCAttachmentTypes.LEXICON_INVENTORY);
             if (handler != null){
                 List<ItemStack> stacks = new ArrayList<>();
                 for (int i = 0;i < handler.getSlots();i++){
                     stacks.add(handler.getStackInSlot(i));
                 }
                 ItemStack[] arr = new ItemStack[stacks.size()];
-                SCPacketHandler.INSTANCE.sendTo(new UpdateInventoryPacket(stacks.toArray(arr)), ((ServerPlayer) ent).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                FDPacketUtil.sendToPlayer((ServerPlayer) ent,new UpdateInventoryPacket(stacks.toArray(arr)));
+//                SCPacketHandler.INSTANCE.sendTo(new UpdateInventoryPacket(stacks.toArray(arr)), ((ServerPlayer) ent).connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
             }
         }
     }

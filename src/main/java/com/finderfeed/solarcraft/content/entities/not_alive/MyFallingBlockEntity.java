@@ -27,6 +27,7 @@ import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.DirectionalPlaceContext;
 import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
@@ -306,7 +307,7 @@ public class MyFallingBlockEntity extends Entity {
         this.setStartPos(this.blockPosition());
     }
     @Override
-    public boolean ignoreExplosion() {
+    public boolean ignoreExplosion(Explosion e) {
         return true;
     }
 }

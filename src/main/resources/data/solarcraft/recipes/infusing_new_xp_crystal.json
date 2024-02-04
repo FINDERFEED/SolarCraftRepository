@@ -1,11 +1,21 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "A": {"item": "minecraft:bowl"},
-    "B": {"item": "solarcraft:enderium_ingot"},
-    "C": {"item": "minecraft:amethyst_shard"},
-    "D": {"item": "solarcraft:illidium_ingot"},
-    "E": {"item": "minecraft:deepslate"}
+    "A": {
+      "item": "minecraft:bowl"
+    },
+    "B": {
+      "item": "solarcraft:enderium_ingot"
+    },
+    "C": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "D": {
+      "item": "solarcraft:illidium_ingot"
+    },
+    "E": {
+      "item": "minecraft:deepslate"
+    }
   },
   "pattern": [
     " C ",

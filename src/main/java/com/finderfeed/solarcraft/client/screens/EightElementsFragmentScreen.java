@@ -2,22 +2,19 @@ package com.finderfeed.solarcraft.client.screens;
 
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.*;
-import com.finderfeed.solarcraft.events.other_events.event_handler.ClientEventsHandler;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 
+import com.finderfeed.solarcraft.local_library.client.screens.buttons.FDImageButton;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.ItemStackTabButton;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.misc_things.SCLocations;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Items;
 
 public class EightElementsFragmentScreen extends LexiconScreen {
     private int ticker = 0;
@@ -34,34 +31,22 @@ public class EightElementsFragmentScreen extends LexiconScreen {
     protected void init() {
         super.init();
         ticker = 0;
-//        addRenderableWidget(new ItemStackTabButton(relX+258,relY+28,17,17,(button)->{minecraft.setScreen(new SolarLexiconRecipesScreen());}, Items.CRAFTING_TABLE.getDefaultInstance(),0.7f,
-//                (buttons, graphics, b, c) -> {
-//                    graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.recipes_screen"), b, c);
-//                }));
-//        addRenderableWidget(new ItemStackTabButton(relX+258,relY+28 + 18,17,17,(button)->{
-//            Minecraft mc = Minecraft.getInstance();
-////            SolarLexicon lexicon = (SolarLexicon) mc.player.getMainHandItem().getItem();
-////            lexicon.currentSavedScreen = this;
-//            ClientEventsHandler.SOLAR_LEXICON_SCREEN_HANDLER.memorizeAndClose();
-////            minecraft.setScreen(null);
-//        }, Items.WRITABLE_BOOK.getDefaultInstance(),0.7f,(buttons, graphics, b, c) -> {
-//            graphics.renderTooltip(font, Component.translatable("solarcraft.screens.buttons.memorize_page"), b, c);
-//        }));
-
-        addRenderableWidget(new ImageButton(relX + 212 + 16, relY + 11, 16, 16, 0, 0, 0, StructureScreen.BUTTONS, 16, 32, (button) -> {
+        addRenderableWidget(new FDImageButton(relX + 212 + 16, relY + 11, 16, 16,
+                RenderingTools.singleWidgetSprite(SCLocations.NEXT_PAGE), (button) -> {
             this.nextPage();
-        }) {
+        },null) {
             @Override
             public void playDownSound(SoundManager smanager) {
-                smanager.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(), 1, 1));
+                smanager.play(SimpleSoundInstance.forUI(SCSounds.BUTTON_PRESS2.get(), 1, 1));
             }
         });
-        addRenderableWidget(new ImageButton(relX + 212 , relY+11, 16, 16, 0, 16, 0, StructureScreen.BUTTONS, 16, 32, (button) -> {
+        addRenderableWidget(new FDImageButton(relX + 212 , relY+11, 16, 16,
+                RenderingTools.singleWidgetSprite(SCLocations.PREV_PAGE), (button) -> {
             this.previousPage();
-        }) {
+        },null) {
             @Override
             public void playDownSound(SoundManager smanager) {
-                smanager.play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(), 1, 1));
+                smanager.play(SimpleSoundInstance.forUI(SCSounds.BUTTON_PRESS2.get(), 1, 1));
             }
         });
     }

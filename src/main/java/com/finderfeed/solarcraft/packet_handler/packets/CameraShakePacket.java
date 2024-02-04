@@ -1,12 +1,13 @@
 package com.finderfeed.solarcraft.packet_handler.packets;
 
 import com.finderfeed.solarcraft.packet_handler.ClientPacketHandles;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 
-import java.util.function.Supplier;
-
-public class CameraShakePacket {
+@Packet("camera_shake_packet")
+public class CameraShakePacket extends FDPacket {
 
     private int inTime;
     private int stayTime;
@@ -20,7 +21,8 @@ public class CameraShakePacket {
         this.spread = spread;
     }
 
-    public CameraShakePacket(FriendlyByteBuf buf){
+
+    public CameraShakePacket(FriendlyByteBuf buf) {
         this.inTime = buf.readInt();
         this.stayTime = buf.readInt();
         this.outTime = buf.readInt();
@@ -34,12 +36,17 @@ public class CameraShakePacket {
         buf.writeFloat(spread);
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(()->{
-            ClientPacketHandles.handleCameraShakePacket(inTime,stayTime,outTime,spread);
-        });
-        ctx.get().setPacketHandled(true);
+//    public static void handle(CameraShakePacket packet, PlayPayloadContext context) {
+//        ClientPacketHandles.handleCameraShakePacket(packet.inTime,packet.stayTime,packet.outTime,packet.spread);
+//    }
+
+    @Override
+    public void clientPlayHandle(PlayPayloadContext ctx) {
+        ClientPacketHandles.handleCameraShakePacket(inTime,stayTime,outTime,spread);
     }
 
-
+    @Override
+    public void write(FriendlyByteBuf friendlyByteBuf) {
+        this.toBytes(friendlyByteBuf);
+    }
 }

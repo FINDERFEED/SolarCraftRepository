@@ -13,6 +13,7 @@ import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.LaunchOrbitalMissilePacket;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
@@ -72,15 +73,21 @@ public class SolarOrbitalMissileLauncherScreen extends DefaultScreen {
             int z = Integer.parseInt(zbox.getValue());
             int radius = Integer.parseInt(radbox.getValue());
             int depth = Integer.parseInt(depthbox.getValue());
-            SCPacketHandler.INSTANCE.sendToServer(new LaunchOrbitalMissilePacket(
+            FDPacketUtil.sendToServer(new LaunchOrbitalMissilePacket(
                     tilePos,x,z,radius,depth,false
             ));
+//            SCPacketHandler.INSTANCE.sendToServer(new LaunchOrbitalMissilePacket(
+//                    tilePos,x,z,radius,depth,false
+//            ));
         });
         SolarCraftButton cancelButton = new SolarCraftButton(relX + this.getScreenWidth() + 28,relY + 50,45,15,
                 Component.translatable("solarcraft.screens.orbital_missile_launch.cancel"),(btn)->{
-            SCPacketHandler.INSTANCE.sendToServer(new LaunchOrbitalMissilePacket(
+            FDPacketUtil.sendToServer(new LaunchOrbitalMissilePacket(
                     tilePos,0,0,0,0,true
             ));
+//            SCPacketHandler.INSTANCE.sendToServer(new LaunchOrbitalMissilePacket(
+//                    tilePos,0,0,0,0,true
+//            ));
         });
         InfoButton info = new InfoButton(relX - 15,relY +  this.getScreenHeight() / 2 - 6,13,13,(btn,graphics,mx,my)->{
             String s = Component.translatable("solarcraft.screens.orbital_missile_launch.info",
@@ -99,7 +106,7 @@ public class SolarOrbitalMissileLauncherScreen extends DefaultScreen {
 
         PoseStack matrices = graphics.pose();
 
-        this.renderBackground(graphics);
+        this.renderBackground(graphics,mx,my,pTicks);
         ClientHelpers.bindText(LOCATION);
         RenderingTools.blitWithBlend(matrices,relX,relY,0,0,this.getScreenWidth(),this.getScreenHeight(),256,256,0,1f);
         if (ClientHelpers.getLevel().getBlockEntity(tilePos) instanceof SolarOrbitalMissileLauncherTileEntity tile){

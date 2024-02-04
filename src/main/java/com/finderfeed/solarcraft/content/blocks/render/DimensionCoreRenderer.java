@@ -18,6 +18,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
 
@@ -62,7 +63,7 @@ public class DimensionCoreRenderer extends TileEntityRenderer<DimensionCoreTile>
         matrices.popPose();
 
         if (FDMathHelper.canSeeBlock(tile.getBlockPos().above(3),Minecraft.getInstance().player) &&
-                RenderingTools.isBoxVisible(tile.getRenderBoundingBox()) && (Minecraft.getInstance().cameraEntity != null)) {
+                RenderingTools.isBoxVisible(this.getRenderBoundingBox(tile)) && (Minecraft.getInstance().cameraEntity != null)) {
             Vec3 playerPos = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
 
 
@@ -106,5 +107,10 @@ public class DimensionCoreRenderer extends TileEntityRenderer<DimensionCoreTile>
         }else{
             RenderingTools.addActivePostShader(tile.toString(),uniforms,SHADER);
         }
+    }
+
+    @Override
+    public AABB getRenderBoundingBox(DimensionCoreTile blockEntity) {
+        return Helpers.createAABBWithRadius(Helpers.getBlockCenter(blockEntity.getBlockPos()).add(0,3,0),3,3);
     }
 }

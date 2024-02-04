@@ -1,7 +1,7 @@
 {
   "placement": [
     {
-      "chance": 250,
+      "chance": 70,
       "type": "minecraft:rarity_filter"
     },
     {

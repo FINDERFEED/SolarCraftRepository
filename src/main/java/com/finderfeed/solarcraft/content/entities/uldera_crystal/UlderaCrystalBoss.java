@@ -19,7 +19,7 @@ import com.finderfeed.solarcraft.local_library.entities.BossAttackChain;
 import com.finderfeed.solarcraft.local_library.entities.bossbar.server.CustomServerBossEvent;
 import com.finderfeed.solarcraft.misc_things.NoHealthLimitMob;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.packet_handler.PacketHelper;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.CameraShakePacket;
 import com.finderfeed.solarcraft.packet_handler.packets.DisablePlayerFlightPacket;
 import com.finderfeed.solarcraft.registries.animations.SCAnimations;
@@ -27,10 +27,9 @@ import com.finderfeed.solarcraft.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.effects.SCEffects;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -48,6 +47,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -208,7 +208,7 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
     private void disableFlight(ServerPlayer player){
         if (player.getAbilities().flying){
             DisablePlayerFlightPacket.send(player,true);
-            PacketHelper.sendToPlayersTrackingEntity(this,
+             FDPacketUtil.sendToTrackingEntity(this,
                     new SendShapeParticlesPacket(
                             new BurstAttackParticleShape(this.getCenterPos(),
                                     player.position().add(0,player.getBbHeight()/2,0)
@@ -222,7 +222,7 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
                                     .setPhysics(false)
                                     .build()
                     ));
-            PacketHelper.sendToPlayersTrackingEntity(this,
+             FDPacketUtil.sendToTrackingEntity(this,
                     new SendShapeParticlesPacket(
                             new BurstAttackParticleShape(this.getCenterPos(),
                                     player.position().add(0,player.getBbHeight()/2,0)
@@ -407,7 +407,7 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
         Vec3 pos = this.position().add(xOffs/2,this.getBbHeight()/2,zOffs/2);
         crystal.setPos(pos);
         level.addFreshEntity(crystal);
-        PacketHelper.sendToPlayersTrackingEntity(this,
+         FDPacketUtil.sendToTrackingEntity(this,
                 new SendShapeParticlesPacket(
                         new BurstAttackParticleShape(this.getCenterPos(),pos,0.5f,3,
                                 0.025),
@@ -456,7 +456,7 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
         }else{
             if (tick % 2 == 0) {
                 Vec3 v = this.getCenterPos();
-                PacketHelper.sendToPlayersTrackingEntity(this, new SendShapeParticlesPacket(
+                 FDPacketUtil.sendToTrackingEntity(this, new SendShapeParticlesPacket(
                         new SphereParticleShape(PULL_DISTANCE, 0.6f, 3, true, false, 0.25f),
                         new BallParticleOptions.Builder().setRGB(180,60,255).setPhysics(false)
                                 .setShouldShrink(true).setSize(0.4f).build(),
@@ -534,24 +534,24 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
 
     private void sendExplosionParticles(){
         Vec3 v = this.getCenterPos();
-        PacketHelper.sendToPlayersTrackingEntity(this,new SendShapeParticlesPacket(
+         FDPacketUtil.sendToTrackingEntity(this,new SendShapeParticlesPacket(
                 new SphereParticleShape(0.5,0.6f,3,true,true,1f),
                 new BallParticleOptions.Builder().setRGB(90,0,186).setPhysics(false)
                         .setShouldShrink(true).setSize(0.25f).build(),
                 v.x,v.y,v.z,0,0,0
         ));
-        PacketHelper.sendToPlayersTrackingEntity(this,new SendShapeParticlesPacket(
+         FDPacketUtil.sendToTrackingEntity(this,new SendShapeParticlesPacket(
                 new SphereParticleShape(0,0.6f,2,true,true,1f),
                 new LightningParticleOptions(2f,90,0,186,-1,60,false),
                 v.x,v.y,v.z,0,0,0
         ));
-        PacketHelper.sendToPlayersTrackingEntity(this,new SendShapeParticlesPacket(
+         FDPacketUtil.sendToTrackingEntity(this,new SendShapeParticlesPacket(
                 new SphereParticleShape(1.5,0.8f,3,true,true,1f),
                 new BallParticleOptions.Builder().setRGB(90,0,186).setPhysics(false)
                         .setShouldShrink(true).setSize(0.25f).build(),
                 v.x,v.y,v.z,0,0,0
         ));
-        PacketHelper.sendToPlayersTrackingEntity(this,new SendShapeParticlesPacket(
+         FDPacketUtil.sendToTrackingEntity(this,new SendShapeParticlesPacket(
                 new SphereParticleShape(1,0.8f,2,true,true,1f),
                 new LightningParticleOptions(2f,90,0,186,-1,60,false),
                 v.x,v.y,v.z,0,0,0
@@ -566,7 +566,7 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
         ElectricRainEntity rain = new ElectricRainEntity(SCEntityTypes.ELECTRIC_RAIN.get(),level);
         int height = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,pos.getX(),pos.getZ());
         Vec3 v = new Vec3(pos.getX() + 0.5,height,pos.getZ() + 0.5);
-        PacketHelper.sendToPlayersTrackingEntity(this,
+         FDPacketUtil.sendToTrackingEntity(this,
                 new SendShapeParticlesPacket(
                         new BurstAttackParticleShape(this.getCenterPos(),
                                 v
@@ -580,7 +580,7 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
                                 .setPhysics(false)
                                 .build()
                 ));
-        PacketHelper.sendToPlayersTrackingEntity(this,
+         FDPacketUtil.sendToTrackingEntity(this,
                 new SendShapeParticlesPacket(
                         new BurstAttackParticleShape(this.getCenterPos(),
                                 v
@@ -677,7 +677,7 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
     }
 
     @Override
-    public boolean ignoreExplosion() {
+    public boolean ignoreExplosion(Explosion p_312868_) {
         return true;
     }
 
@@ -709,7 +709,7 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
                             .replaceable(false)
                     .build());
             this.getAnimationManager().stopAnimation(TEMP2);
-            PacketHelper.sendToPlayersCloseToSpot(level,this.getCenterPos(),30,new CameraShakePacket(5,
+            FDPacketUtil.sendToPlayersCloseToSpot(level,this.getCenterPos(),30,new CameraShakePacket(5,
                     SCAnimations.ULDERA_CRYSTAL_DIE.get().tickLength() - 20,
                     20,0.5f));
         }
@@ -723,13 +723,13 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
         }
         if (this.deathTime >= SCAnimations.ULDERA_CRYSTAL_DIE.get().tickLength() && !this.level().isClientSide() && !this.isRemoved()) {
             Vec3 c = this.getCenterPos();
-            PacketHelper.sendToPlayersTrackingEntity(this,new SendShapeParticlesPacket(
+             FDPacketUtil.sendToTrackingEntity(this,new SendShapeParticlesPacket(
                     new SphereParticleShape(0.5,0.6f,5,true,true,1f),
                     new BallParticleOptions.Builder().setRGB(90,0,186).setPhysics(false)
                             .setShouldShrink(true).setSize(0.5f).build(),
                     c.x,c.y,c.z,0,0,0
             ));
-            PacketHelper.sendToPlayersTrackingEntity(this,new SendShapeParticlesPacket(
+             FDPacketUtil.sendToTrackingEntity(this,new SendShapeParticlesPacket(
                     new SphereParticleShape(0.5,0.6f,3,true,true,1f),
                     new LightningParticleOptions(2f,90,0,186,-1,60,false),
                     c.x,c.y,c.z,0,0,0
@@ -901,12 +901,12 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
 
     @Override
     protected SoundEvent getHurtSound(DamageSource p_21239_) {
-        return SolarcraftSounds.CRYSTAL_HIT.get();
+        return SCSounds.CRYSTAL_HIT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SolarcraftSounds.CRYSTAL_HIT.get();
+        return SCSounds.CRYSTAL_HIT.get();
     }
 
 }

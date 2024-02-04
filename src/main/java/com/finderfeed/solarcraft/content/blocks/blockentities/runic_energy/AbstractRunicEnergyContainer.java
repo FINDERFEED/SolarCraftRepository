@@ -2,6 +2,7 @@ package com.finderfeed.solarcraft.content.blocks.blockentities.runic_energy;
 
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
+import com.finderfeed.solarcraft.events.other_events.event_handler.ModEventHandler;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.OwnedBlock;
 import com.finderfeed.solarcraft.local_library.helpers.CompoundNBTHelper;
@@ -28,9 +29,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
-import net.minecraftforge.common.world.ForgeChunkManager;
-import net.minecraftforge.network.PacketDistributor;
-
+import net.neoforged.neoforge.common.world.chunk.ForcedChunkManager;
+import net.neoforged.neoforge.common.world.chunk.TicketController;
+import net.neoforged.neoforge.network.PacketDistributor;
 import javax.annotation.Nullable;
 import java.util.*;
 
@@ -197,18 +198,15 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         CompoundTag cmp = new CompoundTag();
         CompoundNBTHelper.writeBlockPosList("posclient",nullOrGiverPositionForClient,cmp);
-        if (this.saveAndLoadEverything()){
-            this.saveAdditional(cmp);
-        }
+        this.saveAdditional(cmp);
         return ClientboundBlockEntityDataPacket.create(this,(tile)->{return cmp;});
     }
 
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         nullOrGiverPositionForClient = CompoundNBTHelper.getBlockPosList("posclient",pkt.getTag());
-        if (this.saveAndLoadEverything()){
-            this.load(pkt.getTag());
-        }
+        this.load(pkt.getTag());
+
     }
 
     public void giveEnergy(RunicEnergy.Type type, double amount){
@@ -283,7 +281,8 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
             if (route != null) {
                 if (level.getBlockEntity(route.get(route.size()-1)) instanceof RuneEnergyPylonTile pylon) {
                     ChunkPos pos = new ChunkPos(pylon.getPos());
-                    ForgeChunkManager.forceChunk((ServerLevel) level, SolarCraft.MOD_ID,
+
+                    ModEventHandler.TICKET_CONTROLLER.forceChunk((ServerLevel) level,
                             pylon.getPos(), pos.x, pos.z, true, true);
                 }
                 PATH_TO_CONTAINERS.put(type, route);
@@ -365,15 +364,15 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
 
     public void updateRunicEnergy(float radiusOfUpdate){
         if (!level.isClientSide){
-            SCPacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(
+            PacketDistributor.NEAR.with(
                 PacketDistributor.TargetPoint.p(
                         this.getBlockPos().getX(),
                         this.getBlockPos().getY(),
                         this.getBlockPos().getZ(),
                         radiusOfUpdate,
                         this.level.dimension()
-                )
-            ),new UpdateRunicEnergyInContainerPacket(this));
+                ).get()
+            ).send(new UpdateRunicEnergyInContainerPacket(this));
         }
     }
 
@@ -385,7 +384,7 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
         this.removeFirstPos(firstPos);
         if (!level.isClientSide && level.getBlockEntity(path.get(path.size()-1)) instanceof RuneEnergyPylonTile pylon){
             ChunkPos pos = new ChunkPos(pylon.getPos());
-            ForgeChunkManager.forceChunk((ServerLevel)level, SolarCraft.MOD_ID,
+            ModEventHandler.TICKET_CONTROLLER.forceChunk((ServerLevel)level,
                     pylon.getPos(),pos.x,pos.z,false,true);
         }
         RunicEnergyPath.resetRepeaterConnections(path, level);
@@ -403,9 +402,7 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
         this.container = container;
     }
 
-    public boolean saveAndLoadEverything(){
-        return false;
-    }
+
 
     public List<BlockPos> getNullOrGiverPositionForClient() {
         return nullOrGiverPositionForClient;
@@ -416,9 +413,7 @@ public abstract class AbstractRunicEnergyContainer extends SolarcraftBlockEntity
         super.onLoad();
         if (!level.isClientSide) {
             this.container.setMaximumEnergy((float) getRunicEnergyLimit());
-            if (this.saveAndLoadEverything()){
-                Helpers.updateTile(this);
-            }
+            Helpers.updateTile(this);
         }
     }
 }

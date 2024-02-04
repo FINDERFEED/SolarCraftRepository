@@ -1,6 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "#forge:is_plains",
-  "features": "solarcraft:lunar_lily",
-  "step": "top_layer_modification"
-}

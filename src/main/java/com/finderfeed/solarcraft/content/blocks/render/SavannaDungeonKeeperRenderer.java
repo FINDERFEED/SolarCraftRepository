@@ -110,5 +110,8 @@ public class SavannaDungeonKeeperRenderer extends TileEntityRenderer<SavannaDung
 
     }
 
-
+    @Override
+    public AABB getRenderBoundingBox(SavannaDungeonKeeperTile blockEntity) {
+        return Helpers.createAABBWithRadius(Helpers.posToVec(blockEntity.getBlockPos()),10,10);
+    }
 }

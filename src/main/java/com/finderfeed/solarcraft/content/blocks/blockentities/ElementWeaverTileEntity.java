@@ -6,7 +6,8 @@ import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.registries.ConfigRegistry;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.SCAttachmentTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.Item;
@@ -15,6 +16,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.attachment.AttachmentType;
+import net.neoforged.neoforge.items.ItemStackHandler;
+
+import java.util.function.Supplier;
 
 public class ElementWeaverTileEntity extends REItemHandlerBlockEntity{
 
@@ -37,7 +42,7 @@ public class ElementWeaverTileEntity extends REItemHandlerBlockEntity{
     private boolean active;
 
     public ElementWeaverTileEntity(BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.ELEMENT_WEAVER.get(), p_155229_, p_155230_);
+        super(SCTileEntities.ELEMENT_WEAVER.get(), p_155229_, p_155230_);
     }
 
 
@@ -160,10 +165,6 @@ public class ElementWeaverTileEntity extends REItemHandlerBlockEntity{
     }
 
 
-    @Override
-    public boolean saveAndLoadEverything() {
-        return true;
-    }
 
     public RunicEnergyCost getProcessingItemCost() {
         return processingItemCost;
@@ -202,8 +203,9 @@ public class ElementWeaverTileEntity extends REItemHandlerBlockEntity{
         return true;
     }
 
+
     @Override
-    public AABB getRenderBoundingBox() {
-        return Helpers.createAABBWithRadius(Helpers.posToVec(getBlockPos()),10,10);
+    public Supplier<AttachmentType<ItemStackHandler>> getAttachmentType() {
+        return SCAttachmentTypes.INVENTORY_2;
     }
 }

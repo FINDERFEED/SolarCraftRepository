@@ -7,7 +7,7 @@ import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraftforge.fml.loading.FMLPaths;
+import net.neoforged.fml.loading.FMLPaths;
 import org.apache.logging.log4j.Level;
 
 import java.io.IOException;

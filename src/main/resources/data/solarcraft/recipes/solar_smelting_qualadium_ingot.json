@@ -1,5 +1,5 @@
 {
-  "type":"solarcraft:solar_smelting",
+  "type": "solarcraft:solar_smelting",
   "ingredients": [
     {
       "smelting_item": "solarcraft:illidium_ingot"

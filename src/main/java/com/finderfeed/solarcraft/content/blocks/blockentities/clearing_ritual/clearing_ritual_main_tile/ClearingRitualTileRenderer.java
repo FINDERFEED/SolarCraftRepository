@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
 
@@ -137,6 +138,11 @@ public class ClearingRitualTileRenderer extends TileEntityRenderer<ClearingRitua
         matrices.popPose();
         matrices.popPose();
 
+    }
+
+    @Override
+    public AABB getRenderBoundingBox(ClearingRitualMainTile blockEntity) {
+        return Helpers.createAABBWithRadius(Helpers.getBlockCenter(blockEntity.getBlockPos()),20,100);
     }
 
     @Override

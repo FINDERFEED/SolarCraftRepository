@@ -7,22 +7,24 @@ import com.finderfeed.solarcraft.misc_things.AbstractPacket;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
+import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import net.minecraft.core.BlockPos;
 
 
 import java.util.function.Supplier;
 
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
-
-public class RunicTablePacket extends AbstractPacket {
+@Packet("runic_table_packet")
+public class RunicTablePacket extends FDPacket {
 
 
     public int xPressPos;
@@ -35,25 +37,24 @@ public class RunicTablePacket extends AbstractPacket {
         this.pos = tilePos;
     }
 
-    public RunicTablePacket(FriendlyByteBuf buffer){
+
+    public RunicTablePacket(FriendlyByteBuf buffer) {
         this.xPressPos = buffer.readInt();
         this.yPressPos = buffer.readInt();
         this.pos = buffer.readBlockPos();
     }
 
-    @Override
     public void toBytes(FriendlyByteBuf buf) {
         buf.writeInt(xPressPos);
         buf.writeInt(yPressPos);
         buf.writeBlockPos(pos);
     }
 
-    @Override
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(()->{
-            ServerPlayer player = ctx.get().getSender();
+    public void handle(PlayPayloadContext ctx) {
+        
+            ServerPlayer player = (ServerPlayer) ctx.player().get();
             RunePattern pattern = new RunePattern(player);
-            if (player.level.getBlockEntity(pos) instanceof RunicTableTileEntity table) {
+            if (player.level().getBlockEntity(pos) instanceof RunicTableTileEntity table) {
                 IItemHandler h = table.getInventory();
                 int runeInt = pattern.getRune(xPressPos, yPressPos);
                 if (runeInt != RunePattern.OPENED) {
@@ -97,12 +98,20 @@ public class RunicTablePacket extends AbstractPacket {
                             player.sendSystemMessage(Component.literal("Couldn't find any unlockable fragment. Tell that to dev if you haven't done anything suspicious.").withStyle(ChatFormatting.RED));
                         }
                     }
-
-                    SCPacketHandler.INSTANCE.sendTo(new UpdateRunePattern(player, AncientFragmentHelper.getAllUnlockableFragments(player) == null), player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                    FDPacketUtil.sendToPlayer(player,new UpdateRunePattern(player, AncientFragmentHelper.getAllUnlockableFragments(player) == null));
+//                    SCPacketHandler.INSTANCE.sendTo(new UpdateRunePattern(player, AncientFragmentHelper.getAllUnlockableFragments(player) == null), player.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
                 }
             }
 
-        });
-        ctx.get().setPacketHandled(true);
+    }
+
+    @Override
+    public void serverPlayHandle(PlayPayloadContext ctx) {
+        this.handle(ctx);
+    }
+
+    @Override
+    public void write(FriendlyByteBuf friendlyByteBuf) {
+        this.toBytes(friendlyByteBuf);
     }
 }

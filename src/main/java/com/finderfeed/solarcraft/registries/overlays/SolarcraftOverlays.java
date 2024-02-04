@@ -37,12 +37,12 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
-import net.minecraftforge.client.gui.overlay.ForgeGui;
-import net.minecraftforge.client.gui.overlay.IGuiOverlay;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.client.event.RegisterGuiOverlaysEvent;
+import net.neoforged.neoforge.client.gui.overlay.ExtendedGui;
+import net.neoforged.neoforge.client.gui.overlay.IGuiOverlay;
 import org.joml.Matrix4f;
 
 
@@ -57,11 +57,12 @@ public class SolarcraftOverlays {
 
     @SubscribeEvent
     public static void registerOverlays(RegisterGuiOverlaysEvent event){
-        event.registerAboveAll("solar_wand",new SolarWand());
-        event.registerAboveAll("ultra_crossbow",new UltraCrossbow());
-        event.registerAboveAll("runic_energy_bars",new RunicEnergyBars());
-        event.registerAboveAll("flash",new Flash());
-        event.registerBelow(new ResourceLocation(SolarCraft.MOD_ID,"flash"),"boss_bars",new BossBars());
+        event.registerAboveAll(new ResourceLocation(SolarCraft.MOD_ID,"solar_wand"),new SolarWand());
+        event.registerAboveAll(new ResourceLocation(SolarCraft.MOD_ID,"ultra_crossbow"),new UltraCrossbow());
+        event.registerAboveAll(new ResourceLocation(SolarCraft.MOD_ID,"runic_energy_bars"),new RunicEnergyBars());
+        event.registerAboveAll(new ResourceLocation(SolarCraft.MOD_ID,"flash"),new Flash());
+        event.registerBelow(new ResourceLocation(SolarCraft.MOD_ID,"flash"),
+                new ResourceLocation(SolarCraft.MOD_ID,"boss_bars"),new BossBars());
     }
 
     public static class BossBars implements IGuiOverlay{
@@ -71,7 +72,7 @@ public class SolarcraftOverlays {
 
 
         @Override
-        public void render(ForgeGui gui, GuiGraphics graphics, float partialTick, int screenWidth, int screenHeight) {
+        public void render(ExtendedGui gui, GuiGraphics graphics, float partialTick, int screenWidth, int screenHeight) {
             if (!BOSS_BARS.isEmpty()) {
                 PoseStack matrices = graphics.pose();
                 Minecraft mc = gui.getMinecraft();
@@ -112,7 +113,7 @@ public class SolarcraftOverlays {
     public static class RunicEnergyBars implements IGuiOverlay{
 
         @Override
-        public void render(ForgeGui gui, GuiGraphics g, float partialTick, int screenWidth, int screenHeight) {
+        public void render(ExtendedGui gui, GuiGraphics g, float partialTick, int screenWidth, int screenHeight) {
             Minecraft mc = Minecraft.getInstance();
 
 
@@ -152,7 +153,7 @@ public class SolarcraftOverlays {
     public static class Flash implements IGuiOverlay{
 
         @Override
-        public void render(ForgeGui gui, GuiGraphics graphics, float partialTick, int screenWidth, int screenHeight) {
+        public void render(ExtendedGui gui, GuiGraphics graphics, float partialTick, int screenWidth, int screenHeight) {
             if (currentFlashEffect == null) return;
 
             PoseStack matrices = graphics.pose();
@@ -189,7 +190,7 @@ public class SolarcraftOverlays {
         public static ResourceLocation PRICEL = new ResourceLocation("solarcraft","textures/misc/solar_crossbow_pricel.png");
 
         @Override
-        public void render(ForgeGui gui, GuiGraphics graphics, float partialTick, int screenWidth, int screenHeight) {
+        public void render(ExtendedGui gui, GuiGraphics graphics, float partialTick, int screenWidth, int screenHeight) {
             Minecraft mc = Minecraft.getInstance();
                 if (Minecraft.getInstance().player.getMainHandItem().getItem() instanceof UltraCrossbowItem) {
                     PoseStack stack = graphics.pose();
@@ -227,7 +228,7 @@ public class SolarcraftOverlays {
         public static final ResourceLocation LOC = new ResourceLocation("solarcraft", "textures/misc/wand_crafting_progress.png");
 
         @Override
-        public void render(ForgeGui gui, GuiGraphics graphics, float partialTick, int screenWidth, int screenHeight) {
+        public void render(ExtendedGui gui, GuiGraphics graphics, float partialTick, int screenWidth, int screenHeight) {
 
             Minecraft mc = Minecraft.getInstance();
             Player player = mc.player;
@@ -237,8 +238,8 @@ public class SolarcraftOverlays {
                 int height = mc.getWindow().getGuiScaledHeight();
                 int width = mc.getWindow().getGuiScaledWidth();
                 if (re instanceof BlockHitResult result) {
-                    BlockEntity tile = player.level.getBlockEntity(result.getBlockPos());
-                    Block block = player.level.getBlockState(result.getBlockPos()).getBlock();
+                    BlockEntity tile = player.level().getBlockEntity(result.getBlockPos());
+                    Block block = player.level().getBlockState(result.getBlockPos()).getBlock();
                     if (tile instanceof InfuserTileEntity tileInfusing) {
                         ClientHelpers.bindText(LOC);
                         if (tileInfusing.isRecipeInProgress) {

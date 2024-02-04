@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+
 public class ClientAnimationManager implements AnimationManager{
 
     public Map<String, AnimationTicker> tickers = new HashMap<>();

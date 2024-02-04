@@ -1,11 +1,21 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "C": {"item": "minecraft:piston"},
-    "D": {"item": "minecraft:iron_ingot"},
-    "F": {"item": "minecraft:diamond"},
-    "G": {"item": "minecraft:leather"},
-    "Q": {"item": "solarcraft:illidium_ingot"}
+    "C": {
+      "item": "minecraft:piston"
+    },
+    "D": {
+      "item": "minecraft:iron_ingot"
+    },
+    "F": {
+      "item": "minecraft:diamond"
+    },
+    "G": {
+      "item": "minecraft:leather"
+    },
+    "Q": {
+      "item": "solarcraft:illidium_ingot"
+    }
   },
   "pattern": [
     " G ",

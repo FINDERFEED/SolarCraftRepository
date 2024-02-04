@@ -1,12 +1,24 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "A": {"item": "minecraft:netherite_pickaxe"},
-    "B": {"item": "solarcraft:miner_item"},
-    "C": {"item": "solarcraft:qualadium_ingot"},
-    "D": {"item": "solarcraft:energetic_ingot"},
-    "E": {"item": "solarcraft:void_core"},
-    "F": {"item": "solarcraft:geminium_ingot"}
+    "A": {
+      "item": "minecraft:netherite_pickaxe"
+    },
+    "B": {
+      "item": "solarcraft:miner_item"
+    },
+    "C": {
+      "item": "solarcraft:qualadium_ingot"
+    },
+    "D": {
+      "item": "solarcraft:energetic_ingot"
+    },
+    "E": {
+      "item": "solarcraft:void_core"
+    },
+    "F": {
+      "item": "solarcraft:geminium_ingot"
+    }
   },
   "pattern": [
     " D ",
@@ -20,5 +32,5 @@
   },
   "time": 3000,
   "fragment": "solar_god_pickaxe",
-  "catalysts":"Z    ZZ    Z"
+  "catalysts": "Z    ZZ    Z"
 }

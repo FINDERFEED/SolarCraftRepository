@@ -5,7 +5,7 @@ import com.finderfeed.solarcraft.local_library.algorithms.a_star.AStar;
 import com.finderfeed.solarcraft.local_library.algorithms.a_star.IPosition;
 import com.finderfeed.solarcraft.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.ClearingRitualCrystalTile;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -49,7 +49,7 @@ public class CrystalEnergyVinesTile extends BlockEntity {
     private int[] currentPosition;
 
     public CrystalEnergyVinesTile( BlockPos pos, BlockState state) {
-        super(SolarcraftTileEntityTypes.CRYSTAL_ENERGY_VINES.get(), pos, state);
+        super(SCTileEntities.CRYSTAL_ENERGY_VINES.get(), pos, state);
     }
 
 

@@ -15,9 +15,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.portal.PortalInfo;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-
-import net.minecraftforge.common.util.ITeleporter;
-
+import net.neoforged.neoforge.common.util.ITeleporter;
 import javax.annotation.Nullable;
 import java.util.function.Function;
 
@@ -46,7 +44,7 @@ public class RadiantPortalCreatorTile extends BlockEntity {
             world.getEntitiesOfClass(Entity.class,tile.TP_AABB, Entity::canChangeDimensions).forEach((entity)->{
                 if (world.getServer() != null) {
                     ServerLevel destination;
-                    if (entity.level.dimension() == Level.OVERWORLD){
+                    if (entity.level().dimension() == Level.OVERWORLD){
                         destination = world.getServer().getLevel(SCEventHandler.RADIANT_LAND_KEY);
                     }else{
                         destination = world.getServer().getLevel(Level.OVERWORLD);

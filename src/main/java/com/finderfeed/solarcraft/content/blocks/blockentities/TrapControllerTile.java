@@ -1,20 +1,16 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities;
 
 import com.finderfeed.solarcraft.helpers.Helpers;
-import com.finderfeed.solarcraft.content.blocks.BlueGemDoorBlock;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
-import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.world.level.Level;
 
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.core.Direction;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
 
@@ -24,8 +20,7 @@ import java.util.List;
 
 public class TrapControllerTile extends BlockEntity  {
 
-    public final AABB BOX = new AABB(worldPosition.offset(7,-5,3),
-            worldPosition.offset(-7,-1,-3));
+
     public List<BlockPos> trapPositions = new ArrayList<>();
     public List<BlockPos> entrancePositions = new ArrayList<>();
     public List<BlockPos> resultBlockPositions = new ArrayList<>();
@@ -36,7 +31,7 @@ public class TrapControllerTile extends BlockEntity  {
     public int ticks = 0;
 
     public TrapControllerTile( BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.TRAP_STRUCT_CONTROLLER.get(), p_155229_, p_155230_);
+        super(SCTileEntities.TRAP_STRUCT_CONTROLLER.get(), p_155229_, p_155230_);
     }
 
 
@@ -69,13 +64,13 @@ public class TrapControllerTile extends BlockEntity  {
     public static void tick(Level world, BlockPos post, BlockState blockState, TrapControllerTile tile) {
         if (!tile.level.isClientSide && !tile.isActivated){
             if (!tile.destroyedBlocks){
-                tile.fillEntrancePositions();
+//                tile.fillEntrancePositions();
                 tile.fillResultPositions();
                 tile.fillTrapPositions();
                 tile.destroyedBlocks = true;
             }
-            AABB box = new AABB(tile.worldPosition.offset(8,-5,4),
-                    tile.worldPosition.offset(-7,-1,-3));
+            AABB box = new AABB(Helpers.posToVec(tile.worldPosition.offset(8,-5,4)),
+                    Helpers.posToVec(tile.worldPosition.offset(-7,-1,-3)));
             List<Player> list = tile.level.getEntitiesOfClass(Player.class,box);
             list.forEach((player)->{
                 Helpers.fireProgressionEvent(player, Progression.DIMENSIONAL_SHARD_DUNGEON);
@@ -139,7 +134,7 @@ public class TrapControllerTile extends BlockEntity  {
                 if (tile.ticks >= 1800){
                     tile.isAttackingPlayer = false;
                     tile.isActivated = true;
-                    tile.entrancePositions.forEach((pos) -> tile.level.destroyBlock(pos, false));
+                    //tile.entrancePositions.forEach((pos) -> tile.level.destroyBlock(pos, false));
                     tile.resultBlockPositions.forEach((pos) -> tile.level.destroyBlock(pos, false));
                 }
             }

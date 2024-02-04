@@ -34,16 +34,14 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
-import net.minecraftforge.client.event.RenderLevelStageEvent;
-
-import net.minecraftforge.client.model.data.ModelData;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-
-import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
+import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
+import net.neoforged.neoforge.client.model.data.ModelData;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -90,7 +88,7 @@ public class MultiblockVisualizer {
             Vec3 look = player.getLookAngle().multiply(4,4,4);
             double eyes = player.getStandingEyeHeight(player.getPose(),player.getDimensions(player.getPose()));
             Vec3 e = player.position().add(0,eyes,0);
-            ClipContext context = new ClipContext(e,e.add(look), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,null);
+            ClipContext context = new ClipContext(e,e.add(look), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, CollisionContext.empty());
             BlockHitResult result = world.clip(context);
             renderMultiblock(event.getPoseStack(),multiblock,world,Helpers.posToVec(result.getBlockPos()
                             .relative(result.getDirection()))

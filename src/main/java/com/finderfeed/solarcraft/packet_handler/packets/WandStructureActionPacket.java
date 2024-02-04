@@ -4,18 +4,20 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.Ancient
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.packet_handler.ClientPacketHandles;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.network.NetworkEvent;
-
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-public class WandStructureActionPacket {
+@Packet("wand_structure_action_packet")
+public class WandStructureActionPacket extends FDPacket {
 
     private CompoundTag data;
     private BlockPos checkPos;
@@ -33,8 +35,10 @@ public class WandStructureActionPacket {
     }
 
 
-    public WandStructureActionPacket(FriendlyByteBuf buf){
-        this.data = buf.readAnySizeNbt();
+
+
+    public WandStructureActionPacket(FriendlyByteBuf buf) {
+        this.data = buf.readNbt();
         int size = buf.readInt();
         structIds = new ArrayList<>();
         for (int i = 0; i < size;i++){
@@ -52,10 +56,19 @@ public class WandStructureActionPacket {
         buf.writeBlockPos(checkPos);
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(()->{
+    public void handle(PlayPayloadContext ctx) {
+        
             ClientPacketHandles.handleWandStructureActionPacket(checkPos,structIds,data);
-        });
-        ctx.get().setPacketHandled(true);
+        
+    }
+
+    @Override
+    public void clientPlayHandle(PlayPayloadContext ctx) {
+        ClientPacketHandles.handleWandStructureActionPacket(checkPos,structIds,data);
+    }
+
+    @Override
+    public void write(FriendlyByteBuf friendlyByteBuf) {
+        this.toBytes(friendlyByteBuf);
     }
 }

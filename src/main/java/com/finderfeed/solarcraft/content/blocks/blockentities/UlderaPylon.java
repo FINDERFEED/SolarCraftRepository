@@ -7,7 +7,7 @@ import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.ShadowBolt;
 import com.finderfeed.solarcraft.content.entities.projectiles.SummoningProjectile;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -20,6 +20,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
 
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class UlderaPylon extends BlockEntity {
     private int spawnZombieCooldown = 0;
 
     public UlderaPylon(BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.ULDERA_PYLON.get(), p_155229_, p_155230_);
+        super(SCTileEntities.ULDERA_PYLON.get(), p_155229_, p_155230_);
     }
 
     public static void tick(UlderaPylon tile, BlockPos pos, BlockState state, Level world){
@@ -49,7 +50,7 @@ public class UlderaPylon extends BlockEntity {
                         return false;
                     }
                     Vec3 v = e.position().add(0,e.getBbHeight()/2,0).subtract(p).normalize().multiply(0.5,0.5,0.5);
-                    ClipContext clipContext = new ClipContext(p.add(v),e.position().add(0,e.getBbHeight()/2,0), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,null);
+                    ClipContext clipContext = new ClipContext(p.add(v),e.position().add(0,e.getBbHeight()/2,0), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, CollisionContext.empty());
                     return world.clip(clipContext).getType() == HitResult.Type.MISS;
                 });
                 if (!livings.isEmpty()) {

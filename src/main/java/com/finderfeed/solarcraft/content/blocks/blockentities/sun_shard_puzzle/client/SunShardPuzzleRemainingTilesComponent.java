@@ -18,6 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import org.joml.Matrix4f;
 
+
 public class SunShardPuzzleRemainingTilesComponent extends FDScreenComponent {
 
     private Puzzle localPuzzle;

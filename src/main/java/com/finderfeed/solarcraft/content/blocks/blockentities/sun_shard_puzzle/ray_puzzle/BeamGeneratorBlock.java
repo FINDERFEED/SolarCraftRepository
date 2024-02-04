@@ -1,9 +1,8 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.ray_puzzle;
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.ray_puzzle.blockentities.BeamGenerator;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -24,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 public class BeamGeneratorBlock extends Block implements EntityBlock {
 
     public BeamGeneratorBlock() {
-        super(Properties.copy(Blocks.BEDROCK));
+        super(Properties.ofFullCopy(Blocks.BEDROCK));
     }
 
 
@@ -39,7 +38,7 @@ public class BeamGeneratorBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return SolarcraftTileEntityTypes.BEAM_GENERATOR.get().create(pos,state);
+        return SCTileEntities.BEAM_GENERATOR.get().create(pos,state);
     }
 
     @Nullable

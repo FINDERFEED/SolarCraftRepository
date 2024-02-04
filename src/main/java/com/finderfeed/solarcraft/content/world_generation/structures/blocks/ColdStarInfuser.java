@@ -4,7 +4,7 @@ import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.content.world_generation.structures.blocks.tile_entities.ColdStarInfuserTile;
 import com.finderfeed.solarcraft.registries.items.SCItems;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
@@ -77,7 +77,7 @@ public class ColdStarInfuser extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return SolarcraftTileEntityTypes.COLD_STAR_INFUSER.get().create(blockPos,blockState);
+        return SCTileEntities.COLD_STAR_INFUSER.get().create(blockPos,blockState);
     }
 
     @Nullable

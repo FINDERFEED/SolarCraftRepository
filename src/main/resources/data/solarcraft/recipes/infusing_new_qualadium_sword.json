@@ -1,9 +1,15 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "A": {"item": "solarcraft:illidium_sword"},
-    "B": {"item": "solarcraft:geminium_ingot"},
-    "C": {"item": "solarcraft:qualadium_ingot"}
+    "A": {
+      "item": "solarcraft:illidium_sword"
+    },
+    "B": {
+      "item": "solarcraft:geminium_ingot"
+    },
+    "C": {
+      "item": "solarcraft:qualadium_ingot"
+    }
   },
   "pattern": [
     " B ",
@@ -17,6 +23,8 @@
   },
   "time": 2000,
   "fragment": "qualadium_sword",
-  "zeta": 2500,
-  "catalysts": "Z Z   Z Z   "
+  "catalysts": "Z Z   Z Z   ",
+  "re_cost": {
+    "zeta": 2500
+  }
 }
