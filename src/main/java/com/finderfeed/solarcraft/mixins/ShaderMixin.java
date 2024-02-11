@@ -8,10 +8,15 @@ import com.finderfeed.solarcraft.content.blocks.render.WormholeRenderer;
 import com.finderfeed.solarcraft.content.entities.renderers.OrbitalExplosionEntityRenderer;
 import com.finderfeed.solarcraft.events.RenderEventsHandler;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
+import com.finderfeed.solarcraft.local_library.client.GlowShaderInit;
+import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.PostChain;
 import net.minecraft.world.phys.Vec2;
+import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -25,10 +30,12 @@ public class ShaderMixin {
 
     public Vec2 resolution;
 
+
     @Inject(method = "render",at = @At(value = "INVOKE",target = "Lnet/minecraft/client/renderer/LevelRenderer;doEntityOutline()V",
     shift = At.Shift.AFTER))
     public void processPostEffects(float p_109094_, long p_109095_, boolean p_109096_, CallbackInfo ci){
 
+        //GlowShaderInit.processGlowShader();
         this.processPostShaders();
         this.processProgressionShader();
     }
@@ -65,10 +72,12 @@ public class ShaderMixin {
         }
         if ((Minecraft.getInstance().getWindow().getScreenWidth() != 0) && (Minecraft.getInstance().getWindow().getScreenHeight() != 0)) {
             resizeShader(width,height, RuneEnergyPylonRenderer.SHADER, EnergyGeneratorTileRender.SHADER, WormholeRenderer.SHADER,
-                    DimensionCoreRenderer.SHADER,OrbitalExplosionEntityRenderer.postChain);
+                    DimensionCoreRenderer.SHADER,OrbitalExplosionEntityRenderer.postChain, GlowShaderInit.GLOW);
+
             RenderEventsHandler.ACTIVE_SHADERS.forEach((id,shader)->{
                 shader.process(Minecraft.getInstance().getFrameTime());
             });
+
             OrbitalExplosionEntityRenderer.firstPass = true;
             RenderEventsHandler.ACTIVE_SHADERS.clear();
         }
