@@ -13,14 +13,15 @@ import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.client.NeoForgeRenderTypes;
 import org.lwjgl.opengl.GL11;
 
+import java.util.HashMap;
 import java.util.function.Function;
 
 
@@ -33,15 +34,26 @@ public class SolarCraftRenderTypes extends RenderType {
     }
 
 
-    public static Function<ResourceLocation, RenderType> TEXT = Util.memoize(SolarCraftRenderTypes::getText);
+    public static Function<ResourceLocation, RenderType> TEXT_GLOW = Util.memoize(SolarCraftRenderTypes::getGlowText);
+    public static Function<ResourceLocation, RenderType> TEXT_GLOW_NO_SHARD = Util.memoize(SolarCraftRenderTypes::getGlowTextNoShard);
 
-    private static RenderType getText(ResourceLocation locationIn) {
+    private static RenderType getGlowText(ResourceLocation locationIn) {
         RenderType.CompositeState rendertype$state = RenderType.CompositeState.builder()
-                .setShaderState(RENDERTYPE_TEXT_SHADER)
-                .setTextureState(new RenderStateShard.TextureStateShard(locationIn, false, false))
+                .setShaderState(RenderStateShard.RENDERTYPE_TRANSLUCENT_SHADER)
+                .setTextureState(new RenderStateShard.TextureStateShard(locationIn, true, false))
                 .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
                 .setLightmapState(LIGHTMAP)
                 .setOutputState(GlowShaderInit.GLOW_TARGET_SHARD)
+                .createCompositeState(false);
+        return create("glow_text", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, false, true, rendertype$state);
+    }
+
+    private static RenderType getGlowTextNoShard(ResourceLocation locationIn) {
+        RenderType.CompositeState rendertype$state = RenderType.CompositeState.builder()
+                .setShaderState(RenderStateShard.RENDERTYPE_TRANSLUCENT_SHADER)
+                .setTextureState(new RenderStateShard.TextureStateShard(locationIn, true, false))
+                .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+                .setLightmapState(LIGHTMAP)
                 .createCompositeState(false);
         return create("glow_text", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, false, true, rendertype$state);
     }

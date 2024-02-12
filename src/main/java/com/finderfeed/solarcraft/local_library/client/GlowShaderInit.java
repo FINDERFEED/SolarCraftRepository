@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.local_library.client;
 
 import com.finderfeed.solarcraft.SolarCraft;
+import com.finderfeed.solarcraft.client.rendering.rendertypes.SolarCraftRenderTypes;
 import com.finderfeed.solarcraft.client.rendering.shaders.post_chains.PostChainPlusUltra;
 import com.finderfeed.solarcraft.client.rendering.shaders.post_chains.UniformPlusPlus;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
@@ -40,7 +41,7 @@ public class GlowShaderInit {
             GLOW = new PostChainPlusUltra(new ResourceLocation(SolarCraft.MOD_ID,"shaders/post/glow.json"),new UniformPlusPlus(
                     Map.of(
                             "l",1f,
-                            "brightness",1.5f
+                            "brightness",1f
                     )
             ));
             var window = Minecraft.getInstance().getWindow();
@@ -49,7 +50,6 @@ public class GlowShaderInit {
                     window.getScreenHeight()
             );
             GLOW_RENDER_TARGET = GLOW.getTempTarget("glow");
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -58,6 +58,12 @@ public class GlowShaderInit {
     @SubscribeEvent
     public static void afterLevelRender(RenderLevelStageEvent event){
         if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_LEVEL){
+            GLOW.updateUniforms(new UniformPlusPlus(
+                    Map.of(
+                            "l",1f,
+                            "brightness",1f
+                    )
+            ));
             processGlowShader();
         }
     }

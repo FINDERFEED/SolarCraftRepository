@@ -20,6 +20,7 @@ uniform float weight[10] = float[](
 0.07895013119551161,
 0.0656157880233904
 );
+//uniform float weight[5] = float[] (0.227027, 0.1945946, 0.1216216, 0.054054, 0.016216);
 
 in vec2 texCoord;
 
