@@ -37,6 +37,9 @@ public class ParticleEmitter {
         this.z = z;
         this.lifetime = lifetime;
         this.frequency = frequency;
+        for (ParticleEmitterProcessor processor : particleEmitterProcessors){
+            processor.initEmitter(this);
+        }
     }
 
     public void tick(){
@@ -109,4 +112,7 @@ public class ParticleEmitter {
         return lifetime;
     }
 
+    public void clearParticles(){
+        activeParticles.clear();
+    }
 }
