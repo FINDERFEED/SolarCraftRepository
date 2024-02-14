@@ -1,6 +1,5 @@
 package com.finderfeed.solarcraft.local_library.client.particles.particle_emitters;
 
-import com.finderfeed.solarcraft.local_library.NetworkSerializable;
 import com.finderfeed.solarcraft.local_library.client.particles.particle_emitters.particle_emitter_processors.ParticleEmitterProcessor;
 import com.finderfeed.solarcraft.local_library.client.particles.particle_emitters.particle_emitter_processors.ParticleEmitterProcessorData;
 import com.finderfeed.solarcraft.local_library.client.particles.particle_emitters.particle_emitter_processors.ParticleEmitterProcessorDeserializer;
@@ -13,22 +12,23 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ParticleEmitterData {
 
-    public double x;
-    public double y;
-    public double z;
-    public int lifetime;
-    public int frequency;
-    public List<ParticleProcessorData> particleProcessors;
-    public List<ParticleEmitterProcessorData> particleEmitterProcessors;
+    public double x = 0;
+    public double y = 0;
+    public double z = 0;
+    public int lifetime = 60;
+    public int frequency = 1;
+    public List<ParticleProcessorData<?>> particleProcessors = new ArrayList<>();
+    public List<ParticleEmitterProcessorData<?>> particleEmitterProcessors = new ArrayList<>();
     public ParticleOptions particle;
-
 
 
     public void toNetwork(FriendlyByteBuf buf) {
@@ -51,40 +51,93 @@ public class ParticleEmitterData {
         }
     }
 
-    public static ParticleEmitter createEmitterFromPacket(FriendlyByteBuf buf) {
-        double x = buf.readDouble();
-        double y = buf.readDouble();
-        double z = buf.readDouble();
-        int lifetime = buf.readInt();
-        int frequency = buf.readInt();
+    public void fromNetwork(FriendlyByteBuf buf){
+        this.x = buf.readDouble();
+        this.y = buf.readDouble();
+        this.z = buf.readDouble();
+        this.lifetime = buf.readInt();
+        this.frequency = buf.readInt();
         ParticleType pType = buf.readById(BuiltInRegistries.PARTICLE_TYPE);
         ParticleOptions particle = pType.getDeserializer().fromNetwork(pType,buf);
-        LinkedList<ParticleProcessor> particleProcessors = readParticleProcessors(buf);
-        LinkedList<ParticleEmitterProcessor> particleEmitterProcessors = readParticleEmitterProcessors(buf);
-        return new ParticleEmitter(particleProcessors, particleEmitterProcessors,particle,x,y,z,lifetime,frequency);
+        this.particle = particle;
+        List<ParticleProcessorData<?>> particleProcessors = readParticleProcessors(buf);
+        List<ParticleEmitterProcessorData<?>> particleEmitterProcessors = readParticleEmitterProcessors(buf);
+        this.particleProcessors = particleProcessors;
+        this.particleEmitterProcessors = particleEmitterProcessors;
     }
 
-    private static LinkedList<ParticleProcessor> readParticleProcessors(FriendlyByteBuf buf){
+
+    public ParticleEmitter toParticleEmitter(){
+        LinkedList<ParticleProcessor> processors = new LinkedList<>(
+                this.particleProcessors.stream().map(ParticleProcessorData::createInstance).collect(Collectors.toList())
+        );
+        LinkedList<ParticleEmitterProcessor> particleEmitterProcessors = new LinkedList<>(
+                this.particleEmitterProcessors.stream().map(ParticleEmitterProcessorData::createInstance).collect(Collectors.toList())
+        );
+
+        return new ParticleEmitter(processors,particleEmitterProcessors,
+                particle,
+                x,y,z,lifetime,frequency);
+    }
+
+
+
+    private static ArrayList<ParticleProcessorData<?>> readParticleProcessors(FriendlyByteBuf buf){
         int particleProcessorSize = buf.readInt();
-        LinkedList<ParticleProcessor> particleProcessors = new LinkedList<>();
+        ArrayList<ParticleProcessorData<?>> particleProcessors = new ArrayList<>();
         for (int i = 0; i < particleProcessorSize;i++){
             String name = buf.readUtf();
-            ParticleProcessorDeserializer<?> deserializer = ParticleProcessors.TYPES.get(name).getDeserializer();
-            ParticleProcessor processor = deserializer.fromNetwork(buf);
+            ParticleProcessorDeserializer<?> deserializer = ParticleProcessors.TYPES.get(name).getDataDeserializer();
+            ParticleProcessorData<?> processor = deserializer.fromNetwork(buf);
             particleProcessors.add(processor);
         }
         return particleProcessors;
     }
 
-    private static LinkedList<ParticleEmitterProcessor> readParticleEmitterProcessors(FriendlyByteBuf buf){
+    private static ArrayList<ParticleEmitterProcessorData<?>> readParticleEmitterProcessors(FriendlyByteBuf buf){
         int particleProcessorSize = buf.readInt();
-        LinkedList<ParticleEmitterProcessor> particleProcessors = new LinkedList<>();
+        ArrayList<ParticleEmitterProcessorData<?>> particleProcessors = new ArrayList<>();
         for (int i = 0; i < particleProcessorSize;i++){
             String name = buf.readUtf();
-            ParticleEmitterProcessorDeserializer<?> deserializer = ParticleEmitterProcessors.TYPES.get(name).getDeserializer();
-            ParticleEmitterProcessor processor = deserializer.fromNetwork(buf);
+            ParticleEmitterProcessorDeserializer<?> deserializer = ParticleEmitterProcessors.TYPES.get(name).getDataDeserializer();
+            ParticleEmitterProcessorData<?> processor = deserializer.fromNetwork(buf);
             particleProcessors.add(processor);
         }
         return particleProcessors;
+    }
+
+    public ParticleEmitterData setPos(double x,double y,double z){
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        return this;
+    }
+
+    public ParticleEmitterData setPos(Vec3 pos){
+        return this.setPos(pos.x,pos.y,pos.z);
+    }
+
+    public ParticleEmitterData setFrequency(int frequency){
+        this.frequency = frequency;
+        return this;
+    }
+
+    public ParticleEmitterData setLifetime(int lifetime){
+        this.lifetime = lifetime;
+        return this;
+    }
+
+    public ParticleEmitterData setParticle(ParticleOptions options){
+        this.particle = options;
+        return this;
+    }
+
+    public ParticleEmitterData addParticleProcessor(ParticleProcessorData<?> data){
+        this.particleProcessors.add(data);
+        return this;
+    }
+    public ParticleEmitterData addParticleEmitterProcessor(ParticleEmitterProcessorData<?> data){
+        this.particleEmitterProcessors.add(data);
+        return this;
     }
 }

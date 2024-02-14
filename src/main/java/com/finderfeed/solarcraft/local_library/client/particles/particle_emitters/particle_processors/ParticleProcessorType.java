@@ -2,14 +2,14 @@ package com.finderfeed.solarcraft.local_library.client.particles.particle_emitte
 
 public class ParticleProcessorType<T extends ParticleProcessor> {
 
-    private ParticleProcessorDeserializer<T> deserializer;
+    private ParticleProcessorDeserializer<?> deserializer;
     private String name;
 
-    public ParticleProcessorType(String name,ParticleProcessorDeserializer<T> deserializer){
+    public ParticleProcessorType(String name,ParticleProcessorDeserializer<?> deserializer){
         this.name = name;
         this.deserializer = deserializer;
     }
-    public ParticleProcessorDeserializer<T> getDeserializer() {
+    public ParticleProcessorDeserializer<?> getDataDeserializer() {
         return deserializer;
     }
 

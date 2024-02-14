@@ -2,9 +2,11 @@ package com.finderfeed.solarcraft.local_library.client.particles.particle_emitte
 
 import net.minecraft.network.FriendlyByteBuf;
 
-public abstract class ParticleEmitterProcessorData {
+public abstract class ParticleEmitterProcessorData<T extends ParticleEmitterProcessor> {
 
     public abstract void toNetwork(FriendlyByteBuf buf);
 
     public abstract ParticleEmitterProcessorType<?> getType();
+
+    public abstract T createInstance();
 }
