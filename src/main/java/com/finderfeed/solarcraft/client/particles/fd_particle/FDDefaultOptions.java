@@ -13,6 +13,7 @@ public class FDDefaultOptions extends FDParticleOptions<FDDefaultOptions> {
     public float g;
     public float b;
     public float a;
+    public boolean hasPhysics;
 
 
     public FDDefaultOptions(FriendlyByteBuf buf){
@@ -24,13 +25,14 @@ public class FDDefaultOptions extends FDParticleOptions<FDDefaultOptions> {
         this.a = buf.readFloat();
     }
 
-    public FDDefaultOptions(float size, int lifetime, float r, float g, float b, float a) {
+    public FDDefaultOptions(float size, int lifetime, float r, float g, float b, float a,boolean hasPhysics) {
         this.size = size;
         this.lifetime = lifetime;
         this.r = r;
         this.g = g;
         this.b = b;
         this.a = a;
+        this.hasPhysics = hasPhysics;
     }
 
     @Override
@@ -41,6 +43,7 @@ public class FDDefaultOptions extends FDParticleOptions<FDDefaultOptions> {
         buf.writeFloat(g);
         buf.writeFloat(b);
         buf.writeFloat(a);
+        buf.writeBoolean(this.hasPhysics);
     }
 
     public static final Codec<FDDefaultOptions> CODEC = RecordCodecBuilder.create(p->p.group(
@@ -49,7 +52,8 @@ public class FDDefaultOptions extends FDParticleOptions<FDDefaultOptions> {
             Codec.FLOAT.fieldOf("r").forGetter(o->o.r),
             Codec.FLOAT.fieldOf("g").forGetter(o->o.g),
             Codec.FLOAT.fieldOf("b").forGetter(o->o.b),
-            Codec.FLOAT.fieldOf("a").forGetter(o->o.r)
+            Codec.FLOAT.fieldOf("a").forGetter(o->o.r),
+            Codec.BOOL.fieldOf("hasPhysics").forGetter(o->o.hasPhysics)
     ).apply(p,FDDefaultOptions::new));
 
     @Override
