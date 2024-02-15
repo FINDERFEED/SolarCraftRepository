@@ -50,6 +50,14 @@ public class FDMathHelper {
         return value >= val1 && value < val2;
     }
 
+    public static float easeInOut(float p){
+        if (p <= 0.5){
+            return 2 * p * p;
+        }else{
+            return -2 * (p - 1) * (p - 1) + 1;
+        }
+    }
+
     public static boolean isInEllipse(float x,float y,float z,float ellipseRad,float ellipseDepth){
         if (ellipseRad == 0 || ellipseDepth == 0){
             return false;

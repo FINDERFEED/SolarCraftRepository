@@ -3,6 +3,8 @@ package com.finderfeed.solarcraft.client.particles;
 
 
 import com.finderfeed.solarcraft.client.particles.ball_particle.BallParticleOptions;
+import com.finderfeed.solarcraft.client.particles.fd_particle.FDTSParticleOptions;
+import com.finderfeed.solarcraft.client.particles.fd_particle.instances.SmokeParticleOptions;
 import com.finderfeed.solarcraft.client.particles.lightning_particle.LightningParticleOptions;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.particles.SimpleParticleType;
@@ -22,6 +24,13 @@ public class SCParticleTypes {
     public static final DeferredHolder<ParticleType<?>,SimpleParticleType> SOLAR_EXPLOSION_PARTICLE = PARTICLES.register("solar_explosion_particle",()-> new SimpleParticleType(true));
     public static final DeferredHolder<ParticleType<?>,SimpleParticleType> SPARK_PARTICLE = PARTICLES.register("spark_particle",()-> new SimpleParticleType(true));
     public static final DeferredHolder<ParticleType<?>,SimpleParticleType> CRYSTAL_SPARK_PARTICLE = PARTICLES.register("crystal_spark_particle",()-> new SimpleParticleType(true));
+    public static final DeferredHolder<ParticleType<?>, ParticleType<SmokeParticleOptions>> SMOKE_PARTICLE = PARTICLES.register("smoke_particle",()->
+            new ParticleType<SmokeParticleOptions>(true,SmokeParticleOptions.DESERIALIZER) {
+        @Override
+        public Codec<SmokeParticleOptions> codec() {
+            return SmokeParticleOptions.CODEC;
+        }
+    });
     public static final DeferredHolder<ParticleType<?>,ParticleType<BallParticleOptions>> BALL_PARTICLE = PARTICLES.register("ball_particle",()->
             new ParticleType<>(true, BallParticleOptions.DESERIALIZER) {
                 @Override

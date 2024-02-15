@@ -4,6 +4,7 @@ import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.local_library.client.GlowShaderInit;
 import com.mojang.blaze3d.pipeline.RenderTarget;
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
@@ -162,6 +163,53 @@ public class SolarCraftRenderTypes extends RenderType {
 
 
     public static class ParticleRenderTypes {
+
+        public static final ParticleRenderType ADDITIVE_TRANSLUCENT = new ParticleRenderType() {
+            @Override
+            public void begin(BufferBuilder builder, TextureManager mmanager) {
+                RenderSystem.depthMask(false);
+                RenderSystem.enableBlend();
+                RenderSystem.blendFunc(GL11.GL_SRC_ALPHA,GL11.GL_ONE);
+                ClientHelpers.bindText(TextureAtlas.LOCATION_PARTICLES);
+                builder.begin(VertexFormat.Mode.QUADS,DefaultVertexFormat.PARTICLE);
+            }
+
+            @Override
+            public void end(Tesselator tesselator) {
+                tesselator.end();
+                RenderSystem.disableBlend();
+                RenderSystem.depthMask(true);
+            }
+
+            @Override
+            public String toString() {
+                return "solarcraft:additive";
+            }
+        };
+
+        public static final ParticleRenderType NORMAL_TRANSLUCENT = new ParticleRenderType() {
+            @Override
+            public void begin(BufferBuilder builder, TextureManager mmanager) {
+                RenderSystem.depthMask(false);
+                RenderSystem.enableBlend();
+                RenderSystem.blendFunc(GL11.GL_SRC_ALPHA,GL11.GL_ONE_MINUS_SRC_ALPHA);
+                ClientHelpers.bindText(TextureAtlas.LOCATION_PARTICLES);
+                builder.begin(VertexFormat.Mode.QUADS,DefaultVertexFormat.PARTICLE);
+            }
+
+            @Override
+            public void end(Tesselator tesselator) {
+                tesselator.end();
+                RenderSystem.disableBlend();
+                RenderSystem.depthMask(true);
+            }
+
+            @Override
+            public String toString() {
+                return "solarcraft:normal";
+            }
+        };
+
         public static final ParticleRenderType SOLAR_STRIKE_PARTICLE_RENDER_TYPE = new ParticleRenderType() {
             @Override
             public void begin(BufferBuilder bufferBuilder, TextureManager textureManager) {

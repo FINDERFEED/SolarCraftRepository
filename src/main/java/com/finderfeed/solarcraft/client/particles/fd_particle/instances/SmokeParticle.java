@@ -11,19 +11,12 @@ import org.jetbrains.annotations.Nullable;
 
 public class SmokeParticle extends FDTSParticle {
 
-    public SmokeParticle(FDTSParticleOptions options,ClientLevel level, double x, double y, double z, double xd, double yd, double zd) {
+    public SmokeParticle(SmokeParticleOptions options,ClientLevel level, double x, double y, double z, double xd, double yd, double zd) {
         super(options,level, x, y, z, xd, yd, zd);
     }
 
 
-    @Override
-    public void tick() {
-        super.tick();
-    }
-
-
-
-    public static class Provider implements ParticleProvider<FDTSParticleOptions> {
+    public static class Provider implements ParticleProvider<SmokeParticleOptions> {
 
         public SpriteSet spriteSet;
 
@@ -33,7 +26,7 @@ public class SmokeParticle extends FDTSParticle {
 
         @Nullable
         @Override
-        public Particle createParticle(FDTSParticleOptions options, ClientLevel level, double x, double y, double z, double xd, double yd, double zd) {
+        public Particle createParticle(SmokeParticleOptions options, ClientLevel level, double x, double y, double z, double xd, double yd, double zd) {
             SmokeParticle particle = new SmokeParticle(options,level,x,y,z,xd,yd,zd);
             particle.pickSprite(spriteSet);
             return particle;

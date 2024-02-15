@@ -2,51 +2,22 @@ package com.finderfeed.solarcraft.client.particles.fd_particle;
 
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.mojang.datafixers.util.Function3;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.FriendlyByteBuf;
 
-public class FDTSParticleOptions extends ParticleType<FDTSParticleOptions> implements ParticleOptions {
-
-    public static final ParticleOptions.Deserializer<FDTSParticleOptions> DESERIALIZER = new Deserializer<FDTSParticleOptions>() {
-        @Override
-        public FDTSParticleOptions fromCommand(ParticleType<FDTSParticleOptions> buf, StringReader reader) throws CommandSyntaxException {
-            return new FDTSParticleOptions(true);
-        }
-
-        @Override
-        public FDTSParticleOptions fromNetwork(ParticleType<FDTSParticleOptions> type, FriendlyByteBuf buf) {
-            return FDTSParticleOptions.fromNetwork(buf);
-        }
-    };
-
+public abstract class FDTSParticleOptions implements ParticleOptions {
     public FDDefaultOptions defaultOptions;
     public FDScalingOptions scalingOptions;
     public AlphaInOutOptions alphaOptions;
 
-    public FDTSParticleOptions(boolean overrideLimiter){
-        super(overrideLimiter,DESERIALIZER);
-        this.defaultOptions = new FDDefaultOptions(0.5f,60,1f,1f,1f,1f,true);
-        this.scalingOptions = new FDScalingOptions(0,0);
-        this.alphaOptions = new AlphaInOutOptions(0,0);
-    }
-
     public FDTSParticleOptions(FDDefaultOptions defaultOptions, FDScalingOptions scalingOptions, AlphaInOutOptions alphaOptions){
-        super(true,DESERIALIZER);
         this.defaultOptions = defaultOptions;
         this.scalingOptions = scalingOptions;
         this.alphaOptions = alphaOptions;
-    }
-
-    public static FDTSParticleOptions fromNetwork(FriendlyByteBuf buf){
-        return new FDTSParticleOptions(new FDDefaultOptions(buf),new FDScalingOptions(buf),new AlphaInOutOptions(buf));
-    }
-
-    @Override
-    public ParticleType<?> getType() {
-        return this;
     }
 
     @Override
@@ -61,14 +32,4 @@ public class FDTSParticleOptions extends ParticleType<FDTSParticleOptions> imple
         return "fdst_particle_options";
     }
 
-    public static final Codec<FDTSParticleOptions> CODEC = RecordCodecBuilder.create(p->p.group(
-            FDDefaultOptions.CODEC.fieldOf("default_options").forGetter(r->r.defaultOptions),
-            FDScalingOptions.CODEC.fieldOf("scaling_options").forGetter(r->r.scalingOptions),
-            AlphaInOutOptions.CODEC.fieldOf("alpha_options").forGetter(r->r.alphaOptions)
-    ).apply(p, FDTSParticleOptions::new));
-
-    @Override
-    public Codec<FDTSParticleOptions> codec() {
-        return CODEC;
-    }
 }

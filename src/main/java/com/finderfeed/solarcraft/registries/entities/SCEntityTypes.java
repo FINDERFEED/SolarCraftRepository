@@ -32,7 +32,7 @@ public class SCEntityTypes {
 
 
     public static final DeferredHolder<EntityType<?>,EntityType<SolarStrikeEntity>> SOLAR_STRIKE_ENTITY_REG = ENTITY_TYPE_REGISTER.register("solar_strike_entity",
-            ()->EntityType.Builder.of(SolarStrikeEntity::new, MobCategory.CREATURE).sized(0.5F,0.5F).build("solarcraft:solar_strike_entity"));
+            ()->EntityType.Builder.of(SolarStrikeEntity::new, MobCategory.MISC).sized(0.5F,0.5F).build("solarcraft:solar_strike_entity"));
 
 
 
@@ -199,7 +199,7 @@ public class SCEntityTypes {
 
         @SubscribeEvent
         public static void entityAttributes(EntityAttributeCreationEvent event) {
-            event.put(SCEntityTypes.SOLAR_STRIKE_ENTITY_REG.get(), SolarStrikeEntity.createAttributes().build());
+//            event.put(SCEntityTypes.SOLAR_STRIKE_ENTITY_REG.get(), SolarStrikeEntity.createAttributes().build());
             event.put(SCEntityTypes.VILLAGER_SOLAR_MASTER.get(), VillagerSolarMaster.createAttributes().build());
             event.put(SCEntityTypes.CRYSTAL_BOSS.get(), CrystalBossEntity.createAttributes().build());
             event.put(SCEntityTypes.RUNIC_ELEMENTAL_BOSS.get(), RunicElementalBoss.createAttributes().build());

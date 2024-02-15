@@ -1741,5 +1741,4 @@ public class RenderingTools {
     public static WidgetSprites singleWidgetSprite(ResourceLocation location){
         return new WidgetSprites(location,location,location,location);
     }
-
 }
