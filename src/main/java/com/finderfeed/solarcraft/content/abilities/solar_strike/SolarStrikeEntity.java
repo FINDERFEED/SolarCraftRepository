@@ -7,6 +7,8 @@ import com.finderfeed.solarcraft.client.particles.fd_particle.AlphaInOutOptions;
 import com.finderfeed.solarcraft.client.particles.fd_particle.FDDefaultOptions;
 import com.finderfeed.solarcraft.client.particles.fd_particle.FDScalingOptions;
 import com.finderfeed.solarcraft.client.particles.fd_particle.instances.SmokeParticleOptions;
+import com.finderfeed.solarcraft.client.particles.server_data.shapes.SendShapeParticlesPacket;
+import com.finderfeed.solarcraft.client.particles.server_data.shapes.instances.SphereParticleShape;
 import com.finderfeed.solarcraft.content.entities.not_alive.MyFallingBlockEntity;
 import com.finderfeed.solarcraft.events.other_events.event_handler.SCEventHandler;
 import com.finderfeed.solarcraft.helpers.Helpers;
@@ -17,6 +19,7 @@ import com.finderfeed.solarcraft.local_library.client.particles.particle_emitter
 import com.finderfeed.solarcraft.local_library.client.particles.particle_emitters.particle_processors.instances.random_speed.RandomSpeedProcessorData;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
+import com.finderfeed.solarcraft.packet_handler.packets.CameraShakePacket;
 import com.finderfeed.solarcraft.packet_handler.packets.misc_packets.SolarStrikeEntityDoExplosion;
 import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
@@ -61,7 +64,7 @@ public class SolarStrikeEntity extends Entity {
     public static final int BASE_RADIUS = 10;
     public static final int BASE_MAX_DEPTH = 25;
     public static final int RANDOM_DEPTH = 5;
-    public static int TIME_UNTIL_EXPLOSION = 20;
+    public static int TIME_UNTIL_EXPLOSION = 60;
     private UUID owner;
 
     public static EntityDataAccessor<Integer> LIFE = SynchedEntityData.defineId(SolarStrikeEntity.class, EntityDataSerializers.INT);
@@ -100,19 +103,18 @@ public class SolarStrikeEntity extends Entity {
     @Override
     public void tick(){
 
-        RAYS_COUNT = 3;
-        TIME_UNTIL_EXPLOSION = 60;
 
         if (!this.isRemoved()){
             if (!level.isClientSide) {
-                if (tickCount >= TIME_UNTIL_EXPLOSION) {
+                if (tickCount == TIME_UNTIL_EXPLOSION) {
                     this.explode();
+                }else if (tickCount >= TIME_UNTIL_EXPLOSION + 10){
                     this.remove(RemovalReason.DISCARDED);
                 }
             }else{
                 if (tickCount < TIME_UNTIL_EXPLOSION) {
                     this.particlesBeforeExplosion();
-                }else{
+                }else if (tickCount == TIME_UNTIL_EXPLOSION){
                     this.particlesOnExplosion();
                 }
             }
@@ -121,6 +123,25 @@ public class SolarStrikeEntity extends Entity {
 
     private void particlesOnExplosion(){
 
+        int count = 200;
+        double angle = Math.PI * 2 / count;
+
+        for (double i = 0; i <= Math.PI * 2;i += angle){
+            float radius = random.nextFloat() + 1;
+            double x = Math.sin(i) * radius;
+            double z = Math.cos(i) * radius;
+            Vec3 pos = Helpers.getBlockCenter(this.getOnPos()).add(x,0.5,z);
+            int r = level.random.nextInt(25) + 230;
+            int g = level.random.nextInt(25) + 230;
+            int b = level.random.nextInt(30);
+
+            BallParticleOptions options = new BallParticleOptions(5f + random.nextFloat() * 3,
+                    r,g,b,80,true,false);
+            level.addParticle(options,pos.x,pos.y,pos.z,
+                    x * (0.05 + random.nextFloat() * 0.2),
+                    random.nextFloat() * 0.1,
+                    z * (0.05 + random.nextFloat() * 0.2));
+        }
     }
 
     public float getExplosionCompletionPercent(float pticks){
@@ -159,6 +180,7 @@ public class SolarStrikeEntity extends Entity {
 
 
     private void explode(){
+        FDPacketUtil.sendToTrackingEntity(this,new CameraShakePacket(0,10,10,2f));
         if (SCEventHandler.isExplosionBlockerAround(level(), Helpers.getBlockCenter(this.getOnPos())) || !Helpers.isSpellGriefingEnabled((ServerLevel) level)) return;
         int radius = level.random.nextInt(RANDOM_RADIUS) + BASE_RADIUS;
         int depth = level.random.nextInt(RANDOM_DEPTH) + BASE_MAX_DEPTH;

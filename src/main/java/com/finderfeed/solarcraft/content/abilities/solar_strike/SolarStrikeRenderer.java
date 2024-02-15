@@ -8,6 +8,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -16,6 +17,7 @@ import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
 
 import java.util.List;
+import java.util.Random;
 
 
 public class SolarStrikeRenderer extends EntityRenderer<SolarStrikeEntity> {
@@ -26,8 +28,28 @@ public class SolarStrikeRenderer extends EntityRenderer<SolarStrikeEntity> {
     }
     @Override
     public void render(SolarStrikeEntity entity, float p_225623_2_, float pticks, PoseStack matrices, MultiBufferSource buffer, int p_225623_6_) {
-        this.renderRays(entity,matrices, GlowShaderInit.TEST_SOURCE,pticks);
+        if (entity.tickCount < SolarStrikeEntity.TIME_UNTIL_EXPLOSION) {
+            this.renderRays(entity, matrices, GlowShaderInit.TEST_SOURCE, pticks);
+        }else{
+            this.renderStrike(entity,matrices,buffer,pticks);
+        }
 
+    }
+
+    private void renderStrike(SolarStrikeEntity entity,PoseStack matrices,MultiBufferSource src,float pticks){
+        matrices.pushPose();
+
+        Camera camera = Minecraft.getInstance().gameRenderer.getMainCamera();
+        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.ZP(),90));
+        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.XN(),camera.getYRot()));
+
+        for (int i = 0; i < 4;i++) {
+            Random r = new Random(entity.level.getGameTime() + i * 94034);
+            RenderingTools.Lightning2DRenderer.renderLightning(matrices, src, 20, 4f, 1f,
+                    Vec3.ZERO, Vec3.ZERO.add(200, 0, 0), r, 1f, 1f, 0.3f);
+        }
+
+        matrices.popPose();
     }
 
     private void renderRays(SolarStrikeEntity entity,PoseStack matrices,MultiBufferSource src,float pticks){
@@ -45,7 +67,7 @@ public class SolarStrikeRenderer extends EntityRenderer<SolarStrikeEntity> {
 
             matrices.translate(translation.x,translation.y,translation.z);
             Matrix4f m = matrices.last().pose();
-            matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),camera.getYRot()));
+            matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YN(),camera.getYRot()));
 
 
             vertex.vertex(m,-raySize,0,0).color(0,0,0,1).endVertex();
