@@ -4,7 +4,6 @@ import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.local_library.client.GlowShaderInit;
 import com.mojang.blaze3d.pipeline.RenderTarget;
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
@@ -14,7 +13,6 @@ import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.TextureAtlas;
@@ -22,7 +20,6 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
-import java.util.HashMap;
 import java.util.function.Function;
 
 
@@ -34,6 +31,48 @@ public class SolarCraftRenderTypes extends RenderType {
         super(p_173178_, p_173179_, p_173180_, p_173181_, p_173182_, p_173183_, p_173184_, p_173185_);
     }
 
+
+    public static TransparencyStateShard NORMAL_TRANSPARENCY = new TransparencyStateShard("normal_transparency",()->{
+
+        RenderSystem.enableBlend();
+        RenderSystem.blendFunc(GL11.GL_SRC_ALPHA,GL11.GL_ONE_MINUS_SRC_ALPHA);
+        },()->{
+
+        RenderSystem.disableBlend();
+        RenderSystem.defaultBlendFunc();
+    });
+
+    public static RenderType MY_LIGHTNING = create(
+            "my_lightning",
+            DefaultVertexFormat.POSITION_COLOR,
+            VertexFormat.Mode.QUADS,
+            1536,
+            false,
+            true,
+            RenderType.CompositeState.builder()
+                    .setShaderState(RENDERTYPE_LIGHTNING_SHADER)
+                    .setWriteMaskState(COLOR_DEPTH_WRITE)
+                    .setCullState(RenderStateShard.NO_CULL)
+                    .setTransparencyState(LIGHTNING_TRANSPARENCY)
+                    .createCompositeState(false)
+    );
+    public static RenderType myLightning(){
+        return create(
+                "my_lightning",
+                DefaultVertexFormat.POSITION_COLOR,
+                VertexFormat.Mode.QUADS,
+                1536,
+                false,
+                true,
+                RenderType.CompositeState.builder()
+                        .setShaderState(RENDERTYPE_LIGHTNING_SHADER)
+                        .setWriteMaskState(COLOR_DEPTH_WRITE)
+                        .setCullState(RenderStateShard.NO_CULL)
+
+                        .setTransparencyState(LIGHTNING_TRANSPARENCY)
+                        .createCompositeState(false)
+        );
+    }
 
     public static Function<ResourceLocation, RenderType> TEXT_GLOW = Util.memoize(SolarCraftRenderTypes::getGlowText);
     public static Function<ResourceLocation, RenderType> TEXT_GLOW_NO_SHARD = Util.memoize(SolarCraftRenderTypes::getGlowTextNoShard);

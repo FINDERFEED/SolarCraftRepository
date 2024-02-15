@@ -7,7 +7,10 @@ import com.finderfeed.solarcraft.client.rendering.shaders.post_chains.UniformPlu
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.BufferBuilder;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
@@ -16,13 +19,22 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
+import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL11;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = SolarCraft.MOD_ID,bus = Mod.EventBusSubscriber.Bus.FORGE,value = Dist.CLIENT)
 public class GlowShaderInit {
+
+    public static MultiBufferSource.BufferSource TEST_SOURCE = MultiBufferSource.immediateWithBuffers(
+            new HashMap<>(Map.of(
+                    SolarCraftRenderTypes.MY_LIGHTNING,new BufferBuilder(1024)
+            )),new BufferBuilder(1024)
+    );
+
     public static PostChainPlusUltra GLOW;
 
     public static RenderTarget GLOW_RENDER_TARGET;
@@ -55,6 +67,7 @@ public class GlowShaderInit {
         }
     }
 
+    private static Matrix4f MATRIX = null;
     @SubscribeEvent
     public static void afterLevelRender(RenderLevelStageEvent event){
         if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_LEVEL){
@@ -65,6 +78,15 @@ public class GlowShaderInit {
                     )
             ));
             processGlowShader();
+        }else if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_WEATHER){
+            if (MATRIX != null){
+                Matrix4f copy = new Matrix4f(RenderSystem.getModelViewMatrix());
+                RenderSystem.getModelViewMatrix().set(MATRIX);
+                TEST_SOURCE.endBatch();
+                RenderSystem.getModelViewMatrix().set(copy);
+            }
+        }else if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_PARTICLES){
+            MATRIX = new Matrix4f(RenderSystem.getModelViewMatrix());
         }
     }
 

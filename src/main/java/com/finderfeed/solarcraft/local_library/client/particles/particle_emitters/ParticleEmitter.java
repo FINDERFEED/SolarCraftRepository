@@ -98,6 +98,14 @@ public class ParticleEmitter {
         }
     }
 
+    private void addNewParticle(Particle particle){
+        if (particle != null){
+            this.activeParticles.add(particle);
+            for (ParticleProcessor processor : particleProcessors){
+                processor.initParticle(particle,this);
+            }
+        }
+    }
 
 
     public boolean isRemoved() {
