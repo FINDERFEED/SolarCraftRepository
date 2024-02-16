@@ -82,5 +82,8 @@
   },
   "orbital_explosion": {
     "sounds": ["solarcraft:orbital_explosion"]
+  },
+  "solar_strike_attack": {
+    "sounds": ["solarcraft:solar_strike_attack"]
   }
 }

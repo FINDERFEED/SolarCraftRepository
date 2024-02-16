@@ -181,6 +181,7 @@ public class SolarStrikeEntity extends Entity {
 
     private void explode(){
         FDPacketUtil.sendToTrackingEntity(this,new CameraShakePacket(0,10,10,2f));
+        level.playSound(null,this.getX(),this.getY(),this.getZ(),SCSounds.SOLAR_STRIKE_ATTACK.get(),SoundSource.AMBIENT,40f,1f);
         if (SCEventHandler.isExplosionBlockerAround(level(), Helpers.getBlockCenter(this.getOnPos())) || !Helpers.isSpellGriefingEnabled((ServerLevel) level)) return;
         int radius = level.random.nextInt(RANDOM_RADIUS) + BASE_RADIUS;
         int depth = level.random.nextInt(RANDOM_DEPTH) + BASE_MAX_DEPTH;
