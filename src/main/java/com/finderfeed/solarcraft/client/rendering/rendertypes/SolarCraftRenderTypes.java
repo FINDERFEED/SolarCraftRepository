@@ -42,7 +42,7 @@ public class SolarCraftRenderTypes extends RenderType {
         RenderSystem.defaultBlendFunc();
     });
 
-    public static RenderType MY_LIGHTNING = create(
+    public static RenderType LIGHTNING_NO_CULL = create(
             "my_lightning",
             DefaultVertexFormat.POSITION_COLOR,
             VertexFormat.Mode.QUADS,
@@ -56,23 +56,6 @@ public class SolarCraftRenderTypes extends RenderType {
                     .setTransparencyState(LIGHTNING_TRANSPARENCY)
                     .createCompositeState(false)
     );
-    public static RenderType myLightning(){
-        return create(
-                "my_lightning",
-                DefaultVertexFormat.POSITION_COLOR,
-                VertexFormat.Mode.QUADS,
-                1536,
-                false,
-                true,
-                RenderType.CompositeState.builder()
-                        .setShaderState(RENDERTYPE_LIGHTNING_SHADER)
-                        .setWriteMaskState(COLOR_DEPTH_WRITE)
-                        .setCullState(RenderStateShard.NO_CULL)
-
-                        .setTransparencyState(LIGHTNING_TRANSPARENCY)
-                        .createCompositeState(false)
-        );
-    }
 
     public static Function<ResourceLocation, RenderType> TEXT_GLOW = Util.memoize(SolarCraftRenderTypes::getGlowText);
     public static Function<ResourceLocation, RenderType> TEXT_GLOW_NO_SHARD = Util.memoize(SolarCraftRenderTypes::getGlowTextNoShard);

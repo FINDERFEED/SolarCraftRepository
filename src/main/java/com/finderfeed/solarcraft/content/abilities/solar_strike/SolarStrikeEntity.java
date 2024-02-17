@@ -27,6 +27,7 @@ import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -58,6 +59,7 @@ import java.util.UUID;
 
 public class SolarStrikeEntity extends Entity {
 
+    public static int AFTER_EXPLOSION_TIME = 10;
     public static int RAYS_COUNT = 3;
     public static final int PARTIAL_EXPLOSION_RANGE = 3;
     public static final int RANDOM_RADIUS = 5;
@@ -108,7 +110,7 @@ public class SolarStrikeEntity extends Entity {
             if (!level.isClientSide) {
                 if (tickCount == TIME_UNTIL_EXPLOSION) {
                     this.explode();
-                }else if (tickCount >= TIME_UNTIL_EXPLOSION + 10){
+                }else if (tickCount >= TIME_UNTIL_EXPLOSION + AFTER_EXPLOSION_TIME){
                     this.remove(RemovalReason.DISCARDED);
                 }
             }else{
@@ -164,8 +166,8 @@ public class SolarStrikeEntity extends Entity {
     }
 
     private void particlesBeforeExplosion(){
-        float psize = 1;
-        for (Vec3 pos : this.getRayPositions(RAYS_COUNT,0)){
+        float psize = 1.5f;
+        for (Vec3 pos : this.getRayPositions(RAYS_COUNT,0.5f)){
             int r = 230 + level.random.nextInt(25);
             int g = 230 + level.random.nextInt(25);
             int b = 10 + level.random.nextInt(10);
@@ -200,6 +202,17 @@ public class SolarStrikeEntity extends Entity {
                                 z
                         );
                     }
+                }
+            }
+        }
+        AABB damageBox = new AABB(-radius,-depth,-radius,radius,depth,radius).inflate(3).move(this.position());
+        Entity owner = this.getOwner();
+        for (LivingEntity entity : level.getEntitiesOfClass(LivingEntity.class,damageBox)){
+            if (entity != owner){
+                if (owner instanceof Player player) {
+                    entity.hurt(SCDamageSources.playerArmorPierce(player),SolarcraftConfig.SOLAR_STRIKE_DAMAGE.get().floatValue());
+                }else{
+                    entity.hurt(level.damageSources().magic(),SolarcraftConfig.SOLAR_STRIKE_DAMAGE.get().floatValue());
                 }
             }
         }
