@@ -1,9 +1,16 @@
 package com.finderfeed.solarcraft.content.abilities.meteorite;
 
+import com.finderfeed.solarcraft.client.particles.fd_particle.AlphaInOutOptions;
+import com.finderfeed.solarcraft.client.particles.fd_particle.FDDefaultOptions;
+import com.finderfeed.solarcraft.client.particles.fd_particle.FDScalingOptions;
+import com.finderfeed.solarcraft.client.particles.fd_particle.instances.SmokeParticleOptions;
 import com.finderfeed.solarcraft.content.abilities.solar_strike.SolarStrikeEntity;
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.helpers.Helpers;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
+import com.finderfeed.solarcraft.packet_handler.packets.CameraShakePacket;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Blocks;
@@ -42,38 +49,80 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
     @Override
     protected void onHit(HitResult p_70227_1_) {
         if (!this.level().isClientSide) {
-            Vec3 velocityVector = this.getDeltaMovement().multiply(8,8,8);
-            if (Helpers.isSpellGriefingEnabled((ServerLevel) level())) {
-                this.level().explode(null, level().damageSources().magic(), null, this.position().x, this.position().y, this.position().z, 10, true, Level.ExplosionInteraction.BLOCK);
-                this.level().explode(null, level().damageSources().magic(), null, this.position().x + velocityVector.x / 5, this.position().y + velocityVector.y / 15, this.position().z + velocityVector.z / 10, 10, true, Level.ExplosionInteraction.BLOCK);
-                double radius = this.level().random.nextFloat() * 1 + 4;
-                for (int i = (int) -Math.ceil(radius); i < Math.ceil(radius); i++) {
-                    for (int g = (int) -Math.ceil(radius); g < Math.ceil(radius); g++) {
-                        for (int h = (int) -Math.ceil(radius); h < Math.ceil(radius); h++) {
-                            if (SolarStrikeEntity.checkTochkaVEllipse(i, g, h, radius, radius, radius)) {
-                                BlockPos pos = this.getOnPos().offset((int) Math.floor(i), (int) Math.floor(g), (int) Math.floor(h)).offset((int) Math.ceil(velocityVector.x), (int) Math.ceil(velocityVector.y), (int) Math.ceil(velocityVector.z));
+            this.onExplode();
+            FDPacketUtil.sendToTrackingEntity(this,new CameraShakePacket(0,10,40,1.5f));
+        }else{
+            this.explodeParticles();
+        }
+        this.remove(RemovalReason.KILLED);
+    }
 
-                                if (this.level().random.nextFloat() < 0.8) {
+    private void explodeParticles(){
+        float c = 0.1f;
+        FDDefaultOptions doptions = new FDDefaultOptions(4f,120,c,c,c,1f,false,false);
+        SmokeParticleOptions options = new SmokeParticleOptions(
+                doptions,
+                new FDScalingOptions(0,30),
+                new AlphaInOutOptions(0,0)
+        );
+        FDDefaultOptions doptions1 = new FDDefaultOptions(4f,120,1f,0.5f,0.3f,1f,false,true);
+        SmokeParticleOptions options1 = new SmokeParticleOptions(
+                doptions1,
+                new FDScalingOptions(0,60),
+                new AlphaInOutOptions(0,0)
+        );
+        int count = 200;
+        double angle = Math.PI * 2 / count;
+        for (double i = 0; i <= Math.PI * 2;i += angle){
+            double x = Math.sin(i);
+            double z = Math.cos(i);
+            Vec3 v = this.position().add(x * 4,level.random.nextFloat(),z * 4).add(this.getDeltaMovement()
+                    .multiply(8,8,8));
+            ParticleOptions o;
+            if (level.random.nextFloat() > 0.5){
+                o = options1;
+            }else{
+                o = options;
+            }
+            level.addParticle(o,v.x,v.y,v.z,
+                    x * 0.3 * (level.random.nextFloat() * 0.9 + 0.1),
+                    level.random.nextFloat() * 0.1,
+                    z * 0.3 * (level.random.nextFloat() * 0.9 + 0.1));
+        }
+    }
 
-                                    if (this.level().getBlockState(pos).getDestroySpeed(this.level(), pos) >= 0 && this.level().getBlockState(pos).getDestroySpeed(this.level(), pos) <= 100) {
-                                        this.level().setBlock(pos, Blocks.OBSIDIAN.defaultBlockState(), 3);
-                                    }
-                                } else {
-                                    if (this.level().getBlockState(pos).getDestroySpeed(this.level(), pos) >= 0 && this.level().getBlockState(pos).getDestroySpeed(this.level(), pos) <= 100) {
-                                        this.level().setBlock(pos, Blocks.MAGMA_BLOCK.defaultBlockState(), 3);
-                                    }
+    private void onExplode(){
+        Vec3 velocityVector = this.getDeltaMovement().multiply(8,8,8);
+        if (Helpers.isSpellGriefingEnabled((ServerLevel) level())) {
+            this.level().explode(null, level().damageSources().magic(), null, this.position().x, this.position().y, this.position().z, 10, true, Level.ExplosionInteraction.BLOCK);
+            this.level().explode(null, level().damageSources().magic(), null, this.position().x + velocityVector.x / 5, this.position().y + velocityVector.y / 15, this.position().z + velocityVector.z / 10, 10, true, Level.ExplosionInteraction.BLOCK);
+            double radius = this.level().random.nextFloat() * 1 + 4;
+            for (int i = (int) -Math.ceil(radius); i < Math.ceil(radius); i++) {
+                for (int g = (int) -Math.ceil(radius); g < Math.ceil(radius); g++) {
+                    for (int h = (int) -Math.ceil(radius); h < Math.ceil(radius); h++) {
+                        if (SolarStrikeEntity.checkTochkaVEllipse(i, g, h, radius, radius, radius)) {
+                            BlockPos pos = this.getOnPos().offset((int) Math.floor(i), (int) Math.floor(g), (int) Math.floor(h)).offset((int) Math.ceil(velocityVector.x), (int) Math.ceil(velocityVector.y), (int) Math.ceil(velocityVector.z));
+
+                            if (this.level().random.nextFloat() < 0.8) {
+
+                                if (this.level().getBlockState(pos).getDestroySpeed(this.level(), pos) >= 0 && this.level().getBlockState(pos).getDestroySpeed(this.level(), pos) <= 100) {
+                                    this.level().setBlock(pos, Blocks.OBSIDIAN.defaultBlockState(), 3);
+                                }
+                            } else {
+                                if (this.level().getBlockState(pos).getDestroySpeed(this.level(), pos) >= 0 && this.level().getBlockState(pos).getDestroySpeed(this.level(), pos) <= 100) {
+                                    this.level().setBlock(pos, Blocks.MAGMA_BLOCK.defaultBlockState(), 3);
                                 }
                             }
                         }
                     }
                 }
-            }else{
-                this.level().explode(null, level().damageSources().magic(), null, this.position().x, this.position().y, this.position().z, 10, true, Level.ExplosionInteraction.NONE);
-                this.level().explode(null, level().damageSources().magic(), null, this.position().x + velocityVector.x / 5, this.position().y + velocityVector.y / 15, this.position().z + velocityVector.z / 10, 10, true, Level.ExplosionInteraction.NONE);
             }
+        }else{
+            this.level().explode(null, level().damageSources().magic(), null, this.position().x, this.position().y, this.position().z, 10, true, Level.ExplosionInteraction.NONE);
+            this.level().explode(null, level().damageSources().magic(), null, this.position().x + velocityVector.x / 5, this.position().y + velocityVector.y / 15, this.position().z + velocityVector.z / 10, 10, true, Level.ExplosionInteraction.NONE);
         }
-        this.remove(RemovalReason.KILLED);
     }
+
     @Override
     protected float getInertia() {
         return 1F;
@@ -83,24 +132,55 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
     public void tick(){
         super.tick();
         if (!this.level().isClientSide){
-            tickCount++;
             if (this.tickCount > 500){
                 this.remove(RemovalReason.KILLED);
             }
+        }else{
+            this.spawnParticles();
         }
-        for (int i = 0;i<24;i++){
-            int radius = 3;
-            double offsety = radius*Math.cos(Math.toRadians(i*15));
-            double offsetz = radius*Math.sin(Math.toRadians(i*15));
-            this.level().addParticle(ParticleTypes.FLAME,this.position().x,this.position().y+offsety,this.position().z+offsetz,0,0,0);
-        }
-        for (int i = 0;i<24;i++){
-            int radius = 3;
+    }
 
-            double offsetx = radius*Math.sin(Math.toRadians(i*15));
-            this.level().addParticle(ParticleTypes.FLAME,this.position().x+offsetx,this.position().y,this.position().z,0,0,0);
-        }
+    public void spawnParticles(){
+        int freq = 2;
+        float c = 0.1f;
+        FDDefaultOptions doptions = new FDDefaultOptions(1f,60,c,c,c,1f,false,false);
+        SmokeParticleOptions options = new SmokeParticleOptions(
+                doptions,
+                new FDScalingOptions(0,60),
+                new AlphaInOutOptions(0,0)
+        );
+        FDDefaultOptions doptionsOrange = new FDDefaultOptions(1f,60,1f,0.5f,0.1f,1f,false,true);
+        SmokeParticleOptions optionsOrange = new SmokeParticleOptions(
+                doptionsOrange,
+                new FDScalingOptions(0,60),
+                new AlphaInOutOptions(0,0)
+        );
+        float r = 2.5f;
+        for (int x = -freq;x <= freq;x++){
+            for (int y = -freq;y <= freq;y++){
+                for (int z = -freq;z <= freq;z++){
+                    Vec3 v = new Vec3(x,y,z).normalize();
+                    SmokeParticleOptions o;
+                    if (v.dot(this.getDeltaMovement().reverse()) < 0){
+                        o = optionsOrange;
+                    }else{
+                        o = options;
+                    }
 
+                    v = v.multiply(r,r,r).add(
+                            level.random.nextFloat() * 0.5 - 0.25,
+                            level.random.nextFloat() * 0.5 - 0.25,
+                            level.random.nextFloat() * 0.5 - 0.25
+                    ).add(this.position());
+
+                    level.addParticle(o,true,v.x,v.y,v.z,
+                            level.random.nextFloat() * 0.1- 0.05,
+                            level.random.nextFloat() * 0.1- 0.05,
+                            level.random.nextFloat() * 0.1- 0.05
+                    );
+                }
+            }
+        }
     }
 
     @Override
@@ -111,10 +191,7 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
     public boolean hurt(DamageSource p_70097_1_, float p_70097_2_) {
         return false;
     }
-//    @Override
-//    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-//        return NetworkHooks.getEntitySpawningPacket(this);
-//    }
+
     @Override
     public void load(CompoundTag cmp) {
         tickCount = cmp.getInt("tick");
