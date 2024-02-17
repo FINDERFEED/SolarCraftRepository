@@ -125,6 +125,19 @@ public class SolarStrikeEntity extends Entity {
 
     private void particlesOnExplosion(){
 
+        for (float y = 0; y < 100;y+=1f){
+            int r = level.random.nextInt(25) + 230;
+            int g = level.random.nextInt(25) + 230;
+            int b = level.random.nextInt(30);
+            Vec3 pos = this.position().add(0,y + random.nextFloat(),0);
+            BallParticleOptions options = new BallParticleOptions(2.5f + random.nextFloat() * 3,
+                    r,g,b,80,true,false);
+            level.addParticle(options,pos.x,pos.y,pos.z,
+                    (random.nextFloat() * 0.1 - 0.05),
+                    random.nextFloat() * 0.1-0.05,
+                    (random.nextFloat() * 0.1 - 0.05));
+        }
+
         int count = 200;
         double angle = Math.PI * 2 / count;
 
