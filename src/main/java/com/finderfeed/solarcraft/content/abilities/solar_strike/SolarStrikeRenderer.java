@@ -48,23 +48,23 @@ public class SolarStrikeRenderer extends EntityRenderer<SolarStrikeEntity> {
         matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.XN(),camera.getYRot()));
         for (int i = 0; i < 4;i++) {
             Random r = new Random(entity.level.getGameTime() + i * 94034);
-            RenderingTools.Lightning2DRenderer.renderLightning(matrices, src, 20, 4f, 1f,
-                    Vec3.ZERO, Vec3.ZERO.add(200, 0, 0), r, 1f, 1f, 0.6f + i * 0.1f,alpha);
+            RenderingTools.Lightning2DRenderer.renderLightning(matrices, src, 20, 6f, 1f,
+                    Vec3.ZERO, Vec3.ZERO.add(400, 0, 0), r, 1f, 1f, 0.6f + i * 0.1f,alpha);
         }
         matrices.popPose();
 
         matrices.pushPose();
         Matrix4f m = matrices.last().pose();
-        float raySize = 3f;
+        float raySize = 4f;
         matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YN(),camera.getYRot()));
         VertexConsumer vertex = src.getBuffer(SolarCraftRenderTypes.LIGHTNING_NO_CULL);
         vertex.vertex(m,-raySize,0,0f).color(0f,0f,0f,alpha).endVertex();
-        vertex.vertex(m,-raySize,200,0f).color(0f,0f,0f,alpha).endVertex();
-        vertex.vertex(m,0,200,0f).color(1f,1f,0f,alpha).endVertex();
+        vertex.vertex(m,-raySize,400,0f).color(0f,0f,0f,alpha).endVertex();
+        vertex.vertex(m,0,400,0f).color(1f,1f,0f,alpha).endVertex();
         vertex.vertex(m,0,0,0f).color(1f,1f,0f,alpha).endVertex();
         vertex.vertex(m,raySize,0,0f).color(0f,0f,0f,alpha).endVertex();
-        vertex.vertex(m,raySize,200,0f).color(0f,0f,0f,alpha).endVertex();
-        vertex.vertex(m,0,200,0f).color(1f,1f,0f,alpha).endVertex();
+        vertex.vertex(m,raySize,400,0f).color(0f,0f,0f,alpha).endVertex();
+        vertex.vertex(m,0,400,0f).color(1f,1f,0f,alpha).endVertex();
         vertex.vertex(m,0,0,0f).color(1f,1f,0f,alpha).endVertex();
         matrices.popPose();
     }
@@ -92,12 +92,12 @@ public class SolarStrikeRenderer extends EntityRenderer<SolarStrikeEntity> {
 
             vertex.vertex(m,-raySize,0,0).color(0,0,0,alpha).endVertex();
             vertex.vertex(m,0,0,0).color(r,g,b,alpha).endVertex();
-            vertex.vertex(m,0,200,0).color(r,g,b,alpha).endVertex();
-            vertex.vertex(m,-raySize,200,0).color(0,0,0,alpha).endVertex();
+            vertex.vertex(m,0,400,0).color(r,g,b,alpha).endVertex();
+            vertex.vertex(m,-raySize,400,0).color(0,0,0,alpha).endVertex();
             vertex.vertex(m,raySize,0,0).color(0,0,0,alpha).endVertex();
             vertex.vertex(m,0,0,0).color(r,g,b,alpha).endVertex();
-            vertex.vertex(m,0,200,0).color(r,g,b,alpha).endVertex();
-            vertex.vertex(m,raySize,200,0).color(0,0,0,alpha).endVertex();
+            vertex.vertex(m,0,400,0).color(r,g,b,alpha).endVertex();
+            vertex.vertex(m,raySize,400,0).color(0,0,0,alpha).endVertex();
 
             matrices.popPose();
 
@@ -107,7 +107,7 @@ public class SolarStrikeRenderer extends EntityRenderer<SolarStrikeEntity> {
             matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.ZP(),90));
             matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.XN(),camera.getYRot()));
             RenderingTools.Lightning2DRenderer.renderLightning(matrices, src, 20, 2.5f, 1f,
-                    Vec3.ZERO, Vec3.ZERO.add(200, 0, 0),rand,1f, 1f, 0.6f,alpha);
+                    Vec3.ZERO, Vec3.ZERO.add(400, 0, 0),rand,1f, 1f, 0.6f,alpha);
             matrices.popPose();
         }
     }

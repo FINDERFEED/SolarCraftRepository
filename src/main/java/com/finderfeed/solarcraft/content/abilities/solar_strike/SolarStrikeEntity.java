@@ -129,7 +129,10 @@ public class SolarStrikeEntity extends Entity {
             int r = level.random.nextInt(25) + 230;
             int g = level.random.nextInt(25) + 230;
             int b = level.random.nextInt(30);
-            Vec3 pos = this.position().add(0,y + random.nextFloat(),0);
+            Vec3 pos = this.position().add(
+                    level.random.nextFloat() * 2 - 1,
+                    y + random.nextFloat(),
+                    level.random.nextFloat() * 2 - 1);
             BallParticleOptions options = new BallParticleOptions(2.5f + random.nextFloat() * 3,
                     r,g,b,80,true,false);
             level.addParticle(options,pos.x,pos.y,pos.z,
