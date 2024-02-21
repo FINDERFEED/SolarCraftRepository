@@ -42,7 +42,8 @@ public class SunShardPuzzleRemainingTilesComponent extends FDScreenComponent {
     public void render(PoseStack matrices, int mousex, int mousey, float pticks) {
         var tiles = localPuzzle.getRemainingTiles();
         ClientHelpers.bindText(REMAINING_TILES_BACKGROUND);
-        Gui.blit(matrices,x-11,y-11,0,0,66,214,66,214);
+        RenderingTools.blitWithBlend(matrices,x-11,y-11,0,0,66,214,66,214,
+                screen.getBlitOffset(),1f);
         RenderingTools.scissor(x,y,16*2 + frameThickness*4,192);
         for (int i = 0; i < tiles.size(); i++){
             PuzzleTile tile = tiles.get(i);
@@ -64,10 +65,10 @@ public class SunShardPuzzleRemainingTilesComponent extends FDScreenComponent {
 
 
             Matrix4f m = matrices.last().pose();
-            builder.vertex(m,-8,8,screen.getBlitOffset() - 10).uv(0,1).color(1f,1,1,1).endVertex();
-            builder.vertex(m,8,8,screen.getBlitOffset() - 10).uv(1,1).color(1f,1,1,1).endVertex();
-            builder.vertex(m,8,-8,screen.getBlitOffset() - 10).uv(1,0).color(1f,1,1,1).endVertex();
-            builder.vertex(m,-8,-8,screen.getBlitOffset() - 10).uv(0,0).color(1f,1,1,1).endVertex();
+            builder.vertex(m,-8,8,screen.getBlitOffset() + 10).uv(0,1).color(1f,1,1,1).endVertex();
+            builder.vertex(m,8,8,screen.getBlitOffset() + 10).uv(1,1).color(1f,1,1,1).endVertex();
+            builder.vertex(m,8,-8,screen.getBlitOffset() + 10).uv(1,0).color(1f,1,1,1).endVertex();
+            builder.vertex(m,-8,-8,screen.getBlitOffset() + 10).uv(0,0).color(1f,1,1,1).endVertex();
             matrices.popPose();
             BufferUploader.drawWithShader(builder.end());
         }
