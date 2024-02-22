@@ -37,6 +37,7 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundLevelChunkPacketData;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -51,6 +52,12 @@ import java.util.UUID;
 public class ClientPacketHandles {
 
 
+    public static void deltaMovementPacketHandle(int id,Vec3 deltaMovement){
+        Entity e = Minecraft.getInstance().level.getEntity(id);
+        if (e != null){
+            e.setDeltaMovement(deltaMovement);
+        }
+    }
     public static void handleSpawnShapeParticlesPacket(ParticleSpawnShape spawnShape, ParticleOptions options,double x,double y,double z,double xd,double yd,double zd){
         spawnShape.placeParticles(ClientHelpers.getLevel(),options, x,y,z,xd,yd,zd);
     }

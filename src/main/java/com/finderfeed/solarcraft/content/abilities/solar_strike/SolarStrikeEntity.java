@@ -244,17 +244,17 @@ public class SolarStrikeEntity extends Entity {
         float destroySpeed = state.getDestroySpeed(level,pos);
         if (destroySpeed > 0){
             if (!state.hasBlockEntity() && !(state.getBlock() instanceof LiquidBlock)) {
-                this.trySummonBlock(y, pos);
+                this.trySummonBlock(state,y, pos);
             }
             level.setBlock(pos,Blocks.AIR.defaultBlockState(),3);
         }
     }
 
-    private void trySummonBlock(int y,BlockPos pos){
+    private void trySummonBlock(BlockState state,int y,BlockPos pos){
         if (Math.abs(y) < 3 && level.random.nextFloat() < 0.2){
             Vec3 center = Helpers.getBlockCenter(pos);
-            BlockState state = level.getBlockState(pos);
             MyFallingBlockEntity fallingBlock = new MyFallingBlockEntity(level,center.x,center.y,center.z,state);
+            fallingBlock.setNoPhysicsTime(3);
             Vec3 between = center.multiply(1,0,1).subtract(this.position().multiply(1,0,1)).normalize();
             Vec3 speed = new Vec3(
                     between.x  * (random.nextFloat() + 0.5),

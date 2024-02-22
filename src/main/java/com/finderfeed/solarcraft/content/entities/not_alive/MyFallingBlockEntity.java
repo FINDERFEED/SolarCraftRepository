@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.content.entities.not_alive;
 
 import com.finderfeed.solarcraft.SolarCraft;
+import com.finderfeed.solarcraft.packet_handler.packets.SendDeltaMovementPacket;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.CrashReportCategory;
 import net.minecraft.core.BlockPos;
@@ -8,7 +9,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
@@ -16,6 +19,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
@@ -38,11 +42,13 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.entity.IEntityWithComplexSpawn;
 
 import javax.annotation.Nullable;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public class MyFallingBlockEntity extends Entity {
+public class MyFallingBlockEntity extends Entity implements IEntityWithComplexSpawn {
     public BlockState blockState = Blocks.SAND.defaultBlockState();
     public int time;
     public boolean dropItem = true;
@@ -50,6 +56,7 @@ public class MyFallingBlockEntity extends Entity {
     private boolean hurtEntities;
     private int fallDamageMax = 40;
     private float fallDamagePerDistance;
+    private int noPhysicsTime = 0;
 
     @Nullable
     public CompoundTag blockData;
@@ -100,6 +107,12 @@ public class MyFallingBlockEntity extends Entity {
         if (this.blockState.isAir()) {
             this.discard();
         } else {
+            if (noPhysicsTime > 0){
+                noPhysics = true;
+                noPhysicsTime--;
+            }else{
+                noPhysics = false;
+            }
             Block block = this.blockState.getBlock();
             ++this.time;
             if (!this.isNoGravity()) {
@@ -296,6 +309,12 @@ public class MyFallingBlockEntity extends Entity {
         return new ClientboundAddEntityPacket(this, Block.getId(this.getBlockState()));
     }
 
+    @Override
+    public void sendPairingData(ServerPlayer player, Consumer<CustomPacketPayload> builder) {
+        super.sendPairingData(player, builder);
+        //builder.accept(new SendDeltaMovementPacket(this.getId(),this.getDeltaMovement()));
+    }
+
     public void recreateFromPacket(ClientboundAddEntityPacket packet) {
         super.recreateFromPacket(packet);
         this.blockState = Block.stateById(packet.getData());
@@ -309,5 +328,19 @@ public class MyFallingBlockEntity extends Entity {
     @Override
     public boolean ignoreExplosion(Explosion e) {
         return true;
+    }
+
+    public void setNoPhysicsTime(int noPhysicsTime) {
+        this.noPhysicsTime = noPhysicsTime;
+    }
+
+    @Override
+    public void writeSpawnData(FriendlyByteBuf buffer) {
+        buffer.writeInt(this.noPhysicsTime);
+    }
+
+    @Override
+    public void readSpawnData(FriendlyByteBuf additionalData) {
+        this.noPhysicsTime = additionalData.readInt();
     }
 }

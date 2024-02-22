@@ -7,7 +7,13 @@ import com.finderfeed.solarcraft.client.particles.fd_particle.FDScalingOptions;
 import com.finderfeed.solarcraft.client.particles.fd_particle.instances.SmokeParticleOptions;
 import com.finderfeed.solarcraft.content.abilities.solar_strike.SolarStrikeEntity;
 import com.finderfeed.solarcraft.SolarCraft;
+import com.finderfeed.solarcraft.content.entities.not_alive.MyFallingBlockEntity;
+import com.finderfeed.solarcraft.events.other_events.event_handler.SCEventHandler;
 import com.finderfeed.solarcraft.helpers.Helpers;
+import com.finderfeed.solarcraft.local_library.client.particles.particle_emitters.ParticleEmitterData;
+import com.finderfeed.solarcraft.local_library.client.particles.particle_emitters.ParticleEmmitterPacket;
+import com.finderfeed.solarcraft.local_library.client.particles.particle_emitters.particle_emitter_processors.instances.ebpe_processor.EBPEmitterProcessorData;
+import com.finderfeed.solarcraft.local_library.client.particles.particle_emitters.particle_processors.instances.random_speed.RandomSpeedProcessorData;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.CameraShakePacket;
@@ -26,6 +32,8 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.core.BlockPos;
 
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
@@ -37,6 +45,8 @@ import net.minecraft.world.level.Level;
 
 
 public class MeteoriteProjectile extends AbstractHurtingProjectile {
+
+    private static int CRATER_OFFSET = 5;
     private boolean removeNextTick = false;
     public MeteoriteProjectile(EntityType<? extends AbstractHurtingProjectile> p_i50173_1_, Level p_i50173_2_) {
         super(p_i50173_1_, p_i50173_2_);
@@ -116,16 +126,41 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
     }
 
     private void onExplode(){
-        if (Helpers.isSpellGriefingEnabled((ServerLevel) level())) {
+        if (Helpers.isSpellGriefingEnabled((ServerLevel) level()) && !SCEventHandler.isExplosionBlockerAround(level,this.position())) {
             int i = this.createCrater();
             this.createMeteorite(i);
+            Vec3 v = this.getCraterOffset();
+            int ellipseWidth = 9;
+            int ellipseHeight = 10;
+            FireBlock block = (FireBlock) Blocks.FIRE;
+            BlockState fireState = Blocks.FIRE.defaultBlockState();
+            for (int x = -ellipseWidth; x <= ellipseWidth;x++){
+                for (int y = -ellipseHeight; y <= ellipseHeight;y++){
+                    for (int z = -ellipseWidth; z <= ellipseWidth;z++){
+                        BlockPos pos = new BlockPos(
+                                x
+                                ,y
+                                ,z
+                        );
+                        Vec3 posf = Helpers.getBlockCenter(pos);
+                        if (FDMathHelper.isInEllipse((float)posf.x,(float)posf.y,(float)posf.z,ellipseWidth,ellipseHeight)){
+                            BlockPos p = pos.offset(this.getOnPos()).offset(
+                                    (int)v.x,0,(int)v.z
+                            );
+                            BlockState state = level.getBlockState(p);
+                            if (state.isAir() && fireState.canSurvive(level,p) && level.random.nextFloat() > 0.75){
+                                level.setBlock(p,fireState,3);
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
 
     private void createMeteorite(int depth){
-        int mod = 5;
-        Vec3 v = this.getDeltaMovement().multiply(1,0,1).normalize().multiply(mod,0,mod);
+        Vec3 v = this.getCraterOffset();
         int rad = random.nextInt(2) + 5;
         BlockPos iPos = this.getOnPos().offset(
                 (int)v.x,
@@ -138,9 +173,12 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
                 for (int z = -rad;z <= rad;z++){
                     BlockPos pos = new BlockPos(x,y,z);
                     Vec3 c = Helpers.getBlockCenter(pos);
-                    if (c.length() <= rad){
+                    BlockPos setPos = pos.offset(iPos);
+                    BlockState stateAtPos = level.getBlockState(setPos);
+                    float destroySpeed = stateAtPos.getDestroySpeed(level,setPos);
+                    if (c.length() <= rad && (destroySpeed > 0 || stateAtPos.isAir())){
                         BlockState state = random.nextFloat() > 0.3 ? Blocks.OBSIDIAN.defaultBlockState() : Blocks.MAGMA_BLOCK.defaultBlockState();
-                        level.setBlock(pos.offset(iPos),state,3);
+                        level.setBlock(setPos,state,3);
                     }
                 }
             }
@@ -150,8 +188,7 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
     private int createCrater(){
         int ellipseWidth = 10 + random.nextInt(2);
         int ellipseHeight = 8 + random.nextInt(2);
-        int mod = 5;
-        Vec3 v = this.getDeltaMovement().multiply(1,0,1).normalize().multiply(mod,0,mod);
+        Vec3 v = this.getCraterOffset();
         for (int x = -ellipseWidth; x <= ellipseWidth;x++){
             for (int y = -ellipseHeight; y <= ellipseHeight;y++){
                 for (int z = -ellipseWidth; z <= ellipseWidth;z++){
@@ -167,7 +204,7 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
                        random.nextFloat() * 2
                     ));
                     if (FDMathHelper.isInEllipse((float)posf.x,(float)posf.y,(float)posf.z,ellipseWidth,ellipseHeight)){
-                        this.tryDeleteBlock(pos.offset(this.getOnPos()).offset(
+                        this.tryDeleteBlock(y,v,pos.offset(this.getOnPos()).offset(
                                 (int)v.x,0,(int)v.z
                         ));
                     }
@@ -177,16 +214,63 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
         return ellipseHeight;
     }
 
-    private void tryDeleteBlock(BlockPos pos){
+    private void tryDeleteBlock(int y,Vec3 craterOffset,BlockPos pos){
         BlockState state = level.getBlockState(pos);
         float destroySpeed = state.getDestroySpeed(level,pos);
         if (destroySpeed > 0){
             level.setBlock(pos,Blocks.AIR.defaultBlockState(),3);
+            if (!state.hasBlockEntity() && !(state.getBlock() instanceof LiquidBlock)) {
+                this.trySummonBlock(state,y, craterOffset, pos);
+            }
         }
     }
 
-    private void trySummonBlock(BlockPos pos){
+    private void trySummonBlock(BlockState state,int y,Vec3 craterOffset,BlockPos pos){
 
+        if (Math.abs(y) < 3) {
+            Vec3 center = Helpers.getBlockCenter(pos);
+            Vec3 between = center.subtract(this.position().add(craterOffset)).multiply(1, 0, 1);
+            if (between.length() > 5 && level.random.nextFloat() > 0.5) {
+                MyFallingBlockEntity fallingBlock = new MyFallingBlockEntity(level, center.x, center.y - 1, center.z, state);
+                fallingBlock.setNoPhysicsTime(5);
+                between = between.normalize();
+                Vec3 speed = new Vec3(
+                        between.x * (random.nextFloat() + 0.5),
+                        0.5 + random.nextFloat() * 2 - 0.5,
+                        between.z * (random.nextFloat() + 0.5)
+                ).add(craterOffset.normalize().multiply(2,2,2)).multiply(0.5,0.8,0.5);
+                if (speed.x < 0.05 && speed.z < 0.05) {
+                    speed = speed.add(random.nextFloat() * 0.2 - 0.1, 0, random.nextFloat() * 0.2 - 0.1);
+                }
+                fallingBlock.setDeltaMovement(
+                        speed
+                );
+                level.addFreshEntity(fallingBlock);
+                float r;
+                float g;
+                float b;
+                if (random.nextFloat() > 0.2) {
+                    r = 0.2f + random.nextFloat() * 0.05f;
+                    g = 0.2f + random.nextFloat() * 0.05f;
+                    b = 0.2f + random.nextFloat() * 0.05f;
+                } else {
+                    r = 0.8f - random.nextFloat() * 0.1f;
+                    g = 0.8f - random.nextFloat() * 0.1f;
+                    b = 0.8f - random.nextFloat() * 0.1f;
+                }
+                FDDefaultOptions defaultOptions = new FDDefaultOptions(3f, 30, r, g, b, 1f, false, false);
+                ParticleEmitterData data = new ParticleEmitterData()
+                        .setPos(center.x, center.y, center.z)
+                        .setParticle(new SmokeParticleOptions(
+                                defaultOptions,
+                                new FDScalingOptions(0, 30),
+                                new AlphaInOutOptions(0, 0)
+                        ))
+                        .addParticleProcessor(new RandomSpeedProcessorData(0.025, 0.025, 0.025))
+                        .addParticleEmitterProcessor(new EBPEmitterProcessorData(fallingBlock.getId()));
+                FDPacketUtil.sendToTrackingEntity(this, new ParticleEmmitterPacket(data));
+            }
+        }
     }
 
     @Override
@@ -251,6 +335,11 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
                 }
             }
         }
+    }
+
+
+    private Vec3 getCraterOffset(){
+        return this.getDeltaMovement().multiply(1,0,1).normalize().multiply(CRATER_OFFSET,0,CRATER_OFFSET);
     }
 
     @Override
