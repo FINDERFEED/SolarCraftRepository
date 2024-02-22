@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.content.abilities.meteorite;
 
+import com.finderfeed.solarcraft.client.particles.ball_particle.BallParticleOptions;
 import com.finderfeed.solarcraft.client.particles.fd_particle.AlphaInOutOptions;
 import com.finderfeed.solarcraft.client.particles.fd_particle.FDDefaultOptions;
 import com.finderfeed.solarcraft.client.particles.fd_particle.FDScalingOptions;
@@ -7,6 +8,7 @@ import com.finderfeed.solarcraft.client.particles.fd_particle.instances.SmokePar
 import com.finderfeed.solarcraft.content.abilities.solar_strike.SolarStrikeEntity;
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.helpers.Helpers;
+import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.CameraShakePacket;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
@@ -24,6 +26,8 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.core.BlockPos;
 
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
@@ -33,6 +37,7 @@ import net.minecraft.world.level.Level;
 
 
 public class MeteoriteProjectile extends AbstractHurtingProjectile {
+    private boolean removeNextTick = false;
     public MeteoriteProjectile(EntityType<? extends AbstractHurtingProjectile> p_i50173_1_, Level p_i50173_2_) {
         super(p_i50173_1_, p_i50173_2_);
 
@@ -54,7 +59,7 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
         }else{
             this.explodeParticles();
         }
-        this.remove(RemovalReason.KILLED);
+        removeNextTick = true;
     }
 
     private void explodeParticles(){
@@ -71,56 +76,117 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
                 new FDScalingOptions(0,60),
                 new AlphaInOutOptions(0,0)
         );
-        int count = 200;
+        int mod = 5;
+        Vec3 v = this.getDeltaMovement().multiply(1,0,1).normalize().multiply(mod,0,mod);
+        BlockPos iPos = this.getOnPos().offset(
+                (int)v.x,
+                -1,
+                (int)v.z
+        );
+        v = Helpers.getBlockCenter(iPos);
+        BallParticleOptions ball = new BallParticleOptions(7f,255,115,0,120,true,false);
+        int count = 250;
         double angle = Math.PI * 2 / count;
         for (double i = 0; i <= Math.PI * 2;i += angle){
             double x = Math.sin(i);
             double z = Math.cos(i);
-            Vec3 v = this.position().add(x * 4,level.random.nextFloat(),z * 4).add(this.getDeltaMovement()
-                    .multiply(8,8,8));
+
             ParticleOptions o;
             if (level.random.nextFloat() > 0.5){
                 o = options1;
             }else{
                 o = options;
             }
-            level.addParticle(o,v.x,v.y,v.z,
-                    x * 0.3 * (level.random.nextFloat() * 0.9 + 0.1),
-                    level.random.nextFloat() * 0.1,
-                    z * 0.3 * (level.random.nextFloat() * 0.9 + 0.1));
+            level.addParticle(ball,
+                    v.x + x * (random.nextFloat() * 1),
+                    v.y + random.nextFloat() * 2 - 2,
+                    v.z + z * (random.nextFloat() * 1),
+                    x * (random.nextFloat()*0.15 + 0.05),
+                    random.nextFloat() * 0.1,
+                    z * (random.nextFloat()*0.15 + 0.05)
+            );
+            level.addParticle(o,
+                    v.x + x * (random.nextFloat() * 6 + 2),
+                    v.y,
+                    v.z + z * (random.nextFloat() * 6 + 2),
+                    x * 0.3 * (level.random.nextFloat() * 2 + 0.1),
+                    level.random.nextFloat() * 0.3,
+                    z * 0.3 * (level.random.nextFloat() * 2 + 0.1));
         }
     }
 
     private void onExplode(){
-        Vec3 velocityVector = this.getDeltaMovement().multiply(8,8,8);
         if (Helpers.isSpellGriefingEnabled((ServerLevel) level())) {
-            this.level().explode(null, level().damageSources().magic(), null, this.position().x, this.position().y, this.position().z, 10, true, Level.ExplosionInteraction.BLOCK);
-            this.level().explode(null, level().damageSources().magic(), null, this.position().x + velocityVector.x / 5, this.position().y + velocityVector.y / 15, this.position().z + velocityVector.z / 10, 10, true, Level.ExplosionInteraction.BLOCK);
-            double radius = this.level().random.nextFloat() * 1 + 4;
-            for (int i = (int) -Math.ceil(radius); i < Math.ceil(radius); i++) {
-                for (int g = (int) -Math.ceil(radius); g < Math.ceil(radius); g++) {
-                    for (int h = (int) -Math.ceil(radius); h < Math.ceil(radius); h++) {
-                        if (SolarStrikeEntity.checkTochkaVEllipse(i, g, h, radius, radius, radius)) {
-                            BlockPos pos = this.getOnPos().offset((int) Math.floor(i), (int) Math.floor(g), (int) Math.floor(h)).offset((int) Math.ceil(velocityVector.x), (int) Math.ceil(velocityVector.y), (int) Math.ceil(velocityVector.z));
+            int i = this.createCrater();
+            this.createMeteorite(i);
+        }
+    }
 
-                            if (this.level().random.nextFloat() < 0.8) {
 
-                                if (this.level().getBlockState(pos).getDestroySpeed(this.level(), pos) >= 0 && this.level().getBlockState(pos).getDestroySpeed(this.level(), pos) <= 100) {
-                                    this.level().setBlock(pos, Blocks.OBSIDIAN.defaultBlockState(), 3);
-                                }
-                            } else {
-                                if (this.level().getBlockState(pos).getDestroySpeed(this.level(), pos) >= 0 && this.level().getBlockState(pos).getDestroySpeed(this.level(), pos) <= 100) {
-                                    this.level().setBlock(pos, Blocks.MAGMA_BLOCK.defaultBlockState(), 3);
-                                }
-                            }
-                        }
+    private void createMeteorite(int depth){
+        int mod = 5;
+        Vec3 v = this.getDeltaMovement().multiply(1,0,1).normalize().multiply(mod,0,mod);
+        int rad = random.nextInt(2) + 5;
+        BlockPos iPos = this.getOnPos().offset(
+                (int)v.x,
+                (-depth - rad)/2,
+                (int)v.z
+        );
+
+        for (int x = -rad;x <= rad;x++){
+            for (int y = -rad;y <= rad;y++){
+                for (int z = -rad;z <= rad;z++){
+                    BlockPos pos = new BlockPos(x,y,z);
+                    Vec3 c = Helpers.getBlockCenter(pos);
+                    if (c.length() <= rad){
+                        BlockState state = random.nextFloat() > 0.3 ? Blocks.OBSIDIAN.defaultBlockState() : Blocks.MAGMA_BLOCK.defaultBlockState();
+                        level.setBlock(pos.offset(iPos),state,3);
                     }
                 }
             }
-        }else{
-            this.level().explode(null, level().damageSources().magic(), null, this.position().x, this.position().y, this.position().z, 10, true, Level.ExplosionInteraction.NONE);
-            this.level().explode(null, level().damageSources().magic(), null, this.position().x + velocityVector.x / 5, this.position().y + velocityVector.y / 15, this.position().z + velocityVector.z / 10, 10, true, Level.ExplosionInteraction.NONE);
         }
+    }
+
+    private int createCrater(){
+        int ellipseWidth = 10 + random.nextInt(2);
+        int ellipseHeight = 8 + random.nextInt(2);
+        int mod = 5;
+        Vec3 v = this.getDeltaMovement().multiply(1,0,1).normalize().multiply(mod,0,mod);
+        for (int x = -ellipseWidth; x <= ellipseWidth;x++){
+            for (int y = -ellipseHeight; y <= ellipseHeight;y++){
+                for (int z = -ellipseWidth; z <= ellipseWidth;z++){
+                    BlockPos pos = new BlockPos(
+                            x
+                            ,y
+                            ,z
+                    );
+                    Vec3 posf = Helpers.getBlockCenter(pos);
+                    posf = posf.add(posf.normalize().multiply(
+                       random.nextFloat() * 2,
+                       random.nextFloat() * 2,
+                       random.nextFloat() * 2
+                    ));
+                    if (FDMathHelper.isInEllipse((float)posf.x,(float)posf.y,(float)posf.z,ellipseWidth,ellipseHeight)){
+                        this.tryDeleteBlock(pos.offset(this.getOnPos()).offset(
+                                (int)v.x,0,(int)v.z
+                        ));
+                    }
+                }
+            }
+        }
+        return ellipseHeight;
+    }
+
+    private void tryDeleteBlock(BlockPos pos){
+        BlockState state = level.getBlockState(pos);
+        float destroySpeed = state.getDestroySpeed(level,pos);
+        if (destroySpeed > 0){
+            level.setBlock(pos,Blocks.AIR.defaultBlockState(),3);
+        }
+    }
+
+    private void trySummonBlock(BlockPos pos){
+
     }
 
     @Override
@@ -130,7 +196,11 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
 
     @Override
     public void tick(){
+        if (removeNextTick){
+            this.remove(RemovalReason.KILLED);
+        }
         super.tick();
+
         if (!this.level().isClientSide){
             if (this.tickCount > 500){
                 this.remove(RemovalReason.KILLED);
@@ -141,7 +211,7 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
     }
 
     public void spawnParticles(){
-        int freq = 2;
+        int freq = 1;
         float c = 0.1f;
         FDDefaultOptions doptions = new FDDefaultOptions(1f,60,c,c,c,1f,false,false);
         SmokeParticleOptions options = new SmokeParticleOptions(
@@ -155,7 +225,7 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
                 new FDScalingOptions(0,60),
                 new AlphaInOutOptions(0,0)
         );
-        float r = 2.5f;
+        float r = 2.8f;
         for (int x = -freq;x <= freq;x++){
             for (int y = -freq;y <= freq;y++){
                 for (int z = -freq;z <= freq;z++){
@@ -168,9 +238,9 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
                     }
 
                     v = v.multiply(r,r,r).add(
-                            level.random.nextFloat() * 0.5 - 0.25,
-                            level.random.nextFloat() * 0.5 - 0.25,
-                            level.random.nextFloat() * 0.5 - 0.25
+                            level.random.nextFloat() * 1 - 0.5,
+                            level.random.nextFloat() * 1 - 0.5,
+                            level.random.nextFloat() * 1 - 0.5
                     ).add(this.position());
 
                     level.addParticle(o,true,v.x,v.y,v.z,

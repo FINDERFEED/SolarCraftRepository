@@ -44,9 +44,13 @@ public class MyFallingBlockEntityRenderer extends EntityRenderer<MyFallingBlockE
 
                 float time = (entity.level.getGameTime() + p_114636_)*30%360;
                 Vec3 speed = entity.getDeltaMovement().multiply(1,0,1).normalize();
-                Vec3 rotateAround = speed.yRot((float)Math.toRadians(90));
+                Vec3 rotateAround = speed.cross(new Vec3(0,-1,0));
+//                Vec3 rotateAround = speed.yRot((float)Math.toRadians(90));
 //                matrices.mulPose(new Vector3f((float)rotateAround.x,(float)rotateAround.y,(float)rotateAround.z).rotationDegrees(time));
 
+                if (rotateAround.length() < 0.01){
+                    rotateAround = new Vec3(0,0,1);
+                }
                 matrices.mulPose(RenderingTools.rotationDegrees(new Vector3f((float)rotateAround.x,(float)rotateAround.y,(float)rotateAround.z),time));
 
                 matrices.translate(-0.5D, -0.5D, -0.5D);

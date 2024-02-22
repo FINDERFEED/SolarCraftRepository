@@ -172,7 +172,7 @@ public class SolarStrikeEntity extends Entity {
         double t = (1-p) * Math.PI;
         double angle = Math.PI * 2 / rayCount;
         List<Vec3> vs = new ArrayList<>();
-        for (double i = 0; i <= Math.PI * 2;i += angle){
+        for (double i = 0; i < Math.PI * 2;i += angle){
             double x = Math.sin(i + t) * radius;
             double z = Math.cos(i + t) * radius;
             Vec3 pos = Helpers.getBlockCenter(this.getOnPos()).add(x,0.5,z);
@@ -256,10 +256,16 @@ public class SolarStrikeEntity extends Entity {
             BlockState state = level.getBlockState(pos);
             MyFallingBlockEntity fallingBlock = new MyFallingBlockEntity(level,center.x,center.y,center.z,state);
             Vec3 between = center.multiply(1,0,1).subtract(this.position().multiply(1,0,1)).normalize();
-            fallingBlock.setDeltaMovement(
+            Vec3 speed = new Vec3(
                     between.x  * (random.nextFloat() + 0.5),
                     0.5 + random.nextFloat() * 2-0.5,
                     between.z * (random.nextFloat() + 0.5)
+            );
+            if (speed.x < 0.05 && speed.z < 0.05){
+                speed = speed.add(random.nextFloat() * 0.2 - 0.1,0,random.nextFloat() * 0.2 - 0.1);
+            }
+            fallingBlock.setDeltaMovement(
+                    speed
             );
             level.addFreshEntity(fallingBlock);
             float r;

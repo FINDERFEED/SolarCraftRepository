@@ -71,6 +71,9 @@ public class LightningAbility extends AbstractAbility{
                     BlockPos offsettedPos = mainpos.offset(x,y,z);
                     Vec3 position = Helpers.getBlockCenter(offsettedPos);
                     Vec3 speed = position.subtract(center).multiply(0.3*world.random.nextDouble(),0.1*world.random.nextDouble(),0.3*world.random.nextDouble()).add(0,1.5,0);
+                    if (speed.x  == 0 && speed.z == 0){
+                        speed = speed.add(world.random.nextFloat() * 0.2 - 0.1,0,world.random.nextFloat() * 0.2 - 0.1);
+                    }
                     BlockState state = world.getBlockState(offsettedPos);
                     if (state.getExplosionResistance(world,mainpos,expl) <= 6) {
                         MyFallingBlockEntity fallingBlock = new MyFallingBlockEntity(world, position.x, position.y + 3, position.z, state);

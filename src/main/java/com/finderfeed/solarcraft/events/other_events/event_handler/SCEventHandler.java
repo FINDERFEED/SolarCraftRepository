@@ -43,6 +43,7 @@ import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -152,7 +153,9 @@ public class SCEventHandler {
             playernew.getPersistentData().putInt(SolarCraftTags.RAW_SOLAR_ENERGY, peorig.getPersistentData().getInt(SolarCraftTags.RAW_SOLAR_ENERGY));
             RunicEnergy.handleCloneEvent(event);
         }
-
+        CompoundTag scData = Helpers.getPlayerSolarcraftTag(peorig);
+        CompoundTag newScData = Helpers.getPlayerSolarcraftTag(playernew);
+        newScData.putBoolean("received_lexicon",scData.getBoolean("received_lexicon"));
 
         for (RunicEnergy.Type type : RunicEnergy.Type.getAll()) {
             if (RunicEnergy.hasFoundType(peorig,type)) {
