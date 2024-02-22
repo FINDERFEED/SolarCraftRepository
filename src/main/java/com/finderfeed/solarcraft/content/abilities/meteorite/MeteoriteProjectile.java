@@ -77,12 +77,14 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
 
     @Override
     protected void onHit(HitResult p_70227_1_) {
-        if (!this.level().isClientSide) {
-            this.onExplode();
-            FDPacketUtil.sendToTrackingEntity(this,new CameraShakePacket(0,10,120,1f));
-            level.playSound(null,this.getX(),this.getY(),this.getZ(),SCSounds.METEORITE_IMPACT.get(), SoundSource.MASTER,40f,1f);
-        }else{
-            this.explodeParticles();
+        if (!removeNextTick) {
+            if (!this.level().isClientSide) {
+                this.onExplode();
+                FDPacketUtil.sendToTrackingEntity(this, new CameraShakePacket(0, 10, 100, 1f));
+                level.playSound(null, this.getX(), this.getY(), this.getZ(), SCSounds.METEORITE_IMPACT.get(), SoundSource.MASTER, 40f, 1f);
+            } else {
+                this.explodeParticles();
+            }
         }
         removeNextTick = true;
     }
