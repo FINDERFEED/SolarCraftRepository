@@ -85,5 +85,11 @@
   },
   "solar_strike_attack": {
     "sounds": ["solarcraft:solar_strike_attack"]
+  },
+  "meteorite_impact": {
+    "sounds": ["solarcraft:meteorite_impact"]
+  },
+  "falling_meteorite": {
+    "sounds": ["solarcraft:falling_meteorite"]
   }
 }

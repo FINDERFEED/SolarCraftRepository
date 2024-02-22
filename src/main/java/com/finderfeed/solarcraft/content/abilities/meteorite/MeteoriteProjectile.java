@@ -5,10 +5,12 @@ import com.finderfeed.solarcraft.client.particles.fd_particle.AlphaInOutOptions;
 import com.finderfeed.solarcraft.client.particles.fd_particle.FDDefaultOptions;
 import com.finderfeed.solarcraft.client.particles.fd_particle.FDScalingOptions;
 import com.finderfeed.solarcraft.client.particles.fd_particle.instances.SmokeParticleOptions;
+import com.finderfeed.solarcraft.config.SolarcraftConfig;
 import com.finderfeed.solarcraft.content.abilities.solar_strike.SolarStrikeEntity;
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.entities.not_alive.MyFallingBlockEntity;
 import com.finderfeed.solarcraft.events.other_events.event_handler.SCEventHandler;
+import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.client.particles.particle_emitters.ParticleEmitterData;
 import com.finderfeed.solarcraft.local_library.client.particles.particle_emitters.ParticleEmmitterPacket;
@@ -18,9 +20,17 @@ import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.CameraShakePacket;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.sounds.SoundEngine;
+import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Blocks;
 
 import net.minecraft.world.entity.EntityType;
@@ -36,12 +46,15 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 
 
 import net.minecraft.world.level.Level;
+
+import java.util.List;
 
 
 public class MeteoriteProjectile extends AbstractHurtingProjectile {
@@ -57,15 +70,17 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
         super(SCEntityTypes.METEORITE.get(), p_i50174_2_, p_i50174_4_, p_i50174_6_, p_i50174_8_, p_i50174_10_, p_i50174_12_, p_i50174_14_);
     }
 
-    public MeteoriteProjectile(LivingEntity p_i50175_2_, Level p_i50175_9_) {
+    public MeteoriteProjectile(LivingEntity living, Level p_i50175_9_) {
         super(SCEntityTypes.METEORITE.get(),  p_i50175_9_);
+        this.setOwner(living);
     }
 
     @Override
     protected void onHit(HitResult p_70227_1_) {
         if (!this.level().isClientSide) {
             this.onExplode();
-            FDPacketUtil.sendToTrackingEntity(this,new CameraShakePacket(0,10,40,1.5f));
+            FDPacketUtil.sendToTrackingEntity(this,new CameraShakePacket(0,10,120,1f));
+            level.playSound(null,this.getX(),this.getY(),this.getZ(),SCSounds.METEORITE_IMPACT.get(), SoundSource.MASTER,40f,1f);
         }else{
             this.explodeParticles();
         }
@@ -126,13 +141,13 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
     }
 
     private void onExplode(){
+        this.damageEntities();
         if (Helpers.isSpellGriefingEnabled((ServerLevel) level()) && !SCEventHandler.isExplosionBlockerAround(level,this.position())) {
             int i = this.createCrater();
             this.createMeteorite(i);
             Vec3 v = this.getCraterOffset();
             int ellipseWidth = 9;
             int ellipseHeight = 10;
-            FireBlock block = (FireBlock) Blocks.FIRE;
             BlockState fireState = Blocks.FIRE.defaultBlockState();
             for (int x = -ellipseWidth; x <= ellipseWidth;x++){
                 for (int y = -ellipseHeight; y <= ellipseHeight;y++){
@@ -154,6 +169,31 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    private void damageEntities(){
+        Vec3 pos = this.position().add(this.getCraterOffset());
+        AABB box = new AABB(-12,-10,-12,12,10,12).move(pos);
+        List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class,box);
+        Entity owner = this.getOwner();
+        for (LivingEntity entity : entities){
+            if (owner instanceof LivingEntity living){
+                entity.hurt(level.damageSources().mobProjectile(this,living), SolarcraftConfig.METEORITE_DAMAGE.get().floatValue());
+            }else{
+                entity.hurt(level.damageSources().generic(), SolarcraftConfig.METEORITE_DAMAGE.get().floatValue());
+            }
+            Vec3 b = entity.position().subtract(pos).multiply(1,0,1).normalize();
+            b = b.multiply(5,5,5).add(
+              b.x * random.nextFloat() * 0.2,
+              1.5 + random.nextFloat(),
+              b.z * random.nextFloat() * 0.2
+            );
+            if (entity instanceof ServerPlayer player){
+                Helpers.setServerPlayerSpeed(player,b);
+            }else{
+                entity.setDeltaMovement(b);
             }
         }
     }
@@ -280,6 +320,9 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
 
     @Override
     public void tick(){
+        if (level.isClientSide && (tickCount % 200 == 0 || firstTick)){
+            ClientHelpers.playsoundInEars(SCSounds.METEORITE_FALLING.get(),1f,1f);
+        }
         if (removeNextTick){
             this.remove(RemovalReason.KILLED);
         }
@@ -290,6 +333,7 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
                 this.remove(RemovalReason.KILLED);
             }
         }else{
+
             this.spawnParticles();
         }
     }

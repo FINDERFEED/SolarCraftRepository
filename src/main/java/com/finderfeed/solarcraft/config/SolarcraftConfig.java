@@ -15,6 +15,7 @@ public final class SolarcraftConfig {
 
     public static final ModConfigSpec.ConfigValue<List<String>> PICKAXE_TREASURES;
     public static final ModConfigSpec.ConfigValue<Double> SOLAR_STRIKE_DAMAGE;
+    public static final ModConfigSpec.ConfigValue<Double> METEORITE_DAMAGE;
     public static final ModConfigSpec.ConfigValue<Integer> AUTOHEAL_CHANCE;
     public static final ModConfigSpec.ConfigValue<Integer> BLESSED_CHANCE;
     public static final ModConfigSpec.ConfigValue<Integer> DISARM_CHANCE_MODULE;
@@ -35,6 +36,7 @@ public final class SolarcraftConfig {
                 .define("treasures",DEFAULT_TREASURES);
 
         SOLAR_STRIKE_DAMAGE = BUILDER.comment("Solar strike ability damage").define("solar_strike_damage",300d);
+        METEORITE_DAMAGE = BUILDER.comment("Meteorite ability damage").define("meteorite_damage",50d);
         AUTOHEAL_CHANCE = BUILDER.comment("The chance to heal the sword with sword heal module").define("chance",10);
         BLESSED_CHANCE = BUILDER.comment("The chance to restore durability with blessed module").define("chance",5);
         DISARM_CHANCE_MODULE = BUILDER.comment("Chance to disarm an entity when having the disarm module on armor").define("chance",10);

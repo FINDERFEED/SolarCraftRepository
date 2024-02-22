@@ -40,6 +40,8 @@ public class SCSounds {
     public static final DeferredHolder<SoundEvent,SoundEvent> RITUAL_TILE_STRIKE = SOUND_EVENTS.register("ritual_tile_strike",()-> SoundEvent.createVariableRangeEvent(new ResourceLocation(SolarCraft.MOD_ID,"ritual_tile_strike")));
     public static final DeferredHolder<SoundEvent,SoundEvent> ORBITAL_EXPLOSION = SOUND_EVENTS.register("orbital_explosion",()-> SoundEvent.createVariableRangeEvent(new ResourceLocation(SolarCraft.MOD_ID,"orbital_explosion")));
     public static final DeferredHolder<SoundEvent,SoundEvent> SOLAR_STRIKE_ATTACK = SOUND_EVENTS.register("solar_strike_attack",()-> SoundEvent.createVariableRangeEvent(new ResourceLocation(SolarCraft.MOD_ID,"solar_strike_attack")));
+    public static final DeferredHolder<SoundEvent,SoundEvent> METEORITE_IMPACT = SOUND_EVENTS.register("meteorite_impact",()-> SoundEvent.createVariableRangeEvent(new ResourceLocation(SolarCraft.MOD_ID,"meteorite_impact")));
+    public static final DeferredHolder<SoundEvent,SoundEvent> METEORITE_FALLING = SOUND_EVENTS.register("falling_meteorite",()-> SoundEvent.createVariableRangeEvent(new ResourceLocation(SolarCraft.MOD_ID,"falling_meteorite")));
 
 
     //original: https://freesound.org/people/juskiddink/sounds/101934/

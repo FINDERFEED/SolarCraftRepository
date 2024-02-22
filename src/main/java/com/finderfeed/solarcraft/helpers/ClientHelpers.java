@@ -41,6 +41,7 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -290,6 +291,27 @@ public class ClientHelpers {
 
     public static void playsoundInEars(SoundEvent event,float volume,float pitch){
         Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(event,volume,pitch));
+    }
+    public static SimpleSoundInstance playLoopingSoundInEars(SoundEvent event,float volume,float pitch){
+        SimpleSoundInstance i = uiLoopingSound(event,volume,pitch);
+        Minecraft.getInstance().getSoundManager().play(i);
+        return i;
+    }
+    public static SimpleSoundInstance uiLoopingSound(SoundEvent event,float volume,float pitch){
+        return new SimpleSoundInstance(
+                event.getLocation(),
+                SoundSource.MASTER,
+                volume,
+                pitch,
+                SoundInstance.createUnseededRandom(),
+                true,
+                0,
+                SoundInstance.Attenuation.NONE,
+                0.0,
+                0.0,
+                0.0,
+                true
+        );
     }
 
     public static void playTotemAnimation( ){
