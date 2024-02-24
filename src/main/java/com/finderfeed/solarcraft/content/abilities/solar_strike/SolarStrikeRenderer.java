@@ -1,16 +1,13 @@
 package com.finderfeed.solarcraft.content.abilities.solar_strike;
 
-import com.finderfeed.solarcraft.client.rendering.rendertypes.SolarCraftRenderTypes;
-import com.finderfeed.solarcraft.local_library.client.GlowShaderInit;
+import com.finderfeed.solarcraft.client.rendering.rendertypes.SCRenderTypes;
 import com.finderfeed.solarcraft.local_library.client.delayed_renderer.DelayedRenderer;
-import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -57,7 +54,7 @@ public class SolarStrikeRenderer extends EntityRenderer<SolarStrikeEntity> {
         Matrix4f m = matrices.last().pose();
         float raySize = 4f;
         matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YN(),camera.getYRot()));
-        VertexConsumer vertex = src.getBuffer(SolarCraftRenderTypes.LIGHTNING_NO_CULL);
+        VertexConsumer vertex = src.getBuffer(SCRenderTypes.LIGHTNING_NO_CULL);
         vertex.vertex(m,-raySize,0,0f).color(0f,0f,0f,alpha).endVertex();
         vertex.vertex(m,-raySize,400,0f).color(0f,0f,0f,alpha).endVertex();
         vertex.vertex(m,0,400,0f).color(1f,1f,0f,alpha).endVertex();
@@ -74,7 +71,7 @@ public class SolarStrikeRenderer extends EntityRenderer<SolarStrikeEntity> {
         float alpha = entity.getExplosionCompletionPercent(pticks);
         alpha = (float) Mth.clamp(Math.sqrt(alpha)*1.5f,0,1);
         Vec3 ePos = entity.position();
-        VertexConsumer vertex = src.getBuffer(SolarCraftRenderTypes.LIGHTNING_NO_CULL);
+        VertexConsumer vertex = src.getBuffer(SCRenderTypes.LIGHTNING_NO_CULL);
         float raySize = 1f;
         float r = 1f;
         float g = 1f;

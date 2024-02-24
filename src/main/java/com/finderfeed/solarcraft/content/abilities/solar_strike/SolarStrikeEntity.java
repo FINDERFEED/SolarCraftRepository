@@ -69,16 +69,14 @@ public class SolarStrikeEntity extends Entity {
     public static int TIME_UNTIL_EXPLOSION = 60;
     private UUID owner;
 
-    public static EntityDataAccessor<Integer> LIFE = SynchedEntityData.defineId(SolarStrikeEntity.class, EntityDataSerializers.INT);
-    public int life = 0;
     public SolarStrikeEntity(EntityType<? extends Entity> p_i48581_1_, Level p_i48581_2_) {
         super(SCEntityTypes.SOLAR_STRIKE_ENTITY_REG.get(), p_i48581_2_);
     }
-//
-//    public static AttributeSupplier.Builder createAttributes() {
-//        return createLivingAttributes().add(Attributes.FOLLOW_RANGE);
-//    }
 
+    @Override
+    protected void defineSynchedData() {
+
+    }
 
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
@@ -86,7 +84,7 @@ public class SolarStrikeEntity extends Entity {
         if (owner != null) {
             compound.putUUID("owner", owner);
         }
-        compound.putInt("life", life);
+        //compound.putInt("life", life);
     }
 
     @Override
@@ -95,12 +93,8 @@ public class SolarStrikeEntity extends Entity {
         if (compound.contains("owner")){
             this.owner = compound.getUUID("owner");
         }
-        life = compound.getInt("life");
+        //life = compound.getInt("life");
     }
-    public int getLifeTicks(){
-        return this.entityData.get(LIFE);
-    }
-
 
     @Override
     public void tick(){
@@ -176,14 +170,14 @@ public class SolarStrikeEntity extends Entity {
             double x = Math.sin(i + t) * radius;
             double z = Math.cos(i + t) * radius;
             Vec3 pos = Helpers.getBlockCenter(this.getOnPos()).add(x,0.5,z);
-            vs.add(new Vec3(pos.x,pos.y,pos.z));
+            vs.add(pos);
         }
         return vs;
     }
 
     private void particlesBeforeExplosion(){
-        float psize = 1.5f;
-        for (Vec3 pos : this.getRayPositions(RAYS_COUNT,0.5f)){
+        float psize = 2f;
+        for (Vec3 pos : this.getRayPositions(RAYS_COUNT,1f)){
             int r = 230 + level.random.nextInt(25);
             int g = 230 + level.random.nextInt(25);
             int b = 10 + level.random.nextInt(10);
@@ -200,9 +194,21 @@ public class SolarStrikeEntity extends Entity {
     private void explode(){
         FDPacketUtil.sendToTrackingEntity(this,new CameraShakePacket(0,10,10,2f));
         level.playSound(null,this.getX(),this.getY(),this.getZ(),SCSounds.SOLAR_STRIKE_ATTACK.get(),SoundSource.MASTER,40f,1f);
-        if (SCEventHandler.isExplosionBlockerAround(level(), Helpers.getBlockCenter(this.getOnPos())) || !Helpers.isSpellGriefingEnabled((ServerLevel) level)) return;
         int radius = level.random.nextInt(RANDOM_RADIUS) + BASE_RADIUS;
         int depth = level.random.nextInt(RANDOM_DEPTH) + BASE_MAX_DEPTH;
+        AABB damageBox = new AABB(-radius,-depth,-radius,radius,depth,radius).inflate(3).move(this.position());
+        Entity owner = this.getOwner();
+        for (LivingEntity entity : level.getEntitiesOfClass(LivingEntity.class,damageBox)){
+            if (entity != owner){
+                if (owner instanceof Player player) {
+                    entity.hurt(SCDamageSources.playerArmorPierce(player),SolarcraftConfig.SOLAR_STRIKE_DAMAGE.get().floatValue());
+                }else{
+                    entity.hurt(level.damageSources().magic(),SolarcraftConfig.SOLAR_STRIKE_DAMAGE.get().floatValue());
+                }
+            }
+        }
+        if (SCEventHandler.isExplosionBlockerAround(level(), Helpers.getBlockCenter(this.getOnPos())) || !Helpers.isSpellGriefingEnabled((ServerLevel) level)) return;
+
         for (int x = -radius;x < radius;x++){
             for (int z = -radius;z < radius;z++){
                 for (int y = -depth; y <= depth;y++){
@@ -221,17 +227,7 @@ public class SolarStrikeEntity extends Entity {
                 }
             }
         }
-        AABB damageBox = new AABB(-radius,-depth,-radius,radius,depth,radius).inflate(3).move(this.position());
-        Entity owner = this.getOwner();
-        for (LivingEntity entity : level.getEntitiesOfClass(LivingEntity.class,damageBox)){
-            if (entity != owner){
-                if (owner instanceof Player player) {
-                    entity.hurt(SCDamageSources.playerArmorPierce(player),SolarcraftConfig.SOLAR_STRIKE_DAMAGE.get().floatValue());
-                }else{
-                    entity.hurt(level.damageSources().magic(),SolarcraftConfig.SOLAR_STRIKE_DAMAGE.get().floatValue());
-                }
-            }
-        }
+
     }
 
     private void processBlockExplosion(int x,int y,int z){
@@ -307,68 +303,14 @@ public class SolarStrikeEntity extends Entity {
     }
 
     @Override
-    protected void defineSynchedData() {
-        //super.defineSynchedData();
-        this.entityData.define(LIFE,0);
+    public boolean shouldRender(double p_20296_, double p_20297_, double p_20298_) {
+        return true;
     }
 
-
-    public void doSolarStrikeExplosion(BlockPos pos) {
-        if (!SCEventHandler.isExplosionBlockerAround(level(), Helpers.getBlockCenter(pos)) && Helpers.isSpellGriefingEnabled((ServerLevel) level())) {
-            //8
-            //3 + Math.ceil(randomRadius) * 3
-            double randomRadius = this.level().random.nextFloat() * 2 + 10;
-            double randomHeight = this.level().random.nextFloat() * 3 + Math.ceil(randomRadius) * 3;
-
-            for (int i = (int) -Math.ceil(randomRadius); i <= (int) Math.ceil(randomRadius); i++) {
-                for (int g = (int) -Math.ceil(randomRadius); g <= (int) Math.ceil(randomRadius); g++) {
-                    for (int k = (int) -Math.ceil(randomHeight); k <= (int) Math.ceil(randomHeight); k++) {
-                        if (checkTochkaVEllipse(i, k, g, randomRadius, randomHeight, randomRadius)) {
-                            Vec3 vec = new Vec3(i, 0, g);
-
-                            if ((this.level().random.nextDouble() * 0.5 + 1) * vec.length() < randomRadius) {
-
-                                if (this.level().getBlockState(pos.offset((int) Math.floor(i), (int) Math.floor(k), (int) Math.floor(g))).getDestroySpeed(this.level(), pos.offset((int) Math.floor(i), (int) Math.floor(k), (int) Math.floor(g))) >= 0
-                                        && this.level().getBlockState(pos.offset((int) Math.floor(i), (int) Math.floor(k), (int) Math.floor(g))).getDestroySpeed(this.level(), pos.offset((int) Math.floor(i), (int) Math.floor(k), (int) Math.floor(g))) <= 100) {
-                                    this.level().setBlock(pos.offset((int) Math.floor(i), (int) Math.floor(k), (int) Math.floor(g)), Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
-                                }
-
-
-                            }
-
-                        }
-                    }
-                }
-
-            }//pos.offset((int) Math.floor(i), (int) Math.floor(k), (int) Math.floor(g))
-        }
+    @Override
+    public boolean shouldRenderAtSqrDistance(double p_19883_) {
+        return true;
     }
-
-    public static boolean checkTochkaVEllipse(double xtochka,double ytochka,double ztochka,double xrad,double yrad,double zrad){
-        double first;
-        double second;
-        double third;
-
-        if (xrad != 0) {
-            first = (xtochka * xtochka) / (xrad * xrad);
-        }else{
-            first = 0;
-        }
-        if (yrad != 0) {
-            second = (ytochka*ytochka)/(yrad*yrad);
-        }else{
-            second = 0;
-        }
-        if (zrad != 0) {
-            third = (ztochka*ztochka)/(zrad*zrad);
-        }else{
-            third = 0;
-        }
-
-
-        return first + second + third <= 1;
-    }
-
 }
 /*
 int radius = 21-h;

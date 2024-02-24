@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.content.entities.renderers;
 
 import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.client.rendering.rendertypes.SolarCraftRenderTypes;
+import com.finderfeed.solarcraft.client.rendering.rendertypes.SCRenderTypes;
 import com.finderfeed.solarcraft.content.entities.ShadowZombie;
 import com.finderfeed.solarcraft.content.entities.models.ShadowZombieModel;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -31,7 +31,7 @@ public class ShadowZombieRenderer extends MobRenderer<ShadowZombie, ShadowZombie
                 matrices.translate(0, 2, 0);
                 Matrix4f m = matrices.last().pose();
                 ResourceLocation t = new ResourceLocation(SolarCraft.MOD_ID, "textures/items/amethyst_core.png");
-                VertexConsumer c = src.getBuffer(SolarCraftRenderTypes.TEXT_GLOW.apply(t));
+                VertexConsumer c = src.getBuffer(SCRenderTypes.TEXT_GLOW.apply(t));
 
                 c.vertex(m, 0, 0, 0).color(1f, 1f, 1f, 1f).uv(0, 0).uv2(LightTexture.FULL_BRIGHT).endVertex();
                 c.vertex(m, 0, 1, 0).color(1f, 1f, 1f, 1f).uv(0, 1).uv2(LightTexture.FULL_BRIGHT).endVertex();
@@ -45,7 +45,7 @@ public class ShadowZombieRenderer extends MobRenderer<ShadowZombie, ShadowZombie
                 matrices.translate(0, 2, 0);
                 Matrix4f m = matrices.last().pose();
                 ResourceLocation t = new ResourceLocation(SolarCraft.MOD_ID, "textures/items/amethyst_core.png");
-                VertexConsumer c = src.getBuffer(SolarCraftRenderTypes.text(t));
+                VertexConsumer c = src.getBuffer(SCRenderTypes.text(t));
 
                 c.vertex(m, 0, 0, 0).color(1f, 1f, 1f, 1f).uv(0, 0).uv2(LightTexture.FULL_BRIGHT).endVertex();
                 c.vertex(m, 0, 1, 0).color(1f, 1f, 1f, 1f).uv(0, 1).uv2(LightTexture.FULL_BRIGHT).endVertex();

@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.content.entities.renderers;
 
 import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.client.rendering.rendertypes.SolarCraftRenderTypes;
+import com.finderfeed.solarcraft.client.rendering.rendertypes.SCRenderTypes;
 import com.finderfeed.solarcraft.client.rendering.shaders.post_chains.PostChainPlusUltra;
 import com.finderfeed.solarcraft.client.rendering.shaders.post_chains.UniformPlusPlus;
 import com.finderfeed.solarcraft.content.entities.OrbitalCannonExplosionEntity;
@@ -24,7 +24,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.neoforged.neoforge.client.model.data.ModelData;
-import org.lwjgl.opengl.GL30;
 
 import java.util.List;
 import java.util.Map;
@@ -60,10 +59,10 @@ public class OrbitalExplosionEntityRenderer extends EntityRenderer<OrbitalCannon
 
         if (firstPass){
             int previousFramebuffer = GlStateManager.getBoundFramebuffer();
-            SolarCraftRenderTypes.orbitalExplosionOutTarget.clear(Minecraft.ON_OSX);
-            SolarCraftRenderTypes.orbitalExplosionOutTarget.copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
-            SolarCraftRenderTypes.orbitalExplosionDepthTarget.clear(Minecraft.ON_OSX);
-            SolarCraftRenderTypes.orbitalExplosionDepthTarget.copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
+            SCRenderTypes.orbitalExplosionOutTarget.clear(Minecraft.ON_OSX);
+            SCRenderTypes.orbitalExplosionOutTarget.copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
+            SCRenderTypes.orbitalExplosionDepthTarget.clear(Minecraft.ON_OSX);
+            SCRenderTypes.orbitalExplosionDepthTarget.copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
             firstPass = false;
             //36160
             GlStateManager._glBindFramebuffer(36160,previousFramebuffer);
@@ -81,7 +80,7 @@ public class OrbitalExplosionEntityRenderer extends EntityRenderer<OrbitalCannon
 
 
     private void renderExplosionAtDifferentRenderTarget(OrbitalCannonExplosionEntity entity, PoseStack matrices, MultiBufferSource src){
-        RenderType t = SolarCraftRenderTypes.ORBITAL_EXPLOSION_RENDER_TYPE;
+        RenderType t = SCRenderTypes.ORBITAL_EXPLOSION_RENDER_TYPE;
         List<BakedQuad> list = Minecraft.getInstance().getModelManager().getModel(OBJModels.ORBITAL_EXPLOSION_SPHERE)
                 .getQuads(null, null, RandomSource.create(), ModelData.EMPTY, t);
         VertexConsumer cons = src.getBuffer(t);
@@ -109,12 +108,12 @@ public class OrbitalExplosionEntityRenderer extends EntityRenderer<OrbitalCannon
                         new UniformPlusPlus(Map.of()));
                 chain.resize(Minecraft.getInstance().getWindow().getWidth(),
                         Minecraft.getInstance().getWindow().getHeight());
-                SolarCraftRenderTypes.orbitalExplosionOutTarget = chain.getTempTarget("orbital_explosion");
-                SolarCraftRenderTypes.orbitalExplosionDepthTarget = chain.getTempTarget("depth_target");
-                SolarCraftRenderTypes.orbitalExplosionOutTarget.clear(Minecraft.ON_OSX);
-                SolarCraftRenderTypes.orbitalExplosionOutTarget.copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
-                SolarCraftRenderTypes.orbitalExplosionDepthTarget.clear(Minecraft.ON_OSX);
-                SolarCraftRenderTypes.orbitalExplosionDepthTarget.copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
+                SCRenderTypes.orbitalExplosionOutTarget = chain.getTempTarget("orbital_explosion");
+                SCRenderTypes.orbitalExplosionDepthTarget = chain.getTempTarget("depth_target");
+                SCRenderTypes.orbitalExplosionOutTarget.clear(Minecraft.ON_OSX);
+                SCRenderTypes.orbitalExplosionOutTarget.copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
+                SCRenderTypes.orbitalExplosionDepthTarget.clear(Minecraft.ON_OSX);
+                SCRenderTypes.orbitalExplosionDepthTarget.copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
                 postChain = chain;
                 postChain.addPostActions(()->{
                     firstPass = true;

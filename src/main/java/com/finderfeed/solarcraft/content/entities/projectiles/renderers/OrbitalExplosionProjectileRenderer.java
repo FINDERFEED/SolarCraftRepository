@@ -1,14 +1,13 @@
 package com.finderfeed.solarcraft.content.entities.projectiles.renderers;
 
 import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.client.rendering.rendertypes.SolarCraftRenderTypes;
+import com.finderfeed.solarcraft.client.rendering.rendertypes.SCRenderTypes;
 import com.finderfeed.solarcraft.content.entities.projectiles.OrbitalExplosionProjectile;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -29,7 +28,7 @@ public class OrbitalExplosionProjectileRenderer extends EntityRenderer<OrbitalEx
     @Override
     public void render(OrbitalExplosionProjectile entity, float p_114486_, float pTicks, PoseStack matrices, MultiBufferSource src, int smth) {
         matrices.pushPose();
-        VertexConsumer vertex = src.getBuffer(SolarCraftRenderTypes.depthMaskedTextSeeThrough(LOCATION));
+        VertexConsumer vertex = src.getBuffer(SCRenderTypes.depthMaskedTextSeeThrough(LOCATION));
         Quaternionf quaternion = Minecraft.getInstance().gameRenderer.getMainCamera().rotation();
         matrices.mulPose(quaternion);
 

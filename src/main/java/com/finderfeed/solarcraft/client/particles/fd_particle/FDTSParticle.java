@@ -1,12 +1,9 @@
 package com.finderfeed.solarcraft.client.particles.fd_particle;
 
-import com.finderfeed.solarcraft.client.rendering.rendertypes.SolarCraftRenderTypes;
+import com.finderfeed.solarcraft.client.rendering.rendertypes.SCRenderTypes;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.TextureSheetParticle;
-import org.jetbrains.annotations.Nullable;
 
 public abstract class FDTSParticle extends TextureSheetParticle {
     private FDTSParticleOptions options;
@@ -78,7 +75,7 @@ public abstract class FDTSParticle extends TextureSheetParticle {
 
     @Override
     public ParticleRenderType getRenderType() {
-        return options.defaultOptions.additive ? SolarCraftRenderTypes.ParticleRenderTypes.ADDITIVE_TRANSLUCENT :
-                SolarCraftRenderTypes.ParticleRenderTypes.NORMAL_TRANSLUCENT;
+        return options.defaultOptions.additive ? SCRenderTypes.ParticleRenderTypes.ADDITIVE_TRANSLUCENT :
+                SCRenderTypes.ParticleRenderTypes.NORMAL_TRANSLUCENT;
     }
 }

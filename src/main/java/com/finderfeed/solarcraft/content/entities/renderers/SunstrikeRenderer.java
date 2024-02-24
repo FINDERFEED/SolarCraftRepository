@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.content.entities.renderers;
 
 import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.client.rendering.rendertypes.SolarCraftRenderTypes;
+import com.finderfeed.solarcraft.client.rendering.rendertypes.SCRenderTypes;
 import com.finderfeed.solarcraft.content.entities.not_alive.SunstrikeEntity;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
@@ -87,7 +87,7 @@ public class SunstrikeRenderer extends EntityRenderer<SunstrikeEntity> {
 
 
         matrices.pushPose();
-        VertexConsumer vertexray = src.getBuffer(SolarCraftRenderTypes.depthMaskedTextSeeThrough(SOLAR_STRIKE_RAY));
+        VertexConsumer vertexray = src.getBuffer(SCRenderTypes.depthMaskedTextSeeThrough(SOLAR_STRIKE_RAY));
         mat = matrices.last().pose();
         float modray = 0.125f;
         vertexray.vertex(mat, -1F*modray, h*(float)(1-percent), 0).color(255, 255, 255, 255).uv(0, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();

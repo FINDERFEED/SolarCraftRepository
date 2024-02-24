@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.content.entities.renderers;
 
 import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.client.rendering.rendertypes.SolarCraftRenderTypes;
+import com.finderfeed.solarcraft.client.rendering.rendertypes.SCRenderTypes;
 import com.finderfeed.solarcraft.content.entities.not_alive.EarthquakeEntity;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
@@ -48,7 +48,7 @@ public class EarthquakeRenderer extends EntityRenderer<EarthquakeEntity> {
         int delta = EarthquakeEntity.ACTIVATION_TIME - 3;
         if (entity.tickCount > delta) {
             matrices.pushPose();
-            vertex = src.getBuffer(SolarCraftRenderTypes.depthMaskedTextSeeThrough(LOC_EXPL));
+            vertex = src.getBuffer(SCRenderTypes.depthMaskedTextSeeThrough(LOC_EXPL));
             matrices.translate(0, 0.01, 0);
             RenderingTools.applyMovementMatrixRotations(matrices, entity.getDir());
             m = matrices.last().pose();

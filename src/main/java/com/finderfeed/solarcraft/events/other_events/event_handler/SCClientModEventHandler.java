@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.events.other_events.event_handler;
 
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.client.rendering.radiant_texture.RadiantTextureSpriteSource;
-import com.finderfeed.solarcraft.client.rendering.rendertypes.SolarCraftRenderTypes;
+import com.finderfeed.solarcraft.client.rendering.rendertypes.SCRenderTypes;
 import com.finderfeed.solarcraft.client.tooltips.REClientTooltipComponent;
 import com.finderfeed.solarcraft.client.tooltips.RETooltipComponent;
 import com.finderfeed.solarcraft.content.abilities.meteorite.MeteoriteProjectileRenderer;
@@ -39,7 +39,6 @@ import com.finderfeed.solarcraft.content.runic_network.repeater.RepeaterRenderer
 import com.finderfeed.solarcraft.content.world_generation.dimension_related.radiant_land.RadiantLandDimEffects;
 import com.finderfeed.solarcraft.events.RenderEventsHandler;
 import com.finderfeed.solarcraft.helpers.Helpers;
-import com.finderfeed.solarcraft.local_library.client.GlowShaderInit;
 import com.finderfeed.solarcraft.local_library.client.particles.ScreenParticlesRenderHandler;
 import com.finderfeed.solarcraft.registries.SCBedrockModels;
 import com.finderfeed.solarcraft.registries.ScreenSuppliers;
@@ -121,8 +120,8 @@ public class SCClientModEventHandler {
     public static void registerClientStuff(final FMLClientSetupEvent event){
 
         NeoForge.EVENT_BUS.register(new RenderEventsHandler());
-        ScreenParticlesRenderHandler.registerRenderType(SolarCraftRenderTypes.ParticleRenderTypes.RUNE_TILE_PARTICLE);
-        ScreenParticlesRenderHandler.registerRenderType(SolarCraftRenderTypes.ParticleRenderTypes.SOLAR_STRIKE_PARTICLE_SCREEN);
+        ScreenParticlesRenderHandler.registerRenderType(SCRenderTypes.ParticleRenderTypes.RUNE_TILE_PARTICLE);
+        ScreenParticlesRenderHandler.registerRenderType(SCRenderTypes.ParticleRenderTypes.SOLAR_STRIKE_PARTICLE_SCREEN);
 
         ScreenSuppliers.SCREEN_REGISTRY.registerAll();
 

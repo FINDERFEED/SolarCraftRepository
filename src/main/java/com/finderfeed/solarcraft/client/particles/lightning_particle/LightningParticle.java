@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.client.particles.lightning_particle;
 
 import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.client.rendering.rendertypes.SolarCraftRenderTypes;
+import com.finderfeed.solarcraft.client.rendering.rendertypes.SCRenderTypes;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
@@ -167,7 +167,7 @@ public class LightningParticle extends Particle {
     private static final ParticleRenderType RENDER_TYPE = new ParticleRenderType() {
         @Override
         public void begin(BufferBuilder builder, TextureManager manager) {
-            RenderType type = SolarCraftRenderTypes.lightning();
+            RenderType type = SCRenderTypes.lightning();
             type.setupRenderState();
             builder.begin(type.mode(),type.format());
         }
@@ -175,7 +175,7 @@ public class LightningParticle extends Particle {
         @Override
         public void end(Tesselator end) {
             end.end();
-            RenderType type = SolarCraftRenderTypes.lightning();
+            RenderType type = SCRenderTypes.lightning();
             type.clearRenderState();
 
         }

@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.content.blocks.render;
 
 import com.finderfeed.solarcraft.client.rendering.CoreShaders;
-import com.finderfeed.solarcraft.client.rendering.rendertypes.SolarCraftRenderTypes;
+import com.finderfeed.solarcraft.client.rendering.rendertypes.SCRenderTypes;
 import com.finderfeed.solarcraft.content.blocks.RunicEnergyChargerBlock;
 import com.finderfeed.solarcraft.content.blocks.blockentities.RunicEnergyChargerTileEntity;
 import com.finderfeed.solarcraft.content.blocks.render.abstracts.AbstractRunicEnergyContainerRenderer;
@@ -15,7 +15,6 @@ import org.joml.Matrix4f;
 import static com.finderfeed.solarcraft.local_library.helpers.RenderingTools.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -38,7 +37,7 @@ public class RunicEnergyChargerRenderer extends AbstractRunicEnergyContainerRend
         if (!ItemRunicEnergy.isFullyCharged(stack,(IRunicEnergyUser)stack.getItem())) {
 
             matrices.pushPose();
-            VertexConsumer vertex = buffer.getBuffer(SolarCraftRenderTypes.shaderRendertype2(CoreShaders.RUNIC_ENERGY_FLOW_STATE_SHARD));
+            VertexConsumer vertex = buffer.getBuffer(SCRenderTypes.shaderRendertype2(CoreShaders.RUNIC_ENERGY_FLOW_STATE_SHARD));
             CoreShaders.RUNIC_ENERGY_FLOW_SHADER.safeGetUniform("time").set((tile.getLevel().getGameTime() + pticks) / 10f);
             CoreShaders.RUNIC_ENERGY_FLOW_SHADER.safeGetUniform("definedColor").set(1f, 0.65f, 0.0f);
             CoreShaders.RUNIC_ENERGY_FLOW_SHADER.safeGetUniform("innerColor").set(1f, 1f, 0f);

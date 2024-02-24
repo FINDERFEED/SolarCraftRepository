@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.client.particles;
 
-import com.finderfeed.solarcraft.client.rendering.rendertypes.SolarCraftRenderTypes;
+import com.finderfeed.solarcraft.client.rendering.rendertypes.SCRenderTypes;
 import com.mojang.blaze3d.vertex.*;
 
 import net.minecraft.client.Camera;
@@ -38,7 +38,7 @@ public abstract class ShaderParticle extends Particle {
     public void render(VertexConsumer useless, Camera cam, float pticks) {
         MultiBufferSource src = Minecraft.getInstance().renderBuffers().bufferSource();
 
-        VertexConsumer vertex = src.getBuffer(SolarCraftRenderTypes.shaderRendertype(shaderStateShard));
+        VertexConsumer vertex = src.getBuffer(SCRenderTypes.shaderRendertype(shaderStateShard));
 
         PoseStack matrices = new PoseStack();
         matrices.pushPose();

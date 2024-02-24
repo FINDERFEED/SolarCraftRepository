@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.local_library.helpers;
 
 import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.client.rendering.rendertypes.SolarCraftRenderTypes;
+import com.finderfeed.solarcraft.client.rendering.rendertypes.SCRenderTypes;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.client.custom_tooltips.CustomTooltip;
 import com.finderfeed.solarcraft.client.screens.PositionBlockStateTileEntity;
@@ -1752,7 +1752,7 @@ public class RenderingTools {
             for (int i = 0; i < points.size() - 1;i++){
                 Vec3 p1 = points.get(i);
                 Vec3 p2 = points.get(i + 1);
-                generateLightningCube(matrices.last().pose(),src.getBuffer(SolarCraftRenderTypes.eyesPositionColorTexLightmapNoNormal(WHITE)),lwidth,r,g,b,a,p1,p2);
+                generateLightningCube(matrices.last().pose(),src.getBuffer(SCRenderTypes.eyesPositionColorTexLightmapNoNormal(WHITE)),lwidth,r,g,b,a,p1,p2);
             }
             matrices.popPose();
         }

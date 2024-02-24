@@ -23,11 +23,11 @@ import org.lwjgl.opengl.GL11;
 import java.util.function.Function;
 
 
-public class SolarCraftRenderTypes extends RenderType {
+public class SCRenderTypes extends RenderType {
 
 
 
-    public SolarCraftRenderTypes(String p_173178_, VertexFormat p_173179_, VertexFormat.Mode p_173180_, int p_173181_, boolean p_173182_, boolean p_173183_, Runnable p_173184_, Runnable p_173185_) {
+    public SCRenderTypes(String p_173178_, VertexFormat p_173179_, VertexFormat.Mode p_173180_, int p_173181_, boolean p_173182_, boolean p_173183_, Runnable p_173184_, Runnable p_173185_) {
         super(p_173178_, p_173179_, p_173180_, p_173181_, p_173182_, p_173183_, p_173184_, p_173185_);
     }
 
@@ -57,8 +57,8 @@ public class SolarCraftRenderTypes extends RenderType {
                     .createCompositeState(false)
     );
 
-    public static Function<ResourceLocation, RenderType> TEXT_GLOW = Util.memoize(SolarCraftRenderTypes::getGlowText);
-    public static Function<ResourceLocation, RenderType> TEXT_GLOW_NO_SHARD = Util.memoize(SolarCraftRenderTypes::getGlowTextNoShard);
+    public static Function<ResourceLocation, RenderType> TEXT_GLOW = Util.memoize(SCRenderTypes::getGlowText);
+    public static Function<ResourceLocation, RenderType> TEXT_GLOW_NO_SHARD = Util.memoize(SCRenderTypes::getGlowTextNoShard);
 
     private static RenderType getGlowText(ResourceLocation locationIn) {
         RenderType.CompositeState rendertype$state = RenderType.CompositeState.builder()
@@ -187,8 +187,12 @@ public class SolarCraftRenderTypes extends RenderType {
     public static class ParticleRenderTypes {
 
         public static final ParticleRenderType ADDITIVE_TRANSLUCENT = new ParticleRenderType() {
+
             @Override
             public void begin(BufferBuilder builder, TextureManager mmanager) {
+                if (Minecraft.useShaderTransparency()){
+                    Minecraft.getInstance().getMainRenderTarget().bindWrite(false);
+                }
                 RenderSystem.depthMask(false);
                 RenderSystem.enableBlend();
                 RenderSystem.blendFunc(GL11.GL_SRC_ALPHA,GL11.GL_ONE);
@@ -199,6 +203,10 @@ public class SolarCraftRenderTypes extends RenderType {
             @Override
             public void end(Tesselator tesselator) {
                 tesselator.end();
+                if (Minecraft.useShaderTransparency()){
+                    Minecraft.getInstance().levelRenderer.getParticlesTarget().copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
+                    Minecraft.getInstance().levelRenderer.getParticlesTarget().bindWrite(false);
+                }
                 RenderSystem.disableBlend();
                 RenderSystem.depthMask(true);
             }
@@ -212,6 +220,9 @@ public class SolarCraftRenderTypes extends RenderType {
         public static final ParticleRenderType NORMAL_TRANSLUCENT = new ParticleRenderType() {
             @Override
             public void begin(BufferBuilder builder, TextureManager mmanager) {
+                if (Minecraft.useShaderTransparency()){
+                    Minecraft.getInstance().getMainRenderTarget().bindWrite(false);
+                }
                 RenderSystem.depthMask(false);
                 RenderSystem.enableBlend();
                 RenderSystem.blendFunc(GL11.GL_SRC_ALPHA,GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -222,6 +233,10 @@ public class SolarCraftRenderTypes extends RenderType {
             @Override
             public void end(Tesselator tesselator) {
                 tesselator.end();
+                if (Minecraft.useShaderTransparency()){
+                    Minecraft.getInstance().levelRenderer.getParticlesTarget().copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
+                    Minecraft.getInstance().levelRenderer.getParticlesTarget().bindWrite(false);
+                }
                 RenderSystem.disableBlend();
                 RenderSystem.depthMask(true);
             }

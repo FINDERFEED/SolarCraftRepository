@@ -1,6 +1,5 @@
 package com.finderfeed.solarcraft.content.blocks.render;
 
-import com.finderfeed.solarcraft.client.rendering.rendertypes.SolarCraftRenderTypes;
 import com.finderfeed.solarcraft.content.blocks.blockentities.SavannaDungeonKeeperTile;
 import com.finderfeed.solarcraft.content.blocks.render.abstracts.TileEntityRenderer;
 import com.finderfeed.solarcraft.helpers.Helpers;

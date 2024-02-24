@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.client.particles.screen;
 
-import com.finderfeed.solarcraft.client.rendering.rendertypes.SolarCraftRenderTypes;
+import com.finderfeed.solarcraft.client.rendering.rendertypes.SCRenderTypes;
 import com.finderfeed.solarcraft.local_library.client.particles.TextureScreenParticle;
 import net.minecraft.client.particle.ParticleRenderType;
 
@@ -15,6 +15,6 @@ public class RuneTileParticle extends TextureScreenParticle {
 
     @Override
     public ParticleRenderType getRenderType() {
-        return SolarCraftRenderTypes.ParticleRenderTypes.RUNE_TILE_PARTICLE;
+        return SCRenderTypes.ParticleRenderTypes.RUNE_TILE_PARTICLE;
     }
 }
