@@ -169,20 +169,6 @@ public class RunicEnergyCoreTile extends AbstractRunicEnergyContainer implements
         isDrainingEnergy = tag.getBoolean("drainingEnergy");
     }
 
-    @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        super.onDataPacket(net, pkt);
-        isDrainingEnergy = pkt.getTag().getBoolean("drainingEnergy");
-    }
-
-    @Nullable
-    @Override
-    public ClientboundBlockEntityDataPacket getUpdatePacket() {
-
-        ClientboundBlockEntityDataPacket pkt = super.getUpdatePacket();
-        pkt.getTag().putBoolean("drainingEnergy",isDrainingEnergy);
-        return pkt;
-    }
 
     @Override
     public List<MultiblockStructure> getMultiblocks() {

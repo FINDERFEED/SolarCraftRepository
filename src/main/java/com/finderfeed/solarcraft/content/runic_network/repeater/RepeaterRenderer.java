@@ -26,34 +26,34 @@ public class RepeaterRenderer implements BlockEntityRenderer<BaseRepeaterTile> {
     @Override
     public void render(BaseRepeaterTile tile, float v, PoseStack matrices, MultiBufferSource multiBufferSource, int i, int i1) {
         matrices.pushPose();
-
-
-        if (true) {
-            matrices.pushPose();
-
-            Matrix4f m = matrices.last().pose();
-            ResourceLocation t = new ResourceLocation(SolarCraft.MOD_ID, "textures/frame0.png");
-            VertexConsumer c = multiBufferSource.getBuffer(SCRenderTypes.TEXT_GLOW.apply(t));
-            c.vertex(m, 0, 0, 0).color(1f, 1f, 1f, 1f).uv(0, 0).uv2(LightTexture.FULL_BRIGHT).endVertex();
-            c.vertex(m, 0, 1, 0).color(1f, 1f, 1f, 1f).uv(0, 1).uv2(LightTexture.FULL_BRIGHT).endVertex();
-            c.vertex(m, 1, 1, 0).color(1f, 1f, 1f, 1f).uv(1, 1).uv2(LightTexture.FULL_BRIGHT).endVertex();
-            c.vertex(m, 1, 0, 0).color(1f, 1f, 1f, 1f).uv(1, 0).uv2(LightTexture.FULL_BRIGHT).endVertex();
-            matrices.popPose();
-        }
-
-        if (true) {
-            matrices.pushPose();
-
-            Matrix4f m = matrices.last().pose();
-            ResourceLocation t = new ResourceLocation(SolarCraft.MOD_ID, "textures/frame0.png");
-            VertexConsumer c = multiBufferSource.getBuffer(SCRenderTypes.TEXT_GLOW_NO_SHARD.apply(t));
-            float a = (float)((Math.sin(tile.getLevel().getGameTime()) + 1)/2 );
-            c.vertex(m, 0, 0, 0).color(1f, 1f, 1f, a).uv(0, 0).uv2(LightTexture.FULL_BRIGHT).endVertex();
-            c.vertex(m, 0, 1, 0).color(1f, 1f, 1f, a).uv(0, 1).uv2(LightTexture.FULL_BRIGHT).endVertex();
-            c.vertex(m, 1, 1, 0).color(1f, 1f, 1f, a).uv(1, 1).uv2(LightTexture.FULL_BRIGHT).endVertex();
-            c.vertex(m, 1, 0, 0).color(1f, 1f, 1f, a).uv(1, 0).uv2(LightTexture.FULL_BRIGHT).endVertex();
-            matrices.popPose();
-        }
+//
+//
+//        if (true) {
+//            matrices.pushPose();
+//
+//            Matrix4f m = matrices.last().pose();
+//            ResourceLocation t = new ResourceLocation(SolarCraft.MOD_ID, "textures/frame0.png");
+//            VertexConsumer c = multiBufferSource.getBuffer(SCRenderTypes.TEXT_GLOW.apply(t));
+//            c.vertex(m, 0, 0, 0).color(1f, 1f, 1f, 1f).uv(0, 0).uv2(LightTexture.FULL_BRIGHT).endVertex();
+//            c.vertex(m, 0, 1, 0).color(1f, 1f, 1f, 1f).uv(0, 1).uv2(LightTexture.FULL_BRIGHT).endVertex();
+//            c.vertex(m, 1, 1, 0).color(1f, 1f, 1f, 1f).uv(1, 1).uv2(LightTexture.FULL_BRIGHT).endVertex();
+//            c.vertex(m, 1, 0, 0).color(1f, 1f, 1f, 1f).uv(1, 0).uv2(LightTexture.FULL_BRIGHT).endVertex();
+//            matrices.popPose();
+//        }
+//
+//        if (true) {
+//            matrices.pushPose();
+//
+//            Matrix4f m = matrices.last().pose();
+//            ResourceLocation t = new ResourceLocation(SolarCraft.MOD_ID, "textures/frame0.png");
+//            VertexConsumer c = multiBufferSource.getBuffer(SCRenderTypes.TEXT_GLOW_NO_SHARD.apply(t));
+//            float a = (float)((Math.sin(tile.getLevel().getGameTime()) + 1)/2 );
+//            c.vertex(m, 0, 0, 0).color(1f, 1f, 1f, a).uv(0, 0).uv2(LightTexture.FULL_BRIGHT).endVertex();
+//            c.vertex(m, 0, 1, 0).color(1f, 1f, 1f, a).uv(0, 1).uv2(LightTexture.FULL_BRIGHT).endVertex();
+//            c.vertex(m, 1, 1, 0).color(1f, 1f, 1f, a).uv(1, 1).uv2(LightTexture.FULL_BRIGHT).endVertex();
+//            c.vertex(m, 1, 0, 0).color(1f, 1f, 1f, a).uv(1, 0).uv2(LightTexture.FULL_BRIGHT).endVertex();
+//            matrices.popPose();
+//        }
         if (tile.getConnections() != null){
             tile.getConnections().forEach((pos)->{
                 Vec3 tilepos = new Vec3(tile.getBlockPos().getX() +0.5,tile.getBlockPos().getY() +0.5,tile.getBlockPos().getZ() +0.5);

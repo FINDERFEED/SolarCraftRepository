@@ -164,7 +164,7 @@ public class SolarOrbitalMissileLauncherTileEntity extends AbstractRunicEnergyCo
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         ClientboundBlockEntityDataPacket d = super.getUpdatePacket();
-        saveAdditional(d.getTag());
+        //saveAdditional(d.getTag());
         return d;
     }
 

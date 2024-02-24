@@ -82,20 +82,6 @@ public class RunicEnergyChargerTileEntity extends REItemHandlerBlockEntity imple
         }
     }
 
-    @Nullable
-    @Override
-    public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        ClientboundBlockEntityDataPacket packet = super.getUpdatePacket();
-        this.saveAdditional(packet.getTag());
-        return packet;
-    }
-
-    @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        this.load(pkt.getTag());
-
-    }
-
     public ItemStack chargeSlot(){
         ItemStackHandler inv = this.getInventory();
         if (inv == null) return ItemStack.EMPTY;

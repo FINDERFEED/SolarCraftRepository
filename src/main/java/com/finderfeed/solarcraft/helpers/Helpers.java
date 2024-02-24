@@ -27,6 +27,7 @@ import net.minecraft.core.SectionPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -57,6 +58,7 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.LevelChunk;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforgespi.language.ModFileScanData;
 import org.objectweb.asm.Type;
 
@@ -567,10 +569,15 @@ public class Helpers {
     }
 
     public static void updateTile(BlockEntity tile){
-        if (tile.getLevel() != null) {
+        if (tile.getLevel() instanceof ServerLevel level) {
             tile.setChanged();
-            BlockState state = tile.getLevel().getBlockState(tile.getBlockPos());
-            tile.getLevel().sendBlockUpdated(tile.getBlockPos(), state, state, 3);
+            Packet<?> packet = tile.getUpdatePacket();
+            if (packet != null){
+                LevelChunk chunk = level.getChunkAt(tile.getBlockPos());
+                PacketDistributor.TRACKING_CHUNK.with(chunk).send(packet);
+            }
+            //BlockState state = tile.getLevel().getBlockState(tile.getBlockPos());
+            //level.sendBlockUpdated(tile.getBlockPos(), state, state, 3);
         }
     }
 

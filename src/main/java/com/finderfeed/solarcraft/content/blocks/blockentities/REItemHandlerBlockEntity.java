@@ -59,17 +59,6 @@ public abstract class REItemHandlerBlockEntity extends AbstractRunicEnergyContai
         return  handler.getSlots();
     }
 
-    @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        super.onDataPacket(net, pkt);
-    }
-
-    @Nullable
-    @Override
-    public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        CompoundTag tag = saveWithFullMetadata();
-        return Helpers.createTilePacket(this,tag);
-    }
 
     @Override
     public CompoundTag getUpdateTag() {
