@@ -28,6 +28,7 @@ public abstract class FDTSParticle extends TextureSheetParticle {
         this.hasPhysics = defaultOptions.hasPhysics;
         this.lifetime = defaultOptions.lifetime;
         this.initSize = this.quadSize;
+        this.friction = defaultOptions.friction;
         if (options.scalingOptions.in > 0){
             this.quadSize = 0;
         }

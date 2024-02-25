@@ -30,7 +30,7 @@ public class SmokeParticleOptions extends FDTSParticleOptions {
         super(defaultOptions, scalingOptions, alphaOptions);
     }
     public SmokeParticleOptions() {
-        super(new FDDefaultOptions(0.5f,60,1,1,1,1,true,false),
+        super(new FDDefaultOptions(0.5f,60,1,1,1,1,1,true,false),
                 new FDScalingOptions(30,30),
                 new AlphaInOutOptions(0,0));
     }

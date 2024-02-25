@@ -276,7 +276,7 @@ public class SolarStrikeEntity extends Entity {
                 g = 0.8f - random.nextFloat() * 0.1f;
                 b = 0.8f - random.nextFloat() * 0.1f;
             }
-            FDDefaultOptions defaultOptions = new FDDefaultOptions(3f,30,r,g,b,1f,false,false);
+            FDDefaultOptions defaultOptions = new FDDefaultOptions(3f,30,r,g,b,1f,1,false,false);
             ParticleEmitterData data = new ParticleEmitterData()
                     .setPos(center.x,center.y,center.z)
                     .setParticle(new SmokeParticleOptions(

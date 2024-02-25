@@ -13,6 +13,7 @@ public class FDDefaultOptions extends FDParticleOptions<FDDefaultOptions> {
     public float g = 1;
     public float b = 1;
     public float a = 1;
+    public float friction = 1;
     public boolean hasPhysics;
     public boolean additive = false;
 
@@ -24,17 +25,19 @@ public class FDDefaultOptions extends FDParticleOptions<FDDefaultOptions> {
         this.g = buf.readFloat();
         this.b = buf.readFloat();
         this.a = buf.readFloat();
+        this.friction = buf.readFloat();
         this.hasPhysics = buf.readBoolean();
         this.additive = buf.readBoolean();
     }
 
-    public FDDefaultOptions(float size, int lifetime, float r, float g, float b, float a,boolean hasPhysics,boolean additiveRendering) {
+    public FDDefaultOptions(float size, int lifetime, float r, float g, float b, float a,float friction,boolean hasPhysics,boolean additiveRendering) {
         this.size = size;
         this.lifetime = lifetime;
         this.r = r;
         this.g = g;
         this.b = b;
         this.a = a;
+        this.friction = friction;
         this.hasPhysics = hasPhysics;
         this.additive = additiveRendering;
     }
@@ -47,6 +50,7 @@ public class FDDefaultOptions extends FDParticleOptions<FDDefaultOptions> {
         buf.writeFloat(g);
         buf.writeFloat(b);
         buf.writeFloat(a);
+        buf.writeFloat(friction);
         buf.writeBoolean(this.hasPhysics);
         buf.writeBoolean(this.additive);
     }
@@ -58,6 +62,7 @@ public class FDDefaultOptions extends FDParticleOptions<FDDefaultOptions> {
             Codec.FLOAT.fieldOf("g").forGetter(o->o.g),
             Codec.FLOAT.fieldOf("b").forGetter(o->o.b),
             Codec.FLOAT.fieldOf("a").forGetter(o->o.r),
+            Codec.FLOAT.fieldOf("friction").forGetter(o->o.friction),
             Codec.BOOL.fieldOf("hasPhysics").forGetter(o->o.hasPhysics),
             Codec.BOOL.fieldOf("additive_rendering").forGetter(o->o.additive)
     ).apply(p,FDDefaultOptions::new));

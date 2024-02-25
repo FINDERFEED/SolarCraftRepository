@@ -91,13 +91,14 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
 
     private void explodeParticles(){
         float c = 0.1f;
-        FDDefaultOptions doptions = new FDDefaultOptions(4f,120,c,c,c,1f,false,false);
+        float fr = 0.9f;
+        FDDefaultOptions doptions = new FDDefaultOptions(7f,120,c,c,c,1f,fr,false,false);
         SmokeParticleOptions options = new SmokeParticleOptions(
                 doptions,
                 new FDScalingOptions(0,30),
                 new AlphaInOutOptions(0,0)
         );
-        FDDefaultOptions doptions1 = new FDDefaultOptions(4f,120,1f,0.5f,0.3f,1f,false,true);
+        FDDefaultOptions doptions1 = new FDDefaultOptions(7f,120,1f,0.5f,0.3f,1f,fr,false,true);
         SmokeParticleOptions options1 = new SmokeParticleOptions(
                 doptions1,
                 new FDScalingOptions(0,60),
@@ -112,18 +113,19 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
         );
         v = Helpers.getBlockCenter(iPos);
         BallParticleOptions ball = new BallParticleOptions(7f,255,115,0,120,true,false);
-        int count = 250;
+        int count = 125;
         double angle = Math.PI * 2 / count;
         for (double i = 0; i <= Math.PI * 2;i += angle){
             double x = Math.sin(i);
             double z = Math.cos(i);
 
             ParticleOptions o;
-            if (level.random.nextFloat() > 0.5){
+            if (level.random.nextFloat() > 0.65){
                 o = options1;
             }else{
                 o = options;
             }
+            double r = random.nextFloat();
             level.addParticle(ball,
                     v.x + x * (random.nextFloat() * 1),
                     v.y + random.nextFloat() * 2 - 2,
@@ -132,13 +134,17 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
                     random.nextFloat() * 0.1,
                     z * (random.nextFloat()*0.15 + 0.05)
             );
-            level.addParticle(o,
-                    v.x + x * (random.nextFloat() * 6 + 2),
-                    v.y,
-                    v.z + z * (random.nextFloat() * 6 + 2),
-                    x * 0.3 * (level.random.nextFloat() * 2 + 0.1),
-                    level.random.nextFloat() * 0.3,
-                    z * 0.3 * (level.random.nextFloat() * 2 + 0.1));
+            for (int h = 0; h < 5;h++) {
+                double modo = 0.7 * (level.random.nextFloat() * 2 + 3.5) * r;
+                Vec3 vd = new Vec3(x, 0, z).normalize().yRot((float)angle * (random.nextFloat() * 4 - 2)).multiply(modo, modo, modo);
+                level.addParticle(o,
+                        v.x + x * (random.nextFloat() * 3),
+                        v.y,
+                        v.z + z * (random.nextFloat() * 3),
+                        vd.x,
+                        level.random.nextFloat() * 0.3,
+                        vd.z);
+            }
         }
     }
 
@@ -300,7 +306,7 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
                     g = 0.8f - random.nextFloat() * 0.1f;
                     b = 0.8f - random.nextFloat() * 0.1f;
                 }
-                FDDefaultOptions defaultOptions = new FDDefaultOptions(3f, 30, r, g, b, 1f, false, false);
+                FDDefaultOptions defaultOptions = new FDDefaultOptions(3f, 30, r, g, b, 1f,1, false, false);
                 ParticleEmitterData data = new ParticleEmitterData()
                         .setPos(center.x, center.y, center.z)
                         .setParticle(new SmokeParticleOptions(
@@ -343,13 +349,13 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
     public void spawnParticles(){
         int freq = 1;
         float c = 0.1f;
-        FDDefaultOptions doptions = new FDDefaultOptions(1f,60,c,c,c,1f,false,false);
+        FDDefaultOptions doptions = new FDDefaultOptions(1f,60,c,c,c,1f,1,false,false);
         SmokeParticleOptions options = new SmokeParticleOptions(
                 doptions,
                 new FDScalingOptions(0,60),
                 new AlphaInOutOptions(0,0)
         );
-        FDDefaultOptions doptionsOrange = new FDDefaultOptions(1f,60,1f,0.5f,0.1f,1f,false,true);
+        FDDefaultOptions doptionsOrange = new FDDefaultOptions(1f,60,1f,0.5f,0.1f,1f,1,false,true);
         SmokeParticleOptions optionsOrange = new SmokeParticleOptions(
                 doptionsOrange,
                 new FDScalingOptions(0,60),
