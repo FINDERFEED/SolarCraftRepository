@@ -23,7 +23,7 @@ public class ShapesRenderer {
     });
 
 
-    public static void renderSphere(VertexConstructor v,VertexConsumer vertex, PoseStack matrices, int detalization, float radius,float r,float g,float b,float a,int light,boolean invert){
+    public static void renderSphere(VertexConstructor v,VertexConsumer vertex, PoseStack matrices, int detalization, float radius,float r,float g,float b,float a,int light){
         matrices.pushPose();
 
         Matrix4f matrix4f = matrices.last().pose();
@@ -70,17 +70,12 @@ public class ShapesRenderer {
                         radius * tncos,
                         radius * tnsin * pnsin
                 );
-                if (invert) {
-                    v.process(vertex, matrix4f, p1.x, p1.y, p1.z, r, g, b, a, pa1, pl1, light);
-                    v.process(vertex, matrix4f, p2.x, p2.y, p2.z, r, g, b, a, pa1, pl2, light);
-                    v.process(vertex, matrix4f, p4.x, p4.y, p4.z, r, g, b, a, pa2, pl2, light);
-                    v.process(vertex, matrix4f, p3.x, p3.y, p3.z, r, g, b, a, pa2, pl1, light);
-                }else {
-                    v.process(vertex, matrix4f, p3.x, p3.y, p3.z, r, g, b, a, pa2, pl1, light);
-                    v.process(vertex, matrix4f, p4.x, p4.y, p4.z, r, g, b, a, pa2, pl2, light);
-                    v.process(vertex, matrix4f, p2.x, p2.y, p2.z, r, g, b, a, pa1, pl2, light);
-                    v.process(vertex, matrix4f, p1.x, p1.y, p1.z, r, g, b, a, pa1, pl1, light);
-                }
+
+                v.process(vertex, matrix4f, p3.x, p3.y, p3.z, r, g, b, a, pa2, pl1, light);
+                v.process(vertex, matrix4f, p4.x, p4.y, p4.z, r, g, b, a, pa2, pl2, light);
+                v.process(vertex, matrix4f, p2.x, p2.y, p2.z, r, g, b, a, pa1, pl2, light);
+                v.process(vertex, matrix4f, p1.x, p1.y, p1.z, r, g, b, a, pa1, pl1, light);
+
 
             }
         }

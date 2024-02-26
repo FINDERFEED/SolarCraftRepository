@@ -1,7 +1,9 @@
 package com.finderfeed.solarcraft.content.world_generation.dimension_related.radiant_land;
 
+import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
+import com.finderfeed.solarcraft.local_library.helpers.ShapesRenderer;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
@@ -10,10 +12,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.resources.ResourceLocation;
 
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
+import org.joml.Vector3f;
+import org.lwjgl.opengl.GL11;
 
 
 import javax.annotation.Nonnull;
@@ -58,10 +64,12 @@ public class RadiantLandDimEffects extends DimensionSpecialEffects {
 }
 
 class RenderSky{
-    public static final ResourceLocation STARGAZE = new ResourceLocation("solarcraft","textures/environment/test_stargaze.png");
-    public static final ResourceLocation SUNGAZE = new ResourceLocation("solarcraft","textures/environment/test_sungaze.png");
-    public static final ResourceLocation BROKEN_SKY = new ResourceLocation("solarcraft","textures/environment/broken_sky.png");
-    public static final ResourceLocation MOON = new ResourceLocation("solarcraft","textures/environment/moon.png");
+    public static final ResourceLocation STARGAZE = new ResourceLocation(SolarCraft.MOD_ID,"textures/environment/test_stargaze.png");
+    public static final ResourceLocation SUNGAZE = new ResourceLocation(SolarCraft.MOD_ID,"textures/environment/test_sungaze.png");
+    public static final ResourceLocation BROKEN_SKY = new ResourceLocation(SolarCraft.MOD_ID,"textures/environment/broken_sky.png");
+    public static final ResourceLocation BROKEN_SKY_1 = new ResourceLocation(SolarCraft.MOD_ID,"textures/environment/broken_sky_1.png");
+    public static final ResourceLocation BROKEN_SKY_2 = new ResourceLocation(SolarCraft.MOD_ID,"textures/environment/broken_sky_2.png");
+    public static final ResourceLocation MOON = new ResourceLocation(SolarCraft.MOD_ID,"textures/environment/moon.png");
 
 
     public void render(int ticks, float partialTicks, PoseStack matrixStack, ClientLevel world, Minecraft mc) {
@@ -75,14 +83,8 @@ class RenderSky{
         //0.75 - end of night
         float timeOfDay = world.getTimeOfDay(partialTicks);
 
-//        RenderSystem.enableTexture();
         if (!ClientHelpers.isIsRadiantLandCleaned()) {
             matrixStack.pushPose();
-            matrixStack.scale(3, 1, 3);
-
-            ClientHelpers.bindText(BROKEN_SKY);
-            RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
-            builder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
 
             if ((timeOfDay >= 0.25) && timeOfDay < 0.5) {
 
@@ -91,14 +93,13 @@ class RenderSky{
                 renderBrokenSky(matrixStack, builder, (0.75f - timeOfDay) * 4f);
             }
 
-            tes.end();
+
             matrixStack.popPose();
         }
         RenderSystem.defaultBlendFunc();
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         matrixStack.pushPose();
-//        matrixStack.mulPose(Vector3f.YP.rotationDegrees(-90.0F));
-//        matrixStack.mulPose(Vector3f.XP.rotationDegrees(timeOfDay * 360.0F));
+
         matrixStack.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),-90));
         matrixStack.mulPose(RenderingTools.rotationDegrees(RenderingTools.XP(),timeOfDay * 360.0F));
         Matrix4f mat = matrixStack.last().pose();
@@ -122,66 +123,45 @@ class RenderSky{
         builder.vertex(mat,-25,80,25).uv(0,1).endVertex();
         tes.end();
         matrixStack.popPose();
-//        RenderSystem.disableTexture();
-        //RenderSystem.depthMask(true);
+
         RenderSystem.disableBlend();
     }
 
     private void renderBrokenSky(PoseStack matrixStack,BufferBuilder bufferbuilder,float opacityFactor){
-        float mod = 0.8f;
-        for(int i = 0; i < 4; ++i) {
-            matrixStack.pushPose();
-            if (i == 0) {
-                matrixStack.scale(1,2,1);
-//                matrixStack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
-                matrixStack.mulPose(RenderingTools.rotationDegrees(RenderingTools.XP(),90));
-
-            }
-
-            if (i == 1) {
-                matrixStack.scale(1,2,1);
-//                matrixStack.mulPose(Vector3f.XP.rotationDegrees(-90.0F));
-                matrixStack.mulPose(RenderingTools.rotationDegrees(RenderingTools.XP(),-90));
-            }
-
-            if (i == 2) {
-                matrixStack.scale(1,2,1);
-//                matrixStack.mulPose(Vector3f.ZP.rotationDegrees(90.0F));
-                matrixStack.mulPose(RenderingTools.rotationDegrees(RenderingTools.ZP(),90));
-            }
-
-            if (i == 3) {
-                matrixStack.scale(1,2,1);
-//                matrixStack.mulPose(Vector3f.ZP.rotationDegrees(-90.0F));
-                matrixStack.mulPose(RenderingTools.rotationDegrees(RenderingTools.ZP(),-90));
-            }
-
-            Matrix4f matrix4f = matrixStack.last().pose();
-
-            bufferbuilder.vertex(matrix4f,-100,-100,-100).uv(0.0F, 0.0F).color(mod, mod, mod, opacityFactor).endVertex();
-            bufferbuilder.vertex(matrix4f,-100,-100,100).uv(0.0F, 1.0F).color(mod, mod, mod, opacityFactor).endVertex();
-            bufferbuilder.vertex(matrix4f,100,-100,100).uv(1.0F, 1.0F).color(mod, mod, mod, opacityFactor).endVertex();
-            bufferbuilder.vertex(matrix4f,100,-100,-100).uv(1.0F, 0.0F).color(mod, mod, mod, opacityFactor).endVertex();
-            matrixStack.popPose();
-        }
-
+        Level level = Minecraft.getInstance().level;
+        RenderSystem.setShader(GameRenderer::getPositionColorTexLightmapShader);
+        RenderSystem.enableBlend();
+        RenderSystem.disableCull();
+        RenderSystem.blendFunc(GL11.GL_SRC_ALPHA,GL11.GL_ONE);
+        float r = 120/255f * 0.2f * opacityFactor;
+        float g = 0/255f * 0.2f;
+        float b = 230/255f * 0.2f * opacityFactor;
+        float time = level.getGameTime()/20f;
+        bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP);
         matrixStack.pushPose();
-        Matrix4f matrix4f = matrixStack.last().pose();
-        matrixStack.scale(1,2,1);
-        bufferbuilder.vertex(matrix4f, -100.0F, -100.0F, -100.0F).uv(0.0F, 0.0F).color(mod, mod, mod, opacityFactor).endVertex();
-        bufferbuilder.vertex(matrix4f, -100.0F, -100.0F, 100.0F).uv(0.0F, 1.0F).color(mod, mod, mod, opacityFactor).endVertex();
-        bufferbuilder.vertex(matrix4f, 100.0F, -100.0F, 100.0F).uv(1.0F, 1.0F).color(mod, mod, mod, opacityFactor).endVertex();
-        bufferbuilder.vertex(matrix4f, 100.0F, -100.0F, -100.0F).uv(1.0F, 0.0F).color(mod, mod, mod, opacityFactor).endVertex();
+        ClientHelpers.bindText(BROKEN_SKY_1);
+        matrixStack.mulPose(RenderingTools.rotationDegrees(RenderingTools.YN(),time));
 
-//        matrixStack.mulPose(Vector3f.XN.rotationDegrees(180));
-        matrixStack.mulPose(RenderingTools.rotationDegrees(RenderingTools.XN(),180));
-        bufferbuilder.vertex(matrix4f, -100.0F, -100.0F, -100.0F).uv(0.0F, 0.0F).color(mod, mod, mod, opacityFactor).endVertex();
-        bufferbuilder.vertex(matrix4f, -100.0F, -100.0F, 100.0F).uv(0.0F, 1.0F).color(mod, mod, mod, opacityFactor).endVertex();
-        bufferbuilder.vertex(matrix4f, 100.0F, -100.0F, 100.0F).uv(1.0F, 1.0F).color(mod, mod, mod, opacityFactor).endVertex();
-        bufferbuilder.vertex(matrix4f, 100.0F, -100.0F, -100.0F).uv(1.0F, 0.0F).color(mod, mod, mod, opacityFactor).endVertex();
+        ShapesRenderer.renderSphere(ShapesRenderer.POSITION_COLOR_UV_LIGHTMAP,
+                bufferbuilder,matrixStack,20,50,r,g,b,1, LightTexture.FULL_BRIGHT);
         matrixStack.popPose();
+        BufferUploader.drawWithShader(bufferbuilder.end());
 
 
 
+        bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP);
+        matrixStack.pushPose();
+        ClientHelpers.bindText(BROKEN_SKY_2);
+        matrixStack.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),time));
+
+
+
+
+        ShapesRenderer.renderSphere(ShapesRenderer.POSITION_COLOR_UV_LIGHTMAP,
+                bufferbuilder,matrixStack,20,51,r,g,b,1, LightTexture.FULL_BRIGHT);
+        matrixStack.popPose();
+        BufferUploader.drawWithShader(bufferbuilder.end());
+
+        RenderSystem.enableCull();
     }
 }
