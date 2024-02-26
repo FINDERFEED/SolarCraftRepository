@@ -1,10 +1,13 @@
 package com.finderfeed.solarcraft.content.blocks.render;
 
+import com.finderfeed.solarcraft.SolarCraft;
+import com.finderfeed.solarcraft.client.rendering.rendertypes.SCRenderTypes;
 import com.finderfeed.solarcraft.content.blocks.solar_energy.SolarEnergyCoreTile;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.events.other_events.OBJModels;
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
+import com.finderfeed.solarcraft.local_library.helpers.ShapesRenderer;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -19,6 +22,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import org.joml.Matrix4f;
 import net.minecraft.util.RandomSource;
@@ -31,7 +35,9 @@ import java.util.Random;
 
 public class SolarCoreRenderer implements BlockEntityRenderer<SolarEnergyCoreTile> {
 
-    public final ResourceLocation RAY = new ResourceLocation("solarcraft","textures/misc/ray_into_sky.png");
+    public static final ResourceLocation RAY = new ResourceLocation("solarcraft","textures/misc/ray_into_sky.png");
+    public static final ResourceLocation CORE_TEXTURE = new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/core_texture_1.png");
+    public static final ResourceLocation CORE_TEXTURE_OUTER = new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/core_texture_2.png");
     public SolarCoreRenderer(BlockEntityRendererProvider.Context ctx) {
 
     }
@@ -111,13 +117,25 @@ public class SolarCoreRenderer implements BlockEntityRenderer<SolarEnergyCoreTil
                     matrices.popPose();
 
             }
+            Level level = entity.getLevel();
 
-                matrices.pushPose();
-                matrices.scale(0.5f, 0.5f, 0.5f);
-                matrices.translate(1, 1, 1);
-                matrices.mulPose(rotationDegrees(YP(),(entity.getLevel().getGameTime() + partialTicks) % 360));
-                RenderingTools.renderBlockObjModel(OBJModels.SOLAR_CORE_MODEL,matrices,buffer,1,1,1,LightTexture.FULL_BRIGHT,light2);
-                matrices.popPose();
+            float time = (level.getGameTime() + partialTicks)/2;
+            matrices.pushPose();
+            matrices.scale(0.5f, 0.5f, 0.5f);
+            matrices.translate(1, 1, 1);
+            matrices.pushPose();
+            matrices.mulPose(rotationDegrees(YP(),time));
+            ShapesRenderer.renderSphere(ShapesRenderer.POSITION_COLOR_UV_LIGHTMAP,
+                    buffer.getBuffer(SCRenderTypes.text(CORE_TEXTURE)),matrices,20,2,1,0.15f,0f,1f,LightTexture.FULL_BRIGHT);
+            ShapesRenderer.renderSphere(ShapesRenderer.POSITION_COLOR_UV_LIGHTMAP,
+                    buffer.getBuffer(SCRenderTypes.TEXT_GLOW.apply(CORE_TEXTURE)),matrices,20,2,1,0.15f,0f,1f,LightTexture.FULL_BRIGHT);
+            matrices.popPose();
+            matrices.pushPose();
+            matrices.mulPose(rotationDegrees(YN(),time));
+            ShapesRenderer.renderSphere(ShapesRenderer.POSITION_COLOR_UV_LIGHTMAP,
+                    buffer.getBuffer(RenderType.text(CORE_TEXTURE_OUTER)),matrices,20,2.15f,1,0.75f,0f,1f,LightTexture.FULL_BRIGHT);
+            matrices.popPose();
+            matrices.popPose();
 //            }
 //            }
 

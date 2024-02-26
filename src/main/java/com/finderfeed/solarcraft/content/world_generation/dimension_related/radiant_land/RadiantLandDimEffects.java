@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.content.world_generation.dimension_related.radiant_land;
 
 import com.finderfeed.solarcraft.SolarCraft;
+import com.finderfeed.solarcraft.client.rendering.CoreShaders;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.local_library.helpers.ShapesRenderer;
@@ -129,13 +130,14 @@ class RenderSky{
 
     private void renderBrokenSky(PoseStack matrixStack,BufferBuilder bufferbuilder,float opacityFactor){
         Level level = Minecraft.getInstance().level;
-        RenderSystem.setShader(GameRenderer::getPositionColorTexLightmapShader);
+        RenderSystem.setShader(()->CoreShaders.SC_POSITION_COLOR_TEX_LIGHTMAP);
         RenderSystem.enableBlend();
         RenderSystem.disableCull();
-        RenderSystem.blendFunc(GL11.GL_SRC_ALPHA,GL11.GL_ONE);
-        float r = 120/255f * 0.2f * opacityFactor;
+        RenderSystem.blendFunc(GL11.GL_SRC_ALPHA,GL11.GL_ONE_MINUS_SRC_ALPHA);
+        opacityFactor *= 0.25f;
+        float r = 120/255f;
         float g = 0/255f * 0.2f;
-        float b = 230/255f * 0.2f * opacityFactor;
+        float b = 230/255f;
         float time = level.getGameTime()/20f;
         bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP);
         matrixStack.pushPose();
@@ -143,7 +145,7 @@ class RenderSky{
         matrixStack.mulPose(RenderingTools.rotationDegrees(RenderingTools.YN(),time));
 
         ShapesRenderer.renderSphere(ShapesRenderer.POSITION_COLOR_UV_LIGHTMAP,
-                bufferbuilder,matrixStack,20,50,r,g,b,1, LightTexture.FULL_BRIGHT);
+                bufferbuilder,matrixStack,20,50,r,g,b,opacityFactor, LightTexture.FULL_BRIGHT);
         matrixStack.popPose();
         BufferUploader.drawWithShader(bufferbuilder.end());
 
@@ -158,7 +160,7 @@ class RenderSky{
 
 
         ShapesRenderer.renderSphere(ShapesRenderer.POSITION_COLOR_UV_LIGHTMAP,
-                bufferbuilder,matrixStack,20,51,r,g,b,1, LightTexture.FULL_BRIGHT);
+                bufferbuilder,matrixStack,20,51,r,g,b,opacityFactor, LightTexture.FULL_BRIGHT);
         matrixStack.popPose();
         BufferUploader.drawWithShader(bufferbuilder.end());
 

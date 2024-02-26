@@ -40,6 +40,10 @@ public class SolarcraftCoreShadersRegistry {
                 (instance)->{
                     CoreShaders.RADIAL_MENU = instance;
         });
+        event.registerShader(new ShaderInstance(event.getResourceProvider(),new ResourceLocation(SolarCraft.MOD_ID,"sc_position_color_tex_lightmap"), DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP),
+                (instance)->{
+                    CoreShaders.SC_POSITION_COLOR_TEX_LIGHTMAP = instance;
+        });
     }
 
 }
