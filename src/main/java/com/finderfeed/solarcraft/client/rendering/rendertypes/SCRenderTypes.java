@@ -18,6 +18,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.resources.ResourceLocation;
+import net.neoforged.neoforge.client.NeoForgeRenderTypes;
 import org.lwjgl.opengl.GL11;
 
 import java.util.function.Function;
@@ -31,6 +32,32 @@ public class SCRenderTypes extends RenderType {
         super(p_173178_, p_173179_, p_173180_, p_173181_, p_173182_, p_173183_, p_173184_, p_173185_);
     }
 
+    public static Function<ResourceLocation,RenderType> TEX_TRIANGLES = Util.memoize(SCRenderTypes::texTriangles);
+
+    public static RenderType texTriangles(ResourceLocation location){
+        RenderType.CompositeState rendertype$state = RenderType.CompositeState.builder()
+                .setShaderState(RENDERTYPE_TEXT_SHADER)
+                .setTextureState(new TextureStateShard(location,true,false))
+                .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+                .setLightmapState(LIGHTMAP)
+                .createCompositeState(false);
+        return create("tex_triangles", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, false, true, rendertype$state);
+    }
+
+    public static final RenderType LIGHTNING_TRIANGLES = create(
+            "lightning_triangles",
+            DefaultVertexFormat.POSITION_COLOR,
+            VertexFormat.Mode.TRIANGLES,
+            1536,
+            false,
+            true,
+            RenderType.CompositeState.builder()
+                    .setShaderState(RENDERTYPE_LIGHTNING_SHADER)
+                    .setWriteMaskState(COLOR_DEPTH_WRITE)
+                    .setTransparencyState(LIGHTNING_TRANSPARENCY)
+                    .setOutputState(WEATHER_TARGET)
+                    .createCompositeState(false)
+    );
 
     public static TransparencyStateShard NORMAL_TRANSPARENCY = new TransparencyStateShard("normal_transparency",()->{
 
