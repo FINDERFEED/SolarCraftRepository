@@ -79,6 +79,7 @@ dependencies {
 
     implementation "net.neoforged:neoforge:${neo_version}"
 
+    implementation "curse.maven:embeddium-908741:5142145"
 }
 
 

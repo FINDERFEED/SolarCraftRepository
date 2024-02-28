@@ -3,6 +3,7 @@ package com.finderfeed.solarcraft.local_library.client;
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.client.rendering.shaders.post_chains.PostChainPlusUltra;
 import com.finderfeed.solarcraft.client.rendering.shaders.post_chains.UniformPlusPlus;
+import com.finderfeed.solarcraft.config.SolarcraftClientConfig;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.platform.GlStateManager;
@@ -29,11 +30,11 @@ public class GlowShaderInit {
 
     public static RenderTarget GLOW_RENDER_TARGET;
     public static RenderStateShard.OutputStateShard GLOW_TARGET_SHARD = new RenderStateShard.OutputStateShard("glow_target",()->{
-        if (ClientHelpers.isShadersEnabled()) {
-            GLOW_RENDER_TARGET.copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
-        }
+            if (SolarcraftClientConfig.GLOW_ENABLED.get()) {
+                GLOW_RENDER_TARGET.copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
+            }
         GLOW_RENDER_TARGET.bindWrite(false);
-    },()->{
+        },()->{
         Minecraft.getInstance().getMainRenderTarget().bindWrite(false);
     });
 
@@ -60,21 +61,12 @@ public class GlowShaderInit {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void afterLevelRender(RenderLevelStageEvent event){
         if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_LEVEL){
-            GLOW.updateUniforms(new UniformPlusPlus(
-                    Map.of(
-                            "l",1f,
-                            "brightness",1f
-                    )
-            ));
             processGlowShader();
         }
     }
 
-    public static void copyDepthBuffer(){
-        //GLOW_RENDER_TARGET.copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
-    }
     public static void processGlowShader(){
-        if (ClientHelpers.isShadersEnabled()) {
+        if (SolarcraftClientConfig.GLOW_ENABLED.get()) {
             GlowShaderInit.GLOW.process(Minecraft.getInstance().getFrameTime());
             GlowShaderInit.GLOW_RENDER_TARGET.bindWrite(false);
             GlStateManager._clear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT,true);

@@ -45,7 +45,7 @@ public class SolarStrikeRenderer extends EntityRenderer<SolarStrikeEntity> {
         matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.XN(),camera.getYRot()));
         for (int i = 0; i < 4;i++) {
             Random r = new Random(entity.level.getGameTime() + i * 94034);
-            RenderingTools.Lightning2DRenderer.renderLightning(matrices, src, 20, 6f, 1f,
+            RenderingTools.Lightning2DRenderer.renderLightning(matrices, src.getBuffer(SCRenderTypes.LIGHTNING_NO_CULL), 20, 6f, 1f,
                     Vec3.ZERO, Vec3.ZERO.add(400, 0, 0), r, 1f, 1f, 0.6f + i * 0.1f,alpha);
         }
         matrices.popPose();
@@ -103,7 +103,7 @@ public class SolarStrikeRenderer extends EntityRenderer<SolarStrikeEntity> {
             matrices.translate(translation.x,translation.y,translation.z);
             matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.ZP(),90));
             matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.XN(),camera.getYRot()));
-            RenderingTools.Lightning2DRenderer.renderLightning(matrices, src, 20, 2.5f, 1f,
+            RenderingTools.Lightning2DRenderer.renderLightning(matrices, src.getBuffer(SCRenderTypes.LIGHTNING_NO_CULL), 20, 2.5f, 1f,
                     Vec3.ZERO, Vec3.ZERO.add(400, 0, 0),rand,1f, 1f, 0.6f,alpha);
             matrices.popPose();
         }

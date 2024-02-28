@@ -16,4 +16,8 @@ public class CoreShaders {
     public static RenderStateShard.ShaderStateShard RADIAL_MENU_SHADER = new RenderStateShard.ShaderStateShard(()-> RADIAL_MENU);
 
     public static ShaderInstance SC_POSITION_COLOR_TEX_LIGHTMAP = null;
+
+    public static ShaderInstance getScPositionColorTexLightmap(){
+        return SC_POSITION_COLOR_TEX_LIGHTMAP;
+    }
 }

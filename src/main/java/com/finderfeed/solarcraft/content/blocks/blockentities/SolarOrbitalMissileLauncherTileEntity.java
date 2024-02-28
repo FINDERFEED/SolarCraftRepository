@@ -109,8 +109,12 @@ public class SolarOrbitalMissileLauncherTileEntity extends AbstractRunicEnergyCo
 
         if (!this.hasEnoughRunicEnergy(this.getMissileData().cost, 1)){
             this.requestRunicEnergy(this.getMissileData().cost, 1);
+            if (level.getGameTime() % 20 == 0) {
+                Helpers.updateTile(this);
+            }
             return;
         }
+        breakWay(RunicEnergy.Type.KELDA);
 
 
         if (launchTicker <= 0){
