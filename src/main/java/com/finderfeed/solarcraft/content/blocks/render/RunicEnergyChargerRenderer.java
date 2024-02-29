@@ -42,7 +42,7 @@ public class RunicEnergyChargerRenderer extends AbstractRunicEnergyContainerRend
             CoreShaders.RUNIC_ENERGY_FLOW_SHADER.safeGetUniform("definedColor").set(1f, 0.65f, 0.0f);
             CoreShaders.RUNIC_ENERGY_FLOW_SHADER.safeGetUniform("innerColor").set(1f, 1f, 0f);
             CoreShaders.RUNIC_ENERGY_FLOW_SHADER.safeGetUniform("modifier").set(0.5f);
-            float size = 0.14f;
+            float size = 0.2f;
             for (int i = 0; i < 2; i++) {
                 matrices.pushPose();
                 matrices.translate(0.5, 0.555, 0.5);
