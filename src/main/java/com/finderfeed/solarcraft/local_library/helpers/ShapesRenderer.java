@@ -34,22 +34,31 @@ public class ShapesRenderer {
         for (int i = 0; i < p.length - 1;i++){
             float rad1 = rad;
             float rad2 = rad;
-            float per1 = (1 - i/((float)p.length));
-            float per2 = (1 - (i+1)/((float)p.length));
+            float per1 = (1 - i/((float)p.length - 1));
+            float per2 = (1 - (i+1)/((float)p.length - 1));
             if (!cubic){
                 rad1 = per1 * rad;
                 rad2 = per2 * rad;
             }
             Vec3 point1 = p[i];
             Vec3 point2 = p[i + 1];
-            Vec3 speed1 = sp[i];
-            Vec3 speed2 = sp[i + 1];
+            Vec3 speed1;
+            Vec3 speed2;
+            if (i == 0){
+                speed2 = point1.subtract(point2).normalize();
+                speed1 = speed2;
+            }else{
+                Vec3 prev = p[i - 1];
+                speed2 = point1.subtract(point2).normalize();
+                speed1 = prev.subtract(point1).normalize();
+            }
+
 
             Vec3 renderDir1 = UP.cross(speed1);
             Vec3 renderDir2 = UP.cross(speed2);
 
-            renderDir1 = speed1.cross(renderDir1);
-            renderDir2 = speed2.cross(renderDir2);
+            renderDir1 = speed1.cross(renderDir1).normalize();
+            renderDir2 = speed2.cross(renderDir2).normalize();
 
             Vec3 dir1 = renderDir1.multiply(rad1,rad1,rad1);
             Vec3 dir2 = renderDir2.multiply(rad2,rad2,rad2);
@@ -61,6 +70,11 @@ public class ShapesRenderer {
             v.process(consumer,mat,(float)p2.x,(float)p2.y,(float)p2.z,r,g,b,a,per2,1,light);
             v.process(consumer,mat,(float)p3.x,(float)p3.y,(float)p3.z,r,g,b,a,per2,0,light);
             v.process(consumer,mat,(float)p4.x,(float)p4.y,(float)p4.z,r,g,b,a,per1,0,light);
+
+            v.process(consumer,mat,(float)point1.x,(float)point1.y,(float)point1.z,1,0,0,1,per1,1,light);
+            v.process(consumer,mat,(float)point1.x+0.1f,(float)point1.y,(float)point1.z,1,0,0,1,per1,1,light);
+            v.process(consumer,mat,(float)point1.x+0.1f,(float)point1.y+0.1f,(float)point1.z,1,0,0,1,per1,1,light);
+            v.process(consumer,mat,(float)point1.x,(float)point1.y+0.1f,(float)point1.z,1,0,0,1,per1,1,light);
 
         }
 

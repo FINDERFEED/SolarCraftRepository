@@ -43,7 +43,7 @@ public class MortarProjectileRenderer extends EntityRenderer<MortarProjectile> {
 
 
         if (entity.trail != null){
-            ShapesRenderer.renderTrail(ShapesRenderer.POSITION_COLOR,src.getBuffer(SCRenderTypes.LIGHTING_NO_CULL),matrices,entity.trail,2f,false,1,1,1,0.5f,light);
+            ShapesRenderer.renderTrail(ShapesRenderer.POSITION_COLOR,src.getBuffer(SCRenderTypes.LIGHTING_NO_CULL),matrices,entity.trail,0.5f,false,1,1,1,0.5f,light);
         }
         float time = (entity.level.getGameTime() + p_225623_2_);
         matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.XN(),time%360));
