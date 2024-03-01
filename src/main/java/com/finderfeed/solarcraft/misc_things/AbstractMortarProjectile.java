@@ -2,6 +2,7 @@ package com.finderfeed.solarcraft.misc_things;
 
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
+import com.finderfeed.solarcraft.local_library.helpers.Trail;
 import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 
 import net.minecraft.nbt.CompoundTag;
@@ -29,6 +30,8 @@ public abstract class AbstractMortarProjectile extends AbstractHurtingProjectile
     public double gravity = Helpers.GRAVITY_VELOCITY;       //1 block per second
     public double startingVel = 2;
     private boolean removeit = false;
+
+    public Trail trail;
 
     protected AbstractMortarProjectile(EntityType<? extends AbstractMortarProjectile> p_i50173_1_, Level p_i50173_2_) {
         super(p_i50173_1_, p_i50173_2_);
@@ -73,19 +76,19 @@ public abstract class AbstractMortarProjectile extends AbstractHurtingProjectile
     public void tick(){
         if (!level().isClientSide){
             Vec3 velocity = getDeltaMovement();
-
-
             //setDeltaMovement(velocity.x,0,velocity.y);
             setDeltaMovement(velocity.x,velocity.y- gravity,velocity.z); //decreasing 20 block per second
-
-
-
+        }else{
+            if (trail == null){
+                trail = new Trail(this,10);
+            }
+            trail.tick(this);
         }
-        this.level().addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),this.position().x,this.position().y,this.position().z,0,0,0);
-        this.level().addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),this.position().x,this.position().y-0.25,this.position().z,0,0,0);
-        this.level().addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),this.position().x,this.position().y+0.25,this.position().z,0,0,0);
-        this.level().addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),this.position().x+0.25,this.position().y,this.position().z,0,0,0);
-        this.level().addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),this.position().x-0.25,this.position().y,this.position().z,0,0,0);
+//        this.level().addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),this.position().x,this.position().y,this.position().z,0,0,0);
+//        this.level().addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),this.position().x,this.position().y-0.25,this.position().z,0,0,0);
+//        this.level().addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),this.position().x,this.position().y+0.25,this.position().z,0,0,0);
+//        this.level().addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),this.position().x+0.25,this.position().y,this.position().z,0,0,0);
+//        this.level().addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),this.position().x-0.25,this.position().y,this.position().z,0,0,0);
 
         if (!level().isClientSide && removeit){
             this.kill();

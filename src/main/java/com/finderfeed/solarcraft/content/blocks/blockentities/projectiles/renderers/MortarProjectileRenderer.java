@@ -1,7 +1,9 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.renderers;
 
+import com.finderfeed.solarcraft.client.rendering.rendertypes.SCRenderTypes;
 import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.MortarProjectile;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
+import com.finderfeed.solarcraft.local_library.helpers.ShapesRenderer;
 import com.finderfeed.solarcraft.registries.ModelLayersRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.PartPose;
@@ -16,9 +18,7 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-
-
-
+import net.minecraft.world.phys.Vec3;
 
 
 public class MortarProjectileRenderer extends EntityRenderer<MortarProjectile> {
@@ -39,17 +39,18 @@ public class MortarProjectileRenderer extends EntityRenderer<MortarProjectile> {
     }
 
     @Override
-    public void render(MortarProjectile p_225623_1_, float p_225623_2_, float p_225623_3_, PoseStack matrices, MultiBufferSource p_225623_5_, int p_225623_6_) {
+    public void render(MortarProjectile entity, float p_225623_2_, float p_225623_3_, PoseStack matrices, MultiBufferSource src, int light) {
 
 
-        float time = (p_225623_1_.level.getGameTime() + p_225623_2_);
-//        matrices.mulPose(Vector3f.XN.rotationDegrees(time%360));
-//        matrices.mulPose(Vector3f.ZN.rotationDegrees(time%360));
+        if (entity.trail != null){
+            ShapesRenderer.renderTrail(ShapesRenderer.POSITION_COLOR,src.getBuffer(SCRenderTypes.LIGHTING_NO_CULL),matrices,entity.trail,2f,false,1,1,1,0.5f,light);
+        }
+        float time = (entity.level.getGameTime() + p_225623_2_);
         matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.XN(),time%360));
         matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.ZN(),time%360));
-        ray.render(matrices, p_225623_5_.getBuffer(RenderType.text(RAY)),p_225623_6_,p_225623_6_);
+        //ray.render(matrices, src.getBuffer(RenderType.text(RAY)),light,light);
 
-        super.render(p_225623_1_, p_225623_2_, p_225623_3_, matrices, p_225623_5_, p_225623_6_);
+        super.render(entity, p_225623_2_, p_225623_3_, matrices, src, light);
     }
 
     @Override

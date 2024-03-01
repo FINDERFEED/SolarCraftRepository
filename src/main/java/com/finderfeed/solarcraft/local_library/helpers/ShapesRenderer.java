@@ -10,6 +10,8 @@ import org.joml.Vector3f;
 
 public class ShapesRenderer {
 
+    private static final Vec3 UP = new Vec3(0,1,0);
+
     public static final VertexConstructor POSITION_COLOR = ((vertex, matrix,vx, vy, vz, r, g, b, a, u, v,light) -> {
        vertex.vertex(matrix,vx,vy,vz).color(r,g,b,a).endVertex();
     });
@@ -22,6 +24,49 @@ public class ShapesRenderer {
        vertex.vertex(matrix,vx,vy,vz).color(r,g,b,a).uv(u,v).uv2(light).overlayCoords(OverlayTexture.NO_OVERLAY).endVertex();
     });
 
+
+    public static void renderTrail(VertexConstructor v,VertexConsumer consumer,PoseStack matrices,Trail trail,float rad,boolean cubic,float r,float g,float b,float a,int light){
+        matrices.pushPose();
+
+        Matrix4f mat = matrices.last().pose();
+        Vec3[] p = trail.getTrailPointsForRendering();
+        Vec3[] sp = trail.getSpeeds();
+        for (int i = 0; i < p.length - 1;i++){
+            float rad1 = rad;
+            float rad2 = rad;
+            float per1 = (1 - i/((float)p.length));
+            float per2 = (1 - (i+1)/((float)p.length));
+            if (!cubic){
+                rad1 = per1 * rad;
+                rad2 = per2 * rad;
+            }
+            Vec3 point1 = p[i];
+            Vec3 point2 = p[i + 1];
+            Vec3 speed1 = sp[i];
+            Vec3 speed2 = sp[i + 1];
+
+            Vec3 renderDir1 = UP.cross(speed1);
+            Vec3 renderDir2 = UP.cross(speed2);
+
+            renderDir1 = speed1.cross(renderDir1);
+            renderDir2 = speed2.cross(renderDir2);
+
+            Vec3 dir1 = renderDir1.multiply(rad1,rad1,rad1);
+            Vec3 dir2 = renderDir2.multiply(rad2,rad2,rad2);
+            Vec3 p1 = point1.add(dir1);
+            Vec3 p2 = point2.add(dir2);
+            Vec3 p3 = point2.add(dir2.reverse());
+            Vec3 p4 = point1.add(dir1.reverse());
+            v.process(consumer,mat,(float)p1.x,(float)p1.y,(float)p1.z,r,g,b,a,per1,1,light);
+            v.process(consumer,mat,(float)p2.x,(float)p2.y,(float)p2.z,r,g,b,a,per2,1,light);
+            v.process(consumer,mat,(float)p3.x,(float)p3.y,(float)p3.z,r,g,b,a,per2,0,light);
+            v.process(consumer,mat,(float)p4.x,(float)p4.y,(float)p4.z,r,g,b,a,per1,0,light);
+
+        }
+
+
+        matrices.popPose();
+    }
 
     public static void renderSphere(VertexConstructor v,VertexConsumer vertex, PoseStack matrices, int detalization, float radius,float r,float g,float b,float a,int light){
         matrices.pushPose();
