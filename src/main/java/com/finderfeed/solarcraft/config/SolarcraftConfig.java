@@ -25,6 +25,7 @@ public final class SolarcraftConfig {
     public static final ModConfigSpec.ConfigValue<Integer> ENERGY_PYLON_SPAWN_CHANCE;
     public static final ModConfigSpec.ConfigValue<Boolean> SHOULD_ULDERA_CRYSTAL_REGENERATE;
     public static final ModConfigSpec.ConfigValue<List<String>> ISLAND_ORES;
+    public static final ModConfigSpec.ConfigValue<List<String>> PROHIBITED_DIMENSIONS_FOR_TELEPORTATION_STONE;
 
     public static final ModConfigSpec.ConfigValue<Boolean> IS_ORBITAL_MISSILE_LAUNCHER_ALLOWED;
     static {
@@ -47,6 +48,10 @@ public final class SolarcraftConfig {
         DEFAULT_BLOCKS.addAll(List.of("minecraft:diamond_ore","minecraft:iron_ore","minecraft:gold_ore","minecraft:lapis_ore"));
         ISLAND_ORES = BUILDER.comment("Blocks that can generate in islands/crystallized ore veins in radiant land dimension")
                 .define("blocks",DEFAULT_BLOCKS);
+
+        List<String> DEFAULT_DIMENSIONS = new ArrayList<>();
+        PROHIBITED_DIMENSIONS_FOR_TELEPORTATION_STONE = BUILDER.comment("Dimensions where player won't be able to use Teleportation Stone.")
+                .define("dimensions",DEFAULT_DIMENSIONS);
 
         RUNIC_ENERGY_PER_RUNE_CHARGER = BUILDER.comment("How much runic energy will be given to runic energy charger when it consumes a rune.")
                 .define("runic_energy_per_rune",7.5d);

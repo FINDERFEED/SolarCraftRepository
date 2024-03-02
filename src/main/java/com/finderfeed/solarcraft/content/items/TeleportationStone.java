@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.content.items;
 
+import com.finderfeed.solarcraft.config.SolarcraftConfig;
 import com.finderfeed.solarcraft.content.items.primitive.solacraft_item_classes.SolarcraftItem;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.helpers.Helpers;
@@ -125,13 +126,19 @@ public class TeleportationStone extends SolarcraftItem {
         }
 
         public boolean teleport(ServerPlayer player){
+            String dim = player.level.dimension().location().toString();
+            if (SolarcraftConfig.PROHIBITED_DIMENSIONS_FOR_TELEPORTATION_STONE.get().contains(dim)){
+                player.sendSystemMessage(Component.literal("Teleportation stone cannot be used here.").withStyle(ChatFormatting.RED));
+                return false;
+            }
+
             ServerLevel level = player.server.getLevel(this.dimension);
             if (level != null) {
                 player.fallDistance = 0;
                 player.teleportTo(level,this.position.x,this.position.y,this.position.z,this.yaw,this.pitch);
                 return true;
             } else {
-                player.sendSystemMessage(Component.literal("Could not find level " + this.dimension.location() + ", try again."));
+                player.sendSystemMessage(Component.literal("Could not find level " + this.dimension.location() + ", try again.").withStyle(ChatFormatting.RED));
             }
             return false;
         }
