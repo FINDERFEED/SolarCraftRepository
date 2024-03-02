@@ -22,16 +22,20 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 
 import net.minecraft.world.level.Level;
+import org.joml.AxisAngle4f;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
+
 import java.util.List;
 
 
 public abstract class AbstractMortarProjectile extends AbstractHurtingProjectile {
 
+    private static final Vec3 UP = new Vec3(0,1,0);
+
     public double gravity = Helpers.GRAVITY_VELOCITY;       //1 block per second
     public double startingVel = 2;
     private boolean removeit = false;
-
-    public Trail trail;
 
     protected AbstractMortarProjectile(EntityType<? extends AbstractMortarProjectile> p_i50173_1_, Level p_i50173_2_) {
         super(p_i50173_1_, p_i50173_2_);
@@ -78,18 +82,26 @@ public abstract class AbstractMortarProjectile extends AbstractHurtingProjectile
             Vec3 velocity = getDeltaMovement();
             //setDeltaMovement(velocity.x,0,velocity.y);
             setDeltaMovement(velocity.x,velocity.y- gravity,velocity.z); //decreasing 20 block per second
-        }else{
-            if (trail == null){
-                trail = new Trail(this,10);
-            }
-            trail.tick(this);
-        }
-//        this.level().addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),this.position().x,this.position().y,this.position().z,0,0,0);
-//        this.level().addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),this.position().x,this.position().y-0.25,this.position().z,0,0,0);
-//        this.level().addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),this.position().x,this.position().y+0.25,this.position().z,0,0,0);
-//        this.level().addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),this.position().x+0.25,this.position().y,this.position().z,0,0,0);
-//        this.level().addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),this.position().x-0.25,this.position().y,this.position().z,0,0,0);
+        }else {
+            Vec3 sp = this.getDeltaMovement().normalize();
+            Vec3 rv = UP.cross(sp).normalize();
+            rv = rv.cross(sp);
+            int p = 8;
+            float angle = (float)Math.PI * 2 / p;
+            Quaternionf q = new Quaternionf(new AxisAngle4f(angle,(float)sp.x,(float)sp.y,(float)sp.z));
+            Vector3f toRotate = new Vector3f((float)rv.x,(float)rv.y,(float)rv.z);
+            Vec3 pos = this.position().add(0,this.getBbHeight()/2,0);
+            for (int i = 0; i < p;i++){
+                Vector3f spPos = new Vector3f((float)pos.x,
+                        (float)pos.y,
+                        (float)pos.z).add(new Vector3f(toRotate).mul(0.5f,0.5f,0.5f));
+                this.level().addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), spPos.x,spPos.y,spPos.z,
+                        -toRotate.x*0.005,-toRotate.y*0.005,-toRotate.z*0.005);
 
+
+                q.transform(toRotate);
+            }
+        }
         if (!level().isClientSide && removeit){
             this.kill();
         }

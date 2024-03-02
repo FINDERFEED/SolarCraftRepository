@@ -39,18 +39,15 @@ public class MortarProjectileRenderer extends EntityRenderer<MortarProjectile> {
     }
 
     @Override
-    public void render(MortarProjectile entity, float p_225623_2_, float p_225623_3_, PoseStack matrices, MultiBufferSource src, int light) {
+    public void render(MortarProjectile entity, float smth, float pticks, PoseStack matrices, MultiBufferSource src, int light) {
 
 
-        if (entity.trail != null){
-            ShapesRenderer.renderTrail(ShapesRenderer.POSITION_COLOR,src.getBuffer(SCRenderTypes.LIGHTING_NO_CULL),matrices,entity.trail,0.5f,false,1,1,1,0.5f,light);
-        }
-        float time = (entity.level.getGameTime() + p_225623_2_);
+        float time = (entity.level.getGameTime() + pticks);
         matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.XN(),time%360));
         matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.ZN(),time%360));
-        //ray.render(matrices, src.getBuffer(RenderType.text(RAY)),light,light);
+        ray.render(matrices, src.getBuffer(RenderType.text(RAY)),light,light);
 
-        super.render(entity, p_225623_2_, p_225623_3_, matrices, src, light);
+        super.render(entity, smth, pticks, matrices, src, light);
     }
 
     @Override
