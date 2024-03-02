@@ -67,7 +67,7 @@ public class EnergyGeneratorTileRender implements BlockEntityRenderer<SolarEnerg
 //                matrices.mulPose(Vector3f.XN.rotationDegrees((float) Math.toDegrees(Math.acos(vector.normalize().y))));
 
 
-                float percent = (float) (Helpers.getGipotenuza(Helpers.getGipotenuza(vector.x, vector.z), vector.y));
+                float percent = (float) (Helpers.getHypotenuse(Helpers.getHypotenuse(vector.x, vector.z), vector.y));
 
                 VertexConsumer vertex = buffer.getBuffer(RenderType.text(RAY));
                 Matrix4f matrix = matrices.last().pose();

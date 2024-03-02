@@ -54,6 +54,7 @@ public class AncientFragment {
 
     public static final AncientFragment HIDDEN_ORES = new AncientFragment("hidden_ores",ProgressionStage.PRE_BEGGINING.ALL_PROGRESSIONS,SubCategoryBase.WORLD,CategoryBase.EXPLORATION, Items.STONE,1);
     public static final AncientFragment THROWABLE_LIGHT = new AncientFragment("throwable_light",null,SubCategoryBase.BEGINNER_ITEMS,CategoryBase.BEGINNER,ls(ItemWithRecipe.of(THROWN_LIGHT.get().getDefaultInstance(),"thrown_light")), RecipeType.CRAFTING,1);
+    public static final AncientFragment TELEPORTATION_STONE = new AncientFragment("teleportation_stone",null,SubCategoryBase.BEGINNER_ITEMS,CategoryBase.BEGINNER,ls(ItemWithRecipe.of(SCItems.TELEPORTATION_STONE.get().getDefaultInstance(),"teleportation_stone")), RecipeType.CRAFTING,1);
 
     public static final AncientFragment SOLAR_STONES = new AncientFragment("solar_stones", ProgressionStage.PRE_BEGGINING.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_BLOCKS,CategoryBase.BEGINNER, List.of(
             ItemWithRecipe.of(SCItems.SOLAR_STONE_BRICKS.get().getDefaultInstance(),"solar_stone_bricks"),ItemWithRecipe.of(SCItems.SOLAR_STONE_COLLUMN.get().getDefaultInstance(),"solar_stone_collumn"),

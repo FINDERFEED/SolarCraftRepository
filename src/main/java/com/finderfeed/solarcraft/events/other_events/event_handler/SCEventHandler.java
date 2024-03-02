@@ -195,7 +195,8 @@ public class SCEventHandler {
 
     @SubscribeEvent
     public static void damageTaken(final LivingDamageEvent event){
-        if ((event.getEntity()).hasEffect(SCEffects.IMMORTALITY_EFFECT.get()) ){
+
+        if ((event.getEntity()).hasEffect(SCEffects.IMMORTALITY_EFFECT.get())){
             event.setCanceled(true);
         }
     }
@@ -602,10 +603,9 @@ public class SCEventHandler {
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void manageDivineArmorShields(LivingHurtEvent event){
         LivingEntity entity = event.getEntity();
-        if (entity instanceof Player player && !player.isCreative() && !player.isSpectator()){
+        if (!entity.level.isClientSide && entity instanceof Player player && !player.isCreative() && !player.isSpectator()){
+            player.getCooldowns().addCooldown(SCItems.TELEPORTATION_STONE.get(),200);
             float damageAmount = event.getAmount();
-
-
 
             for (ItemStack stack : player.getArmorSlots()){
                 if (damageAmount <= 0) break;

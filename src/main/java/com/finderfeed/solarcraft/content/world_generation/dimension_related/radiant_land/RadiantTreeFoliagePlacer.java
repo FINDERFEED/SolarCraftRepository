@@ -45,7 +45,8 @@ public class RadiantTreeFoliagePlacer extends FoliagePlacer {
                     if (!reader.isStateAtPosition(toCheck,(state)->state.is(BlockTags.LOGS))) {
                         if (isValidPos(mainpos, toCheck)) {
                             if (reader.isStateAtPosition(toCheck,(BlockBehaviour.BlockStateBase::isAir))) {
-                                world.set(toCheck, cfg.foliageProvider.getState(random, toCheck).setValue(BlockStateProperties.DISTANCE, 1));
+                                world.set(toCheck, cfg.foliageProvider.getState(random, toCheck).setValue(BlockStateProperties.DISTANCE, 1)
+                                        .setValue(BlockStateProperties.PERSISTENT,true));
                             }
                         }
                     }

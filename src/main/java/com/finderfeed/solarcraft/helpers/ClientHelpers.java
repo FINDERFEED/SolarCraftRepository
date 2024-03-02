@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.helpers;
 
+import com.finderfeed.solarcraft.client.particles.ball_particle.BallParticleOptions;
 import com.finderfeed.solarcraft.client.screens.SolarOrbitalMissileLauncherScreen;
 import com.finderfeed.solarcraft.client.screens.ability_screen.AbilitySelectionScreen;
 import com.finderfeed.solarcraft.content.abilities.ability_classes.ToggleableAbility;
@@ -282,8 +283,11 @@ public class ClientHelpers {
 
 
     public static void handleSolarWandParticles(Vec3 pos,Vec3 vel){
-        SmallSolarStrikeParticle particle = (SmallSolarStrikeParticle) Minecraft.getInstance().particleEngine.createParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),pos.x,pos.y,pos.z,vel.normalize().x,vel.normalize().y,vel.normalize().z);
-        particle.setLifetime((int)Math.round(vel.length()/vel.normalize().length())*5/2 );
+        Vec3 norm = vel.normalize();
+        int lifetime = (int) Math.round(vel.length());
+        Particle particle = Minecraft.getInstance().particleEngine.createParticle(
+                new BallParticleOptions(0.25f,255,255,0,lifetime,false,false)
+                ,pos.x,pos.y,pos.z,norm.x,norm.y,norm.z);
     }
 
 

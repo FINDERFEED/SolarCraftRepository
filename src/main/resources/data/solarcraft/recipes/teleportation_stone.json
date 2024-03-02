@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "#U#",
+    " # "
+  ],
+  "key": {
+    "#": {
+      "tag": "solarcraft:runes"
+    },
+    "U": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "result": {
+    "item": "solarcraft:teleportation_stone",
+    "count": 1
+  }
+}

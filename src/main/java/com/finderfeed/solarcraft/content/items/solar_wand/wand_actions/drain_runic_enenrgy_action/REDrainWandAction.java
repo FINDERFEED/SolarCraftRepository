@@ -33,17 +33,13 @@ public class REDrainWandAction implements WandAction<REDrainWandActionData> {
         RunicEnergy.Type type = data.getTypeToDrain();
         WandActionType actionType = this.getActionType(context.player());
         if (actionType == WandActionType.AIR){
-//            RunicEnergy.Type newtype = RunicEnergy.Type.getAll()[(type.getIndex() + 1) % RunicEnergy.Type.getAll().length];
-//            data.setTypeToDrain(newtype);
-//            player.displayClientMessage(Component.translatable("solarcraft.wand_action.re_drain.drain_type").withStyle(ChatFormatting.GOLD)
-//                            .append(Component.literal(": " + newtype.id.toUpperCase(Locale.ROOT)).withStyle(ChatFormatting.GOLD)), true);
             if (level.isClientSide){
                 ClientHelpers.handleClientREDrainWandAction();
             }
         }else{
             Vec3 from = player.position().add(0,player.getStandingEyeHeight(
                     player.getPose(),player.getDimensions(player.getPose())
-            ),0);
+            )-0.2,0);
             Vec3 look = player.getLookAngle().multiply(30,30,30);
             Vec3 to = from.add(look);
             ClipContext ctx = new ClipContext(from,to, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, CollisionContext.empty());
@@ -88,53 +84,6 @@ public class REDrainWandAction implements WandAction<REDrainWandActionData> {
 
         return InteractionResult.SUCCESS;
     }
-
-//    public void handleEnergyConsumption(Level world, Player player,String strType){
-//
-//        Vec3 from = player.position().add(0,1.4,0);
-//        Vec3 look = player.getLookAngle().multiply(30,30,30);
-//        Vec3 to = from.add(look);
-//        ClipContext ctx = new ClipContext(from,to, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,null);
-//        BlockHitResult res = world.clip(ctx);
-//
-//        if (world.getBlockEntity(res.getBlockPos()) instanceof IREWandDrainable tile){
-//            if (!world.isClientSide){
-//                float maxDrain = tile.getMaxEnergyDrain();
-//                float energy = tile.drainEnergy(maxDrain);
-//                if (strType.equals(IREWandDrainable.ALL)){
-//
-//                }else {
-//                    RunicEnergy.Type type = RunicEnergy.Type.byId(strType);
-//                    RunicEnergy.givePlayerEnergy(player,)
-//
-//                    player.displayClientMessage(Component.literal(type.id.toUpperCase() + " " + RunicEnergy.getEnergy(player, tile.getEnergyType())).withStyle(ChatFormatting.GOLD), true);
-//                    Helpers.updateRunicEnergyOnClient(type, RunicEnergy.getEnergy(player, type), player);
-//                    Helpers.fireProgressionEvent(player, Progression.RUNE_ENERGY_CLAIM);
-//                    if (!RunicEnergy.hasFoundType(player, type)) {
-//                        Helpers.sendEnergyTypeToast((ServerPlayer) player, type);
-//                        RunicEnergy.setFound(player, type);
-//                    }
-//                    if (!Helpers.hasPlayerCompletedProgression(Progression.ALL_ENERGY_TYPES, player)) {
-//                        boolean f = true;
-//                        for (RunicEnergy.Type t : RunicEnergy.Type.getAll()) {
-//                            f = RunicEnergy.hasFoundType(player, t);
-//                            if (!f) {
-//                                break;
-//                            }
-//                        }
-//                        if (f) {
-//                            Helpers.fireProgressionEvent(player, Progression.ALL_ENERGY_TYPES);
-//                        }
-//                    }
-//                }
-//            }else{
-//                Vec3 pos = new Vec3(res.getBlockPos().getX()+0.5,res.getBlockPos().getY()+0.5,res.getBlockPos().getZ()+0.5);
-//                Vec3 vel = new Vec3(from.x-pos.x,from.y-pos.y,from.z-pos.z);
-//                ClientHelpers.handleSolarWandParticles(pos,vel);
-//
-//            }
-//        }
-//    }
 
     @Override
     public WandDataSerializer<REDrainWandActionData> getWandDataSerializer() {

@@ -4,19 +4,14 @@ import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.client.rendering.rendertypes.SCRenderTypes;
 import com.finderfeed.solarcraft.content.blocks.solar_energy.SolarEnergyCoreTile;
 import com.finderfeed.solarcraft.helpers.Helpers;
-import com.finderfeed.solarcraft.events.other_events.OBJModels;
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
-import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.local_library.helpers.ShapesRenderer;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 
-import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -25,12 +20,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import org.joml.Matrix4f;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.Vec3;
 import static com.finderfeed.solarcraft.local_library.helpers.RenderingTools.*;
-
-import java.util.List;
-import java.util.Random;
 
 
 public class SolarCoreRenderer implements BlockEntityRenderer<SolarEnergyCoreTile> {
@@ -68,7 +59,7 @@ public class SolarCoreRenderer implements BlockEntityRenderer<SolarEnergyCoreTil
 //                    matrices.mulPose(Vector3f.XN.rotationDegrees((float) Math.toDegrees(Math.acos(vector.normalize().y))));
                     matrices.mulPose(rotationDegrees(XN(),(float) Math.toDegrees(Math.acos(vector.normalize().y))));
 
-                    float percent = (float) (Helpers.getGipotenuza(Helpers.getGipotenuza(vector.x, vector.z), vector.y));
+                    float percent = (float) (Helpers.getHypotenuse(Helpers.getHypotenuse(vector.x, vector.z), vector.y));
 
                     VertexConsumer vertex = buffer.getBuffer(RenderType.text(RAY));
                     Matrix4f matrix = matrices.last().pose();

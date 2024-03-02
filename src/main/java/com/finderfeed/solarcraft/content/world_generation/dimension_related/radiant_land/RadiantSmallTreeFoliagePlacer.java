@@ -42,7 +42,8 @@ public class RadiantSmallTreeFoliagePlacer extends FoliagePlacer {
                     BlockPos toCheck = new BlockPos(mainpos.getX() + a,mainpos.getY() + h, mainpos.getZ() + b);
                     if (!reader.isStateAtPosition(toCheck,(state)->state.is(BlockTags.LOGS))) {
                         if (isValidPos(mainpos, toCheck)) {
-                            world.set(toCheck, cfg.foliageProvider.getState(random, toCheck).setValue(BlockStateProperties.DISTANCE, 1));
+                            world.set(toCheck, cfg.foliageProvider.getState(random, toCheck).setValue(BlockStateProperties.DISTANCE, 1)
+                                    .setValue(BlockStateProperties.PERSISTENT,true));
                         }
                     }
                 }

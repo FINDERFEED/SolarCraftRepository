@@ -98,8 +98,8 @@ public class SCBlocks {
     public  static  final DeferredHolder<Block,RayTrapBlock> RAY_TRAP_BLOCK = BLOCKS.register("ray_trap_block",()-> new RayTrapBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK).noOcclusion()));
     public  static  final DeferredHolder<Block,TrapStructureController> TRAP_CONTROLLER = BLOCKS.register("trap_controller",()-> new TrapStructureController(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK)));
     public  static  final DeferredHolder<Block,BlueGemDoorBlock> BLUE_GEM_DOOR_BLOCK = BLOCKS.register("blue_gem_door_block",()-> new BlueGemDoorBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK)));
-    public  static  final DeferredHolder<Block,LeavesBlock> ASH_LEAVES = BLOCKS.register("ash_leaves",()-> new FlammableLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES).noOcclusion(),20));
-    public  static  final DeferredHolder<Block,RotatedPillarBlock> BURNT_LOG = BLOCKS.register("burnt_log",()-> new RotatedPillarFlammableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LOG),20));
+    //public  static  final DeferredHolder<Block,LeavesBlock> ASH_LEAVES = BLOCKS.register("ash_leaves",()-> new FlammableLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES).noOcclusion(),20));
+    //public  static  final DeferredHolder<Block,RotatedPillarBlock> BURNT_LOG = BLOCKS.register("burnt_log",()-> new RotatedPillarFlammableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LOG),20));
     public  static  final DeferredHolder<Block,Block> RUNE_ENERGY_PYLON = BLOCKS.register("rune_energy_pylon",()-> new RuneEnergyPylonBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK).pushReaction(PushReaction.IGNORE).noOcclusion()));
 
     public  static  final DeferredHolder<Block,Block> ULDERA_PYLON = BLOCKS.register("uldera_pylon",()-> new UlderaPylonBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK).pushReaction(PushReaction.IGNORE).noOcclusion()));

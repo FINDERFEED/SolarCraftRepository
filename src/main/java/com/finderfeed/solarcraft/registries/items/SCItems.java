@@ -185,11 +185,11 @@ public class SCItems {
     public static final DeferredHolder<Item,Item> BLUE_GEM = registerItem(ITEMS.register("blue_gem",()->new BlueGemItem(new Item.Properties().fireResistant())),SOLAR_GROUP_MATERIALS);
     public static final DeferredHolder<Item,Item> BLUE_GEM_ENCHANCED = registerItem(ITEMS.register("blue_gem_enriched",()->new EnchancedBlueGem(new Item.Properties().fireResistant())),SOLAR_GROUP_MATERIALS);
     public static final DeferredHolder<Item,Item> BLUE_GEM_DOOR_BLOCK = ITEMS.register("blue_gem_door_block",()->new BlockItem(SCBlocks.BLUE_GEM_DOOR_BLOCK.get(),new Item.Properties()));
-    public static final DeferredHolder<Item,Item> ASH_LEAVES = ITEMS.register("ash_leaves",()->new BlockItem(SCBlocks.ASH_LEAVES.get(),new Item.Properties()));
-    public static final DeferredHolder<Item,Item> BURNT_LOG = ITEMS.register("burnt_log",()->new BlockItem(SCBlocks.BURNT_LOG.get(),new Item.Properties()));
-    public static final DeferredHolder<Item,Item> DEAD_SPROUT = ITEMS.register("dead_sprout",()->new BlockItem(SCBlocks.DEAD_SPROUT.get(),new Item.Properties()));
+    //public static final DeferredHolder<Item,Item> ASH_LEAVES = ITEMS.register("ash_leaves",()->new BlockItem(SCBlocks.ASH_LEAVES.get(),new Item.Properties()));
+    //public static final DeferredHolder<Item,Item> BURNT_LOG = ITEMS.register("burnt_log",()->new BlockItem(SCBlocks.BURNT_LOG.get(),new Item.Properties()));
+    //public static final DeferredHolder<Item,Item> DEAD_SPROUT = ITEMS.register("dead_sprout",()->new BlockItem(SCBlocks.DEAD_SPROUT.get(),new Item.Properties()));
     public static final DeferredHolder<Item,Item> FIRST_DIMENSIONAL_SHARD = registerItem(ITEMS.register("first_dimensional_shard",()->new Item(new Item.Properties().rarity(Rarity.EPIC))),SOLAR_GROUP_MATERIALS);
-    public static final DeferredHolder<Item,Item> ASH_ITEM = registerItem(ITEMS.register("ash",()->new AshItem(new Item.Properties())),SOLAR_GROUP);
+    //public static final DeferredHolder<Item,Item> ASH_ITEM = registerItem(ITEMS.register("ash",()->new AshItem(new Item.Properties())),SOLAR_GROUP);
 
     public static final DeferredHolder<Item,Item> INFO_FRAGMENT = registerItem(ITEMS.register("ancient_fragment",()->new AncientFragmentItem(new Item.Properties())),SOLAR_GROUP_FRAGMENTS);
 
@@ -345,6 +345,7 @@ public class SCItems {
     public static final DeferredHolder<Item,Item> SUN_SHARD = registerItem(ITEMS.register("sun_shard",()->new SunShardItem(new Item.Properties().rarity(Rarity.EPIC))),SOLAR_GROUP_MATERIALS);
 
     public static final DeferredHolder<Item,CorruptedShardItem> CORRUPTED_SHARD_ITEM = registerItem(ITEMS.register("corrupted_shard",()->new CorruptedShardItem(new Item.Properties().rarity(Rarity.EPIC))),SOLAR_GROUP);
+    public static final DeferredHolder<Item,TeleportationStone> TELEPORTATION_STONE = registerItem(ITEMS.register("teleportation_stone",()->new TeleportationStone(new Item.Properties().stacksTo(1),()->AncientFragment.TELEPORTATION_STONE)),SOLAR_GROUP);
 
 
     public static <T extends Item> DeferredHolder<Item,T> registerItem(DeferredHolder<Item,T> reg, DeferredHolder<CreativeModeTab,CreativeModeTab> tab){

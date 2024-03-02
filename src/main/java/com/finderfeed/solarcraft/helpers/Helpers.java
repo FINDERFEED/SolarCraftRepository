@@ -13,7 +13,6 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progre
 
 import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.*;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.progression_tree.ProgressionTree;
@@ -49,7 +48,6 @@ import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.ExplosionDamageCalculator;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.*;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.neoforged.fml.ModList;
@@ -230,7 +228,7 @@ public class Helpers {
                 level.getChunkAt(worldPosition.offset(-16,0,-16)),level.getChunkAt(worldPosition.offset(16,0,-16)),level.getChunkAt(worldPosition.offset(-16,0,16))};
     }
 
-    public static double getGipotenuza(double a,double b){
+    public static double getHypotenuse(double a, double b){
         return Math.sqrt(a*a + b*b);
     }
 
@@ -252,45 +250,17 @@ public class Helpers {
         return false;
     }
 
+    public static CompoundTag getTag(CompoundTag from,String tagName){
+        if (from.contains(tagName)){
+            return from.getCompound(tagName);
+        }else{
+            CompoundTag tag = new CompoundTag();
+            from.put(tagName,tag);
+            return tag;
+        }
+    }
 
-    //structure towards north, initPos is the pos at the lowest by y lowest by z left corner
-
-//    public static boolean checkStructure(Level world,BlockPos initPos,Multiblock struct,boolean ignoreOtherBlocks){
-//        BlockPos pos = initPos;
-//        String[][] structure = struct.struct;
-//        for (int i = 0;i < structure.length;i++){
-//            for (int g = 0;g < structure[i].length;g++){
-//                String line = structure[i][g];
-//                    for (int k = 0;k < line.length();k++){
-//                        //here the checking begins
-//                        char c = line.charAt(k);
-//
-//                        if (c != ' ') {
-//                                if (!checkBlock(world,pos.offset(k,i,g),struct.getStateAndTag(c))){
-//                                    return false;
-//                                }
-//                        }else{
-//                            if (!ignoreOtherBlocks){
-//                                if (!checkBlock(world,pos.offset(k,i,g),struct.getStateAndTag(c))){
-//                                    return false;
-//                                }
-//                            }
-//                        }
-//                        //here ends
-//                    }
-//            }
-//        }
-//        return true;
-//    }
-//    world.getBlockState(initPos.offset(k, i, g))
-//    private static boolean checkBlock(Level world,BlockPos pos, StateAndTag stateAndTag){
-//        TagKey<Block> tag;
-//        if ((tag = stateAndTag.getTag()) == null){
-//            return StateAndTag.checkBlockState(world.getBlockState(pos),stateAndTag.getState(),stateAndTag.isIgnoreFacing());
-//        }else{
-//            return world.getBlockState(pos).is(tag);
-//        }
-//    }
+    
 
     public static double blocksPerSecondToVelocity(double a){
         return a*0.05;
