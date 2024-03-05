@@ -2,8 +2,13 @@ package com.finderfeed.solarcraft.content.blocks.blockentities.memory_puzzle;
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.SolarcraftBlockEntity;
 import com.finderfeed.solarcraft.local_library.helpers.CompoundNBTHelper;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
+import com.finderfeed.solarcraft.packet_handler.packets.CloseClientScreenPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -12,6 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MemoryPuzzleBlockEntity extends SolarcraftBlockEntity {
     private MemoryPuzzle puzzle;
@@ -42,10 +48,26 @@ public class MemoryPuzzleBlockEntity extends SolarcraftBlockEntity {
         }
     }
 
-    public void pushValue(Player player,int value){
-
-        puzzle.solve(value,false);
-
+    public void pushValue(ServerPlayer player, int value){
+        AtomicBoolean stageCompleted = new AtomicBoolean();
+        if (!puzzle.solve(value,false,stageCompleted)){
+            puzzle.initiatePuzzle(false);
+            MemoryPuzzleUpdatePacket packet = new MemoryPuzzleUpdatePacket(value,puzzle.getValues(),false);
+            FDPacketUtil.sendToPlayer(player,packet);
+        }else{
+            CustomPacketPayload payload;
+            if (!stageCompleted.get()) {
+                payload = new MemoryPuzzleUpdatePacket(value, null, true);
+            }else{
+                if (puzzle.isCompleted()){
+                    payload = new CloseClientScreenPacket();
+                }else {
+                    puzzle.initiatePuzzle(false);
+                    payload = new MemoryPuzzleUpdatePacket(value, puzzle.getValues(), true);
+                }
+            }
+            FDPacketUtil.sendToPlayer(player,payload);
+        }
 
         if (puzzle.isCompleted()){
             used.add(player.getUUID());

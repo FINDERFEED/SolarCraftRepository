@@ -4,6 +4,7 @@ import net.minecraft.nbt.CompoundTag;
 
 import java.util.Random;
 import java.util.Stack;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MemoryPuzzle {
     private Stack<Integer> values;
@@ -13,6 +14,16 @@ public class MemoryPuzzle {
 
     private MemoryPuzzle(){
 
+    }
+
+    public MemoryPuzzle(MemoryPuzzle other){
+        this.maxValue = other.maxValue;
+        this.stages = other.stages;
+        this.currentStage = other.currentStage;
+        this.values = new Stack<>();
+        for (int val : other.values){
+            this.values.push(val);
+        }
     }
     public MemoryPuzzle(int maxValue,int stages){
         this.maxValue = maxValue;
@@ -33,13 +44,14 @@ public class MemoryPuzzle {
         }
     }
 
-    public boolean solve(int value,boolean ignoreValue){
+    public boolean solve(int value, boolean ignoreValue, AtomicBoolean stageCompleted){
         if (values.isEmpty()) return true;
         int p = values.pop();
         if (p == value || ignoreValue){
             if (values.isEmpty()){
                 currentStage++;
                 this.initiatePuzzle(false);
+                stageCompleted.set(true);
             }
             return true;
         }else{
@@ -55,7 +67,11 @@ public class MemoryPuzzle {
         this.stages = stages;
     }
 
-    public void serialize(CompoundTag tag,String name){
+    public Stack<Integer> getValues() {
+        return values;
+    }
+
+    public void serialize(CompoundTag tag, String name){
         CompoundTag puzzle = new CompoundTag();
         int len = values.size();
         puzzle.putInt("length",len);
@@ -69,7 +85,12 @@ public class MemoryPuzzle {
     }
 
     public static MemoryPuzzle deserialize(CompoundTag tag,String name){
-        CompoundTag puzzle = tag.getCompound(name);
+        CompoundTag puzzle;
+        if (name != null){
+            puzzle = tag.getCompound(name);
+        }else{
+            puzzle = tag;
+        }
         int len = puzzle.getInt("length");
         MemoryPuzzle p = new MemoryPuzzle();
         Stack<Integer> stack = new Stack<>();

@@ -5,6 +5,8 @@ import com.finderfeed.solarcraft.client.particles.server_data.shapes.ParticleSpa
 import com.finderfeed.solarcraft.client.toasts.ProgressionToast;
 import com.finderfeed.solarcraft.config.JsonConfig;
 import com.finderfeed.solarcraft.content.blocks.blockentities.RuneEnergyPylonTile;
+import com.finderfeed.solarcraft.content.blocks.blockentities.memory_puzzle.MemoryPuzzle;
+import com.finderfeed.solarcraft.content.blocks.blockentities.memory_puzzle.client.MemoryPuzzleScreen;
 import com.finderfeed.solarcraft.content.blocks.blockentities.runic_energy.AbstractRunicEnergyContainer;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.client.SunShardPuzzleScreen;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_template.Puzzle;
@@ -47,11 +49,22 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
+import java.util.Stack;
 import java.util.UUID;
 
 public class ClientPacketHandles {
 
-
+    public static void closeClientScreenPacketHandle(){
+        Minecraft.getInstance().setScreen(null);
+    }
+    public static void memoryPuzzleUpdatePacketHandle(Stack<Integer> values,int pushedValue,boolean wasTrue){
+        if (Minecraft.getInstance().screen instanceof MemoryPuzzleScreen screen){
+            screen.valuePushed(pushedValue,values,wasTrue);
+        }
+    }
+    public static void memoryPuzzleOpenScreenPacketHandle(BlockPos tilePos, Stack<Integer> values){
+        Minecraft.getInstance().setScreen(new MemoryPuzzleScreen(tilePos,values));
+    }
     public static void deltaMovementPacketHandle(int id,Vec3 deltaMovement){
         Entity e = Minecraft.getInstance().level.getEntity(id);
         if (e != null){
