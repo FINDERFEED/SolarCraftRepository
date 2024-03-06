@@ -339,6 +339,7 @@ public class SCItems {
     public static final DeferredHolder<Item,Item> BEAM_GENERATOR = registerItem(ITEMS.register("beam_generator",()->new BlockItem(SCBlocks.BEAM_GENERATOR.get(),new Item.Properties())),SOLAR_GROUP_BLOCKS);
     public static final DeferredHolder<Item,Item> ELEMENT_WEAVER = registerItem(ITEMS.register("element_weaver",()->new BlockItem(SCBlocks.ELEMENT_WEAVER.get(),new Item.Properties())),SOLAR_GROUP_BLOCKS);
     public static final DeferredHolder<Item,Item> ORBITAL_MISSILE_LAUNCHER = registerItem(ITEMS.register("orbital_missile_launcher",()->new BlockItem(SCBlocks.ORBITAL_MISSILE_LAUNCHER.get(),new Item.Properties())),SOLAR_GROUP_BLOCKS);
+    public static final DeferredHolder<Item,Item> MEMORY_PUZZLE_BLOCK = registerItem(ITEMS.register("memory_puzzle_block",()->new BlockItem(SCBlocks.MEMORY_PUZZLE_BLOCK.get(),new Item.Properties())),SOLAR_GROUP_BLOCKS);
 
     public static final DeferredHolder<Item,Item> RUNIC_ENERGY_CORE = registerItem(ITEMS.register("runic_energy_core",()->new SolarcraftBlockItem(SCBlocks.RUNIC_ENERGY_CORE.get(),new Item.Properties(),()->AncientFragment.RUNIC_ENERGY_CORE)),SOLAR_GROUP_BLOCKS);
 

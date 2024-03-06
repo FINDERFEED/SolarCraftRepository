@@ -38,6 +38,7 @@ public class SunRayButton extends FDButton {
                 renderWithMode(Mode.NORMAL,matrices);
             }
         }else{
+            modeTicker--;
             renderWithMode(currentMode,matrices);
         }
 
@@ -47,7 +48,7 @@ public class SunRayButton extends FDButton {
     private void renderWithMode(Mode mode,PoseStack matrices){
         ClientHelpers.bindText(texture);
         int offset = mode.offset;
-        RenderingTools.blitWithBlend(matrices,x,y,0,offset,16,16,16,64,0,1f);
+        RenderingTools.blitWithBlend(matrices,x-4,y-4,0,offset,16,16,16,64,0,1f);
     }
 
     public void tick(){

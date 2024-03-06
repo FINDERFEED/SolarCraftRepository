@@ -11,6 +11,7 @@ public class MemoryPuzzle {
     private int maxValue;
     private int stages;
     private int currentStage;
+    private int startAmount;
 
     private MemoryPuzzle(){
 
@@ -21,15 +22,17 @@ public class MemoryPuzzle {
         this.stages = other.stages;
         this.currentStage = other.currentStage;
         this.values = new Stack<>();
+        this.startAmount = other.startAmount;
         for (int val : other.values){
             this.values.push(val);
         }
     }
-    public MemoryPuzzle(int maxValue,int stages){
+    public MemoryPuzzle(int maxValue,int stages,int start){
         this.maxValue = maxValue;
         this.stages = stages;
         this.currentStage = 0;
         this.values = new Stack<>();
+        this.startAmount = start;
     }
 
 
@@ -39,7 +42,7 @@ public class MemoryPuzzle {
         if (first) {
             currentStage = 0;
         }
-        for (int i = 0; i <= currentStage;i++){
+        for (int i = 0; i < startAmount + currentStage;i++){
             values.push(random.nextInt(maxValue));
         }
     }
@@ -81,6 +84,7 @@ public class MemoryPuzzle {
         puzzle.putInt("maxStages",stages);
         puzzle.putInt("currentStage",currentStage);
         puzzle.putInt("maxValue",maxValue);
+        puzzle.putInt("startAmount",startAmount);
         puzzle.put(name,puzzle);
     }
 
@@ -100,6 +104,8 @@ public class MemoryPuzzle {
         int stages = puzzle.getInt("maxStages");
         int currentStage = puzzle.getInt("currentStage");
         int maxValue = puzzle.getInt("maxValue");
+        int startAmount = puzzle.getInt("startAmount");
+        p.startAmount = startAmount;
         p.values = stack;
         p.stages = stages;
         p.currentStage = currentStage;

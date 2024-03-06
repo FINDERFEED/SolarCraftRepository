@@ -5,6 +5,7 @@ import com.finderfeed.solarcraft.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
 import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.CloseClientScreenPacket;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -25,8 +26,8 @@ public class MemoryPuzzleBlockEntity extends SolarcraftBlockEntity {
     private boolean canOpenScreen = true;
     private int ticker = 0;
 
-    public MemoryPuzzleBlockEntity(BlockEntityType<?> tetype, BlockPos pos, BlockState state) {
-        super(tetype, pos, state);
+    public MemoryPuzzleBlockEntity(BlockPos pos, BlockState state) {
+        super(SCTileEntities.MEMORY_PUZZLE.get(), pos, state);
     }
 
 
@@ -38,6 +39,8 @@ public class MemoryPuzzleBlockEntity extends SolarcraftBlockEntity {
 
         }
     }
+
+
 
     private void processCompletedPuzzle(){
         if (puzzle.isCompleted()){
@@ -61,6 +64,7 @@ public class MemoryPuzzleBlockEntity extends SolarcraftBlockEntity {
             }else{
                 if (puzzle.isCompleted()){
                     payload = new CloseClientScreenPacket();
+                    puzzle.initiatePuzzle(true);
                 }else {
                     puzzle.initiatePuzzle(false);
                     payload = new MemoryPuzzleUpdatePacket(value, puzzle.getValues(), true);
@@ -72,6 +76,19 @@ public class MemoryPuzzleBlockEntity extends SolarcraftBlockEntity {
         if (puzzle.isCompleted()){
             used.add(player.getUUID());
         }
+        this.setChanged();
+    }
+
+    public void onUse(ServerPlayer player){
+        if (puzzle == null){
+            puzzle = new MemoryPuzzle(8,4,2);
+            puzzle.initiatePuzzle(false);
+        }else{
+            puzzle.initiatePuzzle(false);
+        }
+        this.setChanged();
+        MemoryPuzzleOpenScreenPacket packet = new MemoryPuzzleOpenScreenPacket(this.getBlockPos(),puzzle.getValues());
+        FDPacketUtil.sendToPlayer(player,packet);
     }
 
     @Override

@@ -224,5 +224,6 @@ public class SCBlocks {
     public  static  final DeferredHolder<Block,BeamReflectorBlock> BEAM_REFLECTOR = BLOCKS.register("beam_reflector",()-> new BeamReflectorBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK)));
     public  static  final DeferredHolder<Block,ElementWeaverBlock> ELEMENT_WEAVER = BLOCKS.register("element_weaver",()-> new ElementWeaverBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)));
     public  static  final DeferredHolder<Block,SolarOrbitalMissileLauncherBlock> ORBITAL_MISSILE_LAUNCHER = BLOCKS.register("orbital_missile_launcher",()-> new SolarOrbitalMissileLauncherBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)));
+    public  static  final DeferredHolder<Block,MemoryPuzzleBlock> MEMORY_PUZZLE_BLOCK = BLOCKS.register("memory_puzzle_block",()-> new MemoryPuzzleBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK)));
 
 }
