@@ -17,9 +17,9 @@ public class MemoryPuzzleUpdatePacket extends FDPacket {
     private Stack<Integer> values;
 
     public MemoryPuzzleUpdatePacket(int clickedValue,Stack<Integer> values,boolean wasTrue){
-        this.values = new Stack<>();
         this.wasTrue = wasTrue;
         if (values != null) {
+            this.values = new Stack<>();
             for (int val : values) {
                 this.values.push(val);
             }

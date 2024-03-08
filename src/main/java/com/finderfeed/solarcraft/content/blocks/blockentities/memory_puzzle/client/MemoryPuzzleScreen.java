@@ -115,9 +115,15 @@ public class MemoryPuzzleScreen extends DefaultScreen {
     }
 
     public void valuePushed(int value,Stack<Integer> values,boolean wasTrue){
-        this.stages.add(new ValueClickedStage(wasTrue,10,value));
         if (values != null){
+            if (!wasTrue) {
+                this.stages.add(new ValueClickedStage(false, 10, value));
+            }else{
+                this.stages.add(new ValueClickedStage(true, 30, -1));
+            }
             this.stages.add(new ShowValuesStage(values,10));
+        }else{
+            this.stages.add(new ValueClickedStage(wasTrue,10,value));
         }
     }
 
@@ -159,9 +165,15 @@ public class MemoryPuzzleScreen extends DefaultScreen {
 
         @Override
         void init(MemoryPuzzleScreen screen) {
-            SunRayButton button = screen.buttons.get(value);
-            if (button != null){
-                button.glowWithMode(correct ? SunRayButton.Mode.GREEN : SunRayButton.Mode.RED,tick);
+            if (value != -1) {
+                SunRayButton button = screen.buttons.get(value);
+                if (button != null) {
+                    button.glowWithMode(correct ? SunRayButton.Mode.GREEN : SunRayButton.Mode.RED, tick);
+                }
+            }else{
+                for (SunRayButton b : screen.buttons.values()){
+                    b.glowWithMode(correct ? SunRayButton.Mode.GREEN : SunRayButton.Mode.RED, tick);
+                }
             }
         }
     }
