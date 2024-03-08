@@ -4,10 +4,14 @@ import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.local_library.client.screens.buttons.FDButton;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 
 public class SunRayButton extends FDButton {
@@ -38,7 +42,6 @@ public class SunRayButton extends FDButton {
                 renderWithMode(Mode.NORMAL,matrices);
             }
         }else{
-            modeTicker--;
             renderWithMode(currentMode,matrices);
         }
 
@@ -64,6 +67,10 @@ public class SunRayButton extends FDButton {
         this.modeTicker = time;
     }
 
+    @Override
+    public void playDownSound(SoundManager manager) {
+        manager.play(SimpleSoundInstance.forUI(SCSounds.BUTTON_PRESS2.get(), 1.0F));
+    }
 
     public int getId() {
         return id;

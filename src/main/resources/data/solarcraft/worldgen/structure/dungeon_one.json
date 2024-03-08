@@ -3,5 +3,5 @@
   "biomes": "#solarcraft:has_structure/dungeon_one",
   "spawn_overrides": {},
   "step": "surface_structures",
-  "terrain_adaptation": "bury"
+  "terrain_adaptation": "none"
 }

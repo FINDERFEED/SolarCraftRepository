@@ -83,7 +83,7 @@ public class SCItems {
     public static  final DeferredHolder<Item,SolarLexicon> SOLAR_LEXICON = registerItem(ITEMS.register("solar_lexicon",()-> new SolarLexicon(new Item.Properties().stacksTo(1))),SOLAR_GROUP);
 
     public static final DeferredHolder<Item,VoidBlockWand> VOID_BLOCK_WAND = ITEMS.register("void_block_wand",()-> new VoidBlockWand(new Item.Properties().rarity(Rarity.EPIC)));
-    public static final DeferredHolder<Item,Item> SOLAR_KEY = registerItem(ITEMS.register("solar_key",()-> new RareSolarcraftItem(new Item.Properties().rarity(Rarity.EPIC),()->null)),SOLAR_GROUP);
+    public static final DeferredHolder<Item,Item> SOLAR_KEY = registerItem(ITEMS.register("solar_key",()-> new RareSolarcraftItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC),()->null)),SOLAR_GROUP);
     public static final DeferredHolder<Item,Item> COLD_STAR_PIECE = registerItem(ITEMS.register("cold_star_piece",()-> new ColdStarPieceItem(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1))),SOLAR_GROUP_MATERIALS);
     public static final DeferredHolder<Item,Item> COLD_STAR_PIECE_ACTIVATED = registerItem(ITEMS.register("cold_star_piece_activated",()-> new ChargedColdStar(new Item.Properties().rarity(Rarity.EPIC))),SOLAR_GROUP_MATERIALS);
     public static final DeferredHolder<Item,Item> KEY_LOCK_BLOCK = registerItem(ITEMS.register("key_lock_block",()->new BlockItem(SCBlocks.KEY_LOCK_BLOCK.get(),new Item.Properties())),SOLAR_GROUP_BLOCKS);

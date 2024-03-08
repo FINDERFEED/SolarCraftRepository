@@ -36,26 +36,11 @@ public class DungeonOnePieces {
         public static void start(StructureTemplateManager templateManager, BlockPos pos, Rotation rotation, StructurePiecesBuilder pieceList) {
             int x = pos.getX();
             int z = pos.getZ();
-
-            // This is how we factor in rotation for multi-piece structures.
-            //
-            // I would recommend using the OFFSET map above to have each piece at correct height relative of each other
-            // and keep the X and Z equal to 0. And then in rotations, have the centermost piece have a rotation
-            // of 0, 0, 0 and then have all other pieces' rotation be based off of the bottommost left corner of
-            // that piece (the corner that is smallest in X and Z).
-            //
-            // Lots of trial and error may be needed to get this right for your structure.
             BlockPos rotationOffSet = new BlockPos(0, 0, 0).rotate(rotation);
-            BlockPos blockpos = rotationOffSet.offset(x-20, pos.getY()-14, z-20);
+            BlockPos blockpos = rotationOffSet.offset(x, pos.getY(), z);
             pieceList.addPiece(new DungeonOnePieces.Piece(templateManager, DUNGEON_PIECE, rotation,blockpos));
         }
 
-        /*
-         * Here's where some voodoo happens. Most of this doesn't need to be touched but you do
-         * have to pass in the IStructurePieceType you registered into the super constructors.
-         *
-         * The method you will most likely want to touch is the handleDataMarker method.
-         */
         public static class Piece extends TemplateStructurePiece {
             public Piece( StructureTemplateManager p_163662_, ResourceLocation p_163663_,  Rotation rot, BlockPos p_163666_) {
                 super(StructurePieces.DUNGEON_ONE_PIECE.get(), 0, p_163662_, p_163663_, p_163663_.toString(), makeSettings(rot,p_163663_), makePosition(p_163663_,p_163666_,0));

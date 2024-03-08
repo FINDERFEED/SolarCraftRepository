@@ -24,9 +24,9 @@ public class DungeonOne extends Structure {
     private static void generatePieces(StructurePiecesBuilder p_197089_, GenerationContext ctx) {
         int x = (ctx.chunkPos().x << 4) + 7;
         int z = (ctx.chunkPos().z << 4) + 7;
-        int y = ctx.chunkGenerator().getBaseHeight(x-15,z-15, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+        int y = ctx.chunkGenerator().getBaseHeight(x - 7,z - 7, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 ctx.heightAccessor(), ctx.randomState());
-        BlockPos blockpos = new BlockPos(x-15, y, z-15);
+        BlockPos blockpos = new BlockPos(x - 7, y + 70, z - 7);
         Rotation rotation = Rotation.getRandom(ctx.random());
         DungeonOnePieces.start(ctx.structureTemplateManager(), blockpos, rotation, p_197089_);
     }

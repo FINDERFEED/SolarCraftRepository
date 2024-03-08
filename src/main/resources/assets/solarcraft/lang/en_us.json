@@ -868,5 +868,6 @@
   "key.close_all_pages": "Lexicon close all pages",
   "entity.solarcraft.solar_forge_meteorite_projectile": "Meteorite",
   "solarcraft.teleportation_stone": "Shift-click to set the position. Right click to teleport. Goes on cooldown if player received damage recently.",
-  "solarcraft.teleportation_stone_2": "Dimension: %s, Position: %s."
+  "solarcraft.teleportation_stone_2": "Dimension: %s, Position: %s.",
+  "solarcraft.solar_key_required": "A special key is required for this. Perhaps i could find it in another dungeon?"
 }

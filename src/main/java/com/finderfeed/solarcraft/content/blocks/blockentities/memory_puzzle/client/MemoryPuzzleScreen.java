@@ -13,6 +13,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.*;
@@ -97,6 +98,7 @@ public class MemoryPuzzleScreen extends DefaultScreen {
     @Override
     public void render(GuiGraphics graphics, int mx, int my, float pticks) {
         PoseStack matrices = graphics.pose();
+        graphics.fill(0,0,1000,1000,0xaa000000);
         matrices.pushPose();
         ClientHelpers.bindText(GUI);
         RenderingTools.blitWithBlend(matrices,this.relX,this.relY,0,0,this.getScreenWidth(),this.getScreenHeight(),256,256,0,1f);
@@ -118,13 +120,20 @@ public class MemoryPuzzleScreen extends DefaultScreen {
         if (values != null){
             if (!wasTrue) {
                 this.stages.add(new ValueClickedStage(false, 10, value));
+                ClientHelpers.playsoundInEars(SoundEvents.VILLAGER_NO,1f,1f);
             }else{
                 this.stages.add(new ValueClickedStage(true, 30, -1));
+                ClientHelpers.playsoundInEars(SoundEvents.EXPERIENCE_ORB_PICKUP,1f,1f);
             }
             this.stages.add(new ShowValuesStage(values,10));
         }else{
             this.stages.add(new ValueClickedStage(wasTrue,10,value));
         }
+    }
+
+    @Override
+    public boolean isPauseScreen() {
+        return false;
     }
 
     static class DelayStage extends Stage {
