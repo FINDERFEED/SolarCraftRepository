@@ -2,6 +2,7 @@ package com.finderfeed.solarcraft.content.blocks.blockentities.memory_puzzle;
 
 import com.finderfeed.solarcraft.client.particles.ball_particle.BallParticleOptions;
 import com.finderfeed.solarcraft.content.blocks.blockentities.SolarcraftBlockEntity;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
@@ -24,6 +25,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
@@ -44,10 +46,20 @@ public class MemoryPuzzleBlockEntity extends SolarcraftBlockEntity {
 
     public static void tick(MemoryPuzzleBlockEntity tile, Level level){
         if (!level.isClientSide){
+            tile.giveProgression();
             tile.processCompletedPuzzle();
         }
     }
 
+    private void giveProgression(){
+        if (level.getGameTime() % 20 == 0){
+            List<Player> players = level.getEntitiesOfClass(Player.class,new AABB(-5,-5,-5,5,5,5)
+                    .move(this.getBlockPos()));
+            for (Player player : players){
+                Helpers.fireProgressionEvent(player, Progression.FIND_KEY_LOCK_DUNGEON);
+            }
+        }
+    }
 
 
     private void processCompletedPuzzle(){

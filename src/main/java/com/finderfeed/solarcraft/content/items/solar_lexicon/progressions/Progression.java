@@ -8,7 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.chat.Component;
 public enum Progression {
     ENTER_NETHER("enter_nether",1, Blocks.NETHERRACK.asItem()),
-    FIND_KEY_LOCK_DUNGEON("find_key_lock",1, SCItems.INVINCIBLE_STONE.get()),
+    FIND_KEY_LOCK_DUNGEON("find_key_lock",1, SCItems.MEMORY_PUZZLE_BLOCK.get()),
     FIND_INFUSER_DUNGEON("find_infuser_dungeon",1, SCItems.SOLAR_STONE_COLLUMN.get()),
     FIND_KEY_SOURCE("find_key_source",1, SCItems.SOLAR_STONE_COLLUMN_HORIZONTAL.get()),
     GIANT_VAULT("giant_vault",1, SCItems.CHISELED_MAGISTONE.get()),

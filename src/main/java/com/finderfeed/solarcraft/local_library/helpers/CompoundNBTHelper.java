@@ -24,7 +24,7 @@ public class CompoundNBTHelper {
 
     public static void saveUUIDList(CompoundTag tag,List<UUID> uuids,String name){
         CompoundTag nbtlist = new CompoundTag();
-        nbtlist.putInt("length",uuids.size());
+        nbtlist.putInt(name + "_length",uuids.size());
         for (int i = 0; i < uuids.size();i++){
             saveUUID(nbtlist,uuids.get(i),i+"");
         }
@@ -34,7 +34,7 @@ public class CompoundNBTHelper {
     public static List<UUID> loadUUIDList(CompoundTag tag,String name){
         if (tag.contains(name)){
             CompoundTag t = tag.getCompound(name);
-            int len = t.getInt("length");
+            int len = t.getInt(name+"_length");
             List<UUID> uuids = new ArrayList<>();
             for (int i = 0; i < len;i++){
                 uuids.add(t.getUUID(i+""));

@@ -36,6 +36,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
@@ -48,6 +49,7 @@ import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.ExplosionDamageCalculator;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.phys.*;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.neoforged.fml.ModList;
@@ -77,6 +79,36 @@ public class Helpers {
     public static BlockPos NULL_POS = new BlockPos(0,-100,0);
 
 
+    public static void placeItemInChest(ChestBlockEntity tile,ItemStack item,boolean createItemEntity){
+        ItemStack copy = item.copy();
+        for (int i = 0; i < tile.getContainerSize();i++){
+            if (copy.getCount() == 0) break;
+            ItemStack stack = tile.getItem(i);
+            if (stack.isEmpty()){
+                tile.setItem(i,copy.copy());
+                copy.setCount(0);
+                break;
+            }else if (stack.is(copy.getItem())){
+                addItemToItem(copy,stack);
+            }
+        }
+        if (createItemEntity && copy.getCount() != 0){
+            BlockPos pos = tile.getBlockPos();
+            ItemEntity entity = new ItemEntity(tile.getLevel(),pos.getX() + 0.5, pos.getY() + 1.5,pos.getZ() + 0.5,
+                    copy.copy());
+            entity.setDeltaMovement(0,0,0);
+            tile.getLevel().addFreshEntity(entity);
+        }
+    }
+
+    public static void addItemToItem(ItemStack add,ItemStack to){
+        if (add.getItem() != to.getItem()) return;
+        int maxCount = to.getMaxStackSize();
+        int remCount = maxCount - to.getCount();
+        int toAdd = Math.min(add.getCount(),remCount);
+        to.setCount(to.getCount() + toAdd);
+        add.setCount(add.getCount() - toAdd);
+    }
 
     public static void spawnUlderaLightning(Level level, Vec3 spawnPos, float damage, int delay, int height){
         UlderaLightningEntity lightning = new UlderaLightningEntity(SCEntityTypes.ULDERA_LIGHTNING.get(),level);
