@@ -30,7 +30,7 @@ public class MemoryPuzzleScreen extends DefaultScreen {
         this.tilePos = tilePos;
         this.stages = new ArrayDeque<>();
         stages.add(new DelayStage(50));
-        stages.add(new ShowValuesStage(values,20));
+        stages.add(new ShowValuesStage(values,10));
     }
 
 
