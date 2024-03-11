@@ -24,6 +24,24 @@ public class ShapesRenderer {
        vertex.vertex(matrix,vx,vy,vz).color(r,g,b,a).uv(u,v).uv2(light).overlayCoords(OverlayTexture.NO_OVERLAY).endVertex();
     });
 
+    public static void renderQuad(VertexConstructor v,VertexConsumer vertex,PoseStack matrices,float size,float roll,float r,float g,float b,float a,int light,Vec3 dir){
+        matrices.pushPose();
+        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),roll));
+        RenderingTools.applyMovementMatrixRotations(matrices,dir);
+        Matrix4f m = matrices.last().pose();
+        v.process(vertex,m,-size,0,-size,r,g,b,a,0,0,light);
+        v.process(vertex,m,size,0,-size,r,g,b,a,1,0,light);
+        v.process(vertex,m,size,0,size,r,g,b,a,1,1,light);
+        v.process(vertex,m,-size,0,size,r,g,b,a,0,1,light);
+
+        v.process(vertex,m,-size,0,size,r,g,b,a,0,1,light);
+        v.process(vertex,m,size,0,size,r,g,b,a,1,1,light);
+        v.process(vertex,m,size,0,-size,r,g,b,a,1,0,light);
+        v.process(vertex,m,-size,0,-size,r,g,b,a,0,0,light);
+
+        matrices.popPose();
+    }
+
 
     public static void renderTrail(VertexConstructor v,VertexConsumer consumer,PoseStack matrices,Trail trail,float rad,float pticks,boolean cubic,float r,float g,float b,float a,int light){
         matrices.pushPose();

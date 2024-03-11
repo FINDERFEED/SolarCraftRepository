@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.client.rendering.rendertypes;
 
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
-import com.finderfeed.solarcraft.local_library.client.GlowShaderInit;
+import com.finderfeed.solarcraft.local_library.client.GlowShaderProcessor;
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
@@ -18,7 +18,6 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.client.NeoForgeRenderTypes;
 import org.lwjgl.opengl.GL11;
 
 import java.util.function.Function;
@@ -93,7 +92,7 @@ public class SCRenderTypes extends RenderType {
                 .setTextureState(new RenderStateShard.TextureStateShard(locationIn, true, false))
                 .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
                 .setLightmapState(LIGHTMAP)
-                .setOutputState(GlowShaderInit.GLOW_TARGET_SHARD)
+                .setOutputState(GlowShaderProcessor.GLOW_TARGET_SHARD)
                 .createCompositeState(false);
         return create("glow_text", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, false, true, rendertype$state);
     }

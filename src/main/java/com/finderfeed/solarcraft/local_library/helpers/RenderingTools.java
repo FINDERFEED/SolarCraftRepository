@@ -80,6 +80,7 @@ import static net.minecraft.client.renderer.entity.ItemRenderer.*;
 
 public class RenderingTools {
 
+    public static final Vec3 UP = new Vec3(0,1,0);
     public static final ResourceLocation WHITE_SQUARE = new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/white_square.png");
     public static final ResourceLocation RAY = new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/ray_into_skyy.png");
     public static final ResourceLocation SHADERED_RAY = new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/shadered_ray.png");

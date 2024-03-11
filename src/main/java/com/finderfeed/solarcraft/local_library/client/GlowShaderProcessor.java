@@ -4,7 +4,6 @@ import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.client.rendering.shaders.post_chains.PostChainPlusUltra;
 import com.finderfeed.solarcraft.client.rendering.shaders.post_chains.UniformPlusPlus;
 import com.finderfeed.solarcraft.config.SolarcraftClientConfig;
-import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
@@ -22,7 +21,7 @@ import java.io.IOException;
 import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = SolarCraft.MOD_ID,bus = Mod.EventBusSubscriber.Bus.FORGE,value = Dist.CLIENT)
-public class GlowShaderInit {
+public class GlowShaderProcessor {
 
 
 
@@ -67,8 +66,8 @@ public class GlowShaderInit {
 
     public static void processGlowShader(){
         if (SolarcraftClientConfig.GLOW_ENABLED.get()) {
-            GlowShaderInit.GLOW.process(Minecraft.getInstance().getFrameTime());
-            GlowShaderInit.GLOW_RENDER_TARGET.bindWrite(false);
+            GlowShaderProcessor.GLOW.process(Minecraft.getInstance().getFrameTime());
+            GlowShaderProcessor.GLOW_RENDER_TARGET.bindWrite(false);
             GlStateManager._clear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT,true);
             Minecraft.getInstance().getMainRenderTarget().bindWrite(false);
         }
