@@ -84,7 +84,6 @@ public class SCRenderTypes extends RenderType {
     );
 
     public static Function<ResourceLocation, RenderType> TEXT_GLOW = Util.memoize(SCRenderTypes::getGlowText);
-    public static Function<ResourceLocation, RenderType> TEXT_GLOW_NO_SHARD = Util.memoize(SCRenderTypes::getGlowTextNoShard);
 
     private static RenderType getGlowText(ResourceLocation locationIn) {
         RenderType.CompositeState rendertype$state = RenderType.CompositeState.builder()
@@ -96,13 +95,15 @@ public class SCRenderTypes extends RenderType {
                 .createCompositeState(false);
         return create("glow_text", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, false, true, rendertype$state);
     }
+    public static Function<ResourceLocation, RenderType> TEXT_BLOOM = Util.memoize(SCRenderTypes::getBloomText);
 
-    private static RenderType getGlowTextNoShard(ResourceLocation locationIn) {
+    private static RenderType getBloomText(ResourceLocation locationIn) {
         RenderType.CompositeState rendertype$state = RenderType.CompositeState.builder()
                 .setShaderState(RenderStateShard.RENDERTYPE_TRANSLUCENT_SHADER)
                 .setTextureState(new RenderStateShard.TextureStateShard(locationIn, true, false))
                 .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
                 .setLightmapState(LIGHTMAP)
+                .setOutputState(GlowShaderProcessor.BLOOM_TARGET_SHARD)
                 .createCompositeState(false);
         return create("glow_text", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, false, true, rendertype$state);
     }

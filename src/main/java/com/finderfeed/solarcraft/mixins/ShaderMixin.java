@@ -68,7 +68,8 @@ public class ShaderMixin {
         }
         if ((Minecraft.getInstance().getWindow().getScreenWidth() != 0) && (Minecraft.getInstance().getWindow().getScreenHeight() != 0)) {
             resizeShader(width,height, RuneEnergyPylonRenderer.SHADER, EnergyGeneratorTileRender.SHADER, WormholeRenderer.SHADER,
-                    DimensionCoreRenderer.SHADER,OrbitalExplosionEntityRenderer.postChain, GlowShaderProcessor.GLOW);
+                    DimensionCoreRenderer.SHADER,OrbitalExplosionEntityRenderer.postChain, GlowShaderProcessor.GLOW,
+                    GlowShaderProcessor.BLOOM);
 
             RenderEventsHandler.ACTIVE_SHADERS.forEach((id,shader)->{
                 shader.process(Minecraft.getInstance().getFrameTime());

@@ -37,6 +37,18 @@ public class GlowShaderProcessor {
         Minecraft.getInstance().getMainRenderTarget().bindWrite(false);
     });
 
+    public static PostChainPlusUltra BLOOM;
+    public static RenderTarget BLOOM_IN;
+    public static RenderTarget BLOOM_OUT;
+    public static RenderStateShard.OutputStateShard BLOOM_TARGET_SHARD = new RenderStateShard.OutputStateShard("bloom_target",()->{
+        if (SolarcraftClientConfig.GLOW_ENABLED.get()) {
+            BLOOM_IN.copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
+        }
+        BLOOM_IN.bindWrite(false);
+        },()->{
+        Minecraft.getInstance().getMainRenderTarget().bindWrite(false);
+    });
+
     @SubscribeEvent
     public static void clientPlayerJoin(ClientPlayerNetworkEvent.LoggingIn event){
         try {
@@ -52,6 +64,18 @@ public class GlowShaderProcessor {
                     window.getScreenHeight()
             );
             GLOW_RENDER_TARGET = GLOW.getTempTarget("glow");
+
+            BLOOM = new PostChainPlusUltra(new ResourceLocation(SolarCraft.MOD_ID,"shaders/post/bloom.json"),new UniformPlusPlus(
+                    Map.of(
+                            "deviation",1f,
+                            "size",5f
+                    )
+            ));
+            BLOOM.resize(
+                    window.getScreenWidth(),
+                    window.getScreenHeight()
+            );
+            BLOOM_IN = BLOOM.getTempTarget("bloom_in");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -60,7 +84,18 @@ public class GlowShaderProcessor {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void afterLevelRender(RenderLevelStageEvent event){
         if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_LEVEL){
-            processGlowShader();
+            //processGlowShader();
+
+            processBloomShader();
+
+        }
+    }
+    public static void processBloomShader(){
+        if (SolarcraftClientConfig.GLOW_ENABLED.get()){
+            BLOOM.process(Minecraft.getInstance().getFrameTime());
+            BLOOM_IN.bindWrite(false);
+            GlStateManager._clear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT,true);
+            Minecraft.getInstance().getMainRenderTarget().bindWrite(false);
         }
     }
 
