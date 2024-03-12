@@ -3,6 +3,7 @@ package com.finderfeed.solarcraft.content.blocks.infusing_table_things;
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.client.rendering.rendertypes.SCRenderTypes;
 import com.finderfeed.solarcraft.helpers.Helpers;
+import com.finderfeed.solarcraft.local_library.client.delayed_renderer.DelayedRenderer;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.content.blocks.render.abstracts.AbstractRunicEnergyContainerRenderer;
 import com.finderfeed.solarcraft.content.world_generation.structures.NotStructures;
@@ -60,10 +61,9 @@ public class InfuserRenderer extends AbstractRunicEnergyContainerRenderer<Infuse
             matrices.popPose();
             matrices.pushPose();
 
-            VertexConsumer t = buffer.getBuffer(SCRenderTypes.TEXT_BLOOM.apply(FANCY_RING));
             VertexConsumer vertex = buffer.getBuffer(RenderType.text(FANCY_RING));
             matrices.translate(0.5,0.01,0.5);
-            ShapesRenderer.renderQuad(ShapesRenderer.POSITION_COLOR_UV_LIGHTMAP,t,matrices,1.25f,time % 360,1,1,1,1, LightTexture.FULL_BRIGHT,RenderingTools.UP);
+            ShapesRenderer.renderQuad(ShapesRenderer.POSITION_COLOR_UV_LIGHTMAP,vertex,matrices,1.25f,time % 360,1,1,1,1, LightTexture.FULL_BRIGHT,RenderingTools.UP);
             matrices.translate(0,0.01,0);
             ShapesRenderer.renderQuad(ShapesRenderer.POSITION_COLOR_UV_LIGHTMAP,vertex,matrices,2.8f,-(time % 360)*2,1,1,1,1, LightTexture.FULL_BRIGHT,RenderingTools.UP);
 

@@ -1,0 +1,16 @@
+{
+  "targets":
+  [
+  ],
+  "passes":
+  [
+    {
+      "name": "solarcraft:blit_additive",
+      "intarget": "solarcraft:bloom_out_target",
+      "outtarget": "minecraft:main",
+      "auxtargets": [
+
+      ]
+    }
+  ]
+}

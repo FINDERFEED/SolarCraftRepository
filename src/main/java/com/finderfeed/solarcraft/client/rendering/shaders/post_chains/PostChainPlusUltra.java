@@ -1,11 +1,14 @@
 package com.finderfeed.solarcraft.client.rendering.shaders.post_chains;
 
 
+import com.finderfeed.solarcraft.registries.SCRenderTargets;
 import com.google.gson.JsonSyntaxException;
+import com.mojang.blaze3d.pipeline.RenderTarget;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.PostChain;
 import net.minecraft.client.renderer.PostPass;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 
@@ -51,5 +54,14 @@ public class PostChainPlusUltra extends PostChain {
 
     public void addPostActions(Runnable postActions) {
         this.postActions = postActions;
+    }
+
+
+    @Nullable
+    @Override
+    public RenderTarget getRenderTarget(@Nullable String string) {
+        RenderTarget t = SCRenderTargets.getTarget(string);
+        if (t != null) return t;
+        return super.getRenderTarget(string);
     }
 }

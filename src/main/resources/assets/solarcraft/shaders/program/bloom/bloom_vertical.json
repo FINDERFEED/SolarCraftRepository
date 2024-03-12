@@ -4,7 +4,7 @@
     "srcrgb": "srcalpha",
     "dstrgb": "one"
   },
-  "vertex": "screenquad",
+  "vertex": "sobel",
   "fragment": "solarcraft:bloom/bloom_vertical",
   "attributes":
   [
@@ -14,15 +14,13 @@
   [
     {
       "name": "DiffuseSampler"
-    },
-    {
-      "name": "BloomSampler"
     }
   ],
   "uniforms":
   [
     { "name": "ProjMat",    "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
     { "name": "OutSize",    "type": "float",     "count": 2,  "values": [ 1.0, 1.0 ] },
+    { "name": "InSize",    "type": "float",     "count": 2,  "values": [ 1.0, 1.0 ] },
     { "name": "deviation", "type": "float", "count": 1, "values": [1] },
     { "name": "size", "type": "float", "count": 1, "values": [5] }
 

@@ -41,6 +41,7 @@ import com.finderfeed.solarcraft.events.RenderEventsHandler;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.client.particles.ScreenParticlesRenderHandler;
 import com.finderfeed.solarcraft.registries.SCBedrockModels;
+import com.finderfeed.solarcraft.registries.SCRenderTargets;
 import com.finderfeed.solarcraft.registries.ScreenSuppliers;
 import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
 import com.finderfeed.solarcraft.registries.containers.SCContainers;
@@ -118,6 +119,8 @@ public class SCClientModEventHandler {
 
     @SubscribeEvent
     public static void registerClientStuff(final FMLClientSetupEvent event){
+
+        SCRenderTargets.init(Minecraft.getInstance().getWindow().getWidth(), Minecraft.getInstance().getWindow().getHeight());
 
         NeoForge.EVENT_BUS.register(new RenderEventsHandler());
         ScreenParticlesRenderHandler.registerRenderType(SCRenderTypes.ParticleRenderTypes.RUNE_TILE_PARTICLE);

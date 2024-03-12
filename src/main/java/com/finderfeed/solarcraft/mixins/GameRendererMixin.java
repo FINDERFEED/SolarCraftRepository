@@ -1,8 +1,17 @@
 package com.finderfeed.solarcraft.mixins;
 
+import com.finderfeed.solarcraft.content.blocks.render.DimensionCoreRenderer;
+import com.finderfeed.solarcraft.content.blocks.render.EnergyGeneratorTileRender;
+import com.finderfeed.solarcraft.content.blocks.render.RuneEnergyPylonRenderer;
+import com.finderfeed.solarcraft.content.blocks.render.WormholeRenderer;
+import com.finderfeed.solarcraft.content.entities.renderers.OrbitalExplosionEntityRenderer;
+import com.finderfeed.solarcraft.local_library.client.GlowShaderProcessor;
+import com.finderfeed.solarcraft.registries.SCRenderTargets;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.PostChain;
+import net.minecraft.world.phys.Vec2;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -48,4 +57,26 @@ public class GameRendererMixin {
         }
     }
 
+    @Inject(method = "resize",at = @At(value = "HEAD"))
+    public void onScreenResize(int width, int height, CallbackInfo ci){
+        resizeShader(width,height,
+                RuneEnergyPylonRenderer.SHADER,
+                EnergyGeneratorTileRender.SHADER,
+                WormholeRenderer.SHADER,
+                DimensionCoreRenderer.SHADER,
+                OrbitalExplosionEntityRenderer.postChain,
+                GlowShaderProcessor.GLOW,
+                GlowShaderProcessor.BLOOM,
+                GlowShaderProcessor.BLIT_BLOOM
+                );
+        SCRenderTargets.BLOOM_OUT_TARGET.resize(width,height,Minecraft.ON_OSX);
+    }
+
+    private void resizeShader(float width, float height, PostChain... shader){
+        for (PostChain shaders : shader) {
+            if (shaders != null) {
+                shaders.resize(Minecraft.getInstance().getWindow().getWidth(), Minecraft.getInstance().getWindow().getHeight());
+            }
+        }
+    }
 }

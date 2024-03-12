@@ -3,20 +3,16 @@
   [
     "bloom_in",
     "bloom_1",
-    "bloom_out",
-    "bloom"
+    "bloom_out"
   ],
   "passes":
   [
     {
       "name": "solarcraft:bloom/bloom_horizontal",
-      "intarget": "minecraft:main",
+      "intarget": "bloom_in",
       "outtarget": "bloom_1",
       "auxtargets": [
-        {
-          "name": "BloomSampler",
-          "id": "bloom_in"
-        }
+
       ]
     },
     {
@@ -24,16 +20,13 @@
       "intarget": "bloom_1",
       "outtarget": "bloom_out",
       "auxtargets": [
-        {
-          "name": "BloomSampler",
-          "id": "bloom_1"
-        }
+
       ]
     },
     {
-      "name": "blit",
+      "name": "solarcraft:blit_additive",
       "intarget": "bloom_out",
-      "outtarget": "bloom"
+      "outtarget": "solarcraft:bloom_out_target"
     }
   ]
 }

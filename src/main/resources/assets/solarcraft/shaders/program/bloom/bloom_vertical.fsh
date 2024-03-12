@@ -8,6 +8,7 @@ uniform float size;
 
 
 in vec2 texCoord;
+in vec2 oneTexel;
 out vec4 fragColor;
 
 float gaussian(float x){
@@ -22,12 +23,10 @@ float gaussian(float x){
 
 void main(){
 
-    float p = 1 / textureSize(BloomSampler,0).x;
-
     vec4 col = vec4(0);
-    for (float i = -size; i <= size;i += p){
+    for (float i = -size; i <= size;i++){
         vec2 coord = texCoord + vec2(0,i);
-        vec4 f = texture(BloomSampler,coord) * gaussian(i);
+        vec4 f = texture(DiffuseSampler,coord) * gaussian(i * oneTexel.y);
         col += f;
     }
 

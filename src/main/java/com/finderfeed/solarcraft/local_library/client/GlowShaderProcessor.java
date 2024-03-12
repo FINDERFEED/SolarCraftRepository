@@ -4,6 +4,7 @@ import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.client.rendering.shaders.post_chains.PostChainPlusUltra;
 import com.finderfeed.solarcraft.client.rendering.shaders.post_chains.UniformPlusPlus;
 import com.finderfeed.solarcraft.config.SolarcraftClientConfig;
+import com.finderfeed.solarcraft.registries.SCRenderTargets;
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
@@ -39,15 +40,17 @@ public class GlowShaderProcessor {
 
     public static PostChainPlusUltra BLOOM;
     public static RenderTarget BLOOM_IN;
-    public static RenderTarget BLOOM_OUT;
     public static RenderStateShard.OutputStateShard BLOOM_TARGET_SHARD = new RenderStateShard.OutputStateShard("bloom_target",()->{
         if (SolarcraftClientConfig.GLOW_ENABLED.get()) {
             BLOOM_IN.copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
         }
         BLOOM_IN.bindWrite(false);
         },()->{
+        processBloomShader();
         Minecraft.getInstance().getMainRenderTarget().bindWrite(false);
     });
+
+    public static PostChainPlusUltra BLIT_BLOOM;
 
     @SubscribeEvent
     public static void clientPlayerJoin(ClientPlayerNetworkEvent.LoggingIn event){
@@ -76,6 +79,8 @@ public class GlowShaderProcessor {
                     window.getScreenHeight()
             );
             BLOOM_IN = BLOOM.getTempTarget("bloom_in");
+
+            BLIT_BLOOM = new PostChainPlusUltra(new ResourceLocation(SolarCraft.MOD_ID,"shaders/post/blit_bloom.json"),new UniformPlusPlus(Map.of()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -84,9 +89,11 @@ public class GlowShaderProcessor {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void afterLevelRender(RenderLevelStageEvent event){
         if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_LEVEL){
-            //processGlowShader();
+            processGlowShader();
 
-            processBloomShader();
+            GlowShaderProcessor.BLIT_BLOOM.process(Minecraft.getInstance().getFrameTime());
+            SCRenderTargets.BLOOM_OUT_TARGET.clear(Minecraft.ON_OSX);
+            //processBloomShader();
 
         }
     }
