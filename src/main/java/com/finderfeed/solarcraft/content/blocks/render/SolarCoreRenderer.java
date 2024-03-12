@@ -119,7 +119,7 @@ public class SolarCoreRenderer implements BlockEntityRenderer<SolarEnergyCoreTil
             ShapesRenderer.renderSphere(ShapesRenderer.POSITION_COLOR_UV_LIGHTMAP,
                     buffer.getBuffer(SCRenderTypes.text(CORE_TEXTURE)),matrices,20,2,1,0.15f,0f,1f,LightTexture.FULL_BRIGHT);
             ShapesRenderer.renderSphere(ShapesRenderer.POSITION_COLOR_UV_LIGHTMAP,
-                    buffer.getBuffer(SCRenderTypes.TEXT_GLOW.apply(CORE_TEXTURE)),matrices,20,2,1,0.15f,0f,1f,LightTexture.FULL_BRIGHT);
+                    buffer.getBuffer(SCRenderTypes.TEXT_BLOOM.apply(CORE_TEXTURE)),matrices,20,2,1,0.15f,0f,1f,LightTexture.FULL_BRIGHT);
             matrices.popPose();
             matrices.pushPose();
             matrices.mulPose(rotationDegrees(YN(),time));

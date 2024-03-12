@@ -7,6 +7,7 @@ import com.finderfeed.solarcraft.config.SolarcraftClientConfig;
 import com.finderfeed.solarcraft.registries.SCRenderTargets;
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.resources.ResourceLocation;
@@ -81,6 +82,7 @@ public class GlowShaderProcessor {
             BLOOM_IN = BLOOM.getTempTarget("bloom_in");
 
             BLIT_BLOOM = new PostChainPlusUltra(new ResourceLocation(SolarCraft.MOD_ID,"shaders/post/blit_bloom.json"),new UniformPlusPlus(Map.of()));
+            BLIT_BLOOM.resize(window.getScreenWidth(),window.getScreenHeight());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -91,14 +93,23 @@ public class GlowShaderProcessor {
         if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_LEVEL){
             processGlowShader();
 
-            GlowShaderProcessor.BLIT_BLOOM.process(Minecraft.getInstance().getFrameTime());
+            //GlowShaderProcessor.BLIT_BLOOM.process(Minecraft.getInstance().getFrameTime());
             SCRenderTargets.BLOOM_OUT_TARGET.clear(Minecraft.ON_OSX);
+            Minecraft.getInstance().getMainRenderTarget().bindWrite(false);
             //processBloomShader();
 
         }
     }
     public static void processBloomShader(){
         if (SolarcraftClientConfig.GLOW_ENABLED.get()){
+            BLOOM.updateUniforms(new UniformPlusPlus(
+                    Map.of(
+                            "deviation",1f,
+                            "size",5f,
+                            "xscale",3f,
+                            "colMod",1f
+                    )
+            ));
             BLOOM.process(Minecraft.getInstance().getFrameTime());
             BLOOM_IN.bindWrite(false);
             GlStateManager._clear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT,true);

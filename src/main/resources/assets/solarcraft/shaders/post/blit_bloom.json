@@ -5,7 +5,7 @@
   "passes":
   [
     {
-      "name": "solarcraft:blit_additive",
+      "name": "blit",
       "intarget": "solarcraft:bloom_out_target",
       "outtarget": "minecraft:main",
       "auxtargets": [

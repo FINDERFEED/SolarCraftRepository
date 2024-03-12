@@ -5,11 +5,14 @@ uniform sampler2D BloomSampler;
 
 uniform float deviation;
 uniform float size;
+uniform float xscale;
+uniform float colMod;
 
 
 in vec2 texCoord;
 in vec2 oneTexel;
 out vec4 fragColor;
+
 
 float gaussian(float x){
 
@@ -24,13 +27,13 @@ float gaussian(float x){
 void main(){
 
 
-
     vec4 col = vec4(0);
     for (float i = -size; i <= size;i++){
-        vec2 coord = texCoord + vec2(i,0);
-        vec4 f = texture(DiffuseSampler,coord) * gaussian(i * oneTexel.x);
+        float c = i * oneTexel.x;
+        vec2 coord = texCoord + vec2(c,0);
+        vec4 f = texture(DiffuseSampler,coord) * gaussian(i * 0.1 * xscale);
         col += f;
     }
 
-    fragColor = col;
+    fragColor = col * colMod;
 }

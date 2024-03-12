@@ -22,6 +22,8 @@ public class SCRenderTargets {
 
     public static RenderTarget register(String name,RenderTarget target){
         RENDER_TARGETS.put("solarcraft:"+name,target);
+        target.setClearColor(0,0,0,0);
+        target.clear(Minecraft.ON_OSX);
         return target;
     }
 

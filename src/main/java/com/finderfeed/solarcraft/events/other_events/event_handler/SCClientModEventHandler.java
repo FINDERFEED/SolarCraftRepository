@@ -120,7 +120,6 @@ public class SCClientModEventHandler {
     @SubscribeEvent
     public static void registerClientStuff(final FMLClientSetupEvent event){
 
-        SCRenderTargets.init(Minecraft.getInstance().getWindow().getWidth(), Minecraft.getInstance().getWindow().getHeight());
 
         NeoForge.EVENT_BUS.register(new RenderEventsHandler());
         ScreenParticlesRenderHandler.registerRenderType(SCRenderTypes.ParticleRenderTypes.RUNE_TILE_PARTICLE);

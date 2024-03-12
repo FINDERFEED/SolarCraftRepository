@@ -10,7 +10,10 @@ import com.finderfeed.solarcraft.registries.SCRenderTargets;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.PostChain;
+import net.minecraft.client.renderer.RenderBuffers;
+import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.phys.Vec2;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -57,8 +60,14 @@ public class GameRendererMixin {
         }
     }
 
+    @Inject(method = "<init>",at = @At(value = "RETURN"))
+    public void init(Minecraft mc, ItemInHandRenderer p_234220_, ResourceManager p_234221_, RenderBuffers p_234222_, CallbackInfo ci){
+        SCRenderTargets.init(mc.getWindow().getWidth(),mc.getWindow().getHeight());
+    }
+
     @Inject(method = "resize",at = @At(value = "HEAD"))
     public void onScreenResize(int width, int height, CallbackInfo ci){
+        SCRenderTargets.BLOOM_OUT_TARGET.resize(width, height, Minecraft.ON_OSX);
         resizeShader(width,height,
                 RuneEnergyPylonRenderer.SHADER,
                 EnergyGeneratorTileRender.SHADER,
@@ -69,13 +78,12 @@ public class GameRendererMixin {
                 GlowShaderProcessor.BLOOM,
                 GlowShaderProcessor.BLIT_BLOOM
                 );
-        SCRenderTargets.BLOOM_OUT_TARGET.resize(width,height,Minecraft.ON_OSX);
     }
 
-    private void resizeShader(float width, float height, PostChain... shader){
+    private void resizeShader(int width, int height, PostChain... shader){
         for (PostChain shaders : shader) {
             if (shaders != null) {
-                shaders.resize(Minecraft.getInstance().getWindow().getWidth(), Minecraft.getInstance().getWindow().getHeight());
+                shaders.resize(width, height);
             }
         }
     }

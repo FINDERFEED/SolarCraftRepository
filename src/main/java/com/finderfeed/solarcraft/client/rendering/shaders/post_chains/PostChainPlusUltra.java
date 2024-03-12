@@ -61,7 +61,9 @@ public class PostChainPlusUltra extends PostChain {
     @Override
     public RenderTarget getRenderTarget(@Nullable String string) {
         RenderTarget t = SCRenderTargets.getTarget(string);
-        if (t != null) return t;
+        if (t != null){
+            return t;
+        }
         return super.getRenderTarget(string);
     }
 }
