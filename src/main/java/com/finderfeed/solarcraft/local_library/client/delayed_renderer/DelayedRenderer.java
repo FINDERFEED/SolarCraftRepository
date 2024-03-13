@@ -16,7 +16,7 @@ public class DelayedRenderer {
 
     public static final DelayedBufferSource SRC = new DelayedBufferSource();
     public static Matrix4f MODELVIEW_MATRIX;
-    @SubscribeEvent(priority = EventPriority.LOW)
+    @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void renderLevel(RenderLevelStageEvent event){
         if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_WEATHER){
             if (MODELVIEW_MATRIX != null){

@@ -47,7 +47,9 @@ public class GlowShaderProcessor {
         }
         BLOOM_IN.bindWrite(false);
         },()->{
-        processBloomShader();
+        if (SolarcraftClientConfig.GLOW_ENABLED.get()) {
+            processBloomShader();
+        }
         Minecraft.getInstance().getMainRenderTarget().bindWrite(false);
     });
 
@@ -88,24 +90,30 @@ public class GlowShaderProcessor {
         }
     }
 
-    @SubscribeEvent(priority = EventPriority.LOWEST)
+    @SubscribeEvent(priority = EventPriority.LOW)
     public static void afterLevelRender(RenderLevelStageEvent event){
         if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_LEVEL){
             processGlowShader();
-
-            //GlowShaderProcessor.BLIT_BLOOM.process(Minecraft.getInstance().getFrameTime());
-            SCRenderTargets.BLOOM_OUT_TARGET.clear(Minecraft.ON_OSX);
-            Minecraft.getInstance().getMainRenderTarget().bindWrite(false);
-            //processBloomShader();
+            blitBloom();
 
         }
     }
+
+    public static void blitBloom(){
+        if (SolarcraftClientConfig.GLOW_ENABLED.get()) {
+            GlowShaderProcessor.BLIT_BLOOM.process(Minecraft.getInstance().getFrameTime());
+            SCRenderTargets.BLOOM_OUT_TARGET.bindWrite(false);
+            GlStateManager._clear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT, true);
+            Minecraft.getInstance().getMainRenderTarget().bindWrite(false);
+        }
+    }
+
     public static void processBloomShader(){
         if (SolarcraftClientConfig.GLOW_ENABLED.get()){
             BLOOM.updateUniforms(new UniformPlusPlus(
                     Map.of(
                             "deviation",1f,
-                            "size",5f,
+                            "size",3f,
                             "xscale",3f,
                             "colMod",1f
                     )
@@ -119,10 +127,10 @@ public class GlowShaderProcessor {
 
     public static void processGlowShader(){
         if (SolarcraftClientConfig.GLOW_ENABLED.get()) {
-            GlowShaderProcessor.GLOW.process(Minecraft.getInstance().getFrameTime());
-            GlowShaderProcessor.GLOW_RENDER_TARGET.bindWrite(false);
-            GlStateManager._clear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT,true);
-            Minecraft.getInstance().getMainRenderTarget().bindWrite(false);
+            //GlowShaderProcessor.GLOW.process(Minecraft.getInstance().getFrameTime());
+            //GlowShaderProcessor.GLOW_RENDER_TARGET.bindWrite(false);
+            //GlStateManager._clear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT,true);
+            //Minecraft.getInstance().getMainRenderTarget().bindWrite(false);
         }
     }
 }

@@ -20,7 +20,7 @@ public final class SolarcraftClientConfig {
                         .define("shaders_enabled",true);
         GLOW_ENABLED =
                 BUILDER.comment("Enable/Disable experimental solar craft glow shader.")
-                        .define("shaders_enabled",true);
+                        .define("glow_enabled",true);
 
 
         BUILDER.pop();

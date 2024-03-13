@@ -3,7 +3,8 @@
   [
     "bloom_in",
     "bloom_1",
-    "bloom_out"
+    "bloom_out",
+    "swap"
   ],
   "passes":
   [
@@ -24,8 +25,19 @@
       ]
     },
     {
-      "name": "solarcraft:blit_additive",
+      "name": "solarcraft:additive/additive",
       "intarget": "bloom_out",
+      "outtarget": "swap",
+      "auxtargets": [
+        {
+          "name": "BaseSampler",
+          "id": "solarcraft:bloom_out_target"
+        }
+      ]
+    },
+    {
+      "name": "blit",
+      "intarget": "swap",
       "outtarget": "solarcraft:bloom_out_target"
     }
   ]
