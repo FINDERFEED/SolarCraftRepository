@@ -2,6 +2,7 @@ package com.finderfeed.solarcraft.content.blocks.render;
 
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.client.rendering.rendertypes.SCRenderTypes;
+import com.finderfeed.solarcraft.client.rendering.rendertypes.TextBloomData;
 import com.finderfeed.solarcraft.content.blocks.solar_energy.SolarEnergyCoreTile;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
@@ -119,7 +120,7 @@ public class SolarCoreRenderer implements BlockEntityRenderer<SolarEnergyCoreTil
             ShapesRenderer.renderSphere(ShapesRenderer.POSITION_COLOR_UV_LIGHTMAP,
                     buffer.getBuffer(SCRenderTypes.text(CORE_TEXTURE)),matrices,20,2,1,0.15f,0f,1f,LightTexture.FULL_BRIGHT);
             ShapesRenderer.renderSphere(ShapesRenderer.POSITION_COLOR_UV_LIGHTMAP,
-                    buffer.getBuffer(SCRenderTypes.TEXT_BLOOM.apply(CORE_TEXTURE)),matrices,20,2,1,0.15f,0f,1f,LightTexture.FULL_BRIGHT);
+                    buffer.getBuffer(SCRenderTypes.TEXT_BLOOM.apply(new TextBloomData(CORE_TEXTURE,1,5,3,1))),matrices,20,2,1,0.15f,0.15f,1f,LightTexture.FULL_BRIGHT);
             matrices.popPose();
             matrices.pushPose();
             matrices.mulPose(rotationDegrees(YN(),time));

@@ -82,30 +82,18 @@ public class SCRenderTypes extends RenderType {
                     .setTransparencyState(LIGHTNING_TRANSPARENCY)
                     .createCompositeState(false)
     );
+    public static Function<TextBloomData, RenderType> TEXT_BLOOM = Util.memoize(SCRenderTypes::getBloomText);
 
-    public static Function<ResourceLocation, RenderType> TEXT_GLOW = Util.memoize(SCRenderTypes::getGlowText);
-
-    private static RenderType getGlowText(ResourceLocation locationIn) {
+    private static RenderType getBloomText(TextBloomData data) {
         RenderType.CompositeState rendertype$state = RenderType.CompositeState.builder()
                 .setShaderState(RenderStateShard.RENDERTYPE_TRANSLUCENT_SHADER)
-                .setTextureState(new RenderStateShard.TextureStateShard(locationIn, true, false))
+                .setTextureState(new RenderStateShard.TextureStateShard(data.tex, true, false))
                 .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
                 .setLightmapState(LIGHTMAP)
-                .setOutputState(GlowShaderProcessor.GLOW_TARGET_SHARD)
+                .setOutputState(GlowShaderProcessor.getBloomShard(data.deviation,data.size,data.xscale,data.colorMod))
                 .createCompositeState(false);
-        return create("glow_text", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, false, true, rendertype$state);
-    }
-    public static Function<ResourceLocation, RenderType> TEXT_BLOOM = Util.memoize(SCRenderTypes::getBloomText);
-
-    private static RenderType getBloomText(ResourceLocation locationIn) {
-        RenderType.CompositeState rendertype$state = RenderType.CompositeState.builder()
-                .setShaderState(RenderStateShard.RENDERTYPE_TRANSLUCENT_SHADER)
-                .setTextureState(new RenderStateShard.TextureStateShard(locationIn, true, false))
-                .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
-                .setLightmapState(LIGHTMAP)
-                .setOutputState(GlowShaderProcessor.BLOOM_TARGET_SHARD)
-                .createCompositeState(false);
-        return create("glow_text", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, false, true, rendertype$state);
+        return create("bloom_text[deviation=" + data.deviation + ",size=" + data.size + ",xscale=" + data.xscale + ",colMod="+data.colorMod+"]"
+                , DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, false, true, rendertype$state);
     }
 
     public static final RenderType LIGHTNING_PARTICLES = create("lightning_particle",

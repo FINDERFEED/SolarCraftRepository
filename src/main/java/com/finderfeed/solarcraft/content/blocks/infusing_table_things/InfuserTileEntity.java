@@ -277,7 +277,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
                 double x = xz[0];
                 double z = xz[1];
                 ClientHelpers.Particles.randomline(SCParticleTypes.SPARK_PARTICLE.get(),
-                        center.add(x, 4, z), center, 0.5, () -> 255, () -> 255, () -> r, 0.4f,0.05f);
+                        center.add(x, 4, z), center.add(new Vec3(x,0,z).normalize()), 0.5, () -> 255, () -> 255, () -> r, 0.4f,0.05f);
             }
             for (int i = 1; i <= 4; i++) {
                 double h = Math.toRadians(i * 90 + 60);
@@ -285,7 +285,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
                 double x = xz[0];
                 double z = xz[1];
                 ClientHelpers.Particles.randomline(SCParticleTypes.SPARK_PARTICLE.get(),
-                        center.add(x, 4, z), center, 0.5, () -> 255, () -> 255, () -> r, 0.4f,0.05f);
+                        center.add(x, 4, z), center.add(new Vec3(x,0,z).normalize()), 0.5, () -> 255, () -> 255, () -> r, 0.4f,0.05f);
             }
             ClientHelpers.Particles.verticalCircle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                     center.add(0, -0.5, 0), 3, 4, new float[]{0, 0, 0}, () -> 255, () -> 255, () -> r, 0.35f);

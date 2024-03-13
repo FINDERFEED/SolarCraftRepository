@@ -2,6 +2,7 @@ package com.finderfeed.solarcraft.content.blocks.infusing_table_things;
 
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.client.rendering.rendertypes.SCRenderTypes;
+import com.finderfeed.solarcraft.client.rendering.rendertypes.TextBloomData;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.client.delayed_renderer.DelayedRenderer;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
@@ -39,33 +40,56 @@ public class InfuserRenderer extends AbstractRunicEnergyContainerRenderer<Infuse
         super.render(tile,partialTicks,matrices,buffer,light,light2);
         float time = (tile.getLevel().getGameTime()+partialTicks) ;
         if (tile.isRecipeInProgress) {
-            matrices.pushPose();
+            VertexConsumer rings = buffer.getBuffer(RenderType.text(text));
 
-            matrices.translate(0, -0.20, 0);
-            matrices.translate(0,Math.sin(time/20)*0.15,0);
-            drawRing(partialTicks, matrices, buffer, light, light2, 0.75f,time*2);
+            matrices.pushPose();
+            double r1 = Math.sin(time/20)*0.15 + 0.6;
+            matrices.translate(0.5,r1,0.5);
+            ShapesRenderer.renderQuad(ShapesRenderer.POSITION_COLOR_UV_LIGHTMAP,rings,matrices,0.35f,time * 2,1,1,0.3f,1, LightTexture.FULL_BRIGHT,RenderingTools.UP);
             matrices.popPose();
 
             matrices.pushPose();
-
-            matrices.translate(0, -0.20, 0);
-            matrices.translate(0,Math.sin(time/20 + Math.PI/2f)*0.15,0);
-            drawRing(partialTicks, matrices, buffer, light, light2, 0.525f,time*2+90);
+            double r2 = Math.sin(time/20 + Math.PI/2f) *0.15 + 0.6;
+            matrices.translate(0.5, r2,0.5);
+            ShapesRenderer.renderQuad(ShapesRenderer.POSITION_COLOR_UV_LIGHTMAP,rings,matrices,0.25f,time * 2+90,1,1,0.3f,1, LightTexture.FULL_BRIGHT,RenderingTools.UP);
             matrices.popPose();
 
             matrices.pushPose();
-
-            matrices.translate(0, -0.20, 0);
-            matrices.translate(0,Math.sin(time/20 + Math.PI)*0.15,0);
-            drawRing(partialTicks, matrices, buffer, light, light2, 0.30f,time*2+270);
+            double r3 = Math.sin(time/20 + Math.PI)*0.15 + 0.6;
+            matrices.translate(0.5,r3,0.5);
+            ShapesRenderer.renderQuad(ShapesRenderer.POSITION_COLOR_UV_LIGHTMAP,rings,matrices,0.17f,time * 2+270,1,1,0.3f,1, LightTexture.FULL_BRIGHT,RenderingTools.UP);
             matrices.popPose();
-            matrices.pushPose();
 
+
+            VertexConsumer ringsBloom = buffer.getBuffer(SCRenderTypes.TEXT_BLOOM.apply(new TextBloomData(text,2f,3f,1f,1f)));
+
+
+            matrices.pushPose();
+            matrices.translate(0.5,r1,0.5);
+            ShapesRenderer.renderQuad(ShapesRenderer.POSITION_COLOR_UV_LIGHTMAP,ringsBloom,matrices,0.35f,time * 2,1,1,0.3f,1, LightTexture.FULL_BRIGHT,RenderingTools.UP);
+            matrices.popPose();
+
+            matrices.pushPose();
+            matrices.translate(0.5, r2,0.5);
+            ShapesRenderer.renderQuad(ShapesRenderer.POSITION_COLOR_UV_LIGHTMAP,ringsBloom,matrices,0.25f,time * 2+90,1,1,0.3f,1, LightTexture.FULL_BRIGHT,RenderingTools.UP);
+            matrices.popPose();
+
+            matrices.pushPose();
+            matrices.translate(0.5,r3,0.5);
+            ShapesRenderer.renderQuad(ShapesRenderer.POSITION_COLOR_UV_LIGHTMAP,ringsBloom,matrices,0.17f,time * 2+270,1,1,0.3f,1, LightTexture.FULL_BRIGHT,RenderingTools.UP);
+            matrices.popPose();
+
+
+
+
+
+            matrices.pushPose();
             VertexConsumer vertex = buffer.getBuffer(RenderType.text(FANCY_RING));
             matrices.translate(0.5,0.01,0.5);
-            ShapesRenderer.renderQuad(ShapesRenderer.POSITION_COLOR_UV_LIGHTMAP,vertex,matrices,1.25f,time % 360,1,1,1,1, LightTexture.FULL_BRIGHT,RenderingTools.UP);
-            matrices.translate(0,0.01,0);
-            ShapesRenderer.renderQuad(ShapesRenderer.POSITION_COLOR_UV_LIGHTMAP,vertex,matrices,2.8f,-(time % 360)*2,1,1,1,1, LightTexture.FULL_BRIGHT,RenderingTools.UP);
+            ShapesRenderer.renderQuad(ShapesRenderer.POSITION_COLOR_UV_LIGHTMAP,vertex,matrices,2f,time % 360,1,1,0.3f,1, LightTexture.FULL_BRIGHT,RenderingTools.UP);
+
+            VertexConsumer v = buffer.getBuffer(SCRenderTypes.TEXT_BLOOM.apply(new TextBloomData(FANCY_RING,2f,4f,1f,1.05f)));
+            ShapesRenderer.renderQuad(ShapesRenderer.POSITION_COLOR_UV_LIGHTMAP,v,matrices,2f,time % 360,1,1,0.3f,1, LightTexture.FULL_BRIGHT,RenderingTools.UP);
 
             matrices.popPose();
 

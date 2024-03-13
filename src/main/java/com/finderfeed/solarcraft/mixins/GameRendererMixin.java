@@ -74,7 +74,6 @@ public class GameRendererMixin {
                 WormholeRenderer.SHADER,
                 DimensionCoreRenderer.SHADER,
                 OrbitalExplosionEntityRenderer.postChain,
-                GlowShaderProcessor.GLOW,
                 GlowShaderProcessor.BLOOM,
                 GlowShaderProcessor.BLIT_BLOOM
                 );

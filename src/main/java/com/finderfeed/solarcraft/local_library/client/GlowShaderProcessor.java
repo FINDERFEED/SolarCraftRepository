@@ -27,49 +27,30 @@ public class GlowShaderProcessor {
 
 
 
-    public static PostChainPlusUltra GLOW;
-
-    public static RenderTarget GLOW_RENDER_TARGET;
-    public static RenderStateShard.OutputStateShard GLOW_TARGET_SHARD = new RenderStateShard.OutputStateShard("glow_target",()->{
-            if (SolarcraftClientConfig.GLOW_ENABLED.get()) {
-                GLOW_RENDER_TARGET.copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
-            }
-        GLOW_RENDER_TARGET.bindWrite(false);
-        },()->{
-        Minecraft.getInstance().getMainRenderTarget().bindWrite(false);
-    });
 
     public static PostChainPlusUltra BLOOM;
     public static RenderTarget BLOOM_IN;
-    public static RenderStateShard.OutputStateShard BLOOM_TARGET_SHARD = new RenderStateShard.OutputStateShard("bloom_target",()->{
-        if (SolarcraftClientConfig.GLOW_ENABLED.get()) {
-            BLOOM_IN.copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
-        }
-        BLOOM_IN.bindWrite(false);
+
+    public static RenderStateShard.OutputStateShard getBloomShard(float deviation,float size,float xscale,float colorMod){
+        return new RenderStateShard.OutputStateShard("bloom_target",()->{
+            if (SolarcraftClientConfig.GLOW_ENABLED.get()) {
+                BLOOM_IN.copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
+            }
+            BLOOM_IN.bindWrite(false);
         },()->{
-        if (SolarcraftClientConfig.GLOW_ENABLED.get()) {
-            processBloomShader();
-        }
-        Minecraft.getInstance().getMainRenderTarget().bindWrite(false);
-    });
+            if (SolarcraftClientConfig.GLOW_ENABLED.get()) {
+                processBloomShader(deviation,size,xscale,colorMod);
+            }
+            Minecraft.getInstance().getMainRenderTarget().bindWrite(false);
+        });
+    }
 
     public static PostChainPlusUltra BLIT_BLOOM;
 
     @SubscribeEvent
     public static void clientPlayerJoin(ClientPlayerNetworkEvent.LoggingIn event){
         try {
-            GLOW = new PostChainPlusUltra(new ResourceLocation(SolarCraft.MOD_ID,"shaders/post/glow.json"),new UniformPlusPlus(
-                    Map.of(
-                            "l",1f,
-                            "brightness",1f
-                    )
-            ));
             var window = Minecraft.getInstance().getWindow();
-            GLOW.resize(
-                    window.getScreenWidth(),
-                    window.getScreenHeight()
-            );
-            GLOW_RENDER_TARGET = GLOW.getTempTarget("glow");
 
             BLOOM = new PostChainPlusUltra(new ResourceLocation(SolarCraft.MOD_ID,"shaders/post/bloom.json"),new UniformPlusPlus(
                     Map.of(
@@ -108,14 +89,14 @@ public class GlowShaderProcessor {
         }
     }
 
-    public static void processBloomShader(){
+    public static void processBloomShader(float deviation,float size,float xscale,float colorMod){
         if (SolarcraftClientConfig.GLOW_ENABLED.get()){
             BLOOM.updateUniforms(new UniformPlusPlus(
                     Map.of(
-                            "deviation",1f,
-                            "size",3f,
-                            "xscale",3f,
-                            "colMod",1f
+                            "deviation",deviation,
+                            "size",size,
+                            "xscale",xscale,
+                            "colMod",colorMod
                     )
             ));
             BLOOM.process(Minecraft.getInstance().getFrameTime());
