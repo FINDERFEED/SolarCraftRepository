@@ -3,6 +3,8 @@ package com.finderfeed.solarcraft.events.other_events.event_handler;
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.client.rendering.radiant_texture.RadiantTextureSpriteSource;
 import com.finderfeed.solarcraft.client.rendering.rendertypes.SCRenderTypes;
+import com.finderfeed.solarcraft.client.rendering.shaders.post_chains.PostChainPlusUltra;
+import com.finderfeed.solarcraft.client.rendering.shaders.post_chains.UniformPlusPlus;
 import com.finderfeed.solarcraft.client.tooltips.REClientTooltipComponent;
 import com.finderfeed.solarcraft.client.tooltips.RETooltipComponent;
 import com.finderfeed.solarcraft.content.abilities.meteorite.MeteoriteProjectileRenderer;
@@ -39,7 +41,9 @@ import com.finderfeed.solarcraft.content.runic_network.repeater.RepeaterRenderer
 import com.finderfeed.solarcraft.content.world_generation.dimension_related.radiant_land.RadiantLandDimEffects;
 import com.finderfeed.solarcraft.events.RenderEventsHandler;
 import com.finderfeed.solarcraft.helpers.Helpers;
+import com.finderfeed.solarcraft.local_library.client.GlowShaderProcessor;
 import com.finderfeed.solarcraft.local_library.client.particles.ScreenParticlesRenderHandler;
+import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.registries.SCBedrockModels;
 import com.finderfeed.solarcraft.registries.SCRenderTargets;
 import com.finderfeed.solarcraft.registries.ScreenSuppliers;
@@ -68,6 +72,7 @@ import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import net.neoforged.neoforge.common.NeoForge;
 import org.lwjgl.glfw.GLFW;
 
+import java.util.Map;
 
 
 @Mod.EventBusSubscriber(modid = "solarcraft",bus = Mod.EventBusSubscriber.Bus.MOD,value = Dist.CLIENT)
@@ -120,7 +125,6 @@ public class SCClientModEventHandler {
     @SubscribeEvent
     public static void registerClientStuff(final FMLClientSetupEvent event){
 
-
         NeoForge.EVENT_BUS.register(new RenderEventsHandler());
         ScreenParticlesRenderHandler.registerRenderType(SCRenderTypes.ParticleRenderTypes.RUNE_TILE_PARTICLE);
         ScreenParticlesRenderHandler.registerRenderType(SCRenderTypes.ParticleRenderTypes.SOLAR_STRIKE_PARTICLE_SCREEN);
@@ -170,6 +174,19 @@ public class SCClientModEventHandler {
         MenuScreens.register(SCContainers.SOLAR_FORGE_CONTAINER.get(), SolarForgeScreen::new);
         MenuScreens.register(SCContainers.INFUSING_TABLE_CONTAINER.get(), InfuserScreen::new);
         event.enqueueWork(()->{
+
+            var window = Minecraft.getInstance().getWindow();
+            int width = window.getWidth();
+            int height = window.getHeight();
+            try {
+                GlowShaderProcessor.BLIT_BLOOM = new PostChainPlusUltra(new ResourceLocation(SolarCraft.MOD_ID, "shaders/post/blit_bloom.json"), new UniformPlusPlus(Map.of()));
+                GlowShaderProcessor.BLIT_BLOOM.resize(width,height);
+                GlowShaderProcessor.BLOOM_SHADER = RenderingTools.loadSingleShader("solarcraft:bloom/bloom");
+            }catch (Exception e){
+                throw new RuntimeException("Failed to load bloom shader.",e);
+            }
+
+
 
             SCBedrockModels.init();
 

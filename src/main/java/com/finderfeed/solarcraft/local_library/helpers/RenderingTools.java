@@ -19,6 +19,7 @@ import com.finderfeed.solarcraft.client.rendering.rendertypes.RadiantPortalRende
 import com.finderfeed.solarcraft.client.rendering.shaders.post_chains.PostChainPlusUltra;
 import com.finderfeed.solarcraft.client.rendering.shaders.post_chains.UniformPlusPlus;
 import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
+import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.platform.Window;
@@ -70,6 +71,9 @@ import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.model.data.ModelData;
 import net.neoforged.neoforge.common.NeoForge;
+import org.lwjgl.opengl.GL11;
+
+import java.io.IOException;
 import java.lang.Math;
 import java.util.*;
 import java.util.Random;
@@ -79,6 +83,8 @@ import static net.minecraft.client.renderer.entity.ItemRenderer.*;
 
 
 public class RenderingTools {
+
+    public static Matrix4f FULL_SIZED_SHADER_ORTHO_MATRIX = new Matrix4f();
 
     public static final Vec3 UP = new Vec3(0,1,0);
     public static final ResourceLocation WHITE_SQUARE = new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/white_square.png");
@@ -1762,5 +1768,49 @@ public class RenderingTools {
 
     public static WidgetSprites singleWidgetSprite(ResourceLocation location){
         return new WidgetSprites(location,location,location,location);
+    }
+
+    public static EffectInstance loadSingleShader(String location) throws IOException {
+        return new EffectInstance(Minecraft.getInstance().getResourceManager(),location);
+    }
+
+    public static void loadDefaultShaderUniforms(EffectInstance effect, RenderTarget inTarget,RenderTarget outTarget,float time){
+        Minecraft minecraft = Minecraft.getInstance();
+        int width = minecraft.getWindow().getWidth();
+        int height = minecraft.getWindow().getHeight();
+        effect.setSampler("DiffuseSampler", inTarget::getColorTextureId);
+        effect.safeGetUniform("ProjMat").set(FULL_SIZED_SHADER_ORTHO_MATRIX);
+        effect.safeGetUniform("InSize").set((float)inTarget.width, (float)inTarget.height);
+        effect.safeGetUniform("OutSize").set((float)outTarget.width, (float)outTarget.height);
+        effect.safeGetUniform("Time").set(time);
+        effect.safeGetUniform("ScreenSize").set((float)width, (float)height);
+    }
+
+    public static void blitShaderEffect(EffectInstance effect,RenderTarget inTarget,RenderTarget outTarget,int srcFactor,int dstFactor,boolean unbindOutTarget){
+        inTarget.unbindWrite();
+
+        int w = outTarget.width;
+        int h = outTarget.height;
+        RenderSystem.viewport(0,0,w,h);
+        effect.apply();
+        RenderSystem.enableBlend();
+        RenderSystem.blendFunc(srcFactor,dstFactor);
+        outTarget.bindWrite(false);
+        RenderSystem.depthFunc(GL11.GL_ALWAYS);
+        BufferBuilder bufferbuilder = Tesselator.getInstance().getBuilder();
+        bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION);
+        bufferbuilder.vertex(0.0, 0.0, 500.0).endVertex();
+        bufferbuilder.vertex(w, 0.0, 500.0).endVertex();
+        bufferbuilder.vertex(w, h, 500.0).endVertex();
+        bufferbuilder.vertex(0.0, h, 500.0).endVertex();
+        BufferUploader.draw(bufferbuilder.end());
+        RenderSystem.depthFunc(GL11.GL_LEQUAL);
+        effect.clear();
+
+        RenderSystem.defaultBlendFunc();
+        inTarget.unbindRead();
+        if (unbindOutTarget) {
+            outTarget.unbindWrite();
+        }
     }
 }

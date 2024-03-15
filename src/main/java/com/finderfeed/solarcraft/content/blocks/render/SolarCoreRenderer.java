@@ -118,13 +118,14 @@ public class SolarCoreRenderer implements BlockEntityRenderer<SolarEnergyCoreTil
             matrices.pushPose();
             matrices.mulPose(rotationDegrees(YP(),time));
             ShapesRenderer.renderSphere(ShapesRenderer.POSITION_COLOR_UV_LIGHTMAP,
-                    buffer.getBuffer(SCRenderTypes.text(CORE_TEXTURE)),matrices,20,2,1,0.15f,0f,1f,LightTexture.FULL_BRIGHT);
+                    buffer.getBuffer(SCRenderTypes.text(CORE_TEXTURE)),matrices,20,2.05f,1,0.15f,0f,1f,LightTexture.FULL_BRIGHT);
             ShapesRenderer.renderSphere(ShapesRenderer.POSITION_COLOR_UV_LIGHTMAP,
-                    buffer.getBuffer(SCRenderTypes.TEXT_BLOOM.apply(new TextBloomData(CORE_TEXTURE,1,5,3,1))),matrices,20,2,1,0.15f,0.15f,1f,LightTexture.FULL_BRIGHT);
+                    buffer.getBuffer(SCRenderTypes.TEXT_BLOOM.apply(new TextBloomData(CORE_TEXTURE,1,5,3,1))),matrices,20,2.05f,1,0.4f,0.5f,1f,LightTexture.FULL_BRIGHT);
+
             matrices.popPose();
             matrices.pushPose();
             matrices.mulPose(rotationDegrees(YN(),time));
-            ShapesRenderer.renderSphere(ShapesRenderer.POSITION_COLOR_UV_LIGHTMAP,
+           ShapesRenderer.renderSphere(ShapesRenderer.POSITION_COLOR_UV_LIGHTMAP,
                     buffer.getBuffer(RenderType.text(CORE_TEXTURE_OUTER)),matrices,20,2.15f,1,0.75f,0f,1f,LightTexture.FULL_BRIGHT);
             matrices.popPose();
             matrices.popPose();

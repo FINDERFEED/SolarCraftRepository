@@ -6,18 +6,14 @@
   "passes":
   [
     {
-      "name": "solarcraft:additive/additive",
+      "name": "solarcraft:bloom/bloom",
       "intarget": "solarcraft:bloom_out_target",
       "outtarget": "swap",
       "auxtargets": [
-        {
-          "name": "BaseSampler",
-          "id": "minecraft:main"
-        }
       ]
     },
     {
-      "name": "blit",
+      "name": "solarcraft:blit_additive",
       "intarget": "swap",
       "outtarget": "minecraft:main",
       "auxtargets": [

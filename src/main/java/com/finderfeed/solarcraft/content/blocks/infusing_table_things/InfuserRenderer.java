@@ -89,7 +89,7 @@ public class InfuserRenderer extends AbstractRunicEnergyContainerRenderer<Infuse
             ShapesRenderer.renderQuad(ShapesRenderer.POSITION_COLOR_UV_LIGHTMAP,vertex,matrices,2f,time % 360,1,1,0.3f,1, LightTexture.FULL_BRIGHT,RenderingTools.UP);
 
             VertexConsumer v = buffer.getBuffer(SCRenderTypes.TEXT_BLOOM.apply(new TextBloomData(FANCY_RING,2f,4f,1f,1.05f)));
-            ShapesRenderer.renderQuad(ShapesRenderer.POSITION_COLOR_UV_LIGHTMAP,v,matrices,2f,time % 360,1,1,0.3f,1, LightTexture.FULL_BRIGHT,RenderingTools.UP);
+            ShapesRenderer.renderQuad(ShapesRenderer.POSITION_COLOR_UV_LIGHTMAP,v,matrices,2f,time % 360,1,1,0.5f,1, LightTexture.FULL_BRIGHT,RenderingTools.UP);
 
             matrices.popPose();
 

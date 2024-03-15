@@ -5,7 +5,7 @@
     "dstrgb": "one"
   },
   "vertex": "sobel",
-  "fragment": "solarcraft:bloom/bloom_horizontal",
+  "fragment": "solarcraft:bloom/bloom",
   "attributes":
   [
     "Position"
@@ -23,7 +23,7 @@
     { "name": "InSize",    "type": "float",     "count": 2,  "values": [ 1.0, 1.0 ] },
     { "name": "deviation", "type": "float", "count": 1, "values": [1] },
     { "name": "size", "type": "float", "count": 1, "values": [1] },
-    { "name": "xscale", "type": "float", "count": 1, "values": [1] },
+    { "name": "scale", "type": "float", "count": 1, "values": [1] },
     { "name": "colMod", "type": "float", "count": 1, "values": [1] }
 
   ]
