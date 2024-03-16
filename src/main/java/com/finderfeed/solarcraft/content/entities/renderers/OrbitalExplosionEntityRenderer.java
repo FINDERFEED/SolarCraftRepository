@@ -32,13 +32,6 @@ public class OrbitalExplosionEntityRenderer extends EntityRenderer<OrbitalCannon
 
     public static final ResourceLocation LOCATION = new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/orbital_explosion.png");
 
-    private final ResourceLocation SHADER_LOCATION = new ResourceLocation(SolarCraft.MOD_ID,"shaders/post/orbital_explosion.json");
-
-
-    public static PostChainPlusUltra postChain;
-
-    public static boolean firstPass = true;
-
     public OrbitalExplosionEntityRenderer(EntityRendererProvider.Context ctx) {
         super(ctx);
     }
@@ -49,7 +42,6 @@ public class OrbitalExplosionEntityRenderer extends EntityRenderer<OrbitalCannon
         int radius = entity.getEntityData().get(OrbitalCannonExplosionEntity.RADIUS)*2;
         int depth = entity.getEntityData().get(OrbitalCannonExplosionEntity.DEPTH)*2;
         matrices.scale(radius,depth,radius);
-        //matrices.mulPose(Vector3f.YN.rotationDegrees(RenderingTools.getTime(entity.level,partialTicks)));
 
         RenderingTools.renderEntityObjModel(OBJModels.ORBITAL_EXPLOSION_SPHERE,
                 matrices,src,1,1,1,LightTexture.FULL_BRIGHT,OverlayTexture.NO_OVERLAY);
@@ -58,83 +50,10 @@ public class OrbitalExplosionEntityRenderer extends EntityRenderer<OrbitalCannon
                 matrices,t,src.getBuffer(t),
                 1,1,1,LightTexture.FULL_BRIGHT,OverlayTexture.NO_OVERLAY);
 
-
-        this.loadShader(entity,SHADER_LOCATION);
-
-//        if (firstPass){
-//            int previousFramebuffer = GlStateManager.getBoundFramebuffer();
-//            SCRenderTypes.orbitalExplosionOutTarget.clear(Minecraft.ON_OSX);
-//            SCRenderTypes.orbitalExplosionOutTarget.copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
-//            SCRenderTypes.orbitalExplosionDepthTarget.clear(Minecraft.ON_OSX);
-//            SCRenderTypes.orbitalExplosionDepthTarget.copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
-//            firstPass = false;
-//            //36160
-//            GlStateManager._glBindFramebuffer(36160,previousFramebuffer);
-//            RenderingTools.addActivePostShader(entity.getUUID().toString(),new UniformPlusPlus(Map.of(
-//                    "l",4f,
-//                    "brightness",1.5f
-//                    )),
-//                    postChain);
-//        }
-//        this.renderExplosionAtDifferentRenderTarget(entity,matrices,src);
-
         matrices.popPose();
 
     }
 
-
-    private void renderExplosionAtDifferentRenderTarget(OrbitalCannonExplosionEntity entity, PoseStack matrices, MultiBufferSource src){
-        RenderType t = SCRenderTypes.ORBITAL_EXPLOSION_RENDER_TYPE;
-        List<BakedQuad> list = Minecraft.getInstance().getModelManager().getModel(OBJModels.ORBITAL_EXPLOSION_SPHERE)
-                .getQuads(null, null, RandomSource.create(), ModelData.EMPTY, t);
-        VertexConsumer cons = src.getBuffer(t);
-        float alpha = Math.min(entity.getTimer()/20f,1);
-
-        for (BakedQuad a : list) {
-            cons.putBulkData(matrices.last(), a,new float[]{1,1,1,1}, 1, 1, 1,
-                    new int[]{
-                            LightTexture.FULL_BRIGHT,
-                            LightTexture.FULL_BRIGHT,
-                            LightTexture.FULL_BRIGHT,
-                            LightTexture.FULL_BRIGHT
-                    },
-                    OverlayTexture.NO_OVERLAY,false);
-        }
-        if (src instanceof MultiBufferSource.BufferSource source){
-            source.endBatch(t);
-        }
-    }
-
-    private void loadShader(Entity tile, ResourceLocation location){
-        if (postChain == null){
-            try {
-                PostChainPlusUltra chain = new PostChainPlusUltra(location,
-                        new UniformPlusPlus(Map.of()));
-                chain.resize(Minecraft.getInstance().getWindow().getWidth(),
-                        Minecraft.getInstance().getWindow().getHeight());
-                SCRenderTypes.orbitalExplosionOutTarget = chain.getTempTarget("orbital_explosion");
-                SCRenderTypes.orbitalExplosionDepthTarget = chain.getTempTarget("depth_target");
-                SCRenderTypes.orbitalExplosionOutTarget.clear(Minecraft.ON_OSX);
-                SCRenderTypes.orbitalExplosionOutTarget.copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
-                SCRenderTypes.orbitalExplosionDepthTarget.clear(Minecraft.ON_OSX);
-                SCRenderTypes.orbitalExplosionDepthTarget.copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
-                postChain = chain;
-                postChain.addPostActions(()->{
-                    firstPass = true;
-                });
-            } catch (Exception e){
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    public static void processShaders(float smth){
-//        if (postChain != null && !firstPass){
-//            postChain.process(smth);
-//            firstPass = true;
-//            Minecraft.getInstance().getMainRenderTarget().bindWrite(false);
-//        }
-    }
 
     @Override
     public ResourceLocation getTextureLocation(OrbitalCannonExplosionEntity p_114482_) {

@@ -7,6 +7,7 @@ uniform float deviation;
 uniform float size;
 uniform float scale;
 uniform float colMod;
+uniform float texCoordModifier;
 
 
 in vec2 texCoord;
@@ -30,8 +31,8 @@ void main(){
     vec3 col = vec3(0);
     for (float x = -size; x <= size;x++){
         for (float y = -size; y <= size;y++){
-            float cx = x * oneTexel.x * colMod;
-            float cy = y * oneTexel.y * colMod;
+            float cx = x * oneTexel.x * texCoordModifier;
+            float cy = y * oneTexel.y * texCoordModifier;
             vec2 coord = texCoord + vec2(cx, cy);
             float rx = x * scale * deviation;
             float ry = y * scale * deviation;
@@ -41,5 +42,5 @@ void main(){
         }
     }
 
-    fragColor = vec4(col,1.) * colMod;
+    fragColor = vec4(col * colMod,1.);
 }

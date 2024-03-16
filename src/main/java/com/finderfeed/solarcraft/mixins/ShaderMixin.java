@@ -67,28 +67,12 @@ public class ShaderMixin {
             resolution = new Vec2(width,height);
         }
         if ((Minecraft.getInstance().getWindow().getScreenWidth() != 0) && (Minecraft.getInstance().getWindow().getScreenHeight() != 0)) {
-//            resizeShader(width,height, RuneEnergyPylonRenderer.SHADER, EnergyGeneratorTileRender.SHADER, WormholeRenderer.SHADER,
-//                    DimensionCoreRenderer.SHADER,OrbitalExplosionEntityRenderer.postChain, GlowShaderProcessor.GLOW,
-//                    GlowShaderProcessor.BLOOM);
-
             RenderEventsHandler.ACTIVE_SHADERS.forEach((id,shader)->{
                 shader.process(Minecraft.getInstance().getFrameTime());
             });
-
-            OrbitalExplosionEntityRenderer.firstPass = true;
             RenderEventsHandler.ACTIVE_SHADERS.clear();
         }
     }
 
-//    private void resizeShader(float width, float height, PostChain... shader){
-//        if ((shader != null) && (resolution.x != width || resolution.y != height)){
-//            resolution = new Vec2(width,height);
-//            for (PostChain shaders : shader) {
-//                if (shaders != null) {
-//                    shaders.resize(Minecraft.getInstance().getWindow().getWidth(), Minecraft.getInstance().getWindow().getHeight());
-//                }
-//            }
-//        }
-//    }
 
 }

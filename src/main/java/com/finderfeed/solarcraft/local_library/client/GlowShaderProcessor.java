@@ -27,6 +27,9 @@ import java.util.Map;
 @Mod.EventBusSubscriber(modid = SolarCraft.MOD_ID,bus = Mod.EventBusSubscriber.Bus.FORGE,value = Dist.CLIENT)
 public class GlowShaderProcessor {
 
+    public static boolean wasBloomRendered = false;
+    public static boolean wasOrbitalExplosionRendered = false;
+
     private static final RenderStateShard.OutputStateShard BLOOM_SHARD = new RenderStateShard.OutputStateShard("bloom_target",()->{
         if (SolarcraftClientConfig.GLOW_ENABLED.get()) {
             SCRenderTargets.BLOOM_OUT_TARGET.copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
@@ -34,6 +37,7 @@ public class GlowShaderProcessor {
         SCRenderTargets.BLOOM_OUT_TARGET.bindWrite(false);
     },()->{
         Minecraft.getInstance().getMainRenderTarget().bindWrite(false);
+        wasBloomRendered = true;
     });
 
     private static final RenderStateShard.OutputStateShard ORBITAL_EXPLOSION_BLOOM_SHARD = new RenderStateShard.OutputStateShard("orbital_explosion_target",()->{
@@ -43,6 +47,7 @@ public class GlowShaderProcessor {
         SCRenderTargets.ORBITAL_EXPLOSION_OUT_TARGET.bindWrite(false);
     },()->{
         Minecraft.getInstance().getMainRenderTarget().bindWrite(false);
+        wasOrbitalExplosionRendered = true;
     });
 
     public static RenderStateShard.OutputStateShard getBloomShard(){
@@ -84,24 +89,32 @@ public class GlowShaderProcessor {
     }
 
     public static void processBloomShader(){
-        BLOOM_SHADER.safeGetUniform("deviation").set(0.84089642f);
-        BLOOM_SHADER.safeGetUniform("size").set(5f);
-        BLOOM_SHADER.safeGetUniform("scale").set(1f);
-        BLOOM_SHADER.safeGetUniform("colMod").set(1f);
-        RenderingTools.loadDefaultShaderUniforms(BLOOM_SHADER,SCRenderTargets.BLOOM_OUT_TARGET,Minecraft.getInstance().getMainRenderTarget(),
-                Minecraft.getInstance().level.getGameTime() + Minecraft.getInstance().getFrameTime());
-        RenderingTools.blitShaderEffect(BLOOM_SHADER,SCRenderTargets.BLOOM_OUT_TARGET,Minecraft.getInstance().getMainRenderTarget(),
-                GL11.GL_SRC_ALPHA,GL11.GL_ONE,false);
+        if (wasBloomRendered) {
+            BLOOM_SHADER.safeGetUniform("deviation").set(0.84089642f);
+            BLOOM_SHADER.safeGetUniform("size").set(5f);
+            BLOOM_SHADER.safeGetUniform("scale").set(1f);
+            BLOOM_SHADER.safeGetUniform("colMod").set(1f);
+            BLOOM_SHADER.safeGetUniform("texCoordModifier").set(1f);
+            RenderingTools.loadDefaultShaderUniforms(BLOOM_SHADER, SCRenderTargets.BLOOM_OUT_TARGET, Minecraft.getInstance().getMainRenderTarget(),
+                    Minecraft.getInstance().level.getGameTime() + Minecraft.getInstance().getFrameTime());
+            RenderingTools.blitShaderEffect(BLOOM_SHADER, SCRenderTargets.BLOOM_OUT_TARGET, Minecraft.getInstance().getMainRenderTarget(),
+                    GL11.GL_SRC_ALPHA, GL11.GL_ONE, false);
+            wasBloomRendered = false;
+        }
     }
 
     public static void processOrbitalExplosionBloom(){
-        BLOOM_SHADER.safeGetUniform("deviation").set(0.84089642f);
-        BLOOM_SHADER.safeGetUniform("size").set(5f);
-        BLOOM_SHADER.safeGetUniform("scale").set(1f);
-        BLOOM_SHADER.safeGetUniform("colMod").set(1f);
-        RenderingTools.loadDefaultShaderUniforms(BLOOM_SHADER,SCRenderTargets.ORBITAL_EXPLOSION_OUT_TARGET,Minecraft.getInstance().getMainRenderTarget(),
-                Minecraft.getInstance().level.getGameTime() + Minecraft.getInstance().getFrameTime());
-        RenderingTools.blitShaderEffect(BLOOM_SHADER,SCRenderTargets.ORBITAL_EXPLOSION_OUT_TARGET,Minecraft.getInstance().getMainRenderTarget(),
-                GL11.GL_SRC_ALPHA,GL11.GL_ONE,false);
+        if (wasOrbitalExplosionRendered) {
+            BLOOM_SHADER.safeGetUniform("deviation").set(0.84089642f);
+            BLOOM_SHADER.safeGetUniform("size").set(10f);
+            BLOOM_SHADER.safeGetUniform("scale").set(0.5f);
+            BLOOM_SHADER.safeGetUniform("texCoordModifier").set(3f);
+            BLOOM_SHADER.safeGetUniform("colMod").set(1.5f);
+            RenderingTools.loadDefaultShaderUniforms(BLOOM_SHADER, SCRenderTargets.ORBITAL_EXPLOSION_OUT_TARGET, Minecraft.getInstance().getMainRenderTarget(),
+                    Minecraft.getInstance().level.getGameTime() + Minecraft.getInstance().getFrameTime());
+            RenderingTools.blitShaderEffect(BLOOM_SHADER, SCRenderTargets.ORBITAL_EXPLOSION_OUT_TARGET, Minecraft.getInstance().getMainRenderTarget(),
+                    GL11.GL_SRC_ALPHA, GL11.GL_ONE, false);
+            wasOrbitalExplosionRendered = false;
+        }
     }
 }

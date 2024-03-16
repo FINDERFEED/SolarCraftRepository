@@ -24,7 +24,8 @@
     { "name": "deviation", "type": "float", "count": 1, "values": [1] },
     { "name": "size", "type": "float", "count": 1, "values": [1] },
     { "name": "scale", "type": "float", "count": 1, "values": [1] },
-    { "name": "colMod", "type": "float", "count": 1, "values": [1] }
+    { "name": "colMod", "type": "float", "count": 1, "values": [1] },
+    { "name": "texCoordModifier", "type": "float", "count": 1, "values": [1] }
 
   ]
 }

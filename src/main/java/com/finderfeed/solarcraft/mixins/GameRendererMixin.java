@@ -84,9 +84,8 @@ public class GameRendererMixin {
                 RuneEnergyPylonRenderer.SHADER,
                 EnergyGeneratorTileRender.SHADER,
                 WormholeRenderer.SHADER,
-                DimensionCoreRenderer.SHADER,
-                OrbitalExplosionEntityRenderer.postChain
-                );
+                DimensionCoreRenderer.SHADER
+        );
         RenderingTools.FULL_SIZED_SHADER_ORTHO_MATRIX = new Matrix4f().setOrtho(0.0F, (float)width, 0.0F, (float)height, 0.1F, 1000.0F);
     }
 
