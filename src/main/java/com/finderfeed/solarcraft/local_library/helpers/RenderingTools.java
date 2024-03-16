@@ -830,11 +830,27 @@ public class RenderingTools {
     }
 
     public static void renderEntityObjModel(ResourceLocation location, PoseStack matrices, MultiBufferSource buffer, float r, float g, float b, int light, int overlay){
-        RenderType t = RenderType.entityTranslucent(TextureAtlas.LOCATION_BLOCKS);
+//        RenderType t = RenderType.entityTranslucent(TextureAtlas.LOCATION_BLOCKS);
+//        List<BakedQuad> list = Minecraft.getInstance().getModelManager().getModel(location)
+//                .getQuads(null, null, RandomSource.create(),ModelData.EMPTY, t);
+//
+//        VertexConsumer cons = buffer.getBuffer(t);
+//        matrices.pushPose();
+//
+//        for (BakedQuad a : list) {
+//            cons.putBulkData(matrices.last(), a, r, g, b, light, overlay);
+//        }
+//        matrices.popPose();
+        RenderType type = RenderType.entityTranslucent(TextureAtlas.LOCATION_BLOCKS);
+        renderEntityObjModel(location,matrices,
+                type,
+                buffer.getBuffer(type),
+                r,g,b,light,overlay);
+    }
+    public static void renderEntityObjModel(ResourceLocation location, PoseStack matrices,RenderType t, VertexConsumer cons, float r, float g, float b, int light, int overlay){
         List<BakedQuad> list = Minecraft.getInstance().getModelManager().getModel(location)
                 .getQuads(null, null, RandomSource.create(),ModelData.EMPTY, t);
 
-        VertexConsumer cons = buffer.getBuffer(t);
         matrices.pushPose();
 
         for (BakedQuad a : list) {

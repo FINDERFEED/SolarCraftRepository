@@ -82,17 +82,30 @@ public class SCRenderTypes extends RenderType {
                     .setTransparencyState(LIGHTNING_TRANSPARENCY)
                     .createCompositeState(false)
     );
-    public static Function<TextBloomData, RenderType> TEXT_BLOOM = Util.memoize(SCRenderTypes::getBloomText);
+    public static Function<ResourceLocation, RenderType> TEXT_BLOOM = Util.memoize(SCRenderTypes::getBloomText);
 
-    private static RenderType getBloomText(TextBloomData data) {
+    private static RenderType getBloomText(ResourceLocation texture) {
         RenderType.CompositeState rendertype$state = RenderType.CompositeState.builder()
                 .setShaderState(RenderStateShard.RENDERTYPE_TRANSLUCENT_SHADER)
-                .setTextureState(new RenderStateShard.TextureStateShard(data.tex, true, false))
+                .setTextureState(new RenderStateShard.TextureStateShard(texture, true, false))
                 .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
                 .setLightmapState(LIGHTMAP)
-                .setOutputState(GlowShaderProcessor.getBloomShard(data.deviation,data.size,data.xscale,data.colorMod))
+                .setOutputState(GlowShaderProcessor.getBloomShard())
                 .createCompositeState(false);
-        return create("bloom_text[deviation=" + data.deviation + ",size=" + data.size + ",xscale=" + data.xscale + ",colMod="+data.colorMod+"]"
+        return create("bloom_text"
+                , DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, false, true, rendertype$state);
+    }
+
+    public static Function<ResourceLocation, RenderType> ORBITAL_EXPLOSION_BLOOM = Util.memoize(SCRenderTypes::getOrbitalExplosionRenderType);
+    private static RenderType getOrbitalExplosionRenderType(ResourceLocation texture) {
+        RenderType.CompositeState rendertype$state = RenderType.CompositeState.builder()
+                .setShaderState(RenderStateShard.RENDERTYPE_TRANSLUCENT_SHADER)
+                .setTextureState(new RenderStateShard.TextureStateShard(texture, true, false))
+                .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+                .setLightmapState(LIGHTMAP)
+                .setOutputState(GlowShaderProcessor.getOrbitalExplosionShard())
+                .createCompositeState(false);
+        return create("orbital_explosion_text"
                 , DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, false, true, rendertype$state);
     }
 

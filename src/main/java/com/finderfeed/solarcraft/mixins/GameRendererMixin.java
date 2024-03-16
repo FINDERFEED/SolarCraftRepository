@@ -79,13 +79,13 @@ public class GameRendererMixin {
     @Inject(method = "resize",at = @At(value = "HEAD"))
     public void onScreenResize(int width, int height, CallbackInfo ci){
         SCRenderTargets.BLOOM_OUT_TARGET.resize(width, height, Minecraft.ON_OSX);
+        SCRenderTargets.ORBITAL_EXPLOSION_OUT_TARGET.resize(width, height, Minecraft.ON_OSX);
         resizeShader(width,height,
                 RuneEnergyPylonRenderer.SHADER,
                 EnergyGeneratorTileRender.SHADER,
                 WormholeRenderer.SHADER,
                 DimensionCoreRenderer.SHADER,
-                OrbitalExplosionEntityRenderer.postChain,
-                GlowShaderProcessor.BLIT_BLOOM
+                OrbitalExplosionEntityRenderer.postChain
                 );
         RenderingTools.FULL_SIZED_SHADER_ORTHO_MATRIX = new Matrix4f().setOrtho(0.0F, (float)width, 0.0F, (float)height, 0.1F, 1000.0F);
     }

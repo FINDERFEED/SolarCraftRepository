@@ -13,11 +13,13 @@ public class SCRenderTargets {
 
 
     public static RenderTarget BLOOM_OUT_TARGET;
+    public static RenderTarget ORBITAL_EXPLOSION_OUT_TARGET;
 
 
 
     public static void init(int width, int height){
         BLOOM_OUT_TARGET = register("bloom_out_target",new TextureTarget(width,height,true, Minecraft.ON_OSX));
+        ORBITAL_EXPLOSION_OUT_TARGET = register("orbital_explosion_out_target",new TextureTarget(width,height,true, Minecraft.ON_OSX));
     }
 
     public static RenderTarget register(String name,RenderTarget target){

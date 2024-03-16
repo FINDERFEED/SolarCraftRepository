@@ -179,8 +179,6 @@ public class SCClientModEventHandler {
             int width = window.getWidth();
             int height = window.getHeight();
             try {
-                GlowShaderProcessor.BLIT_BLOOM = new PostChainPlusUltra(new ResourceLocation(SolarCraft.MOD_ID, "shaders/post/blit_bloom.json"), new UniformPlusPlus(Map.of()));
-                GlowShaderProcessor.BLIT_BLOOM.resize(width,height);
                 GlowShaderProcessor.BLOOM_SHADER = RenderingTools.loadSingleShader("solarcraft:bloom/bloom");
             }catch (Exception e){
                 throw new RuntimeException("Failed to load bloom shader.",e);

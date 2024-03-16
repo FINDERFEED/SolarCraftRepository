@@ -65,12 +65,15 @@ public class OrbitalCannonExplosionEntity extends Entity {
 
     public OrbitalCannonExplosionEntity(EntityType<?> type, Level level){
         super(type,level);
+
     }
 
     public OrbitalCannonExplosionEntity(Level level,int maxBlockRadius,int maxExplosionDepth,int blockCorrosionRadius) {
         this(SCEntityTypes.ORBITAL_EXPLOSION.get(), level);
         this.radius = maxBlockRadius;
+        radius = 50;
         this.depth = maxExplosionDepth;
+        depth = 40;
         this.blockCorrosionRadius = blockCorrosionRadius;
     }
 

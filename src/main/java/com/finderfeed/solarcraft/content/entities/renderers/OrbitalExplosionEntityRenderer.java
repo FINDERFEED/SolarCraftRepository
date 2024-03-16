@@ -53,26 +53,30 @@ public class OrbitalExplosionEntityRenderer extends EntityRenderer<OrbitalCannon
 
         RenderingTools.renderEntityObjModel(OBJModels.ORBITAL_EXPLOSION_SPHERE,
                 matrices,src,1,1,1,LightTexture.FULL_BRIGHT,OverlayTexture.NO_OVERLAY);
+        RenderType t = SCRenderTypes.ORBITAL_EXPLOSION_BLOOM.apply(TextureAtlas.LOCATION_BLOCKS);
+        RenderingTools.renderEntityObjModel(OBJModels.ORBITAL_EXPLOSION_SPHERE,
+                matrices,t,src.getBuffer(t),
+                1,1,1,LightTexture.FULL_BRIGHT,OverlayTexture.NO_OVERLAY);
 
 
         this.loadShader(entity,SHADER_LOCATION);
 
-        if (firstPass){
-            int previousFramebuffer = GlStateManager.getBoundFramebuffer();
-            SCRenderTypes.orbitalExplosionOutTarget.clear(Minecraft.ON_OSX);
-            SCRenderTypes.orbitalExplosionOutTarget.copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
-            SCRenderTypes.orbitalExplosionDepthTarget.clear(Minecraft.ON_OSX);
-            SCRenderTypes.orbitalExplosionDepthTarget.copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
-            firstPass = false;
-            //36160
-            GlStateManager._glBindFramebuffer(36160,previousFramebuffer);
-            RenderingTools.addActivePostShader(entity.getUUID().toString(),new UniformPlusPlus(Map.of(
-                    "l",4f,
-                    "brightness",1.5f
-                    )),
-                    postChain);
-        }
-        this.renderExplosionAtDifferentRenderTarget(entity,matrices,src);
+//        if (firstPass){
+//            int previousFramebuffer = GlStateManager.getBoundFramebuffer();
+//            SCRenderTypes.orbitalExplosionOutTarget.clear(Minecraft.ON_OSX);
+//            SCRenderTypes.orbitalExplosionOutTarget.copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
+//            SCRenderTypes.orbitalExplosionDepthTarget.clear(Minecraft.ON_OSX);
+//            SCRenderTypes.orbitalExplosionDepthTarget.copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
+//            firstPass = false;
+//            //36160
+//            GlStateManager._glBindFramebuffer(36160,previousFramebuffer);
+//            RenderingTools.addActivePostShader(entity.getUUID().toString(),new UniformPlusPlus(Map.of(
+//                    "l",4f,
+//                    "brightness",1.5f
+//                    )),
+//                    postChain);
+//        }
+//        this.renderExplosionAtDifferentRenderTarget(entity,matrices,src);
 
         matrices.popPose();
 
