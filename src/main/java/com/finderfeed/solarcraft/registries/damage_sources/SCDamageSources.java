@@ -21,6 +21,7 @@ import net.neoforged.neoforge.event.server.ServerStartedEvent;
 public class SCDamageSources {
 
     public static final ResourceKey<DamageType> STARGAZE_TYPE = ResourceKey.create(Registries.DAMAGE_TYPE,new ResourceLocation(SolarCraft.MOD_ID,"stargaze"));
+    public static final ResourceKey<DamageType> HEAT_TYPE = ResourceKey.create(Registries.DAMAGE_TYPE,new ResourceLocation(SolarCraft.MOD_ID,"heat"));
     public static final ResourceKey<DamageType> SHADOW_TYPE = ResourceKey.create(Registries.DAMAGE_TYPE,new ResourceLocation(SolarCraft.MOD_ID,"shadow"));
     public static final ResourceKey<DamageType> RUNIC_MAGIC_TYPE = ResourceKey.create(Registries.DAMAGE_TYPE,new ResourceLocation(SolarCraft.MOD_ID,"runic_magic"));
     public static final ResourceKey<DamageType> ORBITAL_EXPLOSION_TYPE = ResourceKey.create(Registries.DAMAGE_TYPE,new ResourceLocation(SolarCraft.MOD_ID,"orbital_explosion"));
@@ -30,6 +31,7 @@ public class SCDamageSources {
     public static final ResourceKey<DamageType> MOB_ATTACK_ALL_RESISTANCE_IGNORE_TYPE = ResourceKey.create(Registries.DAMAGE_TYPE,new ResourceLocation(SolarCraft.MOD_ID,"mob_attack_all_resistance_ignore"));
 
     public static DamageSource STARGAZE;
+    public static DamageSource HEAT;
     public static DamageSource SHADOW;
     public static DamageSource RUNIC_MAGIC;
     public static DamageSource ORBITAL_EXPLOSION;
@@ -64,6 +66,7 @@ public class SCDamageSources {
     public static void initializeDamageSources(RegistryAccess access){
         Registry<DamageType> types = access.registryOrThrow(Registries.DAMAGE_TYPE);
         STARGAZE = new DamageSource(types.getHolderOrThrow(STARGAZE_TYPE));
+        HEAT = new DamageSource(types.getHolderOrThrow(HEAT_TYPE));
         SHADOW = new DamageSource(types.getHolderOrThrow(SHADOW_TYPE));
         RUNIC_MAGIC = new DamageSource(types.getHolderOrThrow(RUNIC_MAGIC_TYPE));
         ORBITAL_EXPLOSION = new DamageSource(types.getHolderOrThrow(ORBITAL_EXPLOSION_TYPE));

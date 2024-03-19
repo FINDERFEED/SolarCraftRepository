@@ -32,6 +32,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 
 
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
@@ -101,6 +102,15 @@ public class RenderingTools {
     public static final ResourceLocation TEXT_FIELD_HORIZONTAL = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/text_field_horizontal.png");
     public static final ResourceLocation TEXT_FIELD_VERTICAL = new ResourceLocation(SolarCraft.MOD_ID,"textures/gui/text_field_vertical.png");
 
+
+    public static void renderTextCentered(GuiGraphics graphics,Component component,int x,int y,int col,int pixelCount){
+        Font font = Minecraft.getInstance().font;
+        var l = font.split(component,pixelCount);
+        for (int i = 0; i < l.size();i++){
+            var chars = l.get(i);
+            graphics.drawCenteredString(font,chars,x,y + i * font.lineHeight,col);
+        }
+    }
 
     public static void renderItemAndTooltip(ItemStack item,GuiGraphics graphics,int x,int y,int mx,int my,int tooltipOffset){
         if (!item.isEmpty()) {

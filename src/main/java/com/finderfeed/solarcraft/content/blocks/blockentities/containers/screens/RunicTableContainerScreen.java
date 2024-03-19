@@ -207,9 +207,7 @@ public class RunicTableContainerScreen extends AbstractContainerScreen<RunicTabl
         }
         RenderingTools.blitWithBlend(matrices,relX+a+3,relY+4,0,0,256,256,256,256,0,1f);
         if (menu.hideRuneButtons){
-            graphics.drawCenteredString(font,Component.translatable("solarcraft.no_fragments_available"),relX+135,relY+40,0xffffff);
-            graphics.drawCenteredString(font,Component.translatable("solarcraft.no_fragments_available2"),relX+135,relY+48,0xffffff);
-
+            RenderingTools.renderTextCentered(graphics,Component.translatable("solarcraft.no_fragments_available"),relX + 135,relY + 35, 0xffffff,80);
         }else{
             ItemStack stack = menu.inventory.getStackInSlot(0);
             if (pattern != null && !menu.inventory.getStackInSlot(0).isEmpty() && stack.getTagElement(AncientFragmentHelper.TAG_ELEMENT) == null){
