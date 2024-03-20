@@ -23,13 +23,12 @@ public class ThrownLight extends BlockItem {
         if (!level.isClientSide && hand == InteractionHand.MAIN_HAND){
             ThrownLightProjectile projectile = new ThrownLightProjectile(SCEntityTypes.THROWN_LIGHT.get(),level);
             projectile.setPos(Helpers.getPlayerShootPos(player));
-//            projectile.setDeltaMovement(player.getLookAngle());
             projectile.shootFromRotation(player,player.getXRot(),player.getYRot(),0.0F, 1.5F, 0.0F);
             level.addFreshEntity(projectile);
-            if (!player.isCreative()) {
-                player.getItemInHand(hand).shrink(1);
-            }
+            player.getMainHandItem().shrink(1);
+            return InteractionResultHolder.consume(player.getItemInHand(hand));
         }
+        player.swing(hand);
         return super.use(level, player, hand);
     }
 

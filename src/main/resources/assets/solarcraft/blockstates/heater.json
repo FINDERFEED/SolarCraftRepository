@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "active=true": { "model": "solarcraft:block/heater_on" },
+    "active=false": { "model": "solarcraft:block/heater" }
+  }
+}

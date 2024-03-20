@@ -74,6 +74,7 @@
   "ancient_frag.has_tag": "Shift-click the solar lexicon and put it inside.",
   "ancient_frag.no_tag": "Use the runic table to reveal contents.",
   "aura_healer.lore": "Will heal all players in a huge radius for 2 hearts every 20 seconds. Requires a structure to function.",
+  "block.solarcraft.heater": "Heater",
   "block.solarcraft.memory_puzzle_block": "Solar Key Lock",
   "block.solarcraft.element_weaver": "Element Weaver",
   "block.solarcraft.corrupted_shard_ore": "Corrupted Shard Ore",
