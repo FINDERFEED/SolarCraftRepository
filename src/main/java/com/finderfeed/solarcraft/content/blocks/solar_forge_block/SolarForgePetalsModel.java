@@ -17,13 +17,13 @@ import net.minecraft.client.model.geom.ModelPart;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SolarForgePetalsTrue extends Model {
+public class SolarForgePetalsModel extends Model {
 	private final List<ModelPart> bb_main = new ArrayList<>();
 	private final List<ModelPart> cube_r1 = new ArrayList<>();
 	private final List<ModelPart> cube_r2 = new ArrayList<>();
 
-	public SolarForgePetalsTrue(ModelPart part) {
-		super(RenderType::text);
+	public SolarForgePetalsModel(ModelPart part) {
+		super(RenderType::entityTranslucent);
 		for (int i = 1;i <= 9;i++){
 			bb_main.add(part.getChild("part"+i));
 			bb_main.get(i-1).setPos(9.5625F, 24-22.8125F, 0.0F);

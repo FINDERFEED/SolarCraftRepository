@@ -7,6 +7,7 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.p
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_tiles.PuzzleTileType;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.InfoButton;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
+import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.client.screens.DefaultScreen;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
@@ -95,6 +96,9 @@ public class SunShardPuzzleScreen extends DefaultScreen {
             if (!EDITOR_MODE) {
                 Minecraft.getInstance().setScreen(null);
             }
+        }
+        if (Minecraft.getInstance().player.position().distanceTo(Helpers.getBlockCenter(this.tilePos)) >= 10){
+            Minecraft.getInstance().setScreen(null);
         }
     }
 

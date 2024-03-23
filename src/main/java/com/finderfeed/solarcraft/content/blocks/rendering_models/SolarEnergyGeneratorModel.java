@@ -25,7 +25,7 @@ public class SolarEnergyGeneratorModel extends Model {
 
 
 	public SolarEnergyGeneratorModel(ModelPart part) {
-		super(RenderType::text);
+		super(RenderType::entityTranslucent);
 		for (int i = 1;i <= 3;i++){
 			core.add(part.getChild("core"+i));
 			core.get(i-1).setPos(0,0,0);

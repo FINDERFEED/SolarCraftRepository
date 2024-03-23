@@ -57,6 +57,11 @@ public class ClientPacketHandles {
     public static void closeClientScreenPacketHandle(){
         Minecraft.getInstance().setScreen(null);
     }
+    public static void closeSunShardScreenPacketHandle(){
+        if (Minecraft.getInstance().screen instanceof SunShardPuzzleScreen) {
+            Minecraft.getInstance().setScreen(null);
+        }
+    }
     public static void memoryPuzzleUpdatePacketHandle(Stack<Integer> values,int pushedValue,boolean wasTrue){
         if (Minecraft.getInstance().screen instanceof MemoryPuzzleScreen screen){
             screen.valuePushed(pushedValue,values,wasTrue);

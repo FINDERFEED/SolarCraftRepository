@@ -21,7 +21,7 @@ public class AuraHealerModel extends Model {
 	private List<ModelPart> toRender = new ArrayList<>();
 
 	public AuraHealerModel(ModelPart part) {
-		super(RenderType::text);
+		super(RenderType::entityTranslucent);
 //		texWidth = 64;
 //		texHeight = 64;
 //		bb_main = new ModelPart(this);

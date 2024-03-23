@@ -22,7 +22,7 @@ public class SolarGodShield extends Model {
 	//private final ModelPart cube_r1;
 
 	public SolarGodShield(ModelPart part) {
-		super(RenderType::text);
+		super(RenderType::entityTranslucent);
 		for (int i = 1; i <= 8;i++){
 			bb_main.add(part.getChild(Integer.toString(i)));
 			bb_main.get(i-1).setPos(0,24,0);

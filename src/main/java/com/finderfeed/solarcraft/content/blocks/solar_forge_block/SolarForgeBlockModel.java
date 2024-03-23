@@ -17,12 +17,12 @@ import net.minecraft.client.model.geom.ModelPart;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SolarForgeBlockModelTrue extends Model {
+public class SolarForgeBlockModel extends Model {
 	private final List<ModelPart> bb_main = new ArrayList<>();
 	//private final ModelPart cube_r1;
 
-	public SolarForgeBlockModelTrue(ModelPart part) {
-		super(RenderType::text);
+	public SolarForgeBlockModel(ModelPart part) {
+		super(RenderType::entityTranslucent);
 		for (int i = 1;i <= 12;i++){
 			bb_main.add(part.getChild("part"+i));
 			bb_main.get(i-1).setPos(0.0F, 24.0F, 0.0F);

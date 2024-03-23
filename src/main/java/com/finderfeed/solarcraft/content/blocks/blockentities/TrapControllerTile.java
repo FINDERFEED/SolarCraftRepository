@@ -22,7 +22,6 @@ public class TrapControllerTile extends BlockEntity  {
 
 
     public List<BlockPos> trapPositions = new ArrayList<>();
-    public List<BlockPos> entrancePositions = new ArrayList<>();
     public List<BlockPos> resultBlockPositions = new ArrayList<>();
     public boolean isAttackingPlayer = false;
     public boolean isActivated = false;
@@ -43,17 +42,6 @@ public class TrapControllerTile extends BlockEntity  {
         }
     }
 
-    public void fillEntrancePositions(){
-        entrancePositions.add(worldPosition.offset(8,-3,0));
-        entrancePositions.add(worldPosition.offset(8,-4,0));
-        entrancePositions.add(worldPosition.offset(8,-5,0));
-        entrancePositions.add(worldPosition.offset(8,-3,-1));
-        entrancePositions.add(worldPosition.offset(8,-4,-1));
-        entrancePositions.add(worldPosition.offset(8,-5,-1));
-        entrancePositions.add(worldPosition.offset(8,-3,1));
-        entrancePositions.add(worldPosition.offset(8,-4,1));
-        entrancePositions.add(worldPosition.offset(8,-5,1));
-    }
     public void fillResultPositions(){
         resultBlockPositions.add(worldPosition.offset(-8,-4,0));
         resultBlockPositions.add(worldPosition.offset(-8,-5,0));
@@ -64,7 +52,6 @@ public class TrapControllerTile extends BlockEntity  {
     public static void tick(Level world, BlockPos post, BlockState blockState, TrapControllerTile tile) {
         if (!tile.level.isClientSide && !tile.isActivated){
             if (!tile.destroyedBlocks){
-//                tile.fillEntrancePositions();
                 tile.fillResultPositions();
                 tile.fillTrapPositions();
                 tile.destroyedBlocks = true;
@@ -87,21 +74,6 @@ public class TrapControllerTile extends BlockEntity  {
 
             if (tile.isAttackingPlayer){
                 tile.ticks++;
-
-//                for (BlockPos pos : tile.entrancePositions){
-//
-//                    if ((tile.level.getBlockState(pos).getBlock() != SCBlocks.INVINCIBLE_STONE.get()) || (tile.level.getBlockState(pos).getBlock() != SCBlocks.BLUE_GEM_DOOR_BLOCK.get())){
-//                        if ((!Helpers.equalsBlockPos(pos,tile.worldPosition.offset(8,-4,-1)))
-//                        && (!Helpers.equalsBlockPos(pos,tile.worldPosition.offset(8,-4,1)))) {
-//                            tile.level.setBlock(pos, SCBlocks.INVINCIBLE_STONE.get().defaultBlockState(), 3);
-//                        }else {
-//                            tile.level.setBlock(pos, SCBlocks.BLUE_GEM_DOOR_BLOCK.get().defaultBlockState()
-//                                    .setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.EAST)
-//                                    .setValue(BlueGemDoorBlock.UNLOCKED, false), 3);
-//                        }
-//
-//                    }
-//                }
                 if (tile.ticks % 80 == 0) {
 
                 List<BlockPos> activateThis = new ArrayList<>();
@@ -134,7 +106,6 @@ public class TrapControllerTile extends BlockEntity  {
                 if (tile.ticks >= 1800){
                     tile.isAttackingPlayer = false;
                     tile.isActivated = true;
-                    //tile.entrancePositions.forEach((pos) -> tile.level.destroyBlock(pos, false));
                     tile.resultBlockPositions.forEach((pos) -> tile.level.destroyBlock(pos, false));
                 }
             }

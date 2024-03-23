@@ -14,8 +14,8 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.render
 import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.renderers.MortarProjectileRenderer;
 import com.finderfeed.solarcraft.content.blocks.rendering_models.AuraHealerModel;
 import com.finderfeed.solarcraft.content.blocks.rendering_models.SolarEnergyGeneratorModel;
-import com.finderfeed.solarcraft.content.blocks.solar_forge_block.SolarForgeBlockModelTrue;
-import com.finderfeed.solarcraft.content.blocks.solar_forge_block.SolarForgePetalsTrue;
+import com.finderfeed.solarcraft.content.blocks.solar_forge_block.SolarForgeBlockModel;
+import com.finderfeed.solarcraft.content.blocks.solar_forge_block.SolarForgePetalsModel;
 import com.finderfeed.solarcraft.content.items.item_models.SolarGodShield;
 import com.finderfeed.solarcraft.content.entities.projectiles.renderers.UltraCrossbowProjectileRenderer;
 
@@ -72,8 +72,8 @@ public class ModelLayersRegistry {
         event.registerLayerDefinition(MORTAR_PROJ_LAYER, MortarProjectileRenderer::createLayer);
         event.registerLayerDefinition(TURRET_PROJ_LAYER, AbstractTurretProjectileRenderer::createLayer);
         event.registerLayerDefinition(SOLAR_ENERGY_GEN_LAYER, SolarEnergyGeneratorModel::createLayers);
-        event.registerLayerDefinition(SOLAR_FORGE_PETALS, SolarForgePetalsTrue::createLayer);
-        event.registerLayerDefinition(SOLAR_FORGE_MAIN_MODEL, SolarForgeBlockModelTrue::createLayer);
+        event.registerLayerDefinition(SOLAR_FORGE_PETALS, SolarForgePetalsModel::createLayer);
+        event.registerLayerDefinition(SOLAR_FORGE_MAIN_MODEL, SolarForgeBlockModel::createLayer);
         event.registerLayerDefinition(SOLAR_GOD_SHIELD_MODEL, SolarGodShield::createLayers);
         event.registerLayerDefinition(RunicElementalModel.LAYER_LOCATION, RunicElementalModel::createBodyLayer);
         event.registerLayerDefinition(RunicWarriorModel.LAYER_LOCATION, RunicWarriorModel::createBodyLayer);

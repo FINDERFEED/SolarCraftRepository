@@ -4,6 +4,7 @@ import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
 import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -38,8 +39,10 @@ public class HeaterBlock extends Block {
         super.stepOn(level, pos, state, entity);
         if (!level.isClientSide && state.getValue(ACTIVE) && entity instanceof LivingEntity && !entity.isInWater()){
             int bestSignal = level.getBestNeighborSignal(pos);
-            float p = FDMathHelper.easeInOut(bestSignal / 15f);
-            entity.hurt(SCDamageSources.HEAT,2 * p);
+            float p = bestSignal / 15f;
+            float damage = (float)Mth.clamp(2 * p,0.1,1);
+            System.out.println(damage + " " + ((LivingEntity) entity).getHealth());
+            entity.hurt(SCDamageSources.HEAT, damage);
         }
     }
 

@@ -18,7 +18,7 @@ public class RunicHammerModel extends Model {
 	private final ModelPart bb_main;
 
 	public RunicHammerModel(ModelPart root) {
-		super(RenderType::text);
+		super(RenderType::entityTranslucent);
 		this.bb_main = root.getChild("bb_main");
 	}
 

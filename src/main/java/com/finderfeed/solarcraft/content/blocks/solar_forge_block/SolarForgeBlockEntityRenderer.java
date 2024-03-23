@@ -11,7 +11,6 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.client.extensions.IBlockEntityRendererExtension;
 
 import static com.finderfeed.solarcraft.local_library.helpers.RenderingTools.*;
 
@@ -20,19 +19,19 @@ public class SolarForgeBlockEntityRenderer implements BlockEntityRenderer<SolarF
     public final ResourceLocation LOC = new ResourceLocation("solarcraft","textures/misc/solar_forge_block.png");
     public final ResourceLocation LOCPETALS = new ResourceLocation("solarcraft","textures/misc/solar_forge_petals.png");
     public final ResourceLocation RAY = new ResourceLocation("solarcraft","textures/misc/ray_into_skyy.png");
-    public final SolarForgeBlockModelTrue mainmodel;
-    public final SolarForgePetalsTrue petals;
-    public final SolarForgePetalsTrue petals2;
+    public final SolarForgeBlockModel mainmodel;
+    public final SolarForgePetalsModel petals;
+    public final SolarForgePetalsModel petals2;
 
 
 
 
 
     public SolarForgeBlockEntityRenderer(BlockEntityRendererProvider.Context ctx) {
-        SolarForgePetalsTrue modelp = new SolarForgePetalsTrue(ctx.bakeLayer(ModelLayersRegistry.SOLAR_FORGE_PETALS));
+        SolarForgePetalsModel modelp = new SolarForgePetalsModel(ctx.bakeLayer(ModelLayersRegistry.SOLAR_FORGE_PETALS));
         petals = modelp;
         petals2 = modelp;
-        mainmodel = new SolarForgeBlockModelTrue(ctx.bakeLayer(ModelLayersRegistry.SOLAR_FORGE_MAIN_MODEL));
+        mainmodel = new SolarForgeBlockModel(ctx.bakeLayer(ModelLayersRegistry.SOLAR_FORGE_MAIN_MODEL));
     }
 
     @Override
