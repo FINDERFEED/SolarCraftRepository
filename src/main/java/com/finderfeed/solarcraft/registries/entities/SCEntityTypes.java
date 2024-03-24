@@ -167,6 +167,10 @@ public class SCEntityTypes {
             EntityType.Builder.<ElectricRainEntity>of(ElectricRainEntity::new, MobCategory.MISC)
                     .sized(0.1f, 0.1f).build("electric_rain"));
 
+    public static final DeferredHolder<EntityType<?>,EntityType<DungeonRay>> DUNGEON_RAY = ENTITY_TYPE_REGISTER.register("dungeon_ray", () ->
+            EntityType.Builder.<DungeonRay>of(DungeonRay::new, MobCategory.MISC)
+                    .sized(0.1f, 0.1f).build("dungeon_ray"));
+
     public static final DeferredHolder<EntityType<?>,EntityType<UlderaCrystalBoss>> ULDERA_CRYSTAL_BOSS = ENTITY_TYPE_REGISTER.register("uldera_crystal_boss",()->
             EntityType.Builder.of(UlderaCrystalBoss::new,MobCategory.MONSTER).sized(1,16.5f).build("uldera_crystal_boss"));
 
