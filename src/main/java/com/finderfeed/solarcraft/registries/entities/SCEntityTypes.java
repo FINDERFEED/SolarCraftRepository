@@ -169,6 +169,7 @@ public class SCEntityTypes {
 
     public static final DeferredHolder<EntityType<?>,EntityType<DungeonRay>> DUNGEON_RAY = ENTITY_TYPE_REGISTER.register("dungeon_ray", () ->
             EntityType.Builder.<DungeonRay>of(DungeonRay::new, MobCategory.MISC)
+                    .updateInterval(1)
                     .sized(0.1f, 0.1f).build("dungeon_ray"));
 
     public static final DeferredHolder<EntityType<?>,EntityType<UlderaCrystalBoss>> ULDERA_CRYSTAL_BOSS = ENTITY_TYPE_REGISTER.register("uldera_crystal_boss",()->

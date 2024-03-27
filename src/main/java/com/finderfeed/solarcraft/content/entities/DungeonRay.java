@@ -2,22 +2,21 @@ package com.finderfeed.solarcraft.content.entities;
 
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.helpers.CompoundNBTHelper;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundMoveEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -34,10 +33,12 @@ public class DungeonRay extends Entity {
     private List<BlockPos> movePos = new ArrayList<>();
     private int currentMoveTarget = 1;
     private double movespeed = 0.1;
+    private float rayLength = 0;
 
     public static void summon(Level level,BlockPos summonPos,Direction direction){
         DungeonRay ray = new DungeonRay(SCEntityTypes.DUNGEON_RAY.get(),level);
         ray.setPos(Helpers.getBlockCenter(summonPos));
+        ray.noPhysics = true;
         ray.movePos.add(summonPos);
         level.addFreshEntity(ray);
         ray.setDirection(direction);
@@ -51,11 +52,12 @@ public class DungeonRay extends Entity {
     @Override
     public void tick() {
         this.noPhysics = true;
-        super.tick();
+        this.rayLength = this.computeRayLength();
         if (!level.isClientSide){
             this.processMovement();
             this.doDamage();
         }
+        super.tick();
     }
 
     private void processMovement(){
@@ -77,19 +79,19 @@ public class DungeonRay extends Entity {
     private void doDamage(){
         List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class,this.getDamageBox());
         for (LivingEntity entity : entities){
-            entity.hurt(SCDamageSources.RUNIC_MAGIC,0.5f);
-            entity.invulnerableTime = 0;
+            entity.hurt(SCDamageSources.RUNIC_MAGIC,4f);
         }
     }
 
     private AABB getDamageBox(){
-        int rayLen = this.getRayLength();
-        Vec3i begin = this.blockPosition();
-        Vec3i end = begin.offset(this.getDirection().getNormal().multiply(rayLen));
-        Vec3i n = nc(this.getDirection().getNormal());
+        float rayLen = this.rayLength;
+        Vec3 begin = this.blockPosition().getCenter();
+        Vec3i nrm = this.getDirection().getNormal();
+        Vec3 end = begin.add(nrm.getX() * rayLen,nrm.getY() * rayLen,nrm.getZ() * rayLen);
+        Vec3i n = this.nc(this.getDirection().getNormal());
         AABB box = new AABB(
-                begin.getX(),begin.getY(),begin.getZ(),
-                end.getX() + n.getX(),end.getY() + n.getY(),end.getZ() + n.getZ()
+                begin.x,begin.y,begin.z,
+                end.x + n.getX(),end.y + n.getY(),end.z + n.getZ()
         );
         return box;
     }
@@ -102,20 +104,31 @@ public class DungeonRay extends Entity {
         );
     }
 
-    private int getRayLength(){
+    private float computeRayLength(){
         Vec3i n = this.getDirection().getNormal();
-        Vec3 begin = this.blockPosition().getCenter();
+        Vec3 begin = this.position();
         Vec3 end = begin.add(n.getX()*20,n.getY()*20,n.getZ()*20);
         ClipContext ctx = new ClipContext(begin,end, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, CollisionContext.empty());
         BlockHitResult res = level.clip(ctx);
-        BlockPos result = res.getBlockPos();
-        Vec3i i = result.subtract(this.blockPosition());
-        return Math.max(Math.abs(i.getX()),Math.max(Math.abs(i.getY()),Math.abs(i.getZ())));
+        Vec3 location = res.getLocation();
+        Vec3 i = location.subtract(begin);
+        return (float) i.length();
     }
+
+
+
+    public List<BlockPos> getMovePositions() {
+        return movePos;
+    }
+
 
     @Override
     public boolean isNoGravity() {
         return true;
+    }
+
+    public float getRayLength() {
+        return rayLength;
     }
 
     public Direction getDirection(){
@@ -155,5 +168,15 @@ public class DungeonRay extends Entity {
         return true;
     }
 
+
+    @Override
+    public boolean shouldRender(double p_20296_, double p_20297_, double p_20298_) {
+        return true;
+    }
+
+    @Override
+    public boolean shouldRenderAtSqrDistance(double p_19883_) {
+        return true;
+    }
 
 }
