@@ -3,6 +3,7 @@ package com.finderfeed.solarcraft.content.commands;
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.abilities.AbilityHelper;
 import com.finderfeed.solarcraft.content.abilities.ability_classes.AbstractAbility;
+import com.finderfeed.solarcraft.content.entities.DungeonRay;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.progression_tree.ProgressionTree;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
@@ -82,6 +83,10 @@ public class SolarCraftCommands {
                                 .then(Commands.literal("revoke")
                                         .then(Commands.argument("ability_id",new SCAbilityArgument())
                                                 .executes(css->revokeAbility(css.getSource(),css.getArgument("ability_id",String.class))))))
+                        .then(Commands.literal("stop_dungeon_rays").executes((stack)->{
+                            DungeonRay.stop = !DungeonRay.stop;
+                            return 1;
+                        }))
 
         );
     }

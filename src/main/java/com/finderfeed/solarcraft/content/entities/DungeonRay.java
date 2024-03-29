@@ -29,6 +29,8 @@ import java.util.List;
 
 public class DungeonRay extends Entity {
 
+    public static boolean stop = false;
+
     public static EntityDataAccessor<Direction> DIRECTION = SynchedEntityData.defineId(DungeonRay.class, EntityDataSerializers.DIRECTION);
     private List<BlockPos> movePos = new ArrayList<>();
     private int currentMoveTarget = 1;
@@ -61,7 +63,7 @@ public class DungeonRay extends Entity {
     }
 
     private void processMovement(){
-        if (movePos.size() > 1){
+        if (movePos.size() > 1 && !stop){
             BlockPos ptarget = movePos.get(currentMoveTarget);
             Vec3 target = ptarget.getCenter();
             Vec3 c = this.position();
@@ -79,7 +81,7 @@ public class DungeonRay extends Entity {
     private void doDamage(){
         List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class,this.getDamageBox());
         for (LivingEntity entity : entities){
-            entity.hurt(SCDamageSources.RUNIC_MAGIC,4f);
+            entity.hurt(SCDamageSources.RUNIC_MAGIC,10f);
         }
     }
 

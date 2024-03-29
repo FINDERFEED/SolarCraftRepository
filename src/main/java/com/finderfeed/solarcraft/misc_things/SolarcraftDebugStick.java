@@ -12,6 +12,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -66,6 +67,7 @@ public class SolarcraftDebugStick extends Item {
             DungeonRay ray = this.getRayOnSight(world,player);
             if (ray != null) {
                 this.setUUID(player.getItemInHand(hand), ray.getUUID());
+                player.sendSystemMessage(Component.literal("Changed target"));
             }else{
                 DungeonRay ray2 = this.getDungeonRay((ServerLevel) world,player.getItemInHand(hand));
                 if (ray2 != null) {
@@ -90,14 +92,16 @@ public class SolarcraftDebugStick extends Item {
 
 
     private InteractionResult dungeonRayHandle(InteractionHand hand,Level world,Player player,ItemStack item,BlockPos clickedPos){
-        if (hand == InteractionHand.MAIN_HAND && !world.isClientSide){
+        if (!world.isClientSide){
             DungeonRay ray = this.getDungeonRay((ServerLevel) world,item);
             if (!player.isCrouching()) {
-                if (ray != null) {
+                if (ray != null && hand == InteractionHand.OFF_HAND) {
                     ray.getMovePositions().add(clickedPos);
                 }
             }else{
-                DungeonRay.summon(world,clickedPos, Direction.UP);
+                if (hand == InteractionHand.OFF_HAND) {
+                    DungeonRay.summon(world, clickedPos, Direction.UP);
+                }
             }
         }
         return InteractionResult.SUCCESS;
