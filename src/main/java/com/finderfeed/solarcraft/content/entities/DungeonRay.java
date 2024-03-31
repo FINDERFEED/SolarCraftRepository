@@ -87,19 +87,21 @@ public class DungeonRay extends Entity {
 
     private AABB getDamageBox(){
         float rayLen = this.rayLength;
+        if (rayLen < 0.5){
+            return new AABB(this.position(),this.position());
+        }
+        float damageRadius = 0.25f;
         Vec3 begin = this.blockPosition().getCenter();
-        Vec3i nrm = this.getDirection().getNormal();
-        Vec3 end = begin.add(nrm.getX() * rayLen,nrm.getY() * rayLen,nrm.getZ() * rayLen);
-        Vec3i n = this.nc(this.getDirection().getNormal());
-        AABB box = new AABB(
-                begin.x,begin.y,begin.z,
-                end.x + n.getX(),end.y + n.getY(),end.z + n.getZ()
-        );
+        Vec3i n = this.getDirection().getNormal();
+        Vec3 nrm = new Vec3(n.getX(),n.getY(),n.getZ());
+        rayLen -= damageRadius;
+        Vec3 end = begin.add(nrm.x * rayLen,nrm.y * rayLen,nrm.z * rayLen);
+        AABB box = new AABB(begin,end).inflate(damageRadius);
         return box;
     }
 
-    private Vec3i nc(Vec3i normal){
-        return new Vec3i(
+    private Vec3 nc(Vec3i normal){
+        return new Vec3(
                 normal.getX() == 0 ? 1 : normal.getX(),
                 normal.getY() == 0 ? 1 : normal.getY(),
                 normal.getZ() == 0 ? 1 : normal.getZ()
@@ -114,10 +116,16 @@ public class DungeonRay extends Entity {
         BlockHitResult res = level.clip(ctx);
         Vec3 location = res.getLocation();
         Vec3 i = location.subtract(begin);
-        return (float) i.length();
+        return Math.max((float) i.length() - 0.5f,0);
     }
 
+    public void setMovespeed(double movespeed) {
+        this.movespeed = movespeed;
+    }
 
+    public double getMovespeed() {
+        return movespeed;
+    }
 
     public List<BlockPos> getMovePositions() {
         return movePos;

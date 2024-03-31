@@ -25,6 +25,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -65,24 +67,30 @@ public class SolarcraftDebugStick extends Item {
     public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         if (!world.isClientSide){
             DungeonRay ray = this.getRayOnSight(world,player);
-            if (ray != null) {
-                this.setUUID(player.getItemInHand(hand), ray.getUUID());
-                player.sendSystemMessage(Component.literal("Changed target"));
+            if (hand == InteractionHand.MAIN_HAND) {
+                if (ray != null) {
+                    this.setUUID(player.getItemInHand(hand), ray.getUUID());
+                    player.sendSystemMessage(Component.literal("Changed target"));
+                } else {
+                    DungeonRay ray2 = this.getDungeonRay((ServerLevel) world, player.getItemInHand(hand));
+                    if (ray2 != null) {
+                        List<Direction> dirs = List.of(
+                                Direction.UP,
+                                Direction.DOWN,
+                                Direction.NORTH,
+                                Direction.WEST,
+                                Direction.EAST,
+                                Direction.SOUTH
+                        );
+                        Direction direction = ray2.getDirection();
+                        int index = (dirs.indexOf(direction) + 1) % dirs.size();
+                        Direction newDir = dirs.get(index);
+                        ray2.setDirection(newDir);
+                    }
+                }
             }else{
-                DungeonRay ray2 = this.getDungeonRay((ServerLevel) world,player.getItemInHand(hand));
-                if (ray2 != null) {
-                    List<Direction> dirs = List.of(
-                      Direction.UP,
-                      Direction.DOWN,
-                      Direction.NORTH,
-                      Direction.WEST,
-                      Direction.EAST,
-                      Direction.SOUTH
-                    );
-                    Direction direction = ray2.getDirection();
-                    int index = (dirs.indexOf(direction) + 1) % dirs.size();
-                    Direction newDir = dirs.get(index);
-                    ray2.setDirection(newDir);
+                if (player.isCrouching()) {
+                    ray.remove(Entity.RemovalReason.DISCARDED);
                 }
             }
             return InteractionResultHolder.success(player.getItemInHand(hand));
@@ -94,13 +102,24 @@ public class SolarcraftDebugStick extends Item {
     private InteractionResult dungeonRayHandle(InteractionHand hand,Level world,Player player,ItemStack item,BlockPos clickedPos){
         if (!world.isClientSide){
             DungeonRay ray = this.getDungeonRay((ServerLevel) world,item);
-            if (!player.isCrouching()) {
-                if (ray != null && hand == InteractionHand.OFF_HAND) {
-                    ray.getMovePositions().add(clickedPos);
+            Block block = world.getBlockState(clickedPos).getBlock();
+            if (block == Blocks.BEDROCK) {
+                if (ray != null){
+                    ray.setMovespeed(ray.getMovespeed() + 0.05);
+                }
+            }else if (block == Blocks.COAL_BLOCK){
+                if (ray != null){
+                    ray.setMovespeed(ray.getMovespeed() - 0.05);
                 }
             }else{
-                if (hand == InteractionHand.OFF_HAND) {
-                    DungeonRay.summon(world, clickedPos, Direction.UP);
+                if (!player.isCrouching()) {
+                    if (ray != null && hand == InteractionHand.OFF_HAND) {
+                        ray.getMovePositions().add(clickedPos);
+                    }
+                }else{
+                    if (hand == InteractionHand.OFF_HAND) {
+                        DungeonRay.summon(world, clickedPos, Direction.UP);
+                    }
                 }
             }
         }

@@ -24,6 +24,32 @@ public class ShapesRenderer {
        vertex.vertex(matrix,vx,vy,vz).color(r,g,b,a).uv(u,v).uv2(light).overlayCoords(OverlayTexture.NO_OVERLAY).endVertex();
     });
 
+    public static void renderCube(VertexConstructor v,VertexConsumer vertex,PoseStack matrices,float s,float r,float g,float b,float a,int light){
+        matrices.pushPose();
+        Matrix4f mat = matrices.last().pose();
+
+        v.process(vertex,mat,-s,s,-s,r,g,b,a,0,0,light);
+        v.process(vertex,mat,-s,s,s,r,g,b,a,0,1,light);
+        v.process(vertex,mat,s,s,s,r,g,b,a,1,1,light);
+        v.process(vertex,mat,s,s,-s,r,g,b,a,1,0,light);
+
+        v.process(vertex,mat,s,-s,-s,r,g,b,a,1,0,light);
+        v.process(vertex,mat,s,-s,s,r,g,b,a,1,1,light);
+        v.process(vertex,mat,-s,-s,s,r,g,b,a,0,1,light);
+        v.process(vertex,mat,-s,-s,-s,r,g,b,a,0,0,light);
+
+
+        for (int i = 0; i < 4;i++){
+            matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),90));
+            v.process(vertex,mat,-s,s,-s,r,g,b,a,0,1,light);
+            v.process(vertex,mat,s,s,-s,r,g,b,a,1,1,light);
+            v.process(vertex,mat,s,-s,-s,r,g,b,a,1,0,light);
+            v.process(vertex,mat,-s,-s,-s,r,g,b,a,0,0,light);
+        }
+
+        matrices.popPose();
+    }
+
     public static void renderQuad(VertexConstructor v,VertexConsumer vertex,PoseStack matrices,float size,float roll,float r,float g,float b,float a,int light,Vec3 dir){
         matrices.pushPose();
         matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),roll));
