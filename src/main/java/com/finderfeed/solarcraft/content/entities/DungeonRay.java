@@ -2,14 +2,12 @@ package com.finderfeed.solarcraft.content.entities;
 
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.helpers.CompoundNBTHelper;
-import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.game.ClientboundMoveEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -36,6 +34,7 @@ public class DungeonRay extends Entity {
     private int currentMoveTarget = 1;
     private double movespeed = 0.1;
     private float rayLength = 0;
+    private boolean backward = false;
 
     public static void summon(Level level,BlockPos summonPos,Direction direction){
         DungeonRay ray = new DungeonRay(SCEntityTypes.DUNGEON_RAY.get(),level);
@@ -73,7 +72,19 @@ public class DungeonRay extends Entity {
                 this.move(MoverType.SELF,move);
             }else{
                 this.setPos(target.x,target.y,target.z);
-                currentMoveTarget = (currentMoveTarget + 1) % movePos.size();
+                if (!backward){
+                    currentMoveTarget++;
+                    if (currentMoveTarget >= movePos.size()){
+                        backward = true;
+                        currentMoveTarget = movePos.size() - 2;
+                    }
+                }else{
+                    currentMoveTarget--;
+                    if (currentMoveTarget < 0){
+                        backward = false;
+                        currentMoveTarget = 1;
+                    }
+                }
             }
         }
     }
@@ -162,6 +173,7 @@ public class DungeonRay extends Entity {
         movePos = CompoundNBTHelper.getBlockPosList("movePos",tag);
         currentMoveTarget = tag.getInt("moveTarget");
         movespeed = tag.getDouble("movespeed");
+        backward = tag.getBoolean("backward");
     }
 
     @Override
@@ -171,6 +183,7 @@ public class DungeonRay extends Entity {
         tag.putInt("moveTarget",currentMoveTarget);
         CompoundNBTHelper.writeBlockPosList("movePos",movePos,tag);
         tag.putDouble("movespeed",movespeed);
+        tag.putBoolean("backward", backward);
     }
 
     @Override

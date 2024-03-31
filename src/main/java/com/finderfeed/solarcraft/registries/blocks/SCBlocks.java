@@ -225,6 +225,6 @@ public class SCBlocks {
     public  static  final DeferredHolder<Block,ElementWeaverBlock> ELEMENT_WEAVER = BLOCKS.register("element_weaver",()-> new ElementWeaverBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)));
     public  static  final DeferredHolder<Block,SolarOrbitalMissileLauncherBlock> ORBITAL_MISSILE_LAUNCHER = BLOCKS.register("orbital_missile_launcher",()-> new SolarOrbitalMissileLauncherBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)));
     public  static  final DeferredHolder<Block,MemoryPuzzleBlock> MEMORY_PUZZLE_BLOCK = BLOCKS.register("memory_puzzle_block",()-> new MemoryPuzzleBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK)));
-    public  static  final DeferredHolder<Block,HeaterBlock> HEATER_BLOCK = BLOCKS.register("heater",()-> new HeaterBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).lightLevel(state->state.getValue(HeaterBlock.ACTIVE) ? 8 : 0)));
+    public  static  final DeferredHolder<Block,HeaterBlock> HEATER_BLOCK = BLOCKS.register("heater",()-> new HeaterBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).lightLevel(state->state.getValue(HeaterBlock.ACTIVE) || state.getValue(HeaterBlock.ALWAYS_ACTIVE) ? 8 : 0)));
 
 }

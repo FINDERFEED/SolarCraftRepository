@@ -20,9 +20,10 @@ import org.jetbrains.annotations.Nullable;
 public class HeaterBlock extends Block {
 
     public static BooleanProperty ACTIVE = BooleanProperty.create("active");
+    public static BooleanProperty ALWAYS_ACTIVE = BooleanProperty.create("always_active");
     public HeaterBlock(Properties props) {
         super(props);
-        this.registerDefaultState(this.getStateDefinition().any().setValue(ACTIVE,false));
+        this.registerDefaultState(this.getStateDefinition().any().setValue(ACTIVE,false).setValue(ALWAYS_ACTIVE,false));
     }
 
 
@@ -37,11 +38,10 @@ public class HeaterBlock extends Block {
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
         super.stepOn(level, pos, state, entity);
-        if (!level.isClientSide && state.getValue(ACTIVE) && entity instanceof LivingEntity && !entity.isInWater()){
+        if (!level.isClientSide && (state.getValue(ACTIVE) || state.getValue(ALWAYS_ACTIVE)) && entity instanceof LivingEntity && !entity.isInWater()){
             int bestSignal = level.getBestNeighborSignal(pos);
             float p = bestSignal / 15f;
-            float damage = (float)Mth.clamp(2 * p,0.1,1);
-            System.out.println(damage + " " + ((LivingEntity) entity).getHealth());
+            float damage = state.getValue(ALWAYS_ACTIVE) ? 2f : (float)Mth.clamp(2 * p,0.1,1);
             entity.hurt(SCDamageSources.HEAT, damage);
         }
     }
@@ -50,9 +50,9 @@ public class HeaterBlock extends Block {
     public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos neighbor, boolean smth) {
         if (!level.isClientSide){
             if (level.hasNeighborSignal(pos)){
-                level.setBlock(pos, this.defaultBlockState().setValue(ACTIVE,true),3);
+                level.setBlock(pos, state.setValue(ACTIVE,true),3);
             }else{
-                level.setBlock(pos, this.defaultBlockState().setValue(ACTIVE,false),3);
+                level.setBlock(pos, state.setValue(ACTIVE,false),3);
             }
         }
     }
@@ -61,5 +61,6 @@ public class HeaterBlock extends Block {
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> b) {
         super.createBlockStateDefinition(b);
         b.add(ACTIVE);
+        b.add(ALWAYS_ACTIVE);
     }
 }

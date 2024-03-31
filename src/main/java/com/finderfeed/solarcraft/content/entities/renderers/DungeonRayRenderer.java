@@ -34,7 +34,7 @@ public class DungeonRayRenderer extends EntityRenderer<DungeonRay> {
         float length = ray.getRayLength() + 0.5f;
         Vec3i normal = direction.getNormal();
         Vec3 vn = new Vec3(normal.getX(),normal.getY(),normal.getZ());
-        VertexConsumer v = src.getBuffer(RenderType.lightning());
+        VertexConsumer v = src.getBuffer(SCRenderTypes.LIGHTNING_NO_CULL);
         Matrix4f mat = matrices.last().pose();
         float w = 0.125f;
         RenderingTools.applyMovementMatrixRotations(matrices,vn);
