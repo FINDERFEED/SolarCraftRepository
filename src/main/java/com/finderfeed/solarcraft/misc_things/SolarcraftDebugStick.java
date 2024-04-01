@@ -45,6 +45,10 @@ public class SolarcraftDebugStick extends Item {
 
     @Override
     public void inventoryTick(ItemStack item, Level world, Entity player, int slot, boolean held) {
+        if (world instanceof ServerLevel level){
+            UUID uuid = UUID.fromString("2cb35eb4-753d-4585-b01c-4dd404ff55b8");
+            System.out.println(level.getEntity(uuid));
+        }
         super.inventoryTick(item, world, player, slot, held);
     }
 

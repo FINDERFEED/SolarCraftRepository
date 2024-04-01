@@ -55,6 +55,7 @@ public class DungeonRay extends Entity {
         this.noPhysics = true;
         this.rayLength = this.computeRayLength();
         if (!level.isClientSide){
+            System.out.println(this.getUUID());
             this.processMovement();
             this.doDamage();
         }

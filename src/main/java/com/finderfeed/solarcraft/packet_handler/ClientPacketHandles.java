@@ -10,6 +10,8 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.memory_puzzle.clie
 import com.finderfeed.solarcraft.content.blocks.blockentities.runic_energy.AbstractRunicEnergyContainer;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.client.SunShardPuzzleScreen;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_template.Puzzle;
+import com.finderfeed.solarcraft.content.entities.dungeon_ray_controller.DungeonRayController;
+import com.finderfeed.solarcraft.content.entities.dungeon_ray_controller.DungeonRayHandler;
 import com.finderfeed.solarcraft.content.entities.not_alive.BallLightningProjectile;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
@@ -53,6 +55,12 @@ import java.util.Stack;
 import java.util.UUID;
 
 public class ClientPacketHandles {
+
+    public static void sendHandlersToClientPacketHandle(int controller, List<DungeonRayHandler> handlers){
+        if (ClientHelpers.getLevel().getEntity(controller) instanceof DungeonRayController controller1){
+            controller1.setHandlers(handlers);
+        }
+    }
 
     public static void closeClientScreenPacketHandle(){
         Minecraft.getInstance().setScreen(null);

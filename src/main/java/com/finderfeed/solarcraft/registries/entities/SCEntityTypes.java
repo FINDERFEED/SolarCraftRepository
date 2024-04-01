@@ -6,6 +6,7 @@ import com.finderfeed.solarcraft.content.abilities.meteorite.MeteoriteProjectile
 import com.finderfeed.solarcraft.content.abilities.solar_strike.SolarStrikeEntity;
 import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.TurretProjectile;
 import com.finderfeed.solarcraft.content.entities.*;
+import com.finderfeed.solarcraft.content.entities.dungeon_ray_controller.DungeonRayController;
 import com.finderfeed.solarcraft.content.entities.not_alive.*;
 import com.finderfeed.solarcraft.content.entities.projectiles.*;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.corruption_wisp.CorruptionWisp;
@@ -171,6 +172,10 @@ public class SCEntityTypes {
             EntityType.Builder.<DungeonRay>of(DungeonRay::new, MobCategory.MISC)
                     .updateInterval(1)
                     .sized(0.5f, 0.5f).build("dungeon_ray"));
+
+    public static final DeferredHolder<EntityType<?>,EntityType<DungeonRayController>> DUNGEON_RAY_CONTROLLER = ENTITY_TYPE_REGISTER.register("dungeon_ray_controller", () ->
+            EntityType.Builder.<DungeonRayController>of(DungeonRayController::new, MobCategory.MISC)
+                    .sized(0.5f, 0.5f).build("dungeon_ray_controller"));
 
     public static final DeferredHolder<EntityType<?>,EntityType<UlderaCrystalBoss>> ULDERA_CRYSTAL_BOSS = ENTITY_TYPE_REGISTER.register("uldera_crystal_boss",()->
             EntityType.Builder.of(UlderaCrystalBoss::new,MobCategory.MONSTER).sized(1,16.5f).build("uldera_crystal_boss"));
