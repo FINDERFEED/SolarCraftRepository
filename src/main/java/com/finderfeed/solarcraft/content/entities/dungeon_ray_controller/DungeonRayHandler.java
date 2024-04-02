@@ -7,6 +7,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DungeonRayHandler {
@@ -15,6 +16,13 @@ public class DungeonRayHandler {
     public int moveTarget;
     public boolean backward;
     public Direction rayDir;
+
+    public DungeonRayHandler(){
+        rayDir = Direction.UP;
+        movespeed = 0.3f;
+        backward = false;
+        movePositionOffsets = new ArrayList<>();
+    }
     public void tickRay(BlockPos mainPos,DungeonRay ray){
         ray.setDirection(rayDir);
         Vec3 movePos = movePositionOffsets.get(moveTarget).getCenter();

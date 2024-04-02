@@ -213,6 +213,7 @@ public class SCItems {
     public static final DeferredHolder<Item,Item> INSCRIPTION_STONE = registerItem(ITEMS.register("inscription_stone",()->new BlockItem(SCBlocks.INSCRIPTION_STONE.get(),new Item.Properties())),SOLAR_GROUP_BLOCKS);
 
     public static final DeferredHolder<Item,Item> DEBUG_STICK = ITEMS.register("solar_debug_stick",()->new SolarcraftDebugStick(new Item.Properties()));
+    public static final DeferredHolder<Item,Item> DUNGEON_RAY_CONTROLLER_STICK = ITEMS.register("debug_stick_ray_controller",()->new DungeonRayControllerStick(new Item.Properties()));
     //runes
     public static final DeferredHolder<Item,Item> SOLAR_RUNE_BASE = registerItem(ITEMS.register("runestone",()->new RuneBase(new Item.Properties())),SOLAR_GROUP_MATERIALS);
 
