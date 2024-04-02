@@ -308,6 +308,7 @@ public class SCClientModEventHandler {
         event.registerEntityRenderer(SCEntityTypes.ELECTRIC_RAIN.get(), NullRenderer::new);
         event.registerEntityRenderer(SCEntityTypes.Projectiles.ELECTRIC_SHOCK_PROJECTILE.get(), NullRenderer::new);
         event.registerEntityRenderer(SCEntityTypes.DUNGEON_RAY.get(), DungeonRayRenderer::new);
+        event.registerEntityRenderer(SCEntityTypes.DUNGEON_RAY_CONTROLLER.get(), DungeonRayControllerRenderer::new);
     }
 
 }

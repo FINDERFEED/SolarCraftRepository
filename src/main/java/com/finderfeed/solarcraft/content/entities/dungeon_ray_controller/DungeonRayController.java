@@ -15,8 +15,7 @@ import java.util.UUID;
 
 public class DungeonRayController extends Entity {
 
-    private static boolean inDev = true;
-
+    public static boolean DEBUG = true;
     private List<DungeonRayHandler> handlers = new ArrayList<>();
     private List<UUID> rayIds = new ArrayList<>();
 
@@ -29,7 +28,7 @@ public class DungeonRayController extends Entity {
         super.tick();
 
         if (!level.isClientSide){
-            if (inDev){
+            if (DEBUG){
                 FDPacketUtil.sendToTrackingEntity(this,new SendHandlersToClient(this));
             }
             this.moveRays();
