@@ -21,11 +21,9 @@ import com.finderfeed.solarcraft.local_library.screen_constructor.RenderableComp
 import com.finderfeed.solarcraft.local_library.screen_constructor.ScreenDataBuilder;
 import com.finderfeed.solarcraft.local_library.screen_constructor.WidgetInstance;
 import com.finderfeed.solarcraft.local_library.screen_constructor.renderable_component_instances.ImageComponent;
-import com.finderfeed.solarcraft.misc_things.CameraShake;
-import com.finderfeed.solarcraft.misc_things.Flash;
-import com.finderfeed.solarcraft.misc_things.IScrollable;
-import com.finderfeed.solarcraft.misc_things.RunicEnergy;
+import com.finderfeed.solarcraft.misc_things.*;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
 import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.CastAbilityPacket;
 import com.finderfeed.solarcraft.packet_handler.packets.RequestLoginDataPacket;
@@ -381,33 +379,20 @@ public class ClientEventsHandler {
         ClientEventsHandler.cameraShakeEffect = cameraShakeEffect;
     }
 
-//    @SubscribeEvent
-//    public static void initiateClientDamageSources(ClientPlayerNetworkEvent.LoggingIn event){
-//        SolarcraftDamageSources.initializeDamageSources(event.getPlayer().clientLevel);
-//    }
-
-//    @SubscribeEvent
-//    public static void cameraShake(ViewportEvent.ComputeCameraAngles event){
-//
-//        if (Minecraft.getInstance().level == null || cameraShakeEffect == null) return;
-//        Random random = new Random(Minecraft.getInstance().level.getGameTime()*1233);
-//
-//        float spread = cameraShakeEffect.getMaxSpread();
-//        float mod = 1f;
-//        int time = cameraShakeEffect.getTicker();
-//        if (time <= cameraShakeEffect.getInTime()){
-//            mod = time / (float) cameraShakeEffect.getInTime();
-//        }else if (time >= cameraShakeEffect.getInTime() + cameraShakeEffect.getStayTime()){
-//            mod = (time - (cameraShakeEffect.getInTime() + cameraShakeEffect.getStayTime()) )/(float) cameraShakeEffect.getOutTime();
-//        }
-//
-//
-//        spread *= mod;
-//        float rx = random.nextFloat()*spread*2 - spread;
-//        float ry = random.nextFloat()*spread*2 - spread;
-//        event.setPitch(event.getPitch() + rx);
-//        event.setYaw(event.getYaw() + ry);
-//    }
+    @SubscribeEvent
+    public static void switchDebugStickModes(InputEvent.MouseScrollingEvent scroll){
+        Player player = ClientHelpers.getClientPlayer();
+        if (player.isCrouching() && (player.getMainHandItem().getItem() instanceof DebugStick || player.getOffhandItem().getItem() instanceof DebugStick)) {
+            DebugStickScrollPacket packet;
+            if (scroll.getScrollDeltaY() < 0) {
+               packet = new DebugStickScrollPacket(false);
+            } else {
+                packet = new DebugStickScrollPacket(true);
+            }
+            FDPacketUtil.sendToServer(packet);
+            scroll.setCanceled(true);
+        }
+    }
 }
 
 

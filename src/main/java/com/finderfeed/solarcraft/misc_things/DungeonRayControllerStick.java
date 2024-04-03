@@ -23,40 +23,94 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
+import java.util.Map;
 import java.util.UUID;
+import java.util.function.Consumer;
 
-public class DungeonRayControllerStick extends Item {
+public class DungeonRayControllerStick extends DebugStick {
     public DungeonRayControllerStick(Properties p_41383_) {
         super(p_41383_);
     }
 
 
+//    @Override
+//    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+//
+//        if (!level.isClientSide){
+//            if (hand == InteractionHand.OFF_HAND) {
+//                DungeonRayController controller = this.getRayControllerOnSight(level, player);
+//                this.setUUID(player.getItemInHand(InteractionHand.OFF_HAND),controller.getUUID());
+//                player.sendSystemMessage(Component.literal("Changed controller"));
+//                return InteractionResultHolder.success(player.getItemInHand(InteractionHand.OFF_HAND));
+//            }else{
+//                DungeonRayController controller = this.getDungeonRayController((ServerLevel) level,player.getItemInHand(hand));
+//                if (controller != null){
+//                    if (!player.isCrouching()) {
+//                        controller.getHandlers().add(new DungeonRayHandler());
+//                        player.sendSystemMessage(Component.literal("Created handler"));
+//                        controller.cycleCurrentSelectedHandler();
+//                    }else{
+//                        controller.removeSelectedHandler();
+//                        player.sendSystemMessage(Component.literal("Removed handler"));
+//                    }
+//                }
+//                return InteractionResultHolder.success(player.getItemInHand(InteractionHand.MAIN_HAND));
+//            }
+//        }
+//
+//        return super.use(level, player, hand);
+//    }
+
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
-
-        if (!level.isClientSide){
-            if (hand == InteractionHand.OFF_HAND) {
+    public void getUseActions(Map<String, Consumer<UseContext>> useOnActions) {
+        useOnActions.put("setController",(ctx)->{
+            Player player = ctx.player();
+            Level level = ctx.level();
+            if (!level.isClientSide) {
                 DungeonRayController controller = this.getRayControllerOnSight(level, player);
-                this.setUUID(player.getItemInHand(InteractionHand.OFF_HAND),controller.getUUID());
-                player.sendSystemMessage(Component.literal("Changed controller"));
-                return InteractionResultHolder.success(player.getItemInHand(InteractionHand.OFF_HAND));
-            }else{
-                DungeonRayController controller = this.getDungeonRayController((ServerLevel) level,player.getItemInHand(hand));
-                if (controller != null){
-                    if (!player.isCrouching()) {
-                        controller.getHandlers().add(new DungeonRayHandler());
-                        player.sendSystemMessage(Component.literal("Created handler"));
-                        controller.cycleCurrentSelectedHandler();
-                    }else{
-                        controller.removeSelectedHandler();
-                        player.sendSystemMessage(Component.literal("Removed handler"));
-                    }
-                }
-                return InteractionResultHolder.success(player.getItemInHand(InteractionHand.MAIN_HAND));
+                this.setUUID(player.getItemInHand(InteractionHand.OFF_HAND), controller.getUUID());
             }
-        }
+        });
+        useOnActions.put("createHandler",ctx->{
+            Player player = ctx.player();
+            Level level = ctx.level();
+            ItemStack item = player.getItemInHand(ctx.hand());
+            if (level instanceof ServerLevel serverLevel) {
+                var controller = this.getDungeonRayController(serverLevel,item);
+                if (controller != null) {
+                    controller.getHandlers().add(new DungeonRayHandler());
+                    player.sendSystemMessage(Component.literal("Created handler"));
+                    controller.cycleCurrentSelectedHandler();
+                }
+            }
+        });
+        useOnActions.put("removeHandler",ctx->{
+            Player player = ctx.player();
+            Level level = ctx.level();
+            ItemStack item = player.getItemInHand(ctx.hand());
+            if (level instanceof ServerLevel serverLevel) {
+                var controller = this.getDungeonRayController(serverLevel,item);
+                if (controller != null) {
+                    controller.removeSelectedHandler();
+                }
+            }
+        });
+        useOnActions.put("cycleHandlers",ctx->{
+            Player player = ctx.player();
+            Level level = ctx.level();
+            ItemStack item = player.getItemInHand(ctx.hand());
+            if (level instanceof ServerLevel serverLevel) {
+                var controller = this.getDungeonRayController(serverLevel,item);
+                if (controller != null) {
+                    controller.cycleCurrentSelectedHandler();
+                }
+            }
+        });
+    }
 
-        return super.use(level, player, hand);
+    @Override
+    public void getUseOnActions(Map<String, Consumer<UseOnContext>> useOnActions) {
+
     }
 
     @Override
