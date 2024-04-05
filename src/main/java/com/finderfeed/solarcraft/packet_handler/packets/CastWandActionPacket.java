@@ -1,18 +1,18 @@
 package com.finderfeed.solarcraft.packet_handler.packets;
 
-import com.finderfeed.solarcraft.content.abilities.AbilityHelper;
 import com.finderfeed.solarcraft.content.items.solar_wand.SolarWandItem;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.network.NetworkEvent;
 
-import java.util.function.Supplier;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 
-public class CastWandActionPacket {
+@Packet("cast_wand_action")
+public class CastWandActionPacket extends FDPacket {
 
     private ResourceLocation actionId;
 
@@ -20,7 +20,8 @@ public class CastWandActionPacket {
         this.actionId = actionId;
     }
 
-    public CastWandActionPacket(FriendlyByteBuf buf){
+
+    public CastWandActionPacket(FriendlyByteBuf buf) {
         this.actionId = buf.readResourceLocation();
     }
 
@@ -28,14 +29,26 @@ public class CastWandActionPacket {
         buf.writeResourceLocation(actionId);
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(()->{
-            ServerPlayer player = ctx.get().getSender();
-            ItemStack stack = player.getMainHandItem();
-            if (stack.is(SolarcraftItems.SOLAR_WAND.get())){
-                SolarWandItem.setWandAction(stack,actionId);
-            }
-        });
-        ctx.get().setPacketHandled(true);
+//    public void handle(PlayPayloadContext ctx){
+//
+//            ServerPlayer player = (ServerPlayer) ctx.player().get();
+//            ItemStack stack = player.getMainHandItem();
+//            if (stack.is(SCItems.SOLAR_WAND.get())){
+//                SolarWandItem.setWandAction(stack,actionId);
+//            }
+//
+//    }
+
+    @Override
+    public void serverPlayHandle(PlayPayloadContext ctx) {
+        ServerPlayer player = (ServerPlayer) ctx.player().get();
+        ItemStack stack = player.getMainHandItem();
+        if (stack.is(SCItems.SOLAR_WAND.get())){
+            SolarWandItem.setWandAction(stack,actionId);
+        }    }
+
+    @Override
+    public void write(FriendlyByteBuf friendlyByteBuf) {
+        this.toBytes(friendlyByteBuf);
     }
 }

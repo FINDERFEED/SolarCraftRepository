@@ -4,7 +4,6 @@ import com.finderfeed.solarcraft.SolarCraft;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import net.minecraftforge.fml.loading.FMLPaths;
 import org.apache.logging.log4j.Level;
 
 import java.io.IOException;
@@ -13,10 +12,11 @@ import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import net.neoforged.fml.loading.FMLPaths;
 
 public abstract class JsonConfig {
 
-    private static final Gson GSON = new GsonBuilder()
+    protected static final Gson GSON = new GsonBuilder()
             .setPrettyPrinting()
             .disableHtmlEscaping()
             .create();
@@ -26,7 +26,7 @@ public abstract class JsonConfig {
     private boolean initialized = false;
 
     /**
-     * Saving the json object in order to sync server and client efficiently
+     * Saving the json object in order to sync server and client
      */
     private JsonObject object;
 

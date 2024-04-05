@@ -10,10 +10,11 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import com.mojang.math.Vector3f;
-import net.minecraft.server.level.ServerLevel;
 
-public class MeteoriteAbility extends AbstractAbility{
+import net.minecraft.server.level.ServerLevel;
+import org.joml.Vector3f;
+
+public class MeteoriteAbility extends AbstractAbility {
     public MeteoriteAbility() {
         super("meteorite",new RunicEnergyCost()
         .set(RunicEnergy.Type.ZETA,1000)
@@ -35,7 +36,9 @@ public class MeteoriteAbility extends AbstractAbility{
                     MeteoriteProjectile proj = new MeteoriteProjectile(entity, world);
                     Vector3f posVect = new Vector3f((float) entity.position().x - (float) entity.getLookAngle().x * 20, (float) entity.position().y + 64, (float) entity.position().z - (float) entity.getLookAngle().z * 20);
                     proj.setPos(posVect.x(), posVect.y(), posVect.z());
-                    Vec3 velocity = new Vec3(pos.offset(0.5, 0, 0.5).getX() - posVect.x(), pos.offset(0.5, 0, 0.5).getY() - posVect.y(), pos.offset(0.5, 0, 0.5).getZ() - posVect.z());
+                    Vec3 c = new Vec3(pos.getX() + 0.5,pos.getY(),pos.getZ() + 0.5);
+                    Vec3 velocity = new Vec3(c.x - posVect.x(),
+                            c.y - posVect.y(), c.z - posVect.z());
                     proj.setDeltaMovement(velocity.normalize());
                     world.addFreshEntity(proj);
                     AbilityHelper.spendAbilityEnergy(entity,this);

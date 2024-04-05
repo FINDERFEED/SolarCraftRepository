@@ -7,10 +7,10 @@ import com.finderfeed.solarcraft.events.my_events.PostColorEvent;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.Gui;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderTooltipEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.client.event.RenderTooltipEvent;
 
 
 //code is mine but idea was taken from SSKirillSS(Relics mod)
@@ -20,7 +20,7 @@ public class TooltipEventHandler {
     @SubscribeEvent
     public static void renderTooltips(RenderTooltipEvent.Pre event){
         if (event.getItemStack().getItem() instanceof ICustomTooltip tooltip) {
-            RenderingTools.renderTooltipInternal(event.getPoseStack(), event.getComponents(), event.getX(), event.getY(),tooltip.getTooltip());
+            RenderingTools.renderTooltipInternal(event.getGraphics(), event.getComponents(), event.getX(), event.getY(),event.getTooltipPositioner(),tooltip.getTooltip());
             event.setCanceled(true);
         }
     }
@@ -52,7 +52,7 @@ public class TooltipEventHandler {
         tooltip.bindTop();
         int posX = calculateXTopRenderPosition(relX,relX+sizeX,tooltip.getTopTextureWidth());
         int posY = calculateYTopRenderPosition(relY,tooltip.getTopTextureHeight());
-        Gui.blit(matrices,posX,posY+tooltip.getyOffsetTop(),0,0,tooltip.getTopTextureWidth(),tooltip.getTopTextureHeight(),tooltip.getTopTextureWidth(),tooltip.getTopTextureHeight());
+        RenderingTools.blitWithBlend(matrices,posX,posY+tooltip.getyOffsetTop(),0,0,tooltip.getTopTextureWidth(),tooltip.getTopTextureHeight(),tooltip.getTopTextureWidth(),tooltip.getTopTextureHeight(),1000,1f);
         matrices.popPose();
     }
 
@@ -61,7 +61,7 @@ public class TooltipEventHandler {
         tooltip.bindBottom();
         int posX = calculateXBottomRenderPosition(relX,relX+sizeX,tooltip.getBottomTextureWidth());
         int posY = calculateYBottomRenderPosition(relY,sizeY,tooltip.getBottomTextureHeight());
-        Gui.blit(matrices,posX,posY+tooltip.getyOffsetBottom(),0,0,tooltip.getBottomTextureWidth(),tooltip.getBottomTextureHeight(),tooltip.getBottomTextureWidth(),tooltip.getBottomTextureHeight());
+        RenderingTools.blitWithBlend(matrices,posX,posY+tooltip.getyOffsetBottom(),0,0,tooltip.getBottomTextureWidth(),tooltip.getBottomTextureHeight(),tooltip.getBottomTextureWidth(),tooltip.getBottomTextureHeight(),1000,1f);
         matrices.popPose();
     }
     //in blit first matrix second/third position, 4 5 sdvig, 5 6 skolko vzyat ot teksturi, 7 8 razmer etoy teksturi
@@ -72,13 +72,13 @@ public class TooltipEventHandler {
         int dim = tooltip.getCornerDimensions();
         int half = dim/2;
         int doubled = dim*2;
-        Gui.blit(matrices,relX-half,relY-half,0,0,dim,dim,doubled,doubled);
+        RenderingTools.blitWithBlend(matrices,relX-half,relY-half,0,0,dim,dim,doubled,doubled,1000,1f);
         int[] leftBottom = calculateLeftBottomCornerPos(relX,relY,sizeY,dim);
-        Gui.blit(matrices,leftBottom[0],leftBottom[1],0,dim,dim,dim,doubled,doubled);
+        RenderingTools.blitWithBlend(matrices,leftBottom[0],leftBottom[1],0,dim,dim,dim,doubled,doubled,1000,1f);
         int[] rightTop = calculateRightTopCornerPos(relX,relY,sizeX,dim);
-        Gui.blit(matrices,rightTop[0],rightTop[1],dim,0,dim,dim,doubled,doubled);
+        RenderingTools.blitWithBlend(matrices,rightTop[0],rightTop[1],dim,0,dim,dim,doubled,doubled,1000,1f);
         int[] rightBottom = calculateRightBottomCornerPos(relX,relY,sizeX,sizeY,dim);
-        Gui.blit(matrices,rightBottom[0],rightBottom[1],dim,dim,dim,dim,doubled,doubled);
+        RenderingTools.blitWithBlend(matrices,rightBottom[0],rightBottom[1],dim,dim,dim,dim,doubled,doubled,1000,1f);
 
 
         matrices.popPose();

@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "solarcraft:burnt_log",
     "solarcraft:runic_log",
     "solarcraft:radiant_log"
   ]

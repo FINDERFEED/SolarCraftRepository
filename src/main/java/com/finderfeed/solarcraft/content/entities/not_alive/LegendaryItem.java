@@ -1,8 +1,9 @@
 package com.finderfeed.solarcraft.content.entities.not_alive;
 
-import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -15,7 +16,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.network.NetworkHooks;
+
 
 
 public class LegendaryItem extends Entity {
@@ -30,7 +31,7 @@ public class LegendaryItem extends Entity {
     }
 
     public LegendaryItem(Level world,ItemStack stack){
-        super(SolarcraftEntityTypes.LEGENDARY_ITEM.get(),world);
+        super(SCEntityTypes.LEGENDARY_ITEM.get(),world);
         this.setItem(stack);
     }
 
@@ -76,10 +77,10 @@ public class LegendaryItem extends Entity {
         }
     }
 
-    @Override
-    public Packet<?> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
+//    @Override
+//    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+//        return NetworkHooks.getEntitySpawningPacket(this);
+//    }
 
     @Override
     public void playerTouch(Player player) {

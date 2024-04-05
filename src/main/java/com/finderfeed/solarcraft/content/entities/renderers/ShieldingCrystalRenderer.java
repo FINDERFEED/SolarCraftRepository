@@ -4,8 +4,7 @@ import com.finderfeed.solarcraft.content.entities.not_alive.ShieldingCrystalCrys
 import com.finderfeed.solarcraft.events.other_events.OBJModels;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
+import static com.finderfeed.solarcraft.local_library.helpers.RenderingTools.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -13,6 +12,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
+import org.joml.Quaternionf;
 
 public class ShieldingCrystalRenderer extends EntityRenderer<ShieldingCrystalCrystalBoss> {
 
@@ -31,7 +31,8 @@ public class ShieldingCrystalRenderer extends EntityRenderer<ShieldingCrystalCry
         if (!crystal.isDeploying()) {
             float time = (partialTicks + crystal.level.getGameTime()) % 360;
             RenderingTools.renderEntityObjModel(OBJModels.SHIELDING_CRYSTAL, matrices, buffer, light, OverlayTexture.NO_OVERLAY, (matrix) -> {
-                matrix.mulPose(Vector3f.YP.rotationDegrees(-time));
+//                matrix.mulPose(Vector3f.YP.rotationDegrees(-time));
+                matrix.mulPose(rotationDegrees(YP(),-time));
                 matrix.translate(0, 1, 0);
                 matrix.scale(0.5f, 0.5f, 0.5f);
             });
@@ -39,9 +40,11 @@ public class ShieldingCrystalRenderer extends EntityRenderer<ShieldingCrystalCry
 
             for (int i = 0; i < 4; i++) {
                 matrices.pushPose();
-                matrices.mulPose(Vector3f.YP.rotationDegrees(90 * i + time));
+//                matrices.mulPose(Vector3f.YP.rotationDegrees(90 * i + time));
+                matrices.mulPose(rotationDegrees(YP(),90 * i + time));
                 matrices.translate(0, 1, 0.6f);
-                matrices.mulPose(Vector3f.XP.rotationDegrees(60));
+//                matrices.mulPose(Vector3f.XP.rotationDegrees(60));
+                matrices.mulPose(rotationDegrees(XP(),60));
                 matrices.scale(0.35f, 0.35f, 0.35f);
 
                 RenderingTools.renderEntityObjModel(OBJModels.SHIELDING_CRYSTAL_SHIELD, matrices, buffer, light, OverlayTexture.NO_OVERLAY, (matrix) -> {
@@ -51,7 +54,7 @@ public class ShieldingCrystalRenderer extends EntityRenderer<ShieldingCrystalCry
             matrices.pushPose();
 
             matrices.translate(0,2,0);
-            Quaternion quaternion = Minecraft.getInstance().gameRenderer.getMainCamera().rotation();
+            Quaternionf quaternion = Minecraft.getInstance().gameRenderer.getMainCamera().rotation();
             matrices.mulPose(quaternion);
             matrices.scale(0.5f,0.3f,0.5f);
             RenderingTools.renderHpBar(matrices,buffer,crystal.getHealth()/crystal.getMaxHealth());

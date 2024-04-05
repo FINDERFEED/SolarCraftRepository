@@ -3,11 +3,11 @@ package com.finderfeed.solarcraft.content.blocks.blockentities;
 import com.finderfeed.solarcraft.content.entities.ShadowZombie;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.ShadowBolt;
 import com.finderfeed.solarcraft.content.entities.projectiles.SummoningProjectile;
-import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -20,6 +20,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
 
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class UlderaPylon extends BlockEntity {
     private int spawnZombieCooldown = 0;
 
     public UlderaPylon(BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.ULDERA_PYLON.get(), p_155229_, p_155230_);
+        super(SCTileEntities.ULDERA_PYLON.get(), p_155229_, p_155230_);
     }
 
     public static void tick(UlderaPylon tile, BlockPos pos, BlockState state, Level world){
@@ -49,14 +50,14 @@ public class UlderaPylon extends BlockEntity {
                         return false;
                     }
                     Vec3 v = e.position().add(0,e.getBbHeight()/2,0).subtract(p).normalize().multiply(0.5,0.5,0.5);
-                    ClipContext clipContext = new ClipContext(p.add(v),e.position().add(0,e.getBbHeight()/2,0), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,null);
+                    ClipContext clipContext = new ClipContext(p.add(v),e.position().add(0,e.getBbHeight()/2,0), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, CollisionContext.empty());
                     return world.clip(clipContext).getType() == HitResult.Type.MISS;
                 });
                 if (!livings.isEmpty()) {
                     LivingEntity target = livings.get(world.random.nextInt(livings.size()));
                     Vec3 ePos = target.position().add(0,target.getBbHeight()/2,0);
                     Vec3 between = ePos.subtract(p);
-                    ShadowBolt bolt = new ShadowBolt(SolarcraftEntityTypes.SHADOW_BOLT.get(),world);
+                    ShadowBolt bolt = new ShadowBolt(SCEntityTypes.SHADOW_BOLT.get(),world);
                     bolt.setPos(p.add(between.normalize().multiply(0.5,0.5,0.5)));
                     bolt.setDeltaMovement(between.normalize().multiply(2,2,2));
                     world.addFreshEntity(bolt);
@@ -65,7 +66,7 @@ public class UlderaPylon extends BlockEntity {
                 List<Player> players = world.getEntitiesOfClass(Player.class,aabb,player->!player.isCreative() && !player.isSpectator());
                 if (!players.isEmpty() && tile.spawnZombieCooldown <= 0 && Helpers.isDay(world)){
                     tile.spawnZombieCooldown = 1200;
-                    SummoningProjectile projectile = new SummoningProjectile(world,SolarcraftEntityTypes.SHADOW_ZOMBIE.get(),
+                    SummoningProjectile projectile = new SummoningProjectile(world, SCEntityTypes.SHADOW_ZOMBIE.get(),
                             43,0,60);
                     double speedMult = world.random.nextDouble()*0.2 + 0.1;
                     Vec3 rnd = new Vec3(1,0,0).yRot(world.random.nextFloat()*360).multiply(speedMult,speedMult,speedMult);
@@ -79,7 +80,7 @@ public class UlderaPylon extends BlockEntity {
         }else{
             if (world.getGameTime() % 4 == 0) {
                 Vec3 p = Helpers.getBlockCenter(pos).add(Helpers.randomVector().multiply(0.5,0.5,0.5));
-                ClientHelpers.Particles.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                ClientHelpers.Particles.createParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                         p.x, p.y, p.z, 0, 0.05, 0, () -> 50, () -> 0, () -> 130, 0.4f);
             }
         }

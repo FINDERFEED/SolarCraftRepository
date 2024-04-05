@@ -1,8 +1,8 @@
 package com.finderfeed.solarcraft.content.armor;
 
-import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.util.LazyLoadedValue;
@@ -12,8 +12,8 @@ import net.minecraft.sounds.SoundEvents;
 import java.util.function.Supplier;
 
 public enum SolarArmorMaterial implements ArmorMaterial {
-    SOLAR_ARMOR("solarcraft:solar_armor",40,new int[]{5, 8, 9, 5},20, SoundEvents.ARMOR_EQUIP_NETHERITE,3.5f,0.2f,()->Ingredient.of(SolarcraftItems.SOLAR_SHARD.get())),
-    RADIANT_ARMOR("solarcraft:radiant_armor",80,new int[]{8, 10, 11, 8},40, SoundEvents.ARMOR_EQUIP_NETHERITE,4f,0.3f,()->Ingredient.of(SolarcraftItems.BLUE_GEM_ENCHANCED.get())),
+    SOLAR_ARMOR("solarcraft:solar_armor",40,new int[]{5, 8, 9, 5},20, SoundEvents.ARMOR_EQUIP_NETHERITE,3.5f,0.2f,()->Ingredient.of(SCItems.SOLAR_SHARD.get())),
+    RADIANT_ARMOR("solarcraft:radiant_armor",80,new int[]{8, 10, 11, 8},40, SoundEvents.ARMOR_EQUIP_NETHERITE,4f,0.3f,()->Ingredient.of(SCItems.BLUE_GEM_ENCHANCED.get())),
     DIVINE_ARMOR("solarcraft:divine_armor",200,new int[]{10, 13, 15, 8},60, SoundEvents.ARMOR_EQUIP_NETHERITE,7f,0.5f,()->Ingredient.EMPTY);
 
 
@@ -38,12 +38,15 @@ public enum SolarArmorMaterial implements ArmorMaterial {
         this.repairIngredient = new LazyLoadedValue<>(p_i231593_10_);
     }
 
-    public int getDurabilityForSlot(EquipmentSlot p_200896_1_) {
-        return HEALTH_PER_SLOT[p_200896_1_.getIndex()] * this.durabilityMultiplier;
+
+    @Override
+    public int getDurabilityForType(ArmorItem.Type type) {
+        return HEALTH_PER_SLOT[type.getSlot().getIndex()] * durabilityMultiplier;
     }
 
-    public int getDefenseForSlot(EquipmentSlot p_200902_1_) {
-        return this.slotProtections[p_200902_1_.getIndex()];
+    @Override
+    public int getDefenseForType(ArmorItem.Type type) {
+        return this.slotProtections[type.getSlot().getIndex()];
     }
 
     public int getEnchantmentValue() {

@@ -1,0 +1,7 @@
+{
+  "type": "solarcraft:magician_tower",
+  "biomes": "#solarcraft:has_structure/magician_tower",
+  "spawn_overrides": {},
+  "step": "surface_structures",
+  "terrain_adaptation": "beard_thin"
+}

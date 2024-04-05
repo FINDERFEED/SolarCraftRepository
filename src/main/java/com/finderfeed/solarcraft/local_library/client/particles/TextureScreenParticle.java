@@ -1,11 +1,11 @@
 package com.finderfeed.solarcraft.local_library.client.particles;
 
+import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.util.Mth;
+import org.joml.Matrix4f;
 
 public abstract class TextureScreenParticle extends ScreenParticle{
 
@@ -35,7 +35,12 @@ public abstract class TextureScreenParticle extends ScreenParticle{
         matrices.pushPose();
         double s = size/2;
         matrices.translate(Mth.lerp(partialTicks,xOld,this.x),Mth.lerp(partialTicks,yOld,this.y),0);
-        matrices.mulPose(Vector3f.ZP.rotationDegrees(Mth.lerp(partialTicks,rotationValueOld,rotationValue)));
+//
+//        Vector3f v = RenderingTools.ZP();
+//        Quaternionf q = new Quaternionf(new AxisAngle4f(Mth.lerp(partialTicks,rotationValueOld,rotationValue),v));
+
+//        matrices.mulPose(Vector3f.ZP.rotationDegrees(Mth.lerp(partialTicks,rotationValueOld,rotationValue)));
+        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.ZP(),Mth.lerp(partialTicks,rotationValueOld,rotationValue)));
         Matrix4f matrix4f = matrices.last().pose();
         vertex.vertex(matrix4f,(float) -s,(float) s,500).uv(0,0).color(rCol,gCol,bCol,alpha).uv2(LightTexture.FULL_BRIGHT).endVertex();
         vertex.vertex(matrix4f,(float) s,(float) s,500).uv(1,0).color(rCol,gCol,bCol,alpha).uv2(LightTexture.FULL_BRIGHT).endVertex();

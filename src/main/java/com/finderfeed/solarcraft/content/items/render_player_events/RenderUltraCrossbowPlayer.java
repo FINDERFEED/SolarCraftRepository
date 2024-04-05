@@ -11,13 +11,13 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
-import com.mojang.math.Vector3f;
-import net.minecraftforge.api.distmarker.Dist;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.client.event.RenderHandEvent;
+import net.neoforged.neoforge.client.event.RenderPlayerEvent;
 
-import net.minecraftforge.client.event.RenderHandEvent;
-import net.minecraftforge.client.event.RenderPlayerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import static com.finderfeed.solarcraft.local_library.helpers.RenderingTools.*;
 
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE,modid = "solarcraft",value = Dist.CLIENT)
@@ -71,9 +71,11 @@ public class RenderUltraCrossbowPlayer {
 
                 stack.pushPose();
                 stack.translate(-0.02, -0.4, -1.7);
-                stack.mulPose(Vector3f.ZP.rotationDegrees((Minecraft.getInstance().level.getGameTime() + partialTicks) * 30 % 360));
+//                stack.mulPose(Vector3f.ZP.rotationDegrees((Minecraft.getInstance().level.getGameTime() + partialTicks) * 30 % 360));
 
-                stack.mulPose(Vector3f.XP.rotationDegrees(90));
+//                stack.mulPose(Vector3f.XP.rotationDegrees(90));
+                stack.mulPose(rotationDegrees(ZP(),(Minecraft.getInstance().level.getGameTime() + partialTicks) * 30 % 360));
+                stack.mulPose(rotationDegrees(XP(),90));
                 stack.scale(0.7f, 0.7f, 0.7f);
                 drawRing(partialTicks, stack, buffer, 1, 0);
                 stack.popPose();
@@ -86,9 +88,10 @@ public class RenderUltraCrossbowPlayer {
 
                 stack.pushPose();
                 stack.translate(-0.02, -0.4, -1.7);
-                stack.mulPose(Vector3f.ZP.rotationDegrees((Minecraft.getInstance().level.getGameTime() + partialTicks) * 30 % 360));
-
-                stack.mulPose(Vector3f.XP.rotationDegrees(90));
+//                stack.mulPose(Vector3f.ZP.rotationDegrees((Minecraft.getInstance().level.getGameTime() + partialTicks) * 30 % 360));
+//                stack.mulPose(Vector3f.XP.rotationDegrees(90));
+                stack.mulPose(rotationDegrees(ZP(),(Minecraft.getInstance().level.getGameTime() + partialTicks) * 30 % 360));
+                stack.mulPose(rotationDegrees(XP(),90));
                 stack.scale(0.7f, 0.7f, 0.7f);
                 drawRing(partialTicks, stack, buffer, 1, 0);
                 stack.popPose();
@@ -118,7 +121,8 @@ public class RenderUltraCrossbowPlayer {
     public static void drawRing(float partialTicks, PoseStack stack, MultiBufferSource buffer, float scaleFactor, float angle){
         VertexConsumer vertex = buffer.getBuffer(RenderType.text(LOC));
 
-        stack.mulPose(Vector3f.YP.rotationDegrees(angle));
+//        stack.mulPose(Vector3f.YP.rotationDegrees(angle));
+        stack.mulPose(rotationDegrees(YP(),angle));
         PoseStack.Pose entry = stack.last();
         vertex.vertex(entry.pose(),-0.5F*scaleFactor,0,-0.5F*scaleFactor).color(255,255,40,200).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
         vertex.vertex(entry.pose(),0.5F*scaleFactor,0,-0.5F*scaleFactor).color(255,255,40,200).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();

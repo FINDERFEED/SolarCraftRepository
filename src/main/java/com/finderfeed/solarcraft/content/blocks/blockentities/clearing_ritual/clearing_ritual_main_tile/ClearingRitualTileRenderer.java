@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.c
 
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.client.rendering.rendertypes.SolarCraftRenderTypes;
+import com.finderfeed.solarcraft.client.rendering.rendertypes.SCRenderTypes;
 import com.finderfeed.solarcraft.events.other_events.OBJModels;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
@@ -10,14 +10,15 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.Cl
 import com.finderfeed.solarcraft.content.blocks.render.abstracts.TileEntityRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Matrix4f;
 
 import java.util.List;
 import java.util.Random;
@@ -50,11 +51,12 @@ public class ClearingRitualTileRenderer extends TileEntityRenderer<ClearingRitua
                 Vec3 tilepos = Helpers.getBlockCenter(tile.getBlockPos());
                 Vec3 betweenHorizontal = camPos.subtract(tilepos).multiply(1,0,1).normalize();
                 //ray
-                VertexConsumer vertex = buffer.getBuffer(SolarCraftRenderTypes.depthMaskedTextSeeThrough(RAY));
+                VertexConsumer vertex = buffer.getBuffer(SCRenderTypes.depthMaskedTextSeeThrough(RAY));
                 matrices.translate(0.5,0.5,0.5);
                 matrices.pushPose();
                 double angle = Math.atan2(betweenHorizontal.x,betweenHorizontal.z);
-                matrices.mulPose(Vector3f.YP.rotationDegrees((float)Math.toDegrees(angle)));
+//                matrices.mulPose(Vector3f.YP.rotationDegrees((float)Math.toDegrees(angle)));
+                matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),(float)Math.toDegrees(angle)));
                 Matrix4f m = matrices.last().pose();
                 vertex.vertex(m,0.25f,0,0).color(1f,1f,1f,1f).uv(0,0).uv2(LightTexture.FULL_BRIGHT).endVertex();
                 vertex.vertex(m,0.25f,(float)height,0).color(1f,1f,1f,1f).uv(1,0).uv2(LightTexture.FULL_BRIGHT).endVertex();
@@ -66,7 +68,7 @@ public class ClearingRitualTileRenderer extends TileEntityRenderer<ClearingRitua
                 matrices.translate(0,height,0);
                 matrices.mulPose(Minecraft.getInstance().gameRenderer.getMainCamera().rotation());
                 m = matrices.last().pose();
-                vertex = buffer.getBuffer(SolarCraftRenderTypes.depthMaskedTextSeeThrough(STAR));
+                vertex = buffer.getBuffer(SCRenderTypes.depthMaskedTextSeeThrough(STAR));
                 float r = 2f;
                 vertex.vertex(m,-r,r,0).color(1f,1f,0f,1f).uv(0, 1).uv2(LightTexture.FULL_BRIGHT).endVertex();
                 vertex.vertex(m,r,r,0).color(1f,1f,0f,1f).uv(1, 1).uv2(LightTexture.FULL_BRIGHT).endVertex();
@@ -77,7 +79,7 @@ public class ClearingRitualTileRenderer extends TileEntityRenderer<ClearingRitua
                 if (ClearingRitual.MAX_TIME - tile.ritual.getCurrentTime() <= DIMENSION_CRACK_ANIMATION_TICKS){
                     int time2 = DIMENSION_CRACK_ANIMATION_TICKS - FDMathHelper.clamp(0,ClearingRitual.MAX_TIME - tile.ritual.getCurrentTime(),DIMENSION_CRACK_ANIMATION_TICKS);
                     double alpha = time2/(float)DIMENSION_CRACK_ANIMATION_TICKS;
-                    vertex = buffer.getBuffer(SolarCraftRenderTypes.depthMaskedTextSeeThrough(SKY_BREAK));
+                    vertex = buffer.getBuffer(SCRenderTypes.depthMaskedTextSeeThrough(SKY_BREAK));
                     Matrix4f m2 = matrices.last().pose();
                     float r3 = 100f;
                     vertex.vertex(m2,-r3,200,-r3).color(1f,0.8f,0.15f,(float)alpha).uv(0,0).uv2(LightTexture.FULL_BRIGHT).endVertex();
@@ -117,23 +119,30 @@ public class ClearingRitualTileRenderer extends TileEntityRenderer<ClearingRitua
         matrices.translate(0.5,0,0.5);
         matrices.scale(0.5f,0.5f,0.5f);
         matrices.pushPose();
-        RenderingTools.renderEntityObjModel(OBJModels.CLEARING_RITUAL_MAIN_BLOCK_LOWER,matrices,src,light,overlay,(a)->{});
+        RenderingTools.renderEntityObjModel(OBJModels.CLEARING_RITUAL_MAIN_BLOCK_LOWER,matrices,src,1,1,1,light,overlay);
         matrices.popPose();
 
         matrices.pushPose();
         matrices.translate(0,2,0);
-        matrices.mulPose(Vector3f.YP.rotationDegrees(rotation));
-        RenderingTools.renderEntityObjModel(OBJModels.CLEARING_RITUAL_MAIN_BLOCK_PETALS,matrices,src,light,overlay,(a)->{});
+//        matrices.mulPose(Vector3f.YP.rotationDegrees(rotation));
+        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),rotation));
+        RenderingTools.renderEntityObjModel(OBJModels.CLEARING_RITUAL_MAIN_BLOCK_PETALS,matrices,src,1,1,1,light,overlay);
         matrices.popPose();
 
         matrices.pushPose();
         matrices.translate(0,4,0);
         matrices.scale(0.7f,0.7f,0.7f);
-        matrices.mulPose(Vector3f.YP.rotationDegrees(-rotation));
-        RenderingTools.renderEntityObjModel(OBJModels.CLEARING_RITUAL_MAIN_BLOCK_TOP,matrices,src,light,overlay,(a)->{});
+//        matrices.mulPose(Vector3f.YP.rotationDegrees(-rotation));
+        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),-rotation));
+        RenderingTools.renderEntityObjModel(OBJModels.CLEARING_RITUAL_MAIN_BLOCK_TOP,matrices,src,1,1,1,light,overlay);
         matrices.popPose();
         matrices.popPose();
 
+    }
+
+    @Override
+    public AABB getRenderBoundingBox(ClearingRitualMainTile blockEntity) {
+        return Helpers.createAABBWithRadius(Helpers.getBlockCenter(blockEntity.getBlockPos()),20,100);
     }
 
     @Override

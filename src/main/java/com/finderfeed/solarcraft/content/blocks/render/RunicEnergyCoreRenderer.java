@@ -1,23 +1,21 @@
 package com.finderfeed.solarcraft.content.blocks.render;
 
 import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.client.rendering.rendertypes.SolarCraftRenderTypes;
 import com.finderfeed.solarcraft.content.blocks.blockentities.RunicEnergyCoreTile;
 import com.finderfeed.solarcraft.content.blocks.render.abstracts.AbstractRunicEnergyContainerRenderer;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
+import org.joml.Matrix4f;
+import static com.finderfeed.solarcraft.local_library.helpers.RenderingTools.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import org.joml.Quaternionf;
 
 import java.util.Random;
 
@@ -42,7 +40,7 @@ public class RunicEnergyCoreRenderer extends AbstractRunicEnergyContainerRendere
             matrices.translate(0.5, 0.5, 0.5);
             //core
             matrices.pushPose();
-            Quaternion cam = Minecraft.getInstance().gameRenderer.getMainCamera().rotation();
+            Quaternionf cam = Minecraft.getInstance().gameRenderer.getMainCamera().rotation();
             matrices.mulPose(cam);
 
             Matrix4f m = matrices.last().pose();
@@ -51,7 +49,8 @@ public class RunicEnergyCoreRenderer extends AbstractRunicEnergyContainerRendere
             float r = 0.4f;
 
             for (int i = 0; i <= 3;i++) {
-                matrices.mulPose(Vector3f.ZP.rotationDegrees(i*90));
+//                matrices.mulPose(Vector3f.ZP.rotationDegrees(i*90));
+                matrices.mulPose(rotationDegrees(ZP(),i*90));
                 vertex.vertex(m, 0, r, 0).color(1f, 1f, 0f, 0f).endVertex();
                 vertex.vertex(m, r, r, 0).color(1f, 1f, 0f, 0).endVertex();
                 vertex.vertex(m, r, 0, 0).color(1f, 1f, 0f, 0f).endVertex();
@@ -66,12 +65,15 @@ public class RunicEnergyCoreRenderer extends AbstractRunicEnergyContainerRendere
             time = time*5f;
             matrices.pushPose();
 
-            matrices.mulPose(Vector3f.ZP.rotationDegrees(time));
+//            matrices.mulPose(Vector3f.ZP.rotationDegrees(time));
+            matrices.mulPose(rotationDegrees(ZP(),time));
 
             renderRing(matrices,c,2.25f);
             matrices.popPose();
             matrices.pushPose();
-            matrices.mulPose(Vector3f.XP.rotationDegrees(time));
+//            matrices.mulPose(Vector3f.XP.rotationDegrees(time));
+            matrices.mulPose(rotationDegrees(XP(),time));
+
 
             renderRing(matrices,c,1.75f);
             matrices.popPose();

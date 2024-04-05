@@ -4,10 +4,9 @@ import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.compat.jei.JeiRecipeTypes;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.finderfeed.solarcraft.content.recipe_types.infusing_crafting.InfusingCraftingRecipe;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
-import com.mojang.blaze3d.vertex.PoseStack;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -18,11 +17,12 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.Ingredient;
 
 public class InfusingCraftingRecipeCategory implements IRecipeCategory<InfusingCraftingRecipe> {
 
@@ -50,14 +50,14 @@ public class InfusingCraftingRecipeCategory implements IRecipeCategory<InfusingC
 
     @Override
     public IDrawable getIcon() {
-        return helpers.getGuiHelper().createDrawableIngredient(VanillaTypes.ITEM_STACK, SolarcraftItems.INFUSING_TABLE.get().getDefaultInstance());
+        return helpers.getGuiHelper().createDrawableIngredient(VanillaTypes.ITEM_STACK, SCItems.INFUSING_TABLE.get().getDefaultInstance());
     }
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, InfusingCraftingRecipe recipe, IFocusGroup focuses) {
         AncientFragment fragment = recipe.getFragment();
         if (fragment == null) return;
-        if (!ProgressionHelper.doPlayerHasFragment(Minecraft.getInstance().player, fragment) && !Minecraft.getInstance().player.isCreative()){
+        if (!AncientFragmentHelper.doPlayerHasFragment(Minecraft.getInstance().player, fragment) && !Minecraft.getInstance().player.isCreative()){
             builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT).addItemStack(recipe.getOutput().copy());
             return;
         }
@@ -65,9 +65,10 @@ public class InfusingCraftingRecipeCategory implements IRecipeCategory<InfusingC
         for (int i = 0; i < pattern.length;i++){
             String s = pattern[i];
             for (int g = 0; g < s.length();g++){
-                Item stack = recipe.getDefinitions().get(s.charAt(g));
+                Ingredient stack = recipe.getDefinitions().get(s.charAt(g));
                 if (stack != null){
-                    builder.addSlot(RecipeIngredientRole.INPUT,11 + g * 18,11 + i * 18).addItemStack(stack.getDefaultInstance());
+                    builder.addSlot(RecipeIngredientRole.INPUT,11 + g * 18,11 + i * 18)
+                            .addIngredients(stack);
                 }
             }
         }
@@ -75,18 +76,19 @@ public class InfusingCraftingRecipeCategory implements IRecipeCategory<InfusingC
     }
 
     @Override
-    public void draw(InfusingCraftingRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
+    public void draw(InfusingCraftingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         AncientFragment fragment = recipe.getFragment();
         if (fragment == null) return;
-        if (!ProgressionHelper.doPlayerHasFragment(Minecraft.getInstance().player,fragment)){
-            RenderingTools.fill(stack,6,6,104,68,0.3f,0,0.45f,1);
+        if (!AncientFragmentHelper.doPlayerHasFragment(Minecraft.getInstance().player,fragment)){
+            RenderingTools.fill(guiGraphics.pose(),6,6,104,68,0.3f,0,0.45f,1);
             int iter = 0;
             for (FormattedCharSequence charSequence : Minecraft.getInstance().font.split(Component.translatable("solarcraft.fragment_not_unlocked"),80)) {
-                Gui.drawCenteredString(stack,Minecraft.getInstance().font,charSequence,110/2,74/2 + iter*9 - 14,0xffff00);
+                guiGraphics.drawCenteredString(Minecraft.getInstance().font,charSequence,110/2,74/2 + iter*9 - 14,0xffff00);
                 iter++;
             }
         }
-
     }
+
+
 
 }

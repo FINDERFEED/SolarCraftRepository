@@ -1,20 +1,17 @@
 package com.finderfeed.solarcraft.local_library.client.screens;
 
-import com.finderfeed.solarcraft.client.particles.screen.SolarStrikeParticleScreen;
 import com.finderfeed.solarcraft.client.rendering.CoreShaders;
-import com.finderfeed.solarcraft.local_library.client.particles.ScreenParticlesRenderHandler;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import com.mojang.math.Matrix4f;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
-import net.minecraft.client.sounds.SoundManager;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec2;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Matrix4f;
 
 import java.util.List;
 
@@ -54,19 +51,19 @@ public class RadialMenu {
         return sections.get(i);
     }
 
-    public void render(PoseStack matrices,int mouseX,int mouseY,float pTicks,float zOffset){
+    public void render(GuiGraphics graphics,int mouseX,int mouseY,float pTicks,float zOffset){
         int hoveredSection = getSectionUnderMouse(mouseX,mouseY);
-        drawMenu(matrices,mouseX,mouseY,pTicks,zOffset,hoveredSection);
-        renderSectionsAndSetHovered(matrices,mouseX,mouseY,pTicks,zOffset,hoveredSection);
+        drawMenu(graphics,mouseX,mouseY,pTicks,zOffset,hoveredSection);
+        renderSectionsAndSetHovered(graphics,mouseX,mouseY,pTicks,zOffset,hoveredSection);
     }
 
 
-    public void render(PoseStack matrices,int mouseX,int mouseY,float pTicks,float zOffset,int hoveredSection){
-        drawMenu(matrices,mouseX,mouseY,pTicks,zOffset,hoveredSection);
-        renderSectionsAndSetHovered(matrices,mouseX,mouseY,pTicks,zOffset,hoveredSection);
+    public void render(GuiGraphics graphics,int mouseX,int mouseY,float pTicks,float zOffset,int hoveredSection){
+        drawMenu(graphics,mouseX,mouseY,pTicks,zOffset,hoveredSection);
+        renderSectionsAndSetHovered(graphics,mouseX,mouseY,pTicks,zOffset,hoveredSection);
     }
 
-    public void renderSectionsAndSetHovered(PoseStack matrices,int mouseX,int mouseY,float pTicks,float zOffset,int hoveredSection){
+    public void renderSectionsAndSetHovered(GuiGraphics graphics, int mouseX, int mouseY, float pTicks, float zOffset, int hoveredSection){
         double sectionAngle = Math.PI * 2 / settings.sections;
         double offsI = settings.innerRadius / 0.5 * radius;
         double offsO = settings.outRadius / 0.5 * radius;
@@ -75,18 +72,19 @@ public class RadialMenu {
             Vec2 offPos = rotateVector(new Vec2(0,(float)sr),(float)(sectionAngle*i + sectionAngle/2));
 
             RadialMenuSection section = sections.get(i);
-            section.icon.render(matrices,centerX + offPos.x,centerY + offPos.y);
+            section.icon.render(graphics,centerX + offPos.x,centerY + offPos.y);
             section.setHovered(false);
 
         }
         RadialMenuSection s = getSection(hoveredSection);
         if (s != null){
             s.setHovered(true);
-            s.onTooltip.render(matrices,mouseX,mouseY);
+            s.onTooltip.render(graphics,mouseX,mouseY);
         }
     }
 
-    public void drawMenu(PoseStack matrices,int mouseX,int mouseY,float pTicks,float zOffset,int section){
+    public void drawMenu(GuiGraphics graphics,int mouseX,int mouseY,float pTicks,float zOffset,int section){
+        PoseStack matrices = graphics.pose();
         RenderSystem.enableBlend();
         Matrix4f m = matrices.last().pose();
         RenderSystem.setShader(()-> CoreShaders.RADIAL_MENU);
@@ -175,7 +173,7 @@ public class RadialMenu {
         }
 
         public void playDownSound() {
-            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SolarcraftSounds.BUTTON_PRESS2.get(),1,1));
+            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SCSounds.BUTTON_PRESS2.get(),1,1));
         }
     }
 

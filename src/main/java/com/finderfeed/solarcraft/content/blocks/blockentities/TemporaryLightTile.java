@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities;
 
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -11,7 +11,7 @@ public class TemporaryLightTile extends BlockEntity {
     private int livingTime = 20;
 
     public TemporaryLightTile( BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.TEMPORARY_LIGHT.get(), p_155229_, p_155230_);
+        super(SCTileEntities.TEMPORARY_LIGHT.get(), p_155229_, p_155230_);
     }
 
 

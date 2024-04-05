@@ -1,10 +1,18 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "B": {"item": "minecraft:obsidian"},
-    "C": {"item": "solarcraft:energetic_ingot"},
-    "D": {"item": "solarcraft:algadium_ingot"},
-    "F": {"item": "solarcraft:runic_core"}
+    "B": {
+      "item": "minecraft:obsidian"
+    },
+    "C": {
+      "item": "solarcraft:energetic_ingot"
+    },
+    "D": {
+      "item": "solarcraft:algadium_ingot"
+    },
+    "F": {
+      "item": "solarcraft:runic_core"
+    }
   },
   "pattern": [
     "DCD",
@@ -18,7 +26,9 @@
   },
   "time": 600,
   "fragment": "runic_energy_core",
-  "zeta": 5000,
-  "kelda": 5000,
-  "catalysts": "AUAAUAAUAAUA"
+  "catalysts": "AUAAUAAUAAUA",
+  "re_cost": {
+    "zeta": 5000,
+    "kelda": 5000
+  }
 }

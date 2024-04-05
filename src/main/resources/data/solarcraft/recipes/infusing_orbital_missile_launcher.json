@@ -1,0 +1,47 @@
+{
+  "type": "solarcraft:infusing_new",
+  "items": {
+    "A": {
+      "item": "solarcraft:crystal_heart_piece"
+    },
+    "B": {
+      "item": "solarcraft:crystal_star"
+    },
+    "C": {
+      "item": "minecraft:iron_block"
+    },
+    "D": {
+      "item": "solarcraft:runic_core"
+    },
+    "E": {
+      "item": "solarcraft:enderium_ingot"
+    },
+    "F": {
+      "item": "solarcraft:void_core"
+    },
+    "G": {
+      "item": "solarcraft:materialization_core"
+    },
+    "H": {
+      "item": "solarcraft:energy_core"
+    }
+  },
+  "pattern": [
+    "ECE",
+    "CC",
+    "FBG",
+    "CC",
+    "EAE"
+  ],
+  "result": {
+    "item": "solarcraft:orbital_missile_launcher"
+  },
+  "time": 2000,
+  "count": 1,
+  "fragment": "orbital_missile_launcher",
+  "re_cost": {
+    "ardo": 1000,
+    "tera": 2000,
+    "kelda": 3000
+  }
+}

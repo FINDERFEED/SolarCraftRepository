@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.content.blocks.primitive;
 
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import net.minecraft.core.BlockPos;
@@ -39,7 +39,7 @@ public class ThrownLightBlock extends Block {
         double ry = random.nextDouble() * 0.5 - 0.25f;
         double rz = random.nextDouble() * 0.5 - 0.25f;
         Vec3 p = Helpers.getBlockCenter(pos).add(rx,ry,rz);
-        ClientHelpers.Particles.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+        ClientHelpers.Particles.createParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                 p.x,p.y,p.z,0,0.05,0,random.nextInt(20) + 200,random.nextInt(20) + 200,20,
                 random.nextFloat() * 0.25f + 0.25f);
 

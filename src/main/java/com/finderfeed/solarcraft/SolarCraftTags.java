@@ -39,40 +39,40 @@ public class SolarCraftTags {
 
     public static final String DIVINE_ARMOR_TAG = "divine_armor_tag";
 
-    public static class SBiomes {
-        public static final TagKey<Biome> IS_DESERT =
-                TagKey.create(Registry.BIOME_REGISTRY,
-                new ResourceLocation(SolarCraft.MOD_ID,"is_desert"));
+//    public static class SBiomes {
+//        public static final TagKey<Biome> IS_DESERT =
+//                TagKey.create(Registry.BIOME_REGISTRY,
+//                new ResourceLocation(SolarCraft.MOD_ID,"is_desert"));
+//
+//        public static final TagKey<Biome> IS_SAVANNA =
+//                TagKey.create(Registry.BIOME_REGISTRY,
+//                        new ResourceLocation(SolarCraft.MOD_ID,"is_savanna"));
+//
+//        public static final TagKey<Biome> IS_PLAINS =
+//                TagKey.create(Registry.BIOME_REGISTRY,
+//                        new ResourceLocation(SolarCraft.MOD_ID,"is_plains"));
+//
+//        public static final TagKey<Biome> IS_RADIANT_LAND =
+//                TagKey.create(Registry.BIOME_REGISTRY,
+//                        new ResourceLocation(SolarCraft.MOD_ID,"is_radiant_land"));
+//    }
 
-        public static final TagKey<Biome> IS_SAVANNA =
-                TagKey.create(Registry.BIOME_REGISTRY,
-                        new ResourceLocation(SolarCraft.MOD_ID,"is_savanna"));
-
-        public static final TagKey<Biome> IS_PLAINS =
-                TagKey.create(Registry.BIOME_REGISTRY,
-                        new ResourceLocation(SolarCraft.MOD_ID,"is_plains"));
-
-        public static final TagKey<Biome> IS_RADIANT_LAND =
-                TagKey.create(Registry.BIOME_REGISTRY,
-                        new ResourceLocation(SolarCraft.MOD_ID,"is_radiant_land"));
-    }
-
-    public static class SStructures{
-
-        public static final TagKey<Biome> HAS_CHARGING_STATION = create("charging_station");
-        public static final TagKey<Biome> HAS_CRYSTAL_BOSS_ROOM = create("crystal_boss_room");
-        public static final TagKey<Biome> HAS_DIM_SHARD_DUNGEON = create("dim_shard_dungeon");
-        public static final TagKey<Biome> HAS_DUNGEON_ONE = create("dungeon_one");
-        public static final TagKey<Biome> HAS_TRAP_DUNGEON = create("has_trap_dungeon");
-        public static final TagKey<Biome> HAS_MAGICIAN_TOWER = create("magician_tower");
-        public static final TagKey<Biome> HAS_RUNIC_ELEMENTAL_ARENA = create("runic_elemental_arena");
-        public static final TagKey<Biome> HAS_CLEARING_RITUAL_STRUCTURE = create("clearing_ritual_structure");
-        public static final TagKey<Biome> HAS_SUN_SHARD_PUZZLE = create("sun_shard_puzzle");
-
-
-        public static TagKey<Biome> create(String name){
-            return TagKey.create(Registry.BIOME_REGISTRY,new ResourceLocation(SolarCraft.MOD_ID,"has_structure/"+name));
-        }
-    }
+//    public static class SStructures{
+//
+//        public static final TagKey<Biome> HAS_CHARGING_STATION = create("charging_station");
+//        public static final TagKey<Biome> HAS_CRYSTAL_BOSS_ROOM = create("crystal_boss_room");
+//        public static final TagKey<Biome> HAS_DIM_SHARD_DUNGEON = create("dim_shard_dungeon");
+//        public static final TagKey<Biome> HAS_DUNGEON_ONE = create("dungeon_one");
+//        public static final TagKey<Biome> HAS_TRAP_DUNGEON = create("has_trap_dungeon");
+//        public static final TagKey<Biome> HAS_MAGICIAN_TOWER = create("magician_tower");
+//        public static final TagKey<Biome> HAS_RUNIC_ELEMENTAL_ARENA = create("runic_elemental_arena");
+//        public static final TagKey<Biome> HAS_CLEARING_RITUAL_STRUCTURE = create("clearing_ritual_structure");
+//        public static final TagKey<Biome> HAS_SUN_SHARD_PUZZLE = create("sun_shard_puzzle");
+//
+//
+//        public static TagKey<Biome> create(String name){
+//            return TagKey.create(Registry.BIOME_REGISTRY,new ResourceLocation(SolarCraft.MOD_ID,"has_structure/"+name));
+//        }
+//    }
 
 }

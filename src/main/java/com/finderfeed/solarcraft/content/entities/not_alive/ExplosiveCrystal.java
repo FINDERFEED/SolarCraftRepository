@@ -1,13 +1,15 @@
 package com.finderfeed.solarcraft.content.entities.not_alive;
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.misc_things.CrystalBossBuddy;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -25,9 +27,9 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
@@ -53,7 +55,7 @@ public class ExplosiveCrystal extends Mob implements CrystalBossBuddy {
             if (isDeploying()){
                 for (int i = 0;i < 6;i++){
                     double[] xz = FDMathHelper.rotatePointDegrees(1.5*(1-(float)tickCount / DEPLOYING_TIME),0,i*60 + tickCount*5);
-                    ClientHelpers.Particles.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                    ClientHelpers.Particles.createParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                             position().x + xz[0],position().y + 1.5,position().z + xz[1],0,0,0,()->200 + level.random.nextInt(55),
                             ()->0,()->0,0.3f);
                 }
@@ -65,7 +67,7 @@ public class ExplosiveCrystal extends Mob implements CrystalBossBuddy {
                     for (LivingEntity living : level.getEntitiesOfClass(LivingEntity.class, new AABB(-32, -32, -32, 32, 32, 32).move(position()),
                             (l)->!(l instanceof CrystalBossBuddy))) {
                         living.invulnerableTime = 0;
-                        living.hurt(DamageSource.MAGIC, 60);
+                        living.hurt(SCDamageSources.livingArmorPierce(this), 60);
 
                     }
                     level.playSound(null,position().x,position().y + this.getBbHeight()/2,position().z, SoundEvents.GENERIC_EXPLODE, SoundSource.HOSTILE,1,1);
@@ -146,7 +148,7 @@ public class ExplosiveCrystal extends Mob implements CrystalBossBuddy {
     }
 
     @Override
-    public boolean ignoreExplosion() {
+    public boolean ignoreExplosion(Explosion e) {
         return true;
     }
 
@@ -157,12 +159,12 @@ public class ExplosiveCrystal extends Mob implements CrystalBossBuddy {
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource p_21239_) {
-        return SolarcraftSounds.CRYSTAL_HIT.get();
+        return SCSounds.CRYSTAL_HIT.get();
     }
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SolarcraftSounds.CRYSTAL_HIT.get();
+        return SCSounds.CRYSTAL_HIT.get();
     }
 
     @Override
@@ -183,10 +185,10 @@ public class ExplosiveCrystal extends Mob implements CrystalBossBuddy {
         this.entityData.define(ACTIVATION_SECONDS_REMAINING,(byte)30);
     }
 
-    @Override
-    public Packet<?> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
+//    @Override
+//    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+//        return NetworkHooks.getEntitySpawningPacket(this);
+//    }
 
     @Override
     public void load(CompoundTag tag) {

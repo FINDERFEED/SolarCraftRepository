@@ -1,15 +1,17 @@
 package com.finderfeed.solarcraft.packet_handler.packets;
 
 import com.finderfeed.solarcraft.packet_handler.ClientPacketHandles;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
 import com.finderfeed.solarcraft.registries.ConfigRegistry;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent;
-
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class SendConfigsToClientPacket {
+@Packet("send_configs_to_client_packet")
+public class SendConfigsToClientPacket extends FDPacket {
 
     private List<String> idJson;
 
@@ -25,7 +27,8 @@ public class SendConfigsToClientPacket {
         }
     }
 
-    public SendConfigsToClientPacket(FriendlyByteBuf buf){
+
+    public SendConfigsToClientPacket(FriendlyByteBuf buf) {
         int size = buf.readInt();
         idJson = new ArrayList<>();
         for (int i = 0; i < size;i++){
@@ -42,10 +45,19 @@ public class SendConfigsToClientPacket {
     }
 
 
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(()->{
-            ClientPacketHandles.handleClientConfigsPacket(idJson);
-        });
-        ctx.get().setPacketHandled(true);
+//    public void handle(PlayPayloadContext ctx) {
+//
+//            ClientPacketHandles.handleClientConfigsPacket(idJson);
+//    }
+
+    @Override
+    public void clientPlayHandle(PlayPayloadContext ctx) {
+        ClientPacketHandles.handleClientConfigsPacket(idJson);
+    }
+
+    @Override
+    public void write(FriendlyByteBuf friendlyByteBuf) {
+        this.toBytes(friendlyByteBuf);
+        
     }
 }

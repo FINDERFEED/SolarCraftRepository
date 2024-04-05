@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.client.particles;
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
-import com.finderfeed.solarcraft.client.rendering.rendertypes.SolarCraftRenderTypes;
+import com.finderfeed.solarcraft.client.rendering.rendertypes.SCRenderTypes;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.Minecraft;
@@ -54,7 +54,7 @@ public class SmallSolarStrikeParticle extends SolarcraftParticle {
     public ParticleRenderType getRenderType() {
         //setAlphaState(DEFAULT_ALPHA).setTransparencyState(TRANSLUCENT_TRANSPARENCY).setLightmapState(LIGHTMAP).setDepthTestState(NO_DEPTH_TEST).setWriteMaskState(COLOR_WRITE)
 
-        return SolarCraftRenderTypes.ParticleRenderTypes.SOLAR_STRIKE_PARTICLE_RENDER;
+        return SCRenderTypes.ParticleRenderTypes.SOLAR_STRIKE_PARTICLE_RENDER_TYPE;
     }
 
 

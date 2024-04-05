@@ -1,8 +1,8 @@
 package com.finderfeed.solarcraft.client.rendering.shaders.post_chains;
 
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
 import net.minecraft.client.renderer.EffectInstance;
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
 
 import java.util.Map;
 
@@ -21,7 +21,7 @@ public class UniformPlusPlus {
             if (uniform instanceof Float a) {
                 shader.safeGetUniform(name).set(a);
             }else if (uniform instanceof Matrix4f a){
-                shader.safeGetUniform(name).set(a.copy());
+                shader.safeGetUniform(name).set(new Matrix4f(a));
             }else if (uniform instanceof Vector3f a){
                 shader.safeGetUniform(name).set(a);
             }

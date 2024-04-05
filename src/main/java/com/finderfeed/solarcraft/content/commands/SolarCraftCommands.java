@@ -1,17 +1,26 @@
 package com.finderfeed.solarcraft.content.commands;
 
+import com.finderfeed.solarcraft.SolarCraft;
+import com.finderfeed.solarcraft.content.abilities.AbilityHelper;
+import com.finderfeed.solarcraft.content.abilities.ability_classes.AbstractAbility;
+import com.finderfeed.solarcraft.content.entities.DungeonRay;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.progression_tree.ProgressionTree;
 import com.finderfeed.solarcraft.helpers.Helpers;
-import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
+import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.AnimatedObject;
+import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.Animation;
+import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.manager.AnimationTicker;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.SCAttachmentTypes;
+import com.finderfeed.solarcraft.registries.abilities.AbilitiesRegistry;
+import com.finderfeed.solarcraft.registries.animations.AnimationReloadableResourceListener;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -21,18 +30,18 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 
+
+import net.neoforged.neoforge.items.IItemHandler;
 import java.util.Locale;
 
 public class SolarCraftCommands {
@@ -50,7 +59,7 @@ public class SolarCraftCommands {
                                         .executes((e)->revokeProgression(e.getSource(),e.getArgument("progression",String.class))))))
 
 
-                        .then(RetainFragments.register())
+                        .then(RestoreFragments.register())
                         .then(Commands.literal("structure")
                                 .then(Commands.literal("construct").then(Commands.argument("structure_code",new SolarcraftStructureArgument())
                                 .executes((cmds)-> constructMultiblock(cmds.getSource(),cmds.getArgument("structure_code", String.class))))))
@@ -61,21 +70,90 @@ public class SolarCraftCommands {
                                                 .executes((stack)->setREAmount(stack.getSource(),EntityArgument.getPlayer(stack,"target"),
                                                                 stack.getArgument("type",String.class),
                                                                 stack.getArgument("amount",Float.class)))))))
-                        )
+                        ).then(Commands.literal("animtest")
+                                .then(Commands.argument("ticker",StringArgumentType.string())
+                                        .then(Commands.argument("animation",StringArgumentType.string())
+                                                .executes(stack->testEntityAnimation(stack.getSource(),
+                                                        stack.getArgument("animation",String.class),
+                                                        stack.getArgument("ticker",String.class))))))
+                        .then(Commands.literal("abilities")
+                                .then(Commands.literal("unlock")
+                                        .then(Commands.argument("ability_id",new SCAbilityArgument())
+                                                .executes(css->unlockAbility(css.getSource(),css.getArgument("ability_id",String.class)))))
+                                .then(Commands.literal("revoke")
+                                        .then(Commands.argument("ability_id",new SCAbilityArgument())
+                                                .executes(css->revokeAbility(css.getSource(),css.getArgument("ability_id",String.class))))))
+                        .then(Commands.literal("stop_dungeon_rays").executes((stack)->{
+                            DungeonRay.stop = !DungeonRay.stop;
+                            return 1;
+                        }))
 
         );
     }
 
+    public static int revokeAbility(CommandSourceStack stack,String abilityId) throws CommandSyntaxException {
+        AbstractAbility ability = AbilitiesRegistry.getAbilityByID(abilityId);
+        if (ability != null){
+            AbilityHelper.setAbilityUsable(stack.getPlayerOrException(), ability,false);
+            stack.sendSuccess(()->Component.literal("Successfully revoked ability."),true);
+        }else {
+            stack.sendFailure(Component.literal("No ability exists with id: " + abilityId));
+        }
+
+        return 1;
+    }
+
+    public static int unlockAbility(CommandSourceStack stack,String abilityId) throws CommandSyntaxException {
+        AbstractAbility ability = AbilitiesRegistry.getAbilityByID(abilityId);
+        if (ability != null){
+            AbilityHelper.setAbilityUsable(stack.getPlayerOrException(), ability,true);
+            stack.sendSuccess(()->Component.literal("Successfully unlocked ability."),true);
+
+        }else {
+            stack.sendFailure(Component.literal("No ability exists with id: " + abilityId));
+        }
+
+        return 1;
+    }
+
+    public static int testEntityAnimation(CommandSourceStack src,String animationName,String tickerName) throws CommandSyntaxException {
+        ServerPlayer player = src.getPlayerOrException();
+
+        Vec3 i = player.position().add(0,2,0);
+        Vec3 end = i.add(player.getLookAngle().multiply(20,20,20));
+
+        HitResult result = Helpers.getEntityHitResultIgnoreBlocks(player,player.level(),i,end,(e)->true);
+        if (result instanceof EntityHitResult entityHitResult && entityHitResult.getEntity() instanceof AnimatedObject object){
+            if (!animationName.equals("null")) {
+                Animation animation = AnimationReloadableResourceListener.INSTANCE.getAnimation(new ResourceLocation(SolarCraft.MOD_ID,animationName));
+                if (animation == null) {
+                    src.sendFailure(Component.literal("Animation doesn't exist: " + animationName).withStyle(ChatFormatting.RED));
+                    return 0;
+                }
+                object.getAnimationManager().setAnimation(tickerName, new AnimationTicker.Builder(animation)
+                        .replaceable(false)
+                        .startFrom(0)
+                        .toNullTransitionTime(10)
+                        .build());
+            }else{
+                object.getAnimationManager().stopAnimation(tickerName);
+            }
+        }else{
+            src.sendFailure(Component.literal("Entity not found").withStyle(ChatFormatting.RED));
+        }
+        return 1;
+    }
+
     public static int revokeProgression(CommandSourceStack src,String code) throws CommandSyntaxException {
-        Progression progression = Progression.getAchievementByName(code);
+        Progression progression = Progression.getProgressionByName(code);
         ServerPlayer pl = src.getPlayerOrException();
         if (code.equals("all")){
             for (Progression a : Progression.allProgressions){
                 Helpers.setProgressionCompletionStatus(a,src.getPlayerOrException(),false);
-                src.sendSuccess(Component.translatable("solarcraft.success_revoke")
+                src.sendSuccess(()->Component.translatable("solarcraft.success_revoke")
                         .append(Component.literal(" "+a.translation.getString()).withStyle(ChatFormatting.GOLD)),false);
             }
-            Helpers.updateProgression(src.getPlayerOrException());
+            Helpers.updateProgressionsOnClient(src.getPlayerOrException());
 
         }else if (progression != null){
             if (Helpers.hasPlayerCompletedProgression(progression,pl)){
@@ -88,9 +166,9 @@ public class SolarCraftCommands {
                 }
                 if (flag) {
                     Helpers.setProgressionCompletionStatus(progression, pl, false);
-                    src.sendSuccess(Component.translatable("solarcraft.success_revoke")
+                    src.sendSuccess(()->Component.translatable("solarcraft.success_revoke")
                             .append(Component.literal(" " + progression.getProgressionCode()).withStyle(ChatFormatting.GOLD)), false);
-                    Helpers.updateProgression(src.getPlayerOrException());
+                    Helpers.updateProgressionsOnClient(src.getPlayerOrException());
                 }else{
                     src.sendFailure(Component.translatable("solarcraft.failure_revoke"));
 
@@ -106,23 +184,23 @@ public class SolarCraftCommands {
     }
 
     public static int unlockProgression(CommandSourceStack src,String code) throws CommandSyntaxException {
-        Progression progression = Progression.getAchievementByName(code);
+        Progression progression = Progression.getProgressionByName(code);
         ServerPlayer pl = src.getPlayerOrException();
         if (code.equals("all")){
             for (Progression a : Progression.allProgressions){
                 Helpers.setProgressionCompletionStatus(a,src.getPlayerOrException(),true);
-                src.sendSuccess(Component.translatable("solarcraft.success_unlock")
+                src.sendSuccess(()->Component.translatable("solarcraft.success_unlock")
                         .append(Component.literal(" "+a.translation.getString()).withStyle(ChatFormatting.GOLD)),false);
             }
-            Helpers.updateProgression(src.getPlayerOrException());
+            Helpers.updateProgressionsOnClient(src.getPlayerOrException());
 
         }else if (progression != null){
             if (Helpers.canPlayerUnlock(progression,pl)){
                 Helpers.setProgressionCompletionStatus(progression,pl,true);
-                src.sendSuccess(Component.translatable("solarcraft.success_unlock")
+                src.sendSuccess(()->Component.translatable("solarcraft.success_unlock")
                         .append(Component.literal(" "+ progression.getProgressionCode()).withStyle(ChatFormatting.GOLD)),false);
 
-                Helpers.updateProgression(src.getPlayerOrException());
+                Helpers.updateProgressionsOnClient(src.getPlayerOrException());
 
 
             }else {
@@ -136,14 +214,14 @@ public class SolarCraftCommands {
     }
 
     public static int progressionsHelp(CommandSourceStack src) throws CommandSyntaxException {
-        src.sendSuccess(Component.translatable("solarcraft.gethelpcommand").withStyle(ChatFormatting.GOLD),false);
+        src.sendSuccess(()->Component.translatable("solarcraft.gethelpcommand").withStyle(ChatFormatting.GOLD),false);
         for (Progression ach : Progression.allProgressions){
 
-            src.sendSuccess(Component.literal(ach.translation.getString()).withStyle(ChatFormatting.GOLD)
+            src.sendSuccess(()->Component.literal(ach.translation.getString()).withStyle(ChatFormatting.GOLD)
                     .append(Component.literal(" -> "+ach.getProgressionCode())).withStyle(ChatFormatting.WHITE),false);
 
         }
-        src.sendSuccess(Component.literal("all").withStyle(ChatFormatting.GOLD)
+        src.sendSuccess(()->Component.literal("all").withStyle(ChatFormatting.GOLD)
                 .append(" -> unlocks/revokes all").withStyle(ChatFormatting.WHITE),false);
         return 0;
     }
@@ -166,26 +244,27 @@ public class SolarCraftCommands {
     public static int fillLexicon(CommandSourceStack src) throws CommandSyntaxException {
         ServerPlayer player = src.getPlayerOrException();
         if (player.getMainHandItem().getItem() instanceof SolarLexicon){
-            LazyOptional<IItemHandler> cap = player.getMainHandItem().getCapability(ForgeCapabilities.ITEM_HANDLER);
-            if (cap.isPresent()){
-                cap.ifPresent((inv)->{
-                    try {
-                        for (int i = 0; i < AncientFragment.getAllFragments().length; i++) {
 
-                            AncientFragment fragment = AncientFragment.getAllFragments()[i];
-                            ItemStack stack = SolarcraftItems.INFO_FRAGMENT.get().getDefaultInstance();
-                            ProgressionHelper.applyTagToFragment(stack, fragment);
+            IItemHandler inv = player.getMainHandItem().getData(SCAttachmentTypes.LEXICON_INVENTORY);
+            if (inv != null){
+
+                    try {
+                        for (int i = 0; i < AncientFragment.getAllFragments().size(); i++) {
+
+                            AncientFragment fragment = AncientFragment.getAllFragments().get(i);
+                            ItemStack stack = SCItems.INFO_FRAGMENT.get().getDefaultInstance();
+                            AncientFragmentHelper.applyTagToFragment(stack, fragment);
                             inv.insertItem(i, stack, false);
 
 
                         }
-                        src.sendSuccess(Component.literal("Filled lexicon inventory"),false);
+                        src.sendSuccess(()->Component.literal("Filled lexicon inventory"),false);
                     }catch (Exception e){
                         e.printStackTrace();
                         src.sendFailure(Component.literal("CAUGHT FATAL ERROR DURING COMMAND, STACK TRACE PRINTED"));
                     }
 
-                });
+
             }else {
                 src.sendFailure(Component.literal("Not found inventory"));
             }
@@ -198,8 +277,8 @@ public class SolarCraftCommands {
     public static int constructMultiblock(CommandSourceStack src,String id) throws CommandSyntaxException{
         ServerPlayer player = src.getPlayerOrException();
         if (Multiblocks.STRUCTURES.containsKey(id)){
-            Multiblocks.STRUCTURES.get(id).placeInWorld(player,player.level,player.getOnPos().above());
-            src.sendSuccess(Component.literal("Constructed!"),false);
+            Multiblocks.STRUCTURES.get(id).placeInWorld(player,player.level(),player.getOnPos().above());
+            src.sendSuccess(()->Component.literal("Constructed!"),false);
         }else{
             src.sendFailure(Component.literal("Structure doesnt exist"));
         }
@@ -211,7 +290,7 @@ public class SolarCraftCommands {
 
 
 
-class RetainFragments{
+class RestoreFragments {
     public static ArgumentBuilder<CommandSourceStack,?> register(){
         return Commands.literal("fragments")
                 .requires(cs->cs.hasPermission(0))
@@ -224,8 +303,8 @@ class RetainFragments{
                                     String id = cmd.getArgument("fragment_id",String.class);
                                     AncientFragment fragment = AncientFragment.getFragmentByID(id);
                                     if (fragment != null){
-                                        ProgressionHelper.givePlayerFragment(fragment,player);
-                                        stack.sendSuccess(Component.literal("Fragment successefuly given."),true);
+                                        AncientFragmentHelper.givePlayerFragment(fragment,player);
+                                        stack.sendSuccess(()->Component.literal("Fragment successefuly given."),true);
                                     }else{
                                         stack.sendFailure(Component.literal("This fragments doesn't exist."));
                                     }
@@ -239,8 +318,8 @@ class RetainFragments{
                                     String id = cmd.getArgument("fragment_id",String.class);
                                     AncientFragment fragment = AncientFragment.getFragmentByID(id);
                                     if (fragment != null){
-                                        ProgressionHelper.revokePlayerFragment(fragment,player);
-                                        stack.sendSuccess(Component.literal("Fragment successfully revoked."),true);
+                                        AncientFragmentHelper.revokePlayerFragment(fragment,player);
+                                        stack.sendSuccess(()->Component.literal("Fragment successfully revoked."),true);
                                     }else{
                                         stack.sendFailure(Component.literal("This fragments doesn't exist."));
                                     }
@@ -254,7 +333,7 @@ class RetainFragments{
     public static int unlockAllFragments(CommandSourceStack src) throws CommandSyntaxException {
         ServerPlayer playerEntity  = src.getPlayerOrException();
         for (AncientFragment fragment : AncientFragment.getAllFragments()){
-            ProgressionHelper.givePlayerFragment(fragment,playerEntity);
+            AncientFragmentHelper.givePlayerFragment(fragment,playerEntity);
         }
         Helpers.updateFragmentsOnClient(playerEntity);
         return 0;
@@ -262,7 +341,7 @@ class RetainFragments{
     public static int refreshFragments(CommandSourceStack src) throws CommandSyntaxException {
         ServerPlayer playerEntity  = src.getPlayerOrException();
         for (AncientFragment fragment : AncientFragment.getAllFragments()){
-            ProgressionHelper.revokePlayerFragment(fragment,playerEntity);
+            AncientFragmentHelper.revokePlayerFragment(fragment,playerEntity);
         }
         Helpers.updateFragmentsOnClient(playerEntity);
         return 0;

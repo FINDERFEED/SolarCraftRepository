@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.local_library.client.tooltips.animatable_omponents;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ public class ComponentSequence extends BaseComponent{
     }
 
     @Override
-    public void render(PoseStack matrices, int x, int y, float pTicks, int mouseX, int mouseY,int ticker,int animationLength) {
+    public void render(GuiGraphics matrices, int x, int y, float pTicks, int mouseX, int mouseY, int ticker, int animationLength) {
         int[] xy = this.getAlignment().getCoords(this,x,y);
         xy[0] += this.getInnerBorder();
         xy[1] += this.getInnerBorder();

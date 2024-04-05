@@ -1,12 +1,11 @@
 package com.finderfeed.solarcraft.content.items.solar_lexicon;
 
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
-
 import javax.annotation.Nonnull;
 
 public class SolarLexiconContainerSlot extends SlotItemHandler {
@@ -21,9 +20,9 @@ public class SolarLexiconContainerSlot extends SlotItemHandler {
     @Override
     public boolean mayPlace(@Nonnull ItemStack stack) {
 
-        CompoundTag nbt = stack.getTagElement(ProgressionHelper.TAG_ELEMENT);
+        CompoundTag nbt = stack.getTagElement(AncientFragmentHelper.TAG_ELEMENT);
         if (nbt != null){
-            if (AncientFragment.getFragmentByID(nbt.getString(ProgressionHelper.FRAG_ID)) != frag){
+            if (AncientFragment.getFragmentByID(nbt.getString(AncientFragmentHelper.FRAG_ID)) != frag){
                 return false;
             }
         }else{

@@ -4,46 +4,65 @@ import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.ClearingRitual;
 import com.finderfeed.solarcraft.content.entities.CrystalBossEntity;
 import com.finderfeed.solarcraft.content.entities.runic_elemental.RunicElementalBoss;
+import com.finderfeed.solarcraft.content.entities.uldera_crystal.UlderaLightningEntity;
 import com.finderfeed.solarcraft.events.my_events.ProgressionUnlockEvent;
+import com.finderfeed.solarcraft.events.other_events.event_handler.ModEventHandler;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.RadiantLandCleanedData;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.*;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.progression_tree.ProgressionTree;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.packets.UpdateProgressionOnClient;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.packets.UpdateProgressionsOnClient;
 import com.finderfeed.solarcraft.registries.SolarcraftGamerules;
-import com.mojang.blaze3d.vertex.*;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
+
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.SectionPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.Container;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.ExplosionDamageCalculator;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.phys.*;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.neoforged.fml.ModList;
+import net.neoforged.neoforge.common.NeoForge;
+
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.LevelChunk;
-import net.minecraftforge.common.MinecraftForge;
+import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforgespi.language.ModFileScanData;
+import org.objectweb.asm.Type;
 
-import net.minecraftforge.common.world.ForgeChunkManager;
-import net.minecraftforge.network.NetworkDirection;
-
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.Predicate;
 
@@ -60,11 +79,95 @@ public class Helpers {
     public static BlockPos NULL_POS = new BlockPos(0,-100,0);
 
 
+    public static void placeItemInChest(ChestBlockEntity tile,ItemStack item,boolean createItemEntity){
+        ItemStack copy = item.copy();
+        for (int i = 0; i < tile.getContainerSize();i++){
+            if (copy.getCount() == 0) break;
+            ItemStack stack = tile.getItem(i);
+            if (stack.isEmpty()){
+                tile.setItem(i,copy.copy());
+                copy.setCount(0);
+                break;
+            }else if (stack.is(copy.getItem())){
+                addItemToItem(copy,stack);
+            }
+        }
+        if (createItemEntity && copy.getCount() != 0){
+            BlockPos pos = tile.getBlockPos();
+            ItemEntity entity = new ItemEntity(tile.getLevel(),pos.getX() + 0.5, pos.getY() + 1.5,pos.getZ() + 0.5,
+                    copy.copy());
+            entity.setDeltaMovement(0,0,0);
+            tile.getLevel().addFreshEntity(entity);
+        }
+    }
 
+    public static void addItemToItem(ItemStack add,ItemStack to){
+        if (add.getItem() != to.getItem()) return;
+        int maxCount = to.getMaxStackSize();
+        int remCount = maxCount - to.getCount();
+        int toAdd = Math.min(add.getCount(),remCount);
+        to.setCount(to.getCount() + toAdd);
+        add.setCount(add.getCount() - toAdd);
+    }
+
+    public static void spawnUlderaLightning(Level level, Vec3 spawnPos, float damage, int delay, int height){
+        UlderaLightningEntity lightning = new UlderaLightningEntity(SCEntityTypes.ULDERA_LIGHTNING.get(),level);
+        lightning.damage = damage;
+        lightning.setLightningDelay(delay);
+        lightning.setHeight(height);
+        lightning.setPos(spawnPos);
+        level.addFreshEntity(lightning);
+    }
+
+    public static HitResult getEntityHitResultIgnoreBlocks(Player player, Level level, Vec3 init, Vec3 end, Predicate<Entity> predicate){
+        AABB box = new AABB(init,end);
+        return ProjectileUtil.getEntityHitResult(level,player,init,end,box,predicate);
+    }
+
+    @Nullable
+    public static HitResult getEntityHitResult(Entity exclude,Level level, Vec3 init, Vec3 end, Predicate<Entity> predicate){
+        AABB box = new AABB(init,end);
+
+        ClipContext clipContext = new ClipContext(init,end, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,exclude);
+        BlockHitResult hitResult = level.clip(clipContext);
+        if (hitResult.getType() != HitResult.Type.MISS){
+            end = hitResult.getLocation();
+        }
+
+        return ProjectileUtil.getEntityHitResult(level,exclude,init,end,box,predicate);
+    }
+
+    public static CompoundTag getPlayerSolarcraftTag(Player player){
+        if (player.getPersistentData().contains("solarcraft_data")){
+            return player.getPersistentData().getCompound("solarcraft_data");
+        }else{
+            CompoundTag tag = new CompoundTag();
+            player.getPersistentData().put("solarcraft_data",tag);
+            return tag;
+        }
+    }
+
+
+    public static Direction directionByNormal(int x,int y, int z){
+        if (x == 1){
+            return Direction.EAST;
+        }else if (x == -1){
+            return Direction.WEST;
+        }else if (y == 1){
+            return Direction.UP;
+        }else if (y == -1){
+            return Direction.DOWN;
+        }else if (z == 1){
+            return Direction.SOUTH;
+        }else if (z == -1){
+            return Direction.NORTH;
+        }
+        throw new RuntimeException("No normal exists for: " + x + " " + y + " " + z);
+    }
     public static boolean isRadiantLandCleanedServer(ServerLevel level){
         RadiantLandCleanedData data = level.getServer().overworld()
                 .getDataStorage()
-                .computeIfAbsent(RadiantLandCleanedData::load,()->new RadiantLandCleanedData(false),"is_radiant_land_cleaned");
+                .computeIfAbsent(RadiantLandCleanedData.factory(false),"is_radiant_land_cleaned");
         return data.isCleaned();
     }
 
@@ -73,7 +176,7 @@ public class Helpers {
     }
 
 
-    public static void drawBoundedText(PoseStack matrices,int posx,int posy,int bound,String s,int color){
+    public static void drawBoundedText(GuiGraphics graphics, int posx, int posy, int bound, String s, int color){
         StringBuilder str = new StringBuilder(s);
         for (int a = 0;a < s.length();a++) {
             if (a % bound == 0 ){
@@ -100,7 +203,7 @@ public class Helpers {
 
         int y = 0;
         for (String strings : string){
-            GuiComponent.drawString(matrices, Minecraft.getInstance().font, strings,posx,posy+y,color);
+            graphics.drawString(Minecraft.getInstance().font, strings,posx,posy+y,color);
             y+=10;
         }
 
@@ -157,7 +260,7 @@ public class Helpers {
                 level.getChunkAt(worldPosition.offset(-16,0,-16)),level.getChunkAt(worldPosition.offset(16,0,-16)),level.getChunkAt(worldPosition.offset(-16,0,16))};
     }
 
-    public static double getGipotenuza(double a,double b){
+    public static double getHypotenuse(double a, double b){
         return Math.sqrt(a*a + b*b);
     }
 
@@ -166,7 +269,7 @@ public class Helpers {
         Vec3 vec1 = new Vec3(pos1.getX()+0.5f,pos1.getY()+0.5f,pos1.getZ()+0.5f);
         Vec3 vec2 = new Vec3(pos2.getX()+0.5f,pos2.getY()+0.5f,pos2.getZ()+0.5f);
         Vec3 vector = new Vec3(vec2.x - vec1.x,vec2.y - vec1.y,vec2.z - vec1.z);
-        ClipContext ctx = new ClipContext(vec1.add(vector.normalize()),vec2, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,null);
+        ClipContext ctx = new ClipContext(vec1.add(vector.normalize()),vec2, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,CollisionContext.empty());
         BlockHitResult result = world.clip(ctx);
         boolean first = world.getBlockState(result.getBlockPos()).getBlock() == world.getBlockState(pos2).getBlock();
         boolean second = Helpers.equalsBlockPos(result.getBlockPos(),pos2);
@@ -179,45 +282,17 @@ public class Helpers {
         return false;
     }
 
+    public static CompoundTag getTag(CompoundTag from,String tagName){
+        if (from.contains(tagName)){
+            return from.getCompound(tagName);
+        }else{
+            CompoundTag tag = new CompoundTag();
+            from.put(tagName,tag);
+            return tag;
+        }
+    }
 
-    //structure towards north, initPos is the pos at the lowest by y lowest by z left corner
-
-//    public static boolean checkStructure(Level world,BlockPos initPos,Multiblock struct,boolean ignoreOtherBlocks){
-//        BlockPos pos = initPos;
-//        String[][] structure = struct.struct;
-//        for (int i = 0;i < structure.length;i++){
-//            for (int g = 0;g < structure[i].length;g++){
-//                String line = structure[i][g];
-//                    for (int k = 0;k < line.length();k++){
-//                        //here the checking begins
-//                        char c = line.charAt(k);
-//
-//                        if (c != ' ') {
-//                                if (!checkBlock(world,pos.offset(k,i,g),struct.getStateAndTag(c))){
-//                                    return false;
-//                                }
-//                        }else{
-//                            if (!ignoreOtherBlocks){
-//                                if (!checkBlock(world,pos.offset(k,i,g),struct.getStateAndTag(c))){
-//                                    return false;
-//                                }
-//                            }
-//                        }
-//                        //here ends
-//                    }
-//            }
-//        }
-//        return true;
-//    }
-//    world.getBlockState(initPos.offset(k, i, g))
-//    private static boolean checkBlock(Level world,BlockPos pos, StateAndTag stateAndTag){
-//        TagKey<Block> tag;
-//        if ((tag = stateAndTag.getTag()) == null){
-//            return StateAndTag.checkBlockState(world.getBlockState(pos),stateAndTag.getState(),stateAndTag.isIgnoreFacing());
-//        }else{
-//            return world.getBlockState(pos).is(tag);
-//        }
-//    }
+    
 
     public static double blocksPerSecondToVelocity(double a){
         return a*0.05;
@@ -265,7 +340,7 @@ public class Helpers {
     public static boolean isEntityReachable(Level world, BlockPos pos1, BlockPos pos2){
         Vec3 vec1 = new Vec3(pos1.getX()+0.5f,pos1.getY()+0.5f,pos1.getZ()+0.5f);
         Vec3 vec2 = new Vec3(pos2.getX()+0.5f,pos2.getY()+1.25f,pos2.getZ()+0.5f);
-        ClipContext ctx = new ClipContext(vec2,vec1, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE,null);
+        ClipContext ctx = new ClipContext(vec2,vec1, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, CollisionContext.empty());
         BlockHitResult result = world.clip(ctx);
 
         if (result.getBlockPos().equals(pos1)){
@@ -287,32 +362,34 @@ public class Helpers {
     }
 
 
-    public static void updateProgression(ServerPlayer player){
-        for (Progression a : Progression.allProgressions) {
-
-            SCPacketHandler.INSTANCE.sendTo(new UpdateProgressionOnClient(a.getProgressionCode(), hasPlayerCompletedProgression(a,player)),
-                    player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
-        }
+    public static void updateProgressionsOnClient(ServerPlayer player){
+        UpdateProgressionsOnClient.send(player);
     }
 
+    public static Explosion oldExplosionConstructor(Level level, @Nullable Entity entity, @Nullable DamageSource src, @Nullable ExplosionDamageCalculator calculator, double x, double y, double z, float power, boolean fire, Explosion.BlockInteraction blockInteraction){
+        return new Explosion(level,entity,src,calculator,x,y,z,power,fire,blockInteraction,ParticleTypes.EXPLOSION, ParticleTypes.EXPLOSION_EMITTER, SoundEvents.GENERIC_EXPLODE);
+    }
     public static void updateFragmentsOnClient(ServerPlayer player){
-        SCPacketHandler.INSTANCE.sendTo(new UpdateFragmentsOnClient(player),
-                player.connection.connection,NetworkDirection.PLAY_TO_CLIENT);
+        FDPacketUtil.sendToPlayer(player,new UpdateFragmentsOnClient(player));
+//        SCPacketHandler.INSTANCE.sendTo(new UpdateFragmentsOnClient(player),
+//                player.connection.connection,PlayNetworkDirection.PLAY_TO_CLIENT);
     }
 
     public static void updateClientRadiantLandStateForPlayer(ServerPlayer player){
-        SCPacketHandler.INSTANCE.sendTo(new SetClientRadiantLandStatePacket(ClearingRitual.getRLState((ServerLevel) player.level)),
-                player.connection.connection,NetworkDirection.PLAY_TO_CLIENT);
+        FDPacketUtil.sendToPlayer(player,new SetClientRadiantLandStatePacket(ClearingRitual.getRLState((ServerLevel) player.level())));
+//        SCPacketHandler.INSTANCE.sendTo(new SetClientRadiantLandStatePacket(ClearingRitual.getRLState((ServerLevel) player.level())),
+//                player.connection.connection,PlayNetworkDirection.PLAY_TO_CLIENT);
     }
 
     public static void updateClientRadiantLandStateForPlayer(ServerPlayer player,boolean state){
-        SCPacketHandler.INSTANCE.sendTo(new SetClientRadiantLandStatePacket(state),
-                player.connection.connection,NetworkDirection.PLAY_TO_CLIENT);
+        FDPacketUtil.sendToPlayer(player,new SetClientRadiantLandStatePacket(state));
+//        SCPacketHandler.INSTANCE.sendTo(new SetClientRadiantLandStatePacket(state),
+//                player.connection.connection,PlayNetworkDirection.PLAY_TO_CLIENT);
     }
 
     public static void forceChunksReload(ServerPlayer playerEntity){
-
-        SCPacketHandler.INSTANCE.sendTo(new ReloadChunks(),playerEntity.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+        FDPacketUtil.sendToPlayer(playerEntity,new ReloadChunks());
+//        SCPacketHandler.INSTANCE.sendTo(new ReloadChunks(),playerEntity.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
     }
     public static List<BlockPos> getBlockPositionsByDirection(Direction dir,BlockPos mainpos,int count){
         List<BlockPos> pos = new ArrayList<>();
@@ -366,30 +443,32 @@ public class Helpers {
     }
 
     public static void triggerToast(Progression ach, Player player){
-        SCPacketHandler.INSTANCE.sendTo(new TriggerToastPacket(ach.getId()), ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+        FDPacketUtil.sendToPlayer((ServerPlayer) player,new TriggerToastPacket(ach.getProgressionCode()));
+//        SCPacketHandler.INSTANCE.sendTo(new TriggerToastPacket(ach.getProgressionCode()), ((ServerPlayer)player).connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
     }
 
     public static void fireProgressionEvent(Player playerEntity, Progression ach){
         if (!Helpers.hasPlayerCompletedProgression(ach,playerEntity) && Helpers.canPlayerUnlock(ach,playerEntity)) {
-            MinecraftForge.EVENT_BUS.post(new ProgressionUnlockEvent(playerEntity, ach));
+            NeoForge.EVENT_BUS.post(new ProgressionUnlockEvent(playerEntity, ach));
         }
     }
 
 
     public static void updateRunicEnergyOnClient(RunicEnergy.Type type,float amount,Player player){
-        SCPacketHandler.INSTANCE.sendTo(new UpdateEnergyOnClientPacket(type, amount),
-                ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+        FDPacketUtil.sendToPlayer((ServerPlayer) player,new UpdateEnergyOnClientPacket(type, amount));
+//        SCPacketHandler.INSTANCE.sendTo(new UpdateEnergyOnClientPacket(type, amount),
+//                ((ServerPlayer)player).connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
     }
 
     public static void triggerProgressionShader(Player playerEntity){
-        SCPacketHandler.INSTANCE.sendTo(new TriggerProgressionShaderPacket(),
-                ((ServerPlayer)playerEntity).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+        FDPacketUtil.sendToPlayer((ServerPlayer) playerEntity,new TriggerProgressionShaderPacket());
+//        SCPacketHandler.INSTANCE.sendTo(new TriggerProgressionShaderPacket(),
+//                ((ServerPlayer)playerEntity).connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
     }
 
 
     public static void loadChunkAtPos(ServerLevel world,BlockPos pos,boolean add,boolean ticking){
-        ForgeChunkManager.forceChunk(world,
-                SolarCraft.MOD_ID,pos, SectionPos.blockToSectionCoord(pos.getX()),SectionPos.blockToSectionCoord(pos.getZ()),
+        ModEventHandler.TICKET_CONTROLLER.forceChunk(world,pos, SectionPos.blockToSectionCoord(pos.getX()),SectionPos.blockToSectionCoord(pos.getZ()),
                 add,ticking);
     }
 
@@ -416,7 +495,7 @@ public class Helpers {
                 for (int z = -intensity; z < intensity+1;z++){
                     Vec3 offset = new Vec3(x,y,z).normalize().multiply(spawnDistanceFactor,spawnDistanceFactor,spawnDistanceFactor);
                     Vec3 finalpos = position.add(offset);
-                    world.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),finalpos.x,finalpos.y,finalpos.z,offset.x*speedFactor,offset.y*speedFactor,offset.z*speedFactor);
+                    world.addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),finalpos.x,finalpos.y,finalpos.z,offset.x*speedFactor,offset.y*speedFactor,offset.z*speedFactor);
 
                 }
             }
@@ -429,8 +508,8 @@ public class Helpers {
                 for (int z = -intensity; z < intensity+1;z++){
                     Vec3 offset = new Vec3(x,y,z).normalize().multiply(spawnDistanceFactor,spawnDistanceFactor,spawnDistanceFactor);
                     Vec3 finalpos = position.add(offset);
-                    world.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),finalpos.x,finalpos.y,finalpos.z,offset.x*speedFactor,offset.y*speedFactor,offset.z*speedFactor);
-                    world.addParticle(SolarcraftParticleTypes.SOLAR_EXPLOSION_PARTICLE.get(),finalpos.x,finalpos.y,finalpos.z,offset.x*(speedFactor+0.3),offset.y*(speedFactor+0.3),offset.z*(speedFactor+0.3));
+                    world.addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),finalpos.x,finalpos.y,finalpos.z,offset.x*speedFactor,offset.y*speedFactor,offset.z*speedFactor);
+                    world.addParticle(SCParticleTypes.SOLAR_EXPLOSION_PARTICLE.get(),finalpos.x,finalpos.y,finalpos.z,offset.x*(speedFactor+0.3),offset.y*(speedFactor+0.3),offset.z*(speedFactor+0.3));
 
                 }
             }
@@ -448,7 +527,7 @@ public class Helpers {
         List<Vec3> toreturn = new ArrayList<>();
         List<BlockPos> pos = new ArrayList<>();
         for (int i = 0; i > -2;i--){
-            List<BlockPos> positions = findNormalBlockPositionsOnPlane(world,radius,new BlockPos(mainpos.x,mainpos.y+i,mainpos.z));
+            List<BlockPos> positions = findNormalBlockPositionsOnPlane(world,radius,new BlockPos((int)mainpos.x,(int)mainpos.y+i,(int)mainpos.z));
             pos.addAll(positions);
         }
         for (int i = 0; i < amount;i++){
@@ -463,7 +542,8 @@ public class Helpers {
     }
 
     public static void sendEnergyTypeToast(ServerPlayer player,RunicEnergy.Type type){
-        SCPacketHandler.INSTANCE.sendTo(new TriggerEnergyTypeToast(type.id),player.connection.connection,NetworkDirection.PLAY_TO_CLIENT);
+        FDPacketUtil.sendToPlayer(player,new TriggerEnergyTypeToast(type.id));
+//        SCPacketHandler.INSTANCE.sendTo(new TriggerEnergyTypeToast(type.id),player.connection.connection,PlayNetworkDirection.PLAY_TO_CLIENT);
     }
 
     private static List<BlockPos> findNormalBlockPositionsOnPlane(Level world,int radius,BlockPos mainpos){
@@ -491,20 +571,27 @@ public class Helpers {
     }
 
     public static void updateTile(BlockEntity tile){
-        tile.setChanged();
-        BlockState state = tile.getLevel().getBlockState(tile.getBlockPos());
-        tile.getLevel().sendBlockUpdated(tile.getBlockPos(),state,state,3);
+        if (tile.getLevel() instanceof ServerLevel level) {
+            tile.setChanged();
+            Packet<?> packet = tile.getUpdatePacket();
+            if (packet != null){
+                LevelChunk chunk = level.getChunkAt(tile.getBlockPos());
+                PacketDistributor.TRACKING_CHUNK.with(chunk).send(packet);
+            }
+            //BlockState state = tile.getLevel().getBlockState(tile.getBlockPos());
+            //level.sendBlockUpdated(tile.getBlockPos(), state, state, 3);
+        }
     }
 
 
     public static void setServerPlayerSpeed(ServerPlayer player,Vec3 speed){
         player.setDeltaMovement(speed);
-
-        SCPacketHandler.INSTANCE.sendTo(new SetSpeedPacket(speed),player.connection.connection,NetworkDirection.PLAY_TO_CLIENT);
+        FDPacketUtil.sendToPlayer(player,new SetSpeedPacket(speed));
+//        SCPacketHandler.INSTANCE.sendTo(new SetSpeedPacket(speed),player.connection.connection,PlayNetworkDirection.PLAY_TO_CLIENT);
     }
 
     public static boolean playerInBossfight(Player pl){
-        return !pl.level.getEntitiesOfClass(LivingEntity.class,new AABB(-20,-20,-20,20,20,20)
+        return !pl.level().getEntitiesOfClass(LivingEntity.class,new AABB(-20,-20,-20,20,20,20)
                 .move(pl.position()),(l)-> l instanceof CrystalBossEntity || l instanceof RunicElementalBoss).isEmpty();
     }
 
@@ -583,12 +670,13 @@ public class Helpers {
     }
 
     public static BlockPos vecToPos(Vec3 pos){
-        return new BlockPos(pos.x,pos.y,pos.z);
+        return new BlockPos((int)pos.x,(int)pos.y,(int)pos.z);
     }
 
     public static void sendDimBreak(ServerLevel world){
         world.getPlayers((e)->true).forEach((player)->{
-            SCPacketHandler.INSTANCE.sendTo(new DimensionBreakPacket(),player.connection.connection,NetworkDirection.PLAY_TO_CLIENT);
+            FDPacketUtil.sendToPlayer(player,new DimensionBreakPacket());
+//            SCPacketHandler.INSTANCE.sendTo(new DimensionBreakPacket(),player.connection.connection,PlayNetworkDirection.PLAY_TO_CLIENT);
         });
     }
 
@@ -627,5 +715,49 @@ public class Helpers {
                         (output.getItem() == input.getItem() &&
                                 output.getCount() < output.getMaxStackSize())
                 );
+    }
+
+    public static String generateMinutesAndSecondsStringFromTicks(int tick){
+        int mins = tick / 20 / 60;
+        int seconds = tick / 20 - mins * 60;
+        Component c = Component.translatable("solarcraft.minutes_seconds","%2s".formatted(""+mins),"%2s".formatted(""+seconds));
+        return c.getString();
+
+    }
+
+    public static <T extends Recipe<Container>> Optional<T> getRecipe(RecipeType<T> type, Container container,Level level){
+        var holder = level.getRecipeManager().getRecipeFor(type,container,level);
+        if (holder.isPresent()){
+            return Optional.of(holder.get().value());
+        }else{
+            return Optional.empty();
+        }
+    }
+
+    public static Optional<Recipe<?>> recipeByKey(ResourceLocation key,Level level){
+        var holder = level.getRecipeManager().byKey(key);
+        if (holder.isPresent()){
+            return Optional.of(holder.get().value());
+        }else{
+            return Optional.empty();
+        }
+    }
+
+    public static <T> List<Class<?>> getAnnotatedClasses(Class<T> annotationClass){
+        Type type = Type.getType(annotationClass);
+        ModList modList = ModList.get();
+        ModFileScanData data = modList.getModFileById(SolarCraft.MOD_ID).getFile().getScanResult();
+        var annotationDatas = data.getAnnotations();
+        List<Class<?>> classes = new ArrayList<>();
+        for (var adata : annotationDatas){
+            if (!adata.annotationType().equals(type)) continue;
+            try {
+                Class<?> clazz = Class.forName(adata.clazz().getClassName());
+                classes.add(clazz);
+            } catch (ClassNotFoundException e){
+                throw new RuntimeException("Unexpected error - class not found: " + adata.clazz().getClassName());
+            }
+        }
+        return classes;
     }
 }

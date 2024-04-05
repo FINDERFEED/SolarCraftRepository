@@ -1,13 +1,12 @@
 package com.finderfeed.solarcraft.content.entities.projectiles.renderers;
 
 import com.finderfeed.solarcraft.client.rendering.CoreShaders;
-import com.finderfeed.solarcraft.client.rendering.rendertypes.SolarCraftRenderTypes;
+import com.finderfeed.solarcraft.client.rendering.rendertypes.SCRenderTypes;
 import com.finderfeed.solarcraft.content.entities.not_alive.BallLightningProjectile;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Quaternion;
+
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -15,6 +14,8 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
+import org.joml.Matrix4f;
+import org.joml.Quaternionf;
 
 public class BallLightningRenderer extends EntityRenderer<BallLightningProjectile> {
 
@@ -34,10 +35,10 @@ public class BallLightningRenderer extends EntityRenderer<BallLightningProjectil
                 .set(1f,1f,0f);
 
 
-        VertexConsumer vertex = src.getBuffer(SolarCraftRenderTypes.shaderRendertype(CoreShaders.AOE_GUN_PROJECTILE_STATE_SHARD));
+        VertexConsumer vertex = src.getBuffer(SCRenderTypes.shaderRendertype(CoreShaders.AOE_GUN_PROJECTILE_STATE_SHARD));
         Camera cam = Minecraft.getInstance().gameRenderer.getMainCamera();
         matrices.pushPose();
-        Quaternion quaternion = cam.rotation();
+        Quaternionf quaternion = cam.rotation();
         matrices.translate(0,0.2,0);
         matrices.mulPose(quaternion);
         Matrix4f mat = matrices.last().pose();

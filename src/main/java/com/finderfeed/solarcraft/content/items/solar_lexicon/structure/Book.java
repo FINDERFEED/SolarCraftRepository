@@ -6,6 +6,7 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.structure.subcatego
 import com.finderfeed.solarcraft.content.items.solar_lexicon.structure.subcategory.SubCategoryBase;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 
 import javax.annotation.Nullable;
@@ -55,11 +56,11 @@ public class Book {
         });
     }
 
-    public void render(PoseStack matrices){
+    public void render(GuiGraphics graphics){
         for (int i = 0; i < ROWS_COLLUMNS.size();i ++){
             List<Category> cies;
             for (int g = 0;g < (cies = ROWS_COLLUMNS.get(i)).size();g++){
-                cies.get(g).renderAtPos(matrices,relX+xPositions[i][g],relY+yPositions[i]);
+                cies.get(g).renderAtPos(graphics,relX+xPositions[i][g],relY+yPositions[i]);
             }
         }
     }

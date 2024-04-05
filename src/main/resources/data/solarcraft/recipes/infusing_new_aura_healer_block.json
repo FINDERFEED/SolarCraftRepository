@@ -1,12 +1,24 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "B": {"item": "minecraft:iron_block"},
-    "C": {"item": "solarcraft:algadium_ingot"},
-    "D": {"item": "solarcraft:illidium_ingot"},
-    "F": {"item": "solarcraft:energy_dust"},
-    "G": {"item": "minecraft:grass_block"},
-    "Q": {"item": "solarcraft:giro_crystal"}
+    "B": {
+      "item": "minecraft:iron_block"
+    },
+    "C": {
+      "item": "solarcraft:algadium_ingot"
+    },
+    "D": {
+      "item": "solarcraft:illidium_ingot"
+    },
+    "F": {
+      "item": "solarcraft:energy_dust"
+    },
+    "G": {
+      "item": "minecraft:grass_block"
+    },
+    "Q": {
+      "item": "solarcraft:giro_crystal"
+    }
   },
   "pattern": [
     "QFQ",
@@ -15,7 +27,6 @@
     "CC",
     "QGQ"
   ],
-
   "result": {
     "item": "solarcraft:aura_healer_block"
   },

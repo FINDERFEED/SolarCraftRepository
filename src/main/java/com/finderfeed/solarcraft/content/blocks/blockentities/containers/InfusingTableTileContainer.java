@@ -1,8 +1,8 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities.containers;
 
-import com.finderfeed.solarcraft.content.blocks.blockentities.InfusingTableTile;
+import com.finderfeed.solarcraft.content.blocks.blockentities.InfusingCraftingTableTile;
 import com.finderfeed.solarcraft.content.blocks.blockentities.containers.misc.TESlotItemHandler;
-import com.finderfeed.solarcraft.registries.containers.SolarcraftContainers;
+import com.finderfeed.solarcraft.registries.containers.SCContainers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -14,24 +14,22 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.capabilities.Capabilities;
 
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
-
+import net.neoforged.neoforge.items.IItemHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class InfusingTableTileContainer extends AbstractContainerMenu {
 
-    public InfusingTableTile tile;
+    public InfusingCraftingTableTile tile;
     public IItemHandler inventory;
 
     public InfusingTableTileContainer( int p_38852_,Inventory inv, BlockPos tilepos) {
-        super(SolarcraftContainers.INFUSING_TABLE_TILE.get(), p_38852_);
-        Level world= inv.player.level;
-        this.tile = (InfusingTableTile) world.getBlockEntity(tilepos);
-        this.inventory = tile.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+        super(SCContainers.INFUSING_TABLE_TILE.get(), p_38852_);
+        Level world= inv.player.level();
+        this.tile = (InfusingCraftingTableTile) world.getBlockEntity(tilepos);
+        this.inventory = tile.getInventory();
 
 
         for(int i = 0; i < 3; ++i) {
@@ -112,9 +110,9 @@ public class InfusingTableTileContainer extends AbstractContainerMenu {
 
     public static class Provider implements MenuProvider{
 
-        private final InfusingTableTile tile;
+        private final InfusingCraftingTableTile tile;
 
-        public Provider(InfusingTableTile tile){
+        public Provider(InfusingCraftingTableTile tile){
             this.tile = tile;
         }
 

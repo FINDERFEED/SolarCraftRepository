@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.client.particles;
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
-import com.finderfeed.solarcraft.client.rendering.rendertypes.SolarCraftRenderTypes;
+import com.finderfeed.solarcraft.client.rendering.rendertypes.SCRenderTypes;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
@@ -16,7 +16,6 @@ import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nullable;
 
-import static org.apache.commons.lang3.RandomUtils.nextFloat;
 
 public class SolarStrikeParticle extends TextureSheetParticle {
 
@@ -46,7 +45,7 @@ public class SolarStrikeParticle extends TextureSheetParticle {
     public ParticleRenderType getRenderType() {
 
 
-        return SolarCraftRenderTypes.ParticleRenderTypes.SOLAR_STRIKE_PARTICLE_RENDER ;
+        return SCRenderTypes.ParticleRenderTypes.SOLAR_STRIKE_PARTICLE_RENDER_TYPE;
     }
 
 
@@ -66,7 +65,7 @@ public class SolarStrikeParticle extends TextureSheetParticle {
 
     public static class Factory implements ParticleProvider<SimpleParticleType>{
         private final SpriteSet spriteSetl;
-                public Factory(SpriteSet sprite){
+        public Factory(SpriteSet sprite){
             this.spriteSetl = sprite;
                 }
         @Nullable

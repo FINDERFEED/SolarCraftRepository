@@ -2,25 +2,19 @@ package com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.structur
 
 
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
-import com.finderfeed.solarcraft.helpers.ClientHelpers;
-import com.finderfeed.solarcraft.helpers.Helpers;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.local_library.client.screens.DefaultScreen;
 import com.finderfeed.solarcraft.local_library.client.screens.RadialMenu;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
-import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
-import com.finderfeed.solarcraft.packet_handler.packets.SetREDrainTypePacket;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class StructureSelectionScreen extends DefaultScreen {
 
@@ -49,7 +43,7 @@ public class StructureSelectionScreen extends DefaultScreen {
         for (int i = 0; i < structures.size(); i++){
             MultiblockStructure structure  = structures.get(i);
             try {
-                if (!ProgressionHelper.doPlayerHasFragment(minecraft.player, AncientFragment.STRUCTURE_FRAGMENTS.get(structure))) {
+                if (!AncientFragmentHelper.doPlayerHasFragment(minecraft.player, AncientFragment.STRUCTURE_FRAGMENTS.get(structure))) {
                     continue;
                 }
             }catch (NullPointerException e){
@@ -59,15 +53,16 @@ public class StructureSelectionScreen extends DefaultScreen {
                     ()->{
                         processStructure(checkPos,structure,3);
                     },
-                    (matrices, x, y) -> {
+                    (graphics, x, y) -> {
                         RenderingTools.renderScaledGuiItemCentered(
+                                graphics,
                                 structure.mainBlock.getBlock()
                                         .asItem().getDefaultInstance(),
-                                x,y,1f,0
+                                x,y,1f,300
                         );
                     },
-                    (matrices, x, y) -> {
-                        renderTooltip(matrices, Component.translatable("solarcraft.structure." + structure.getId()),(int)x,(int)y);
+                    (graphics, x, y) -> {
+                        graphics.renderTooltip(font, Component.translatable("solarcraft.structure." + structure.getId()),(int)x,(int)y);
                     }
             );
             sections.add(section);
@@ -120,9 +115,9 @@ public class StructureSelectionScreen extends DefaultScreen {
     }
 
     @Override
-    public void render(PoseStack matrices, int mx, int my, float pTicks) {
-        super.render(matrices, mx, my, pTicks);
-        menu.render(matrices,mx,my,pTicks,0);
+    public void render(GuiGraphics graphics, int mx, int my, float pTicks) {
+        super.render(graphics, mx, my, pTicks);
+        menu.render(graphics,mx,my,pTicks,0);
     }
 
     @Override

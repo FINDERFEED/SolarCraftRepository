@@ -1,8 +1,8 @@
 package com.finderfeed.solarcraft.content.blocks;
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.TurretTileEntity;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.items.SCItems;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -62,7 +62,7 @@ public class TurretBlock extends Block implements EntityBlock {
             BlockEntity test = world.getBlockEntity(pos);
             if (test instanceof TurretTileEntity) {
                 TurretTileEntity tile = (TurretTileEntity) test;
-                ItemStack stack = SolarcraftItems.TURRET_BLOCK.get().getDefaultInstance();
+                ItemStack stack = SCItems.TURRET_BLOCK.get().getDefaultInstance();
                 stack.getOrCreateTagElement(SUBTAG).putInt(LEVEL_TAG, tile.turretLevel);
                 world.addFreshEntity(new ItemEntity(world, pos.getX() + 0.5f, pos.getY() + 0.5, pos.getZ() + 0.5, stack));
             }
@@ -96,7 +96,7 @@ public class TurretBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return SolarcraftTileEntityTypes.TURRET_TILE_ENTITY.get().create(blockPos,blockState);
+        return SCTileEntities.TURRET_TILE_ENTITY.get().create(blockPos,blockState);
     }
 
     @Nullable

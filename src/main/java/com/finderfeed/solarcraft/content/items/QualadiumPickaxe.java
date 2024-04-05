@@ -4,6 +4,7 @@ import com.finderfeed.solarcraft.config.SolarcraftConfig;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.vein_miner.IllidiumPickaxe;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.TooltipFlag;
@@ -66,7 +67,7 @@ public class QualadiumPickaxe extends IllidiumPickaxe {
         if (REWARDS_LIST == null){
             REWARDS_LIST = new ArrayList<>();
             List<String> ids = SolarcraftConfig.PICKAXE_TREASURES.get();
-            Optional<? extends Registry<Item>> a  = level.registryAccess().registry(Registry.ITEM_REGISTRY);
+            Optional<? extends Registry<Item>> a  = level.registryAccess().registry(Registries.ITEM);
             if (a.isPresent()){
                 Registry<Item> reg = a.get();
                 ids.forEach((string)->{

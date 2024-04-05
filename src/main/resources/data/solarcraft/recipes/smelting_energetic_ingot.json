@@ -1,15 +1,15 @@
 {
-  "type":"solarcraft:solar_smelting",
+  "type": "solarcraft:solar_smelting",
   "ingredients": [
     {
-      "item": "minecraft:gold_ingot"
+      "smelting_item": "minecraft:gold_ingot"
     },
     {
-      "item": "solarcraft:energy_dust",
+      "smelting_item": "solarcraft:energy_dust",
       "count": 8
     },
     {
-      "item": "minecraft:redstone",
+      "smelting_item": "minecraft:redstone",
       "count": 16
     }
   ],

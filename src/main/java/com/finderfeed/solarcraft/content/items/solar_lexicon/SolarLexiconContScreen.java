@@ -2,15 +2,17 @@ package com.finderfeed.solarcraft.content.items.solar_lexicon;
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.InfoButton;
+import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.misc_things.IScrollable;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 import org.lwjgl.glfw.GLFW;
 
 public class SolarLexiconContScreen extends AbstractContainerScreen<SolarLexiconContainer> implements IScrollable {
@@ -69,30 +71,32 @@ public class SolarLexiconContScreen extends AbstractContainerScreen<SolarLexicon
         if (scale != 2){
             a = 1;
         }
-        InfoButton button = new InfoButton(relX + 180 + a,relY + 40,12,12,(btn,matrices,x,y)->{
-           this.renderTooltip(matrices,font.split(Component.translatable("solarcraft.lexicon_inventory_description"),200),x,y,font);
+        InfoButton button = new InfoButton(relX + 180 + a,relY + 40,12,12,(btn,graphics,x,y)->{
+           graphics.renderTooltip(font,font.split(Component.translatable("solarcraft.lexicon_inventory_description"),200),x,y);
         });
         addRenderableWidget(button);
     }
 
     @Override
-    public void render(PoseStack p_230430_1_, int p_230430_2_, int p_230430_3_, float p_230430_4_) {
-        this.renderBackground(p_230430_1_);
+    public void render(GuiGraphics graphics, int p_230430_2_, int p_230430_3_, float p_230430_4_) {
+        this.renderBackground(graphics,p_230430_2_,p_230430_3_,p_230430_4_);
 
-        super.render(p_230430_1_, p_230430_2_, p_230430_3_, p_230430_4_);
-        this.renderTooltip(p_230430_1_,p_230430_2_,p_230430_3_);
+        super.render(graphics, p_230430_2_, p_230430_3_, p_230430_4_);
+        this.renderTooltip(graphics,p_230430_2_,p_230430_3_);
     }
 
     @Override
-    protected void renderBg(PoseStack matrices, float partialTicks, int mousex, int mousey) {
+    protected void renderBg(GuiGraphics graphics, float partialTicks, int mousex, int mousey) {
         ClientHelpers.bindText(LOC);
+
+        PoseStack matrices = graphics.pose();
 
         int a = 0;
         if (minecraft.getWindow().getGuiScale() != 2){
             a = 1;
         }
 
-        blit(matrices,relX+3+a,relY+33,0,0,256,256,256,256);
+        RenderingTools.blitWithBlend(matrices,relX+3+a,relY+33,0,0,256,256,256,256,0,1f);
     }
 
 

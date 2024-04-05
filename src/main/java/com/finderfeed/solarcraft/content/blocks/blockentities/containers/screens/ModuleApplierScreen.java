@@ -3,6 +3,7 @@ package com.finderfeed.solarcraft.content.blocks.blockentities.containers.screen
 import com.finderfeed.solarcraft.content.blocks.blockentities.containers.ModuleApplierMenu;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.ItemCombinerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -19,8 +20,13 @@ public class ModuleApplierScreen extends ItemCombinerScreen<ModuleApplierMenu> {
     }
 
     @Override
-    protected void renderLabels(PoseStack p_97808_, int p_97809_, int p_97810_) {
+    protected void renderLabels(GuiGraphics p_97808_, int p_97809_, int p_97810_) {
         RenderSystem.disableBlend();
         super.renderLabels(p_97808_, p_97809_, p_97810_);
+    }
+
+    @Override
+    protected void renderErrorIcon(GuiGraphics p_281990_, int p_266822_, int p_267045_) {
+
     }
 }

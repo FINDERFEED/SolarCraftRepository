@@ -8,26 +8,29 @@ import com.finderfeed.solarcraft.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarcraft.local_library.other.InterpolatedValue;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.content.entities.projectiles.MagicMissile;
-import com.finderfeed.solarcraft.content.entities.projectiles.RunicWarriorSummoningRocket;
+import com.finderfeed.solarcraft.content.entities.projectiles.RunicWarriorSummoningProjectile;
 import com.finderfeed.solarcraft.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarcraft.packet_handler.packets.DisablePlayerFlightPacket;
 import com.finderfeed.solarcraft.packet_handler.packets.TeleportEntityPacket;
 import com.finderfeed.solarcraft.registries.attributes.AttributesRegistry;
-import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
+import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
+import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.data_serializers.FDEntityDataSerializers;
-import com.finderfeed.solarcraft.registries.effects.SolarcraftEffects;
-import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.effects.SCEffects;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
+import com.finderfeed.solarcraft.registries.items.SCItems;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
@@ -44,11 +47,11 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -214,12 +217,12 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
 
         if (level.getGameTime() % 20 == 0){
             Block b = getBlockBelow();
-            if (b == SolarcraftBlocks.REGENERATION_AMPLIFICATION_BLOCK.get()){
+            if (b == SCBlocks.REGENERATION_AMPLIFICATION_BLOCK.get()){
                 this.heal(3);
-            }else if(b == SolarcraftBlocks.ARMOR_AMPLIFICATION_BLOCK.get()){
+            }else if(b == SCBlocks.ARMOR_AMPLIFICATION_BLOCK.get()){
                 this.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE,100,0));
-            }else if (b == SolarcraftBlocks.EVASION_AMPLIFICATION_BLOCK.get()){
-                this.addEffect(new MobEffectInstance(SolarcraftEffects.EVASION.get(),100,1));
+            }else if (b == SCBlocks.EVASION_AMPLIFICATION_BLOCK.get()){
+                this.addEffect(new MobEffectInstance(SCEffects.EVASION.get(),100,1));
             }
         }
     }
@@ -254,7 +257,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         if (BOSS_ATTACK_CHAIN.getTicker() >= 15 && BOSS_ATTACK_CHAIN.getTicker() <= 115){
             if (BOSS_ATTACK_CHAIN.getTicker() % 9 == 0){
                 for (Player player : getPlayersAround(false)){
-                    SunstrikeEntity sunstrike = new SunstrikeEntity(SolarcraftEntityTypes.SUNSTRIKE.get(),level);
+                    SunstrikeEntity sunstrike = new SunstrikeEntity(SCEntityTypes.SUNSTRIKE.get(),level);
                     Vec3 playerSpeed = player.getLookAngle().multiply(1f,0,1f).normalize().multiply(0.5,0,0.5);
                     float damage = (SUNTRIKES_DAMAGE + getDamageBonus()) * getDamageModifier();
                     sunstrike.setDamage(damage);
@@ -265,7 +268,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
                     if (!crystals.isEmpty()){
                         List<BlockPos> positions = Helpers.getValidSpawningPositionsAround(level,this.getOnPos(),12,2,2);
                         for (RefractionCrystal crystal : crystals){
-                            SunstrikeEntity s = new SunstrikeEntity(SolarcraftEntityTypes.SUNSTRIKE.get(),level);
+                            SunstrikeEntity s = new SunstrikeEntity(SCEntityTypes.SUNSTRIKE.get(),level);
                             s.setDamage(damage);
                             s.setPos(Helpers.getBlockCenter(positions.get(level.random.nextInt(positions.size())).above()).add(0,-0.5,0));
                             level.addFreshEntity(s);
@@ -317,9 +320,9 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
             if (BOSS_ATTACK_CHAIN.getTicker() % 10 == 0) {
                 List<MobEffect> toRemove = new ArrayList<>();
                 float damage = (VARTH_DADER_DAMAGE + getDamageBonus()/4f) * getDamageModifier();
-                living.hurt(DamageSource.mobAttack(this).setMagic().bypassArmor(), damage);
+                living.hurt(SCDamageSources.livingArmorPierce(this), damage);
                 for (MobEffectInstance effect : living.getActiveEffects()){
-                    if (effect.getEffect().isBeneficial() && effect.getEffect() != SolarcraftEffects.IMMORTALITY_EFFECT.get()){
+                    if (effect.getEffect().isBeneficial() && effect.getEffect() != SCEffects.IMMORTALITY_EFFECT.get()){
                         toRemove.add(effect.getEffect());
                     }
                 }
@@ -339,14 +342,14 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
             this.removeDuplicatePositions(positions);
             if (!positions.isEmpty()) {
                 BlockPos randomPos1 = positions.get(level.random.nextInt(positions.size()));
-                RefractionCrystal crystal = new RefractionCrystal(SolarcraftEntityTypes.REFRACTION_CRYSTAL.get(), level);
+                RefractionCrystal crystal = new RefractionCrystal(SCEntityTypes.REFRACTION_CRYSTAL.get(), level);
                 crystal.setPos(Helpers.getBlockCenter(randomPos1.above()).add(0,-0.5,0));
                 level.addFreshEntity(crystal);
                 if (c == 3) return;
                 positions.remove(randomPos1);
                 if (!positions.isEmpty()){
                     BlockPos randomPos2 = positions.get(level.random.nextInt(positions.size()));
-                    RefractionCrystal crystal2 = new RefractionCrystal(SolarcraftEntityTypes.REFRACTION_CRYSTAL.get(), level);
+                    RefractionCrystal crystal2 = new RefractionCrystal(SCEntityTypes.REFRACTION_CRYSTAL.get(), level);
                     crystal2.setPos(Helpers.getBlockCenter(randomPos2.above()).add(0,-0.5,0));
                     level.addFreshEntity(crystal2);
                 }
@@ -363,14 +366,14 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
             this.removeDuplicatePositions(positions);
             if (!positions.isEmpty()) {
                 BlockPos randomPos1 = positions.get(level.random.nextInt(positions.size()));
-                ExplosiveCrystal crystal = new ExplosiveCrystal(SolarcraftEntityTypes.EXPLOSIVE_CRYSTAL.get(), level);
+                ExplosiveCrystal crystal = new ExplosiveCrystal(SCEntityTypes.EXPLOSIVE_CRYSTAL.get(), level);
                 crystal.setPos(Helpers.getBlockCenter(randomPos1.above()).add(0,-0.5,0));
                 level.addFreshEntity(crystal);
                 if (c == 1) return;
                 positions.remove(randomPos1);
                 if (!positions.isEmpty()){
                     BlockPos randomPos2 = positions.get(level.random.nextInt(positions.size()));
-                    ExplosiveCrystal crystal2 = new ExplosiveCrystal(SolarcraftEntityTypes.EXPLOSIVE_CRYSTAL.get(), level);
+                    ExplosiveCrystal crystal2 = new ExplosiveCrystal(SCEntityTypes.EXPLOSIVE_CRYSTAL.get(), level);
                     crystal2.setPos(Helpers.getBlockCenter(randomPos2.above()).add(0,-0.5,0));
                     level.addFreshEntity(crystal2);
                 }
@@ -382,7 +385,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         if (BOSS_ATTACK_CHAIN.getTicker() == 8) {
             int playersAround = getPlayersAround(false).size();
             for (int i = 0; i < 3 * playersAround; i++) {
-                RunicWarriorSummoningRocket rocket = new RunicWarriorSummoningRocket(SolarcraftEntityTypes.RUNIC_WARRIOR_ROCKET.get(),level);
+                RunicWarriorSummoningProjectile rocket = new RunicWarriorSummoningProjectile(SCEntityTypes.RUNIC_WARRIOR_ROCKET.get(),level);
                 Vec3 rnd = new Vec3(level.random.nextDouble()*0.5f - 0.25f,0.4f,level.random.nextDouble()*0.5f - 0.25f);
                 rocket.setDeltaMovement(rnd);
                 rocket.setPos(this.position().add(0,this.getBbHeight()/2,0));
@@ -412,7 +415,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
                 double attackDirAngle = Math.toDegrees(Math.atan2(attackDir.x,attackDir.z));
                 if (Math.abs(attackDirAngle - angleVec) <= 110 && vec.length() <= 16){
                     float damage = (HAMMER_ATTACK_DAMAGE + getDamageBonus()) * getDamageModifier();
-                    player.hurt(DamageSource.mobAttack(this),damage);
+                    player.hurt(SCDamageSources.livingArmorPierce(this),damage);
                 }
             }
 
@@ -445,7 +448,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     }
 
     public float getDamageBonus(){
-        return level.getBlockState(getOnPos()).is(SolarcraftBlocks.DAMAGE_AMPLIFICATION_BLOCK.get()) ? 10 : 0;
+        return level.getBlockState(getOnPos()).is(SCBlocks.DAMAGE_AMPLIFICATION_BLOCK.get()) ? 10 : 0;
     }
 
     public float getDamageModifier(){
@@ -475,7 +478,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     public InteractionResult interactAt(Player player, Vec3 vec, InteractionHand hand) {
         if (!level.isClientSide && hand == InteractionHand.MAIN_HAND && !wasAlreadySummoned()) {
             ItemStack item = player.getItemInHand(hand);
-            if (item.is(SolarcraftItems.CRYSTALLITE_CORE.get())){
+            if (item.is(SCItems.CRYSTALLITE_CORE.get())){
                 setSummoned(true);
                 setSummoningPos(this.getOnPos().above());
                 item.shrink(1);
@@ -534,14 +537,14 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
 
     @Override
     public boolean canBeAffected(MobEffectInstance effect) {
-        return effect.getEffect() == MobEffects.DAMAGE_RESISTANCE || effect.getEffect() == SolarcraftEffects.EVASION.get();
+        return effect.getEffect() == MobEffects.DAMAGE_RESISTANCE || effect.getEffect() == SCEffects.EVASION.get();
     }
 
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SolarcraftSounds.CRYSTAL_HIT.get();
+        return SCSounds.CRYSTAL_HIT.get();
     }
 
     @Override
@@ -566,7 +569,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     }
 
     @Override
-    public boolean ignoreExplosion() {
+    public boolean ignoreExplosion(Explosion explosion) {
         return true;
     }
 
@@ -587,7 +590,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     }
     public void spawnWarrior(){
         if (this.getHealth()/this.getMaxHealth() <= 0.5 && getAttackType() != 0) {
-            RunicWarriorSummoningRocket rocket = new RunicWarriorSummoningRocket(SolarcraftEntityTypes.RUNIC_WARRIOR_ROCKET.get(), level);
+            RunicWarriorSummoningProjectile rocket = new RunicWarriorSummoningProjectile(SCEntityTypes.RUNIC_WARRIOR_ROCKET.get(), level);
             Vec3 rnd = new Vec3(level.random.nextDouble() * 0.5f - 0.25f, 0.4f, level.random.nextDouble() * 0.5f - 0.25f);
             rocket.setDeltaMovement(rnd);
             rocket.setPos(this.position().add(0, this.getBbHeight() / 2, 0));
@@ -673,10 +676,10 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
         super.load(tag);
     }
 
-    @Override
-    public Packet<?> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
+//    @Override
+//    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+//        return NetworkHooks.getEntitySpawningPacket(this);
+//    }
 
     @Override
     public void checkDespawn() {
@@ -804,7 +807,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
 
         if (attacker != null ){
             if (this.isWaitingForPlayerToDestroyExplosiveCrystals) {
-                attacker.hurt(DamageSource.MAGIC, 4);
+                attacker.hurt(level.damageSources().magic(), 4);
             }
             if (attacker.position().subtract(this.position()).multiply(1,0,1).length() >= 10){
                 return false;
@@ -816,7 +819,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     @Override
     protected void dropAllDeathLoot(DamageSource src) {
         super.dropAllDeathLoot(src);
-        LegendaryItem item = new LegendaryItem(level, new ItemStack(SolarcraftItems.CRYSTAL_HEART.get(),1));
+        LegendaryItem item = new LegendaryItem(level, new ItemStack(SCItems.CRYSTAL_HEART.get(),1));
         item.setPos(this.position().add(0,this.getBbHeight()/2,0));
         level.addFreshEntity(item);
         if (!level.isClientSide) {
@@ -828,7 +831,7 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
 
     @Override
     public boolean isInvulnerableTo(DamageSource src) {
-        return this.wasAlreadySummoned() ? src.isProjectile() : src != DamageSource.OUT_OF_WORLD;
+        return this.wasAlreadySummoned() ? src.is(DamageTypeTags.IS_PROJECTILE) : src != level.damageSources().fellOutOfWorld();
     }
 
     public static class AttackType{

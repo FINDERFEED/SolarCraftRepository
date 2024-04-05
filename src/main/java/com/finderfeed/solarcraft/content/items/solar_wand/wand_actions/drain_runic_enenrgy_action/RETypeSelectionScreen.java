@@ -7,9 +7,11 @@ import com.finderfeed.solarcraft.local_library.client.screens.RadialMenu;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.SetREDrainTypePacket;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
@@ -40,15 +42,16 @@ public class RETypeSelectionScreen extends DefaultScreen {
 
             RadialMenu.RadialMenuSection section = new RadialMenu.RadialMenuSection(
                     ()->{
-                        SCPacketHandler.INSTANCE.sendToServer(new SetREDrainTypePacket(type));
+                        FDPacketUtil.sendToServer(new SetREDrainTypePacket(type));
+//                        SCPacketHandler.INSTANCE.sendToServer(new SetREDrainTypePacket(type));
                     },
                     (matrices, x, y) -> {
                         ClientHelpers.bindText(ALL_ELEMENTS_ID_ORDERED);
-                        RenderingTools.blitWithBlend(matrices,x-8,y-8,type.getIndex() * 16,
+                        RenderingTools.blitWithBlend(matrices.pose(),x-8,y-8,type.getIndex() * 16,
                                 0,16,16,128,16,0,1f);
                     },
-                    (matrices, x, y) -> {
-                        renderTooltip(matrices, Component.literal(type.id.toUpperCase(Locale.ROOT)),(int)x,(int)y);
+                    (graphics, x, y) -> {
+                        graphics.renderTooltip(font, Component.literal(type.id.toUpperCase(Locale.ROOT)),(int)x,(int)y);
                     }
             );
             sections.add(section);
@@ -62,9 +65,9 @@ public class RETypeSelectionScreen extends DefaultScreen {
 
 
     @Override
-    public void render(PoseStack matrices, int mx, int my, float pTicks) {
-        super.render(matrices, mx, my, pTicks);
-        menu.render(matrices,mx,my,pTicks,0);
+    public void render(GuiGraphics graphics, int mx, int my, float pTicks) {
+        super.render(graphics, mx, my, pTicks);
+        menu.render(graphics,mx,my,pTicks,0);
     }
 
     @Override

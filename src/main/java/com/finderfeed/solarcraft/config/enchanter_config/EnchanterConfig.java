@@ -1,15 +1,16 @@
 package com.finderfeed.solarcraft.config.enchanter_config;
 
+
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.google.gson.*;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.Level;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,7 +52,7 @@ public class EnchanterConfig {
                 String enchantmentID = object.get(ENCHANTMENT_ID).getAsString();
                 int maxLevel = object.get(MAX_LEVEL).getAsInt();
 
-                Enchantment enchantment = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(enchantmentID));
+                Enchantment enchantment = BuiltInRegistries.ENCHANTMENT.get(new ResourceLocation(enchantmentID));
                 if (enchantment == null){
                     SolarCraft.LOGGER.log(Level.ERROR,"Enchantment " + enchantmentID + " doesn't exist. Skipping...");
                     continue;
@@ -93,7 +94,7 @@ public class EnchanterConfig {
     }
 
     public ConfigEnchantmentInstance getConfigEntryByEnchantment(Enchantment enchantment) {
-        return CONFIG_ENCHANTMENTS_MAP.get(ForgeRegistries.ENCHANTMENTS.getKey(enchantment).toString());
+        return CONFIG_ENCHANTMENTS_MAP.get(BuiltInRegistries.ENCHANTMENT.getKey(enchantment).toString());
     }
 
     public float getMaxEnchanterRunicEnergyCapacity() {
@@ -141,7 +142,7 @@ public class EnchanterConfig {
 
             public EnchantmentsArray addEnchantment(Enchantment enchantment,int maxLevel,RunicEnergyCost cost){
                 JsonObject enchantmentInstance = new JsonObject();
-                enchantmentInstance.addProperty("enchantment_id",ForgeRegistries.ENCHANTMENTS.getKey(enchantment).toString());
+                enchantmentInstance.addProperty("enchantment_id",BuiltInRegistries.ENCHANTMENT.getKey(enchantment).toString());
                 enchantmentInstance.addProperty("max_level",maxLevel);
                 for (RunicEnergy.Type type : cost.getSetTypes()){
                     enchantmentInstance.addProperty(type.id,cost.get(type));

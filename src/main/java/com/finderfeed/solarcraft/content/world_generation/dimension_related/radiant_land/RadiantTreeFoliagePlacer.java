@@ -33,8 +33,10 @@ public class RadiantTreeFoliagePlacer extends FoliagePlacer {
         return FoliagePlacerRegistry.RADIANT_PLACER.get();
     }
 
+
+
     @Override
-    protected void createFoliage(LevelSimulatedReader reader, BiConsumer<BlockPos, BlockState> world, RandomSource random, TreeConfiguration cfg, int i, FoliageAttachment place, int i1, int i2, int i3) {
+    protected void createFoliage(LevelSimulatedReader reader, FoliageSetter world, RandomSource random, TreeConfiguration cfg, int i, FoliageAttachment place, int i1, int i2, int i3) {
         BlockPos mainpos = place.pos().below(7);
         for (int a = -3;a < 4;a++){
             for (int b = -3;b < 4;b++){
@@ -43,7 +45,8 @@ public class RadiantTreeFoliagePlacer extends FoliagePlacer {
                     if (!reader.isStateAtPosition(toCheck,(state)->state.is(BlockTags.LOGS))) {
                         if (isValidPos(mainpos, toCheck)) {
                             if (reader.isStateAtPosition(toCheck,(BlockBehaviour.BlockStateBase::isAir))) {
-                                world.accept(toCheck, cfg.foliageProvider.getState(random, toCheck).setValue(BlockStateProperties.DISTANCE, 1));
+                                world.set(toCheck, cfg.foliageProvider.getState(random, toCheck).setValue(BlockStateProperties.DISTANCE, 1)
+                                        .setValue(BlockStateProperties.PERSISTENT,true));
                             }
                         }
                     }

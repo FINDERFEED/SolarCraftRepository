@@ -1,37 +1,35 @@
 package com.finderfeed.solarcraft.content.blocks.render;
 
+import com.finderfeed.solarcraft.SolarCraft;
+import com.finderfeed.solarcraft.client.rendering.rendertypes.SCRenderTypes;
+import com.finderfeed.solarcraft.client.rendering.rendertypes.TextBloomData;
 import com.finderfeed.solarcraft.content.blocks.solar_energy.SolarEnergyCoreTile;
 import com.finderfeed.solarcraft.helpers.Helpers;
-import com.finderfeed.solarcraft.events.other_events.OBJModels;
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
-import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
-import com.mojang.blaze3d.systems.RenderSystem;
+import com.finderfeed.solarcraft.local_library.helpers.ShapesRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 
-import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
-import com.mojang.math.Matrix4f;
-import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
+import org.joml.Matrix4f;
 import net.minecraft.world.phys.Vec3;
-import com.mojang.math.Vector3f;
-import net.minecraftforge.client.model.data.ModelData;
-
-import java.util.List;
-import java.util.Random;
+import static com.finderfeed.solarcraft.local_library.helpers.RenderingTools.*;
 
 
 public class SolarCoreRenderer implements BlockEntityRenderer<SolarEnergyCoreTile> {
 
-    public final ResourceLocation RAY = new ResourceLocation("solarcraft","textures/misc/ray_into_sky.png");
+    public static final ResourceLocation RAY = new ResourceLocation("solarcraft","textures/misc/ray_into_sky.png");
+    public static final ResourceLocation CORE_TEXTURE = new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/core_texture_1.png");
+    public static final ResourceLocation CORE_TEXTURE_OUTER = new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/core_texture_2.png");
     public SolarCoreRenderer(BlockEntityRendererProvider.Context ctx) {
 
     }
@@ -52,15 +50,17 @@ public class SolarCoreRenderer implements BlockEntityRenderer<SolarEnergyCoreTil
                     Vec3 verticalVector = new Vec3(0, childPos.y - parentPos.y, 0).normalize();
 
                     if (horizontalVector.x >= 0) {
-                        matrices.mulPose(Vector3f.YN.rotationDegrees((float) Math.toDegrees(Math.acos(-horizontalVector.normalize().z))));
+//                        matrices.mulPose(Vector3f.YN.rotationDegrees((float) Math.toDegrees(Math.acos(-horizontalVector.normalize().z))));
+                        matrices.mulPose(rotationDegrees(YN(),(float) Math.toDegrees(Math.acos(-horizontalVector.normalize().z))));
                     } else {
-                        matrices.mulPose(Vector3f.YN.rotationDegrees(180 + (float) Math.toDegrees(Math.acos(horizontalVector.normalize().z))));
+//                        matrices.mulPose(Vector3f.YN.rotationDegrees(180 + (float) Math.toDegrees(Math.acos(horizontalVector.normalize().z))));
+                        matrices.mulPose(rotationDegrees(YN(),180 + (float) Math.toDegrees(Math.acos(-horizontalVector.normalize().z))));
                     }
 
-                    matrices.mulPose(Vector3f.XN.rotationDegrees((float) Math.toDegrees(Math.acos(vector.normalize().y))));
+//                    matrices.mulPose(Vector3f.XN.rotationDegrees((float) Math.toDegrees(Math.acos(vector.normalize().y))));
+                    matrices.mulPose(rotationDegrees(XN(),(float) Math.toDegrees(Math.acos(vector.normalize().y))));
 
-
-                    float percent = (float) (Helpers.getGipotenuza(Helpers.getGipotenuza(vector.x, vector.z), vector.y));
+                    float percent = (float) (Helpers.getHypotenuse(Helpers.getHypotenuse(vector.x, vector.z), vector.y));
 
                     VertexConsumer vertex = buffer.getBuffer(RenderType.text(RAY));
                     Matrix4f matrix = matrices.last().pose();
@@ -109,27 +109,35 @@ public class SolarCoreRenderer implements BlockEntityRenderer<SolarEnergyCoreTil
                     matrices.popPose();
 
             }
-//            matrices.pushPose();
-//            matrices.scale(0.5f, 0.5f, 0.5f);
-//            matrices.translate(1, 1, 1);
-//            matrices.mulPose(Vector3f.YP.rotationDegrees((entity.getLevel().getGameTime() + partialTicks) % 360));
-//            RenderingTools.renderObjModel(OBJModels.SOLAR_CORE_MODEL,matrices,buffer,1f,1f,1f,LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
-//
-//            matrices.popPose();
-//            List<BakedQuad> list = Minecraft.getInstance().getModelManager().getModel(OBJModels.SOLAR_CORE_MODEL)
-//                    .getQuads(null, null, RandomSource.create(), ModelData.EMPTY,RenderType.solid());
-//            for (BakedQuad a : list) {
-                matrices.pushPose();
-                matrices.scale(0.5f, 0.5f, 0.5f);
-                matrices.translate(1, 1, 1);
-                matrices.mulPose(Vector3f.YP.rotationDegrees((entity.getLevel().getGameTime() + partialTicks) % 360));
-//                buffer.getBuffer(RenderType.solid()).putBulkData(matrices.last(), a, 1, 1, 1, light1, light2);
-                RenderingTools.renderBlockObjModel(OBJModels.SOLAR_CORE_MODEL,matrices,buffer,1,1,1,LightTexture.FULL_BRIGHT,light2);
-                matrices.popPose();
+            Level level = entity.getLevel();
+
+            float time = (level.getGameTime() + partialTicks)/2;
+            matrices.pushPose();
+            matrices.scale(0.5f, 0.5f, 0.5f);
+            matrices.translate(1, 1, 1);
+            matrices.pushPose();
+            matrices.mulPose(rotationDegrees(YP(),time));
+            ShapesRenderer.renderSphere(ShapesRenderer.POSITION_COLOR_UV_LIGHTMAP,
+                    buffer.getBuffer(SCRenderTypes.text(CORE_TEXTURE)),matrices,20,2.05f,1,0.15f,0f,1f,LightTexture.FULL_BRIGHT);
+            ShapesRenderer.renderSphere(ShapesRenderer.POSITION_COLOR_UV_LIGHTMAP,
+                    buffer.getBuffer(SCRenderTypes.TEXT_BLOOM.apply(CORE_TEXTURE)),matrices,20,2.05f,1,0.4f,0.5f,1f,LightTexture.FULL_BRIGHT);
+
+            matrices.popPose();
+            matrices.pushPose();
+            matrices.mulPose(rotationDegrees(YN(),time));
+           ShapesRenderer.renderSphere(ShapesRenderer.POSITION_COLOR_UV_LIGHTMAP,
+                    buffer.getBuffer(RenderType.text(CORE_TEXTURE_OUTER)),matrices,20,2.15f,1,0.75f,0f,1f,LightTexture.FULL_BRIGHT);
+            matrices.popPose();
+            matrices.popPose();
 //            }
 //            }
 
         }
+    }
+
+    @Override
+    public AABB getRenderBoundingBox(SolarEnergyCoreTile blockEntity) {
+        return Helpers.createAABBWithRadius(Helpers.getBlockCenter(blockEntity.getBlockPos()),16,16);
     }
 
     @Override

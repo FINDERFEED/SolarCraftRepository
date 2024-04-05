@@ -4,7 +4,7 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.runic_energy.Abstr
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.misc_things.DebugTarget;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
@@ -27,7 +27,7 @@ public class BonemealerTileEntity extends AbstractRunicEnergyContainer implement
     private final RunicEnergyCost COST = new RunicEnergyCost().set(RunicEnergy.Type.TERA,200);
 
     public BonemealerTileEntity( BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.BONEMEALER.get(), p_155229_, p_155230_);
+        super(SCTileEntities.BONEMEALER.get(), p_155229_, p_155230_);
     }
 
 
@@ -70,7 +70,7 @@ public class BonemealerTileEntity extends AbstractRunicEnergyContainer implement
                 for (int h = -10; h <= 10;h++){
                     BlockPos whereToSeek = worldPosition.offset(i,g,h);
                     if (level.getBlockState(whereToSeek).getBlock() instanceof CropBlock crop){
-                        if (crop.isValidBonemealTarget(level,whereToSeek,level.getBlockState(whereToSeek),true)) {
+                        if (crop.isValidBonemealTarget(level,whereToSeek,level.getBlockState(whereToSeek))) {
                             returnThis.add(whereToSeek);
                         }
                     }
@@ -83,7 +83,7 @@ public class BonemealerTileEntity extends AbstractRunicEnergyContainer implement
 
 
     @Override
-    public float getMaxRunicEnergyInput() {
+    public float getREPerTickInput() {
         return 20;
     }
 

@@ -1,20 +1,25 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities;
 
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
+import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.registries.ConfigRegistry;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.SCAttachmentTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.attachment.AttachmentType;
+import net.neoforged.neoforge.items.ItemStackHandler;
+
+import java.util.function.Supplier;
 
 public class ElementWeaverTileEntity extends REItemHandlerBlockEntity{
 
@@ -37,7 +42,7 @@ public class ElementWeaverTileEntity extends REItemHandlerBlockEntity{
     private boolean active;
 
     public ElementWeaverTileEntity(BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.ELEMENT_WEAVER.get(), p_155229_, p_155230_);
+        super(SCTileEntities.ELEMENT_WEAVER.get(), p_155229_, p_155230_);
     }
 
 
@@ -46,6 +51,26 @@ public class ElementWeaverTileEntity extends REItemHandlerBlockEntity{
         if (!world.isClientSide){
             energyDrain(tile);
             processItems(tile);
+        }else{
+            if (tile.level.getGameTime() % 20 == 0) {
+                float k = 0.2f;
+                for (int i = 0; i < 2; i++) {
+                    for (int g = 0; g < 2; g++) {
+                        if (tile.isActive()) {
+                            Vec3 pos = Helpers.posToVec(tile.getBlockPos()).add(i * (1 - k*2) + k, 0.2, g * (1 - k*2) + k);
+                            ClientHelpers.Particles.createParticle(
+                                    SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                                    pos.x, pos.y, pos.z, 0, 0, 0, 255, 255, 40, 0.3f
+                            );
+                            pos = Helpers.posToVec(tile.getBlockPos()).add(i * (1 - k*2) + k, 0.8, g * (1 - k*2) + k);
+                            ClientHelpers.Particles.createParticle(
+                                    SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                                    pos.x, pos.y, pos.z, 0, 0, 0, 255, 255, 40, 0.3f
+                            );
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -66,12 +91,6 @@ public class ElementWeaverTileEntity extends REItemHandlerBlockEntity{
                 tile.processingItem = null;
                 tile.processingItemCost = null;
                 tile.processingTime = 0;
-            }
-        }else{
-            if (tile.isActive()) {
-                BlockPos pos = tile.getBlockPos();
-                tile.level.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
-                        pos.getX(), pos.getY() + 2, pos.getZ(), 0, 0.05, 0);
             }
         }
 
@@ -145,6 +164,8 @@ public class ElementWeaverTileEntity extends REItemHandlerBlockEntity{
         this.active = tag.getBoolean("active");
     }
 
+
+
     public RunicEnergyCost getProcessingItemCost() {
         return processingItemCost;
     }
@@ -158,7 +179,7 @@ public class ElementWeaverTileEntity extends REItemHandlerBlockEntity{
     }
 
     @Override
-    public float getMaxRunicEnergyInput() {
+    public float getREPerTickInput() {
         return 2;
     }
 
@@ -182,8 +203,9 @@ public class ElementWeaverTileEntity extends REItemHandlerBlockEntity{
         return true;
     }
 
+
     @Override
-    public AABB getRenderBoundingBox() {
-        return Helpers.createAABBWithRadius(Helpers.posToVec(getBlockPos()),10,10);
+    public Supplier<AttachmentType<ItemStackHandler>> getAttachmentType() {
+        return SCAttachmentTypes.INVENTORY_2;
     }
 }

@@ -4,7 +4,7 @@ import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.blocks.blockentities.RunicEnergyChargerTileEntity;
 import com.finderfeed.solarcraft.content.blocks.blockentities.containers.RunicEnergyChargerContainer;
 import com.finderfeed.solarcraft.content.blocks.primitive.RunicEnergySaverBlock;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -23,10 +23,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.network.NetworkHooks;
+
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -43,7 +43,7 @@ public class RunicEnergyChargerBlock extends RunicEnergySaverBlock implements En
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return SolarcraftTileEntityTypes.RUNIC_ENERGY_CHARGER.get().create(pos,state);
+        return SCTileEntities.RUNIC_ENERGY_CHARGER.get().create(pos,state);
     }
 
 
@@ -58,7 +58,7 @@ public class RunicEnergyChargerBlock extends RunicEnergySaverBlock implements En
        if (!world.isClientSide && hand == InteractionHand.MAIN_HAND){
             if (world.getBlockEntity(pos) instanceof RunicEnergyChargerTileEntity tile) {
                 Helpers.updateTile(tile);
-                NetworkHooks.openScreen((ServerPlayer) player, new RunicEnergyChargerContainer.Provider(pos), (buf) -> {
+                ((ServerPlayer) player).openMenu( new RunicEnergyChargerContainer.Provider(pos), (buf) -> {
                     buf.writeBlockPos(pos);
                 });
                 return InteractionResult.SUCCESS;
@@ -83,12 +83,12 @@ public class RunicEnergyChargerBlock extends RunicEnergySaverBlock implements En
     }
 
     @Override
-    public List<ItemStack> getDrops(BlockState state, LootContext.Builder context) {
+    public List<ItemStack> getDrops(BlockState state, LootParams.Builder context) {
         List<ItemStack> drops = super.getDrops(state,context);
 
         if (context.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof RunicEnergyChargerTileEntity charger){
             ItemStack i;
-            charger.reviveCaps();
+//            charger.reviveCaps();
             if (!(i = charger.getStackInSlot(0)).isEmpty()){
                 drops.add(i);
             }
@@ -96,8 +96,13 @@ public class RunicEnergyChargerBlock extends RunicEnergySaverBlock implements En
             if (!(i1 = charger.getStackInSlot(1)).isEmpty()){
                 drops.add(i1);
             }
-            charger.invalidateCaps();
+//            charger.invalidateCaps();
         }
         return drops;
+    }
+
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState p_60518_, boolean p_60519_) {
+        super.onRemove(state, level, pos, p_60518_, p_60519_);
     }
 }

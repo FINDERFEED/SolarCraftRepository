@@ -1,12 +1,12 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities;
 
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.structure_check.IStructureOwner;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
@@ -21,17 +21,17 @@ public class ExplosionBlockerBlockEntity extends SolarcraftBlockEntity implement
     private boolean shouldRenderShield = true;
 
     public ExplosionBlockerBlockEntity( BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.EXPLOSTION_BLOCKER.get(), p_155229_, p_155230_);
+        super(SCTileEntities.EXPLOSTION_BLOCKER.get(), p_155229_, p_155230_);
     }
 
 
     public static void tick(ExplosionBlockerBlockEntity b, Level world){
         if (b.shouldRenderShield) {
 
-            ClientHelpers.Particles.horizontalXCircle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+            ClientHelpers.Particles.horizontalXCircle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                     Helpers.getBlockCenter(b.getBlockPos()), 3, 2, new float[]{0, 0, 0},
                     () -> 87, () -> 202, () -> 255, 0.4f, 2f, 0);
-            ClientHelpers.Particles.horizontalZCircle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+            ClientHelpers.Particles.horizontalZCircle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                     Helpers.getBlockCenter(b.getBlockPos()), 3, 2, new float[]{0, 0, 0},
                     () -> 87, () -> 202, () -> 255, 0.4f, 2f, 90);
         }
@@ -62,16 +62,8 @@ public class ExplosionBlockerBlockEntity extends SolarcraftBlockEntity implement
     public void load(CompoundTag tag) {
         super.load(tag);
         shouldRenderShield = tag.getBoolean("shouldRenderShield");
-//        if (level != null){
-//            this.setChanged();
-//            level.sendBlockUpdated(worldPosition,getBlockState(),getBlockState(),3);
-//        }
     }
 
-    @Override
-    public AABB getRenderBoundingBox() {
-        return new AABB(-40,-40,-40,40,40,40).move(Helpers.getBlockCenter(worldPosition));
-    }
 
 
     public boolean isFunctioning(){

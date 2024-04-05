@@ -3,8 +3,9 @@ package com.finderfeed.solarcraft.content.world_generation.structures.blocks;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.content.world_generation.structures.blocks.tile_entities.ColdStarInfuserTile;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
+import com.finderfeed.solarcraft.registries.items.SCItems;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
@@ -44,7 +45,7 @@ public class ColdStarInfuser extends Block implements EntityBlock {
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
         BlockState starredState = this.defaultBlockState().setValue(NOT_STARRED,false);
 
-        if (player.getItemInHand(hand).getItem() == SolarcraftItems.COLD_STAR_PIECE.get()){
+        if (player.getItemInHand(hand).getItem() == SCItems.COLD_STAR_PIECE.get()){
             for (int i = 0; i < 96;i++){
                 world.addParticle(ParticleTypes.FLAME,pos.getX()+0.5f + Math.cos(Math.toRadians(i*30)),pos.getY() + i * 0.5,pos.getZ()+0.5f + Math.sin(Math.toRadians(i*30)),0,0,0);
             }
@@ -57,14 +58,14 @@ public class ColdStarInfuser extends Block implements EntityBlock {
                         world.setBlock(pos,starredState,3);
                     }
                 } else {
-                    if (player.getItemInHand(hand).getItem() == SolarcraftItems.COLD_STAR_PIECE.get()){
+                    if (player.getItemInHand(hand).getItem() == SCItems.COLD_STAR_PIECE.get()){
                         player.getItemInHand(hand).grow(-1);
-                        ItemStack stack = SolarcraftItems.COLD_STAR_PIECE_ACTIVATED.get().getDefaultInstance();
+                        ItemStack stack = SCItems.COLD_STAR_PIECE_ACTIVATED.get().getDefaultInstance();
                         if (!player.addItem(stack)){
                             ItemEntity item = new ItemEntity(world,pos.getX(),pos.getY(),pos.getZ(),stack);
                             world.addFreshEntity(item);
                         }
-                        world.destroyBlock(pos,false);
+                        world.setBlock(pos, SCBlocks.COLD_STAR_INFUSER.get().defaultBlockState(),3);
                     }
                 }
             }
@@ -77,7 +78,7 @@ public class ColdStarInfuser extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return SolarcraftTileEntityTypes.COLD_STAR_INFUSER.get().create(blockPos,blockState);
+        return SCTileEntities.COLD_STAR_INFUSER.get().create(blockPos,blockState);
     }
 
     @Nullable

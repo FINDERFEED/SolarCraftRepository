@@ -58,11 +58,11 @@ public class DimStructPieces {
 
 
         public Piece( StructureTemplateManager p_163662_, ResourceLocation p_163663_, Rotation rotation, BlockPos p_163666_) {
-            super(StructurePieces.DIMENSIONAL_SHARD_STRUCTURE, 0, p_163662_, p_163663_,p_163663_.toString(), makeSettings(rotation,p_163663_), makePosition(p_163663_,p_163666_,0));
+            super(StructurePieces.DIMENSIONAL_SHARD_STRUCTURE.get(), 0, p_163662_, p_163663_,p_163663_.toString(), makeSettings(rotation,p_163663_), makePosition(p_163663_,p_163666_,0));
         }
 
         public Piece( StructurePieceSerializationContext p_163670_,CompoundTag tagCompound) {
-            super(StructurePieces.DIMENSIONAL_SHARD_STRUCTURE, tagCompound, p_163670_.structureTemplateManager(), (loc)->{
+            super(StructurePieces.DIMENSIONAL_SHARD_STRUCTURE.get(), tagCompound, p_163670_.structureTemplateManager(), (loc)->{
                 return makeSettings(Rotation.valueOf(tagCompound.getString("Rot")),loc);
             });
         }

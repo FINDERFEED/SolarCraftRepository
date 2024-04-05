@@ -46,7 +46,7 @@ public class SunShardPuzzleStructure extends Structure {
 
     @Override
     public StructureType<?> type() {
-        return SolarcraftStructureTypes.SUN_SHARD_PUZZLE_STRUCTURE_TYPE;
+        return SolarcraftStructureTypes.SUN_SHARD_PUZZLE_STRUCTURE_TYPE.get();
     }
 
 }

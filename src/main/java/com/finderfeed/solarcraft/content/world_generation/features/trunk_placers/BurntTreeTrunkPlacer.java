@@ -36,7 +36,7 @@ public class BurntTreeTrunkPlacer extends TrunkPlacer {
 
     @Override
     protected TrunkPlacerType<?> type() {
-        return TrunkPlacersRegistry.BURNT_TREE_TRUNK_PLACER_TRUNK_PLACER_TYPE;
+        return null;
     }
 
 

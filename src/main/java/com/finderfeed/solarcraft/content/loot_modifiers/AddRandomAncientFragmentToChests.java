@@ -1,6 +1,6 @@
 package com.finderfeed.solarcraft.content.loot_modifiers;
 
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -8,8 +8,8 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraftforge.common.loot.IGlobalLootModifier;
-import net.minecraftforge.common.loot.LootModifier;
+import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
+import net.neoforged.neoforge.common.loot.LootModifier;
 import org.jetbrains.annotations.NotNull;
 
 public class AddRandomAncientFragmentToChests extends LootModifier {
@@ -41,7 +41,7 @@ public class AddRandomAncientFragmentToChests extends LootModifier {
         int amount = min + r.nextInt((max - min) + 1);
         ObjectArrayList<ItemStack> stacks = new ObjectArrayList<>(generatedLoot);
         for (int i = 0; i < amount;i++){
-            stacks.add(SolarcraftItems.INFO_FRAGMENT.get().getDefaultInstance());
+            stacks.add(SCItems.INFO_FRAGMENT.get().getDefaultInstance());
         }
         return stacks;
     }

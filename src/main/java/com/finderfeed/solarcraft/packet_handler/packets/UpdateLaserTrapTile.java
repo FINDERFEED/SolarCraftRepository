@@ -1,24 +1,24 @@
 package com.finderfeed.solarcraft.packet_handler.packets;
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
 import net.minecraft.network.FriendlyByteBuf;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import net.minecraft.core.BlockPos;
-import net.minecraftforge.network.NetworkEvent;
-
-
 import java.util.function.Supplier;
 
 
 
-public class UpdateLaserTrapTile {
+@Packet("update_laser_trap_tile")
+public class UpdateLaserTrapTile extends FDPacket {
 
-    public final int updateIt;
-    public final BlockPos pos;
+    public int updateIt;
+    public BlockPos pos;
     public UpdateLaserTrapTile(int i,BlockPos pos) {
         this.updateIt = i;
         this.pos = pos;
     }
-
     public UpdateLaserTrapTile(FriendlyByteBuf buf) {
         updateIt = buf.readInt();
         pos = buf.readBlockPos();
@@ -29,10 +29,18 @@ public class UpdateLaserTrapTile {
         buf.writeBlockPos(pos);
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(() -> {
-            ClientHelpers.updateIntegerLASERTRAP(pos,updateIt);
-        });
-        ctx.get().setPacketHandled(true);
+//    public void handle(PlayPayloadContext ctx) {
+//            ClientHelpers.updateIntegerLASERTRAP(pos,updateIt);
+//
+//    }
+
+    @Override
+    public void clientPlayHandle(PlayPayloadContext ctx) {
+        ClientHelpers.updateIntegerLASERTRAP(pos,updateIt);
+    }
+
+    @Override
+    public void write(FriendlyByteBuf friendlyByteBuf) {
+        this.toBytes(friendlyByteBuf);
     }
 }

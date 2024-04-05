@@ -1,0 +1,17 @@
+{
+  "placement": [
+    {
+      "height": {
+        "min_inclusive": {
+          "absolute": 5
+        },
+        "max_inclusive": {
+          "absolute": 30
+        },
+        "type": "minecraft:uniform"
+      },
+      "type": "minecraft:height_range"
+    }
+  ],
+  "feature": "solarcraft:solar_ore"
+}

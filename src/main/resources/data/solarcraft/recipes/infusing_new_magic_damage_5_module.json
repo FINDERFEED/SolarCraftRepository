@@ -1,11 +1,21 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "C": {"item": "solarcraft:amethyst_core"},
-    "D": {"item": "solarcraft:ardo_crystal"},
-    "F": {"item": "solarcraft:urba_crystal"},
-    "G": {"item": "solarcraft:blue_gem_enriched"},
-    "Q": {"item": "solarcraft:qualadium_ingot"}
+    "C": {
+      "item": "solarcraft:amethyst_core"
+    },
+    "D": {
+      "item": "solarcraft:ardo_crystal"
+    },
+    "F": {
+      "item": "solarcraft:urba_crystal"
+    },
+    "G": {
+      "item": "solarcraft:blue_gem_enriched"
+    },
+    "Q": {
+      "item": "solarcraft:qualadium_ingot"
+    }
   },
   "pattern": [
     " F ",
@@ -19,7 +29,9 @@
   },
   "time": 700,
   "fragment": "modules",
-  "ardo": 2000,
-  "urba": 2000,
-  "catalysts": "A AA AR RR R"
+  "catalysts": "A AA AR RR R",
+  "re_cost": {
+    "ardo": 2000,
+    "urba": 2000
+  }
 }

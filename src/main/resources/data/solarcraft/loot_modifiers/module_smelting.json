@@ -3,7 +3,7 @@
   "conditions": [{
     "condition": "minecraft:match_tool",
     "predicate": {
-      "type": "solarcraft_module_predicate",
+      "type": "solarcraft:solarcraft_module_predicate",
       "module_tag": "solarcraft_smelting_module"
 
     }

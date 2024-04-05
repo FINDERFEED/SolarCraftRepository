@@ -1,14 +1,14 @@
 package com.finderfeed.solarcraft.content.entities.renderers;
 
 import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.client.rendering.rendertypes.SolarCraftRenderTypes;
+import com.finderfeed.solarcraft.client.rendering.rendertypes.SCRenderTypes;
 import com.finderfeed.solarcraft.content.entities.not_alive.SunstrikeEntity;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
+import org.joml.Matrix4f;
+import static com.finderfeed.solarcraft.local_library.helpers.RenderingTools.*;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.culling.Frustum;
@@ -33,7 +33,8 @@ public class SunstrikeRenderer extends EntityRenderer<SunstrikeEntity> {
 
         matrices.pushPose();
         matrices.translate(0,0.001,0);
-        matrices.mulPose(Vector3f.YP.rotationDegrees(RenderingTools.getTime(entity.level,pticks)*15));
+//        matrices.mulPose(Vector3f.YP.rotationDegrees(RenderingTools.getTime(entity.level,pticks)*15));
+        matrices.mulPose(rotationDegrees(YP(),getTime(entity.level,pticks)*15));
         double percent = FDMathHelper.clamp(0,(entity.tickCount + pticks)/(float)SunstrikeEntity.FALLING_TIME,1);
         matrices.pushPose();
         VertexConsumer vertex = src.getBuffer(RenderType.text(LOC));
@@ -41,7 +42,8 @@ public class SunstrikeRenderer extends EntityRenderer<SunstrikeEntity> {
         matrices.translate(0,h*(1-percent) + 0.7f,0);
 
         matrices.scale(1.4f,1.4f,1.4f);
-        matrices.mulPose(Vector3f.XP.rotationDegrees(180));
+//        matrices.mulPose(Vector3f.XP.rotationDegrees(180));
+        matrices.mulPose(rotationDegrees(XP(),180));
         Matrix4f mat = matrices.last().pose();
         RenderingTools.basicVertex(mat,vertex,-0.25,-0.5,0,0,0);
         RenderingTools.basicVertex(mat,vertex,-0.25,0.5,0,1,0);
@@ -85,7 +87,7 @@ public class SunstrikeRenderer extends EntityRenderer<SunstrikeEntity> {
 
 
         matrices.pushPose();
-        VertexConsumer vertexray = src.getBuffer(SolarCraftRenderTypes.depthMaskedTextSeeThrough(SOLAR_STRIKE_RAY));
+        VertexConsumer vertexray = src.getBuffer(SCRenderTypes.depthMaskedTextSeeThrough(SOLAR_STRIKE_RAY));
         mat = matrices.last().pose();
         float modray = 0.125f;
         vertexray.vertex(mat, -1F*modray, h*(float)(1-percent), 0).color(255, 255, 255, 255).uv(0, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();

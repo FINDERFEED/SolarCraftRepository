@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "solarcraft:solar_ore",
+    "solarcraft:lensing_crystal_ore",
+    "solarcraft:ender_cracks",
+    "solarcraft:blue_gem_ore",
+    "solarcraft:corrupted_shard_ore",
+    "solarcraft:deepslate_corrupted_shard_ore"
+  ]
+}

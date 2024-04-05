@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.content.blocks.blockentities;
 
 import com.finderfeed.solarcraft.local_library.helpers.EntityHelper;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
@@ -16,7 +16,7 @@ public class WormholeTileEntity extends BlockEntity {
 
 
     public WormholeTileEntity( BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.WORMHOLE.get(), p_155229_, p_155230_);
+        super(SCTileEntities.WORMHOLE.get(), p_155229_, p_155230_);
     }
 
 
@@ -37,8 +37,5 @@ public class WormholeTileEntity extends BlockEntity {
         });
     }
 
-    @Override
-    public AABB getRenderBoundingBox() {
-        return new AABB(getBlockPos(),getBlockPos().offset(1,1,1));
-    }
+
 }

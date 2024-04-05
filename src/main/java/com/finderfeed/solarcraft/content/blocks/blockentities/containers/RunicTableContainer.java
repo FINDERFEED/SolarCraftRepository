@@ -2,9 +2,9 @@ package com.finderfeed.solarcraft.content.blocks.blockentities.containers;
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.RunicTableTileEntity;
 import com.finderfeed.solarcraft.content.items.RuneItem;
-import com.finderfeed.solarcraft.registries.containers.SolarcraftContainers;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarcraft.registries.containers.SCContainers;
+import com.finderfeed.solarcraft.registries.items.SCItems;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -16,9 +16,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 import net.minecraft.core.BlockPos;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -31,9 +31,9 @@ public class RunicTableContainer extends AbstractContainerMenu {
     public boolean hideRuneButtons;
 
     public RunicTableContainer(int windowId, Inventory playerInv,BlockPos tilepos,boolean hideRuneButtons) {
-        super(SolarcraftContainers.RUNIC_TABLE_CONTAINER.get(), windowId);
+        super(SCContainers.RUNIC_TABLE_CONTAINER.get(), windowId);
         this.hideRuneButtons = hideRuneButtons;
-        Level world = playerInv.player.level;
+        Level world = playerInv.player.level();
         this.tile = (RunicTableTileEntity)world.getBlockEntity(tilepos);
         this.inventory = tile.getInventory();
 
@@ -148,14 +148,14 @@ class RuneSlot extends Slot{
     @Override
     public boolean mayPlace(ItemStack stack) {
         Item item = stack.getItem();
-        return (item == SolarcraftItems.SOLAR_RUNE_ARDO.get()) ||
-                (item == SolarcraftItems.SOLAR_RUNE_ZETA.get()) ||
-                (item == SolarcraftItems.SOLAR_RUNE_TERA.get()) ||
-                (item == SolarcraftItems.SOLAR_RUNE_URBA.get()) ||
-                (item == SolarcraftItems.SOLAR_RUNE_KELDA.get()) ||
-                (item == SolarcraftItems.SOLAR_RUNE_FIRA.get()) ||
-                (item == SolarcraftItems.SOLAR_RUNE_GIRO.get()) ||
-                (item == SolarcraftItems.SOLAR_RUNE_ULTIMA.get());
+        return (item == SCItems.SOLAR_RUNE_ARDO.get()) ||
+                (item == SCItems.SOLAR_RUNE_ZETA.get()) ||
+                (item == SCItems.SOLAR_RUNE_TERA.get()) ||
+                (item == SCItems.SOLAR_RUNE_URBA.get()) ||
+                (item == SCItems.SOLAR_RUNE_KELDA.get()) ||
+                (item == SCItems.SOLAR_RUNE_FIRA.get()) ||
+                (item == SCItems.SOLAR_RUNE_GIRO.get()) ||
+                (item == SCItems.SOLAR_RUNE_ULTIMA.get());
     }
 }
 class FragmentSlot extends SlotItemHandler {
@@ -168,7 +168,7 @@ class FragmentSlot extends SlotItemHandler {
     @Override
     public boolean mayPlace(ItemStack stack) {
         Item item = stack.getItem();
-        return (item == SolarcraftItems.INFO_FRAGMENT.get()) && (stack.getTagElement(ProgressionHelper.TAG_ELEMENT) == null);
+        return (item == SCItems.INFO_FRAGMENT.get()) && (stack.getTagElement(AncientFragmentHelper.TAG_ELEMENT) == null);
     }
 
     @Override

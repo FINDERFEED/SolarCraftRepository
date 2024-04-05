@@ -6,7 +6,7 @@ import com.finderfeed.solarcraft.content.items.solar_wand.WandAction;
 import com.finderfeed.solarcraft.content.items.solar_wand.WandActionType;
 import com.finderfeed.solarcraft.content.items.solar_wand.WandDataSerializer;
 import com.finderfeed.solarcraft.content.items.solar_wand.WandUseContext;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -72,6 +72,6 @@ public class SolarNetworkBinderWandAction implements WandAction<SolarNetworkBind
 
     @Override
     public ItemStack getIcon() {
-        return SolarcraftItems.SOLAR_NETWORK_BINDER.get().getDefaultInstance();
+        return SCItems.SOLAR_NETWORK_BINDER.get().getDefaultInstance();
     }
 }

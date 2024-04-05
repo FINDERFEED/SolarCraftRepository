@@ -4,8 +4,7 @@ import com.finderfeed.solarcraft.content.entities.not_alive.MineEntityCrystalBos
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
+import org.joml.Matrix4f;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -29,7 +28,8 @@ public class MineEntityRenderer extends EntityRenderer<MineEntityCrystalBoss> {
         float percent = (float)mine.getEntityData().get(mine.TICKER)/60;
         float time = (mine.level.getGameTime() + partialTicks)*20 % 360;
         matrices.pushPose();
-        matrices.mulPose(Vector3f.YP.rotationDegrees(time));
+//        matrices.mulPose(Vector3f.YP.rotationDegrees(time));
+        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),time));
         matrices.translate(0,0.01,0);
         matrices.scale(percent,percent,percent);
         Matrix4f mat = matrices.last().pose();
@@ -47,7 +47,8 @@ public class MineEntityRenderer extends EntityRenderer<MineEntityCrystalBoss> {
 
         vertex = buffer.getBuffer(RenderType.text(RAY));
 
-        matrices.mulPose(Vector3f.ZN.rotationDegrees(180));
+//        matrices.mulPose(Vector3f.ZN.rotationDegrees(180));
+        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.ZN(),180));
         matrices.translate(0,-1,0);
         RenderingTools.basicVertex(mat,vertex,-0.5,0,0,0,0);
         RenderingTools.basicVertex(mat,vertex,-0.5,1,0,0,1);

@@ -38,11 +38,11 @@ public class TrapStructurePieces {
     public static class Piece extends TemplateStructurePiece {
 
         public Piece(StructureTemplateManager templateManagerIn, ResourceLocation resourceLocationIn, Rotation rot, BlockPos pos) {
-            super(StructurePieces.DUNGEON_MAZE_PIECE, 0, templateManagerIn, resourceLocationIn, resourceLocationIn.toString(), makeSettings(rot,DUNGEON_PIECE), makePosition(DUNGEON_PIECE,pos,0));
+            super(StructurePieces.DUNGEON_MAZE_PIECE.get(), 0, templateManagerIn, resourceLocationIn, resourceLocationIn.toString(), makeSettings(rot,DUNGEON_PIECE), makePosition(DUNGEON_PIECE,pos,0));
         }
 
         public Piece(  StructurePieceSerializationContext p_163670_,CompoundTag tagCompound) {
-            super(StructurePieces.DUNGEON_MAZE_PIECE, tagCompound, p_163670_.structureTemplateManager(), (loc)->{
+            super(StructurePieces.DUNGEON_MAZE_PIECE.get(), tagCompound, p_163670_.structureTemplateManager(), (loc)->{
                 return makeSettings(Rotation.valueOf(tagCompound.getString("Rot")),loc);
             });
         }

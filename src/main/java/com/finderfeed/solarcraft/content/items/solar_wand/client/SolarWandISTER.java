@@ -1,7 +1,5 @@
 package com.finderfeed.solarcraft.content.items.solar_wand.client;
 
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
 import com.finderfeed.solarcraft.content.items.solar_wand.SolarWandItem;
 import com.finderfeed.solarcraft.content.items.solar_wand.WandAction;
 import com.finderfeed.solarcraft.events.other_events.OBJModels;
@@ -11,11 +9,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 
 public class SolarWandISTER extends BlockEntityWithoutLevelRenderer {
@@ -26,13 +23,13 @@ public class SolarWandISTER extends BlockEntityWithoutLevelRenderer {
     }
 
     @Override
-    public void renderByItem(ItemStack stack, ItemTransforms.TransformType transformType, PoseStack matrices, MultiBufferSource buffer, int light, int overlay) {
-        if (transformType == ItemTransforms.TransformType.GUI){
+    public void renderByItem(ItemStack stack, ItemDisplayContext transformType, PoseStack matrices, MultiBufferSource buffer, int light, int overlay) {
+        if (transformType == ItemDisplayContext.GUI){
             matrices.pushPose();
             matrices.translate(0.5,0.5,0);
             MultiBufferSource.BufferSource source = Minecraft.getInstance().renderBuffers().bufferSource();
             Lighting.setupForFlatItems();
-            renderItem(matrices,stack, ItemTransforms.TransformType.GUI,source,light,OverlayTexture.NO_OVERLAY);
+            renderItem(matrices,stack, ItemDisplayContext.GUI,source,light,OverlayTexture.NO_OVERLAY);
             matrices.popPose();
             source.endBatch();
             Lighting.setupFor3DItems();
@@ -52,7 +49,7 @@ public class SolarWandISTER extends BlockEntityWithoutLevelRenderer {
                 if (!model.usesBlockLight()){
                     Lighting.setupForFlatItems();
                 }
-                Minecraft.getInstance().getItemRenderer().render(icon, ItemTransforms.TransformType.GUI, false, matrices, src2, light,
+                Minecraft.getInstance().getItemRenderer().render(icon, ItemDisplayContext.GUI, false, matrices, src2, light,
                         OverlayTexture.NO_OVERLAY, model);
                 src2.endBatch();
                 if (!model.usesBlockLight()){
@@ -70,7 +67,7 @@ public class SolarWandISTER extends BlockEntityWithoutLevelRenderer {
         }
     }
 
-    public static void renderItem(PoseStack matrices, ItemStack stack, ItemTransforms.TransformType type,MultiBufferSource buffer,int light, int overlay){
+    public static void renderItem(PoseStack matrices, ItemStack stack, ItemDisplayContext type,MultiBufferSource buffer,int light, int overlay){
         Minecraft.getInstance().getItemRenderer().render(stack,type,false,matrices,buffer,light,overlay,
                 Minecraft.getInstance().getModelManager().getModel(OBJModels.SOLAR_WAND_MODEL));
     }

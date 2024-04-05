@@ -2,6 +2,7 @@ package com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.
 
 import net.minecraft.nbt.CompoundTag;
 
+
 public class PuzzleTile {
 
     private final PuzzleTileType tileType;

@@ -1,19 +1,25 @@
 package com.finderfeed.solarcraft.content.entities.not_alive;
 
 import com.finderfeed.solarcraft.SolarCraft;
-import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
+import com.finderfeed.solarcraft.packet_handler.packets.SendDeltaMovementPacket;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.CrashReportCategory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
@@ -25,6 +31,7 @@ import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.DirectionalPlaceContext;
 import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
@@ -35,19 +42,22 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.entity.IEntityWithComplexSpawn;
 
 import javax.annotation.Nullable;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public class MyFallingBlockEntity extends Entity {
+public class MyFallingBlockEntity extends Entity implements IEntityWithComplexSpawn {
     public BlockState blockState = Blocks.SAND.defaultBlockState();
     public int time;
     public boolean dropItem = true;
     public boolean cancelDrop;
     private boolean hurtEntities;
-    private int fallDamageMax = 20;
+    private int fallDamageMax = 40;
     private float fallDamagePerDistance;
-    public long removeAtMillis;
+    private int noPhysicsTime = 0;
+
     @Nullable
     public CompoundTag blockData;
     protected static final EntityDataAccessor<BlockPos> DATA_START_POS = SynchedEntityData.defineId(MyFallingBlockEntity.class, EntityDataSerializers.BLOCK_POS);
@@ -57,7 +67,7 @@ public class MyFallingBlockEntity extends Entity {
     }
 
     public MyFallingBlockEntity(Level world, double x, double y, double z, BlockState p_31957_) {
-        this(SolarcraftEntityTypes.FALLING_BLOCK.get(), world);
+        this(SCEntityTypes.FALLING_BLOCK.get(), world);
         this.blockState = p_31957_;
         this.blocksBuilding = true;
         this.setPos(x, y + (double)((1.0F - this.getBbHeight()) / 2.0F), z);
@@ -97,6 +107,12 @@ public class MyFallingBlockEntity extends Entity {
         if (this.blockState.isAir()) {
             this.discard();
         } else {
+            if (noPhysicsTime > 0){
+                noPhysics = true;
+                noPhysicsTime--;
+            }else{
+                noPhysics = false;
+            }
             Block block = this.blockState.getBlock();
             ++this.time;
             if (!this.isNoGravity()) {
@@ -117,7 +133,7 @@ public class MyFallingBlockEntity extends Entity {
                     }
                 }
 
-                if (!this.onGround && !flag1) {
+                if (!this.onGround() && !flag1) {
                     if (!this.level.isClientSide && (this.time > 100 && (blockpos.getY() <= this.level.getMinBuildHeight() || blockpos.getY() > this.level.getMaxBuildHeight()) || this.time > 600)) {
                         if (this.dropItem && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
                             this.spawnAtLocation(block);
@@ -190,27 +206,27 @@ public class MyFallingBlockEntity extends Entity {
 
     }
 
-    public boolean causeFallDamage(float damage, float multiplier, DamageSource source) {
+    public boolean causeFallDamage(float p_149643_, float p_149644_, DamageSource p_149645_) {
         if (!this.hurtEntities) {
             return false;
         } else {
-            int i = Mth.ceil(damage - 1.0F);
+            int i = Mth.ceil(p_149643_ - 1.0F);
             if (i < 0) {
                 return false;
             } else {
-                Predicate<Entity> predicate;
-                DamageSource damagesource;
-                if (this.blockState.getBlock() instanceof Fallable) {
-                    Fallable fallable = (Fallable)this.blockState.getBlock();
-                    predicate = fallable.getHurtsEntitySelector();
-                    damagesource = fallable.getFallDamageSource();
+                Predicate<Entity> predicate = EntitySelector.NO_CREATIVE_OR_SPECTATOR.and(EntitySelector.LIVING_ENTITY_STILL_ALIVE);
+                Block $$8 = this.blockState.getBlock();
+                DamageSource damagesource1;
+                if ($$8 instanceof Fallable) {
+                    Fallable fallable = (Fallable)$$8;
+                    damagesource1 = fallable.getFallDamageSource(this);
                 } else {
-                    predicate = EntitySelector.NO_SPECTATORS;
-                    damagesource = DamageSource.FALLING_BLOCK;
+                    damagesource1 = this.damageSources().fallingBlock(this);
                 }
 
+                DamageSource damagesource = damagesource1;
                 float f = (float)Math.min(Mth.floor((float)i * this.fallDamagePerDistance), this.fallDamageMax);
-                this.level.getEntities(this, this.getBoundingBox(), predicate).forEach((p_149649_) -> {
+                this.level().getEntities(this, this.getBoundingBox(), predicate).forEach((p_149649_) -> {
                     p_149649_.hurt(damagesource, f);
                 });
                 boolean flag = this.blockState.is(BlockTags.ANVIL);
@@ -228,36 +244,36 @@ public class MyFallingBlockEntity extends Entity {
         }
     }
 
-    protected void addAdditionalSaveData(CompoundTag p_31973_) {
-        p_31973_.put("BlockState", NbtUtils.writeBlockState(this.blockState));
-        p_31973_.putInt("Time", this.time);
-        p_31973_.putBoolean("DropItem", this.dropItem);
-        p_31973_.putBoolean("HurtEntities", this.hurtEntities);
-        p_31973_.putFloat("FallHurtAmount", this.fallDamagePerDistance);
-        p_31973_.putInt("FallHurtMax", this.fallDamageMax);
+    protected void addAdditionalSaveData(CompoundTag tag) {
+        tag.put("BlockState", NbtUtils.writeBlockState(this.blockState));
+        tag.putInt("Time", this.time);
+        tag.putBoolean("DropItem", this.dropItem);
+        tag.putBoolean("HurtEntities", this.hurtEntities);
+        tag.putFloat("FallHurtAmount", this.fallDamagePerDistance);
+        tag.putInt("FallHurtMax", this.fallDamageMax);
         if (this.blockData != null) {
-            p_31973_.put("TileEntityData", this.blockData);
+            tag.put("TileEntityData", this.blockData);
         }
 
     }
 
-    protected void readAdditionalSaveData(CompoundTag p_31964_) {
-        this.blockState = NbtUtils.readBlockState(p_31964_.getCompound("BlockState"));
-        this.time = p_31964_.getInt("Time");
-        if (p_31964_.contains("HurtEntities", 99)) {
-            this.hurtEntities = p_31964_.getBoolean("HurtEntities");
-            this.fallDamagePerDistance = p_31964_.getFloat("FallHurtAmount");
-            this.fallDamageMax = p_31964_.getInt("FallHurtMax");
+    protected void readAdditionalSaveData(CompoundTag tag) {
+        this.blockState = NbtUtils.readBlockState(this.level().holderLookup(Registries.BLOCK), tag.getCompound("BlockState"));
+        this.time = tag.getInt("Time");
+        if (tag.contains("HurtEntities", 99)) {
+            this.hurtEntities = tag.getBoolean("HurtEntities");
+            this.fallDamagePerDistance = tag.getFloat("FallHurtAmount");
+            this.fallDamageMax = tag.getInt("FallHurtMax");
         } else if (this.blockState.is(BlockTags.ANVIL)) {
             this.hurtEntities = true;
         }
 
-        if (p_31964_.contains("DropItem", 99)) {
-            this.dropItem = p_31964_.getBoolean("DropItem");
+        if (tag.contains("DropItem", 99)) {
+            this.dropItem = tag.getBoolean("DropItem");
         }
 
-        if (p_31964_.contains("TileEntityData", 10)) {
-            this.blockData = p_31964_.getCompound("TileEntityData");
+        if (tag.contains("TileEntityData", 10)) {
+            this.blockData = tag.getCompound("TileEntityData");
         }
 
         if (this.blockState.isAir()) {
@@ -289,8 +305,14 @@ public class MyFallingBlockEntity extends Entity {
         return true;
     }
 
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return new ClientboundAddEntityPacket(this, Block.getId(this.getBlockState()));
+    }
+
+    @Override
+    public void sendPairingData(ServerPlayer player, Consumer<CustomPacketPayload> builder) {
+        super.sendPairingData(player, builder);
+        //builder.accept(new SendDeltaMovementPacket(this.getId(),this.getDeltaMovement()));
     }
 
     public void recreateFromPacket(ClientboundAddEntityPacket packet) {
@@ -304,7 +326,21 @@ public class MyFallingBlockEntity extends Entity {
         this.setStartPos(this.blockPosition());
     }
     @Override
-    public boolean ignoreExplosion() {
+    public boolean ignoreExplosion(Explosion e) {
         return true;
+    }
+
+    public void setNoPhysicsTime(int noPhysicsTime) {
+        this.noPhysicsTime = noPhysicsTime;
+    }
+
+    @Override
+    public void writeSpawnData(FriendlyByteBuf buffer) {
+        buffer.writeInt(this.noPhysicsTime);
+    }
+
+    @Override
+    public void readSpawnData(FriendlyByteBuf additionalData) {
+        this.noPhysicsTime = additionalData.readInt();
     }
 }

@@ -1,9 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    "solarcraft:solar_ores",
-    "solarcraft:lensing_crystal_ore",
-    "solarcraft:ender_cracks",
-    "solarcraft:uldoradium_ore"
-  ]
-}

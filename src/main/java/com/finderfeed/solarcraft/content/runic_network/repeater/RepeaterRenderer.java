@@ -1,11 +1,17 @@
 package com.finderfeed.solarcraft.content.runic_network.repeater;
 
+import com.finderfeed.solarcraft.SolarCraft;
+import com.finderfeed.solarcraft.client.rendering.rendertypes.SCRenderTypes;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
+import com.finderfeed.solarcraft.local_library.helpers.ShapesRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 //AND DESERT YOU! NEVER GONNA MAKE YOU CRY, NEVER GONNA SAY GOODBYE, NEVER GONNA TELL A LIE
@@ -19,6 +25,7 @@ public class RepeaterRenderer implements BlockEntityRenderer<BaseRepeaterTile> {
     @Override
     public void render(BaseRepeaterTile tile, float v, PoseStack matrices, MultiBufferSource multiBufferSource, int i, int i1) {
         matrices.pushPose();
+
         if (tile.getConnections() != null){
             tile.getConnections().forEach((pos)->{
                 Vec3 tilepos = new Vec3(tile.getBlockPos().getX() +0.5,tile.getBlockPos().getY() +0.5,tile.getBlockPos().getZ() +0.5);
@@ -30,5 +37,11 @@ public class RepeaterRenderer implements BlockEntityRenderer<BaseRepeaterTile> {
             });
         }
         matrices.popPose();
+    }
+
+    @Override
+    public AABB getRenderBoundingBox(BaseRepeaterTile blockEntity) {
+        return new AABB(Helpers.posToVec(blockEntity.getBlockPos().offset(-16,-16,-16)),
+                Helpers.posToVec(blockEntity.getBlockPos().offset(16,16,16)));
     }
 }

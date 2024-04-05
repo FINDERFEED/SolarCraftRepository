@@ -2,19 +2,17 @@ package com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.SolarcraftBlockEntity;
 import com.finderfeed.solarcraft.helpers.Helpers;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
-import com.mojang.math.*;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import org.joml.Matrix3f;
+import org.joml.Vector3f;
 
-import java.nio.FloatBuffer;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,7 +23,7 @@ public class BeamReflectorTile extends SolarcraftBlockEntity {
     private BeamGenerator tile;
 
     public BeamReflectorTile(BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.BEAM_REFLECTOR.get(), p_155229_, p_155230_);
+        super(SCTileEntities.BEAM_REFLECTOR.get(), p_155229_, p_155230_);
         directions = new HashSet<>(List.of(Direction.NORTH));
     }
 
@@ -41,27 +39,33 @@ public class BeamReflectorTile extends SolarcraftBlockEntity {
             int a;
             Matrix3f m = new Matrix3f();
             if (Math.abs(a = faceNormal.getX()) == 1){
-                m.load(FloatBuffer.wrap(new float[]{
+                m.set(new float[]{
                         1,0,0,
                         0,(float)(Math.cos(Math.PI/2*a)),- (float)(Math.sin(Math.PI/2*a)),
-                        0,(float)(Math.sin(Math.PI/2*a)),(float)(Math.cos(Math.PI/2*a))})
+                        0,(float)(Math.sin(Math.PI/2*a)),(float)(Math.cos(Math.PI/2*a))}
                 );
             }else if (Math.abs(a = faceNormal.getY()) == 1){
-                m.load(FloatBuffer.wrap(new float[]{
+                m.set(new float[]{
                         (float)(Math.cos(Math.PI/2*a)),0,(float)(Math.sin(Math.PI/2*a)),
                         0,1,0,
-                        - (float)(Math.sin(Math.PI/2*a)),0,(float)(Math.cos(Math.PI/2*a))})
+                        - (float)(Math.sin(Math.PI/2*a)),0,(float)(Math.cos(Math.PI/2*a))}
                 );
             }else if (Math.abs(a = faceNormal.getZ()) == 1){
-                m.load(FloatBuffer.wrap(new float[]{
+                m.set(new float[]{
                         (float)(Math.cos(Math.PI/2*a)),- (float)(Math.sin(Math.PI/2*a)),0,
                         (float)(Math.sin(Math.PI/2*a)),(float)(Math.cos(Math.PI/2*a)),0,
-                        0,0,1})
+                        0,0,1}
                 );
+//                m.load(FloatBuffer.wrap(new float[]{
+//                        (float)(Math.cos(Math.PI/2*a)),- (float)(Math.sin(Math.PI/2*a)),0,
+//                        (float)(Math.sin(Math.PI/2*a)),(float)(Math.cos(Math.PI/2*a)),0,
+//                        0,0,1})
+
             }
             Vector3f v = new Vector3f(normal.getX(),normal.getY(),normal.getZ());
-            v.transform(m);
-            newDirs.add(Direction.fromNormal((int)v.x(),(int)v.y(),(int)v.z()));
+//            v.transform(m);
+            v = m.transform(v);
+            newDirs.add(Helpers.directionByNormal((int)v.x(),(int)v.y(),(int)v.z()));
         }
         this.directions = newDirs;
         if (this.getGenerator() != null){

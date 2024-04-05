@@ -3,11 +3,10 @@ package com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.
 import com.finderfeed.solarcraft.content.blocks.blockentities.PuzzleBlockEntity;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.ray_puzzle.BeamData;
 import com.finderfeed.solarcraft.helpers.Helpers;
-import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
@@ -18,7 +17,7 @@ public class BeamGenerator extends PuzzleBlockEntity {
     public int targetsNeeded = 1;
 
     public BeamGenerator(BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.BEAM_GENERATOR.get(), p_155229_, p_155230_);
+        super(SCTileEntities.BEAM_GENERATOR.get(), p_155229_, p_155230_);
     }
 
 
@@ -41,7 +40,7 @@ public class BeamGenerator extends PuzzleBlockEntity {
                 .getValue(BlockStateProperties.FACING),10);
         int ending = 0;
         for (BeamData.BeamPath path : beamData.getPaths()){
-            if (level.getBlockState(path.beamEnd()).is(SolarcraftBlocks.BEAM_INPUT.get())){
+            if (level.getBlockState(path.beamEnd()).is(SCBlocks.BEAM_INPUT.get())){
                 ending++;
                 if (ending == targetsNeeded){
                     this.solve(false);
@@ -51,10 +50,6 @@ public class BeamGenerator extends PuzzleBlockEntity {
         }
     }
 
-    @Override
-    public AABB getRenderBoundingBox() {
-        return Helpers.createAABBWithRadius(Helpers.getBlockCenter(getBlockPos()),30,30);
-    }
 
     @Override
     protected void saveAdditional(CompoundTag tag) {

@@ -3,7 +3,7 @@ package com.finderfeed.solarcraft.content.items.solar_wand.wand_actions;
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.blocks.solar_energy.SolarEnergyContainer;
 import com.finderfeed.solarcraft.content.items.solar_wand.*;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -51,6 +51,6 @@ public class CheckSolarEnergyWandAction implements WandAction<EmptyWandData> {
 
     @Override
     public ItemStack getIcon() {
-        return SolarcraftItems.ENERGY_GENERATOR_BLOCK.get().getDefaultInstance();
+        return SCItems.ENERGY_GENERATOR_BLOCK.get().getDefaultInstance();
     }
 }

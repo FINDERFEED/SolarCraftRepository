@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class RadiantChestplate extends SolarcraftArmorItem {
-    public RadiantChestplate(ArmorMaterial p_i48534_1_, EquipmentSlot p_i48534_2_, Properties p_i48534_3_, Supplier<AncientFragment> fragmentSupplier) {
+    public RadiantChestplate(ArmorMaterial p_i48534_1_, Type p_i48534_2_, Properties p_i48534_3_, Supplier<AncientFragment> fragmentSupplier) {
         super(p_i48534_1_, p_i48534_2_, p_i48534_3_,fragmentSupplier);
 
     }
@@ -37,7 +37,7 @@ public class RadiantChestplate extends SolarcraftArmorItem {
                 if (player.tickCount % 20 == 0) {
 
                     ((ServerLevel)world).sendParticles(ParticleTypes.FLAME,entity.getX(),entity.getY()+entity.getBbHeight()*0.5,entity.getZ(),5,0,0,0,0.05);
-                    entity.hurt(DamageSource.MAGIC, 1.5f);
+                    entity.hurt(world.damageSources().magic(), 1.5f);
                     entity.setSecondsOnFire(2);
                     entity.invulnerableTime=0;
 

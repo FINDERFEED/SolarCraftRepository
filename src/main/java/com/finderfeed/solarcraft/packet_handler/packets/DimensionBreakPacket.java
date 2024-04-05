@@ -1,28 +1,38 @@
 package com.finderfeed.solarcraft.packet_handler.packets;
 
-import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.packet_handler.ClientPacketHandles;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 
-import java.util.function.Supplier;
-
-public class DimensionBreakPacket {
+@Packet("dimension_break_packet")
+public class DimensionBreakPacket extends FDPacket {
 
     public DimensionBreakPacket(){
 
     }
 
-    public DimensionBreakPacket(FriendlyByteBuf buf){
+
+    public DimensionBreakPacket(FriendlyByteBuf buf) {
 
     }
 
     public void toBytes(FriendlyByteBuf buf){
 
     }
-    public void handle(Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(ClientPacketHandles::handleDimBreakPacket);
-        ctx.get().setPacketHandled(true);
+//    public void handle(DimensionBreakPacket packet,PlayPayloadContext ctx){
+//        ClientPacketHandles.handleDimBreakPacket();
+//
+//    }
+
+    @Override
+    public void clientPlayHandle(PlayPayloadContext ctx) {
+        ClientPacketHandles.handleDimBreakPacket();
     }
 
+    @Override
+    public void write(FriendlyByteBuf friendlyByteBuf) {
+        this.toBytes(friendlyByteBuf);
+    }
 }

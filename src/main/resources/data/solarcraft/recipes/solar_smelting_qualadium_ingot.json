@@ -1,11 +1,11 @@
 {
-  "type":"solarcraft:solar_smelting",
+  "type": "solarcraft:solar_smelting",
   "ingredients": [
     {
-      "item": "solarcraft:illidium_ingot"
+      "smelting_item": "solarcraft:illidium_ingot"
     },
     {
-      "item": "solarcraft:algadium_ingot"
+      "smelting_item": "solarcraft:algadium_ingot"
     }
   ],
   "result": "solarcraft:qualadium_ingot",

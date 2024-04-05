@@ -4,6 +4,7 @@ import com.finderfeed.solarcraft.local_library.client.particles.ScreenParticlesR
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
@@ -75,18 +76,18 @@ public abstract class DefaultScreen extends Screen {
     }
 
     @Override
-    public boolean mouseScrolled(double mousePosX, double mousePosY, double delta) {
+    public boolean mouseScrolled(double mousePosX, double mousePosY, double delta,double what) {
         for (FDScreenComponent component : components.values()){
-            component.mouseScrolled(mousePosX - component.x,mousePosY - component.y,delta);
+            component.mouseScrolled(mousePosX - component.x,mousePosY - component.y,what);
         }
-        return super.mouseScrolled(mousePosX, mousePosY, delta);
+        return super.mouseScrolled(mousePosX, mousePosY, delta,what);
     }
 
-    public void renderComponents(PoseStack matrices, int mx, int my, float pticks, String... ids){
+    public void renderComponents(GuiGraphics graphics, int mx, int my, float pticks, String... ids){
         for (String id : ids){
             FDScreenComponent component = components.get(id);
 
-            component.render(matrices,mx - component.x,my - component.y,pticks);
+            component.render(graphics,mx - component.x,my - component.y,pticks);
         }
     }
 
@@ -98,6 +99,11 @@ public abstract class DefaultScreen extends Screen {
     public void onClose() {
         super.onClose();
         ScreenParticlesRenderHandler.clearAllParticles();
+    }
+
+    @Override
+    public void renderBackground(GuiGraphics p_283688_, int p_296369_, int p_296477_, float p_294317_) {
+
     }
 
     public abstract int getScreenWidth();

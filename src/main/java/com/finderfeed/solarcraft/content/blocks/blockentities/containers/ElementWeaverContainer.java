@@ -4,7 +4,7 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.ElementWeaverTileE
 import com.finderfeed.solarcraft.content.blocks.blockentities.containers.misc.TESlotItemHandler;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.registries.ConfigRegistry;
-import com.finderfeed.solarcraft.registries.containers.SolarcraftContainers;
+import com.finderfeed.solarcraft.registries.containers.SCContainers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -15,7 +15,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -25,7 +25,7 @@ public class ElementWeaverContainer extends AbstractContainerMenu {
     private ItemStackHandler inventory;
 
     public ElementWeaverContainer(int p_38852_, Inventory inv, BlockPos tilepos) {
-        super(SolarcraftContainers.ELEMENT_WEAVER.get(), p_38852_);
+        super(SCContainers.ELEMENT_WEAVER.get(), p_38852_);
         Level world = inv.player.level;
         this.tile = (ElementWeaverTileEntity) world.getBlockEntity(tilepos);
         this.inventory = tile.getInventory();

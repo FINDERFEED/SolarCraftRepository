@@ -1,0 +1,11 @@
+{
+  "parent": "block/deepslate",
+  "overrides": [
+    {
+      "predicate": {
+        "solarcraft:unlocked": 1
+      },
+      "model": "solarcraft:item/unlocked_states/deepslate_corrupted_shard_ore"
+    }
+  ]
+}

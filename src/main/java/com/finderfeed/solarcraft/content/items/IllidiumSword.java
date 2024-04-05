@@ -1,6 +1,5 @@
 package com.finderfeed.solarcraft.content.items;
 
-import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.items.item_tiers.SolarCraftToolTiers;
 import com.finderfeed.solarcraft.content.items.primitive.RareSolarcraftSword;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
@@ -19,12 +18,11 @@ import java.util.List;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
 import net.minecraft.world.phys.AABB;
 
 public class IllidiumSword extends RareSolarcraftSword {
-    public IllidiumSword() {
-        super(SolarCraftToolTiers.ILLIDIUM_TOOLS_TIER, 3, -2.4F, (new Item.Properties()).stacksTo(1).tab(SolarCraft.SOLAR_GROUP_WEAPONS).rarity(Rarity.RARE).fireResistant(),()-> AncientFragment.ILLIDIUM_SWORD);
+    public IllidiumSword(Item.Properties properties) {
+        super(SolarCraftToolTiers.ILLIDIUM_TOOLS_TIER, 3, -2.4F,properties ,()-> AncientFragment.ILLIDIUM_SWORD);
     }
 
     @Nonnull

@@ -2,6 +2,7 @@ package com.finderfeed.solarcraft.local_library.client.tooltips;
 
 import com.finderfeed.solarcraft.local_library.client.tooltips.animatable_omponents.ComponentSequence;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 
 public abstract class AnimatedTooltip {
     protected int ticker = 0;
@@ -27,7 +28,7 @@ public abstract class AnimatedTooltip {
         this.borderWidth = borderWidth;
     }
 
-    public abstract void render(PoseStack matrices, int x, int y, float pTicks, int mousex, int mousey);
+    public abstract void render(GuiGraphics graphics, int x, int y, float pTicks, int mousex, int mousey);
 
     public int calculateXRenderPos(int x){
         if (xFixed) return x;

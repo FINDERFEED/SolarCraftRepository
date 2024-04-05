@@ -4,8 +4,9 @@ import com.finderfeed.solarcraft.content.entities.CrystalBossEntity;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.local_library.other.CyclingInterpolatedValue;
 import com.finderfeed.solarcraft.misc_things.CrystalBossBuddy;
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
+import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -20,6 +21,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 
@@ -78,7 +80,7 @@ public class RipRayGenerator extends PathfinderMob implements CrystalBossBuddy{
         if (level.getGameTime() % 2 == 0) {
             for (int i = 0; i < 6; i++) {
                 double[] coords = FDMathHelper.polarToCartesian(0.5, Math.toRadians(60 * i));
-                this.level.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                this.level.addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                         this.position().x + coords[0],
                         this.position().y,
                         this.position().z + coords[1],
@@ -92,7 +94,7 @@ public class RipRayGenerator extends PathfinderMob implements CrystalBossBuddy{
         .move(this.position()));
         for (LivingEntity ent : entities){
             if (!(ent instanceof CrystalBossBuddy)) {
-                ent.hurt(DamageSource.MAGIC, CrystalBossEntity.RIP_RAY_DAMAGE);
+                ent.hurt(SCDamageSources.RUNIC_MAGIC, CrystalBossEntity.RIP_RAY_DAMAGE);
             }
         }
     }
@@ -100,7 +102,7 @@ public class RipRayGenerator extends PathfinderMob implements CrystalBossBuddy{
 
     public void doParticles(){
         double[] coords = FDMathHelper.polarToCartesian(0.4,Math.toRadians(level.getGameTime()*30));
-        this.level.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+        this.level.addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                 this.position().x+coords[0],
                 this.position().y-particlesValue.getValue(),
                 this.position().z + coords[1],
@@ -173,7 +175,7 @@ public class RipRayGenerator extends PathfinderMob implements CrystalBossBuddy{
     }
 
     @Override
-    public boolean ignoreExplosion() {
+    public boolean ignoreExplosion(Explosion e) {
         return true;
     }
 
@@ -186,13 +188,13 @@ public class RipRayGenerator extends PathfinderMob implements CrystalBossBuddy{
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SolarcraftSounds.CRYSTAL_HIT.get();
+        return SCSounds.CRYSTAL_HIT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource p_21239_) {
-        return SolarcraftSounds.CRYSTAL_HIT.get();
+        return SCSounds.CRYSTAL_HIT.get();
     }
 
     @Override

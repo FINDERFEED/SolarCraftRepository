@@ -26,19 +26,10 @@
               "type": "minecraft:item",
               "functions": [
                 {
-                  "function": "minecraft:set_count",
-                  "count": {
-                    "type": "minecraft:uniform",
-                    "min": 1.0,
-                    "max": 4.0
-                  },
-                  "add": false
-                },
-                {
                   "function": "minecraft:explosion_decay"
                 }
               ],
-              "name": "solarcraft:energy_dust"
+              "name": "solarcraft:solar_flower"
             }
           ]
         }

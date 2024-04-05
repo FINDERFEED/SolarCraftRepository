@@ -11,8 +11,8 @@ import com.finderfeed.solarcraft.local_library.other.EaseInOut;
 import com.finderfeed.solarcraft.content.entities.projectiles.renderers.models.RunicHammerModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
+import org.joml.Matrix4f;
+import static com.finderfeed.solarcraft.local_library.helpers.RenderingTools.*;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.culling.Frustum;
@@ -48,9 +48,12 @@ public class RunicElementalRenderer extends MobRenderer<RunicElementalBoss, Runi
             matrices.pushPose();
             matrices.translate(0,1.75,0);
 
-            matrices.mulPose(Vector3f.YN.rotationDegrees(Mth.lerp(pticks,boss.yHeadRotO,boss.yHeadRot)));
-            matrices.mulPose(Vector3f.XP.rotationDegrees(Mth.lerp(pticks,boss.xRotO,boss.getXRot()) + 90));
-            matrices.mulPose(Vector3f.YN.rotationDegrees(time*10));
+//            matrices.mulPose(Vector3f.YN.rotationDegrees(Mth.lerp(pticks,boss.yHeadRotO,boss.yHeadRot)));
+//            matrices.mulPose(Vector3f.XP.rotationDegrees(Mth.lerp(pticks,boss.xRotO,boss.getXRot()) + 90));
+//            matrices.mulPose(Vector3f.YN.rotationDegrees(time*10));
+            matrices.mulPose(rotationDegrees(YN(),Mth.lerp(pticks,boss.yHeadRotO,boss.yHeadRot)));
+            matrices.mulPose(rotationDegrees(XP(),Mth.lerp(pticks,boss.xRotO,boss.getXRot()) + 90));
+            matrices.mulPose(rotationDegrees(YN(),time*10));
             PoseStack.Pose entry = matrices.last();
 
             Matrix4f matrix = entry.pose();
@@ -116,8 +119,10 @@ public class RunicElementalRenderer extends MobRenderer<RunicElementalBoss, Runi
             matrices.pushPose();
             matrices.translate(0,1.75,0);
             RenderingTools.applyMovementMatrixRotations(matrices,dirVec.yRot((float)Math.toRadians(-80)));
-            matrices.mulPose(Vector3f.XP.rotationDegrees(180));
-            matrices.mulPose(Vector3f.YP.rotationDegrees(90));
+//            matrices.mulPose(Vector3f.XP.rotationDegrees(180));
+//            matrices.mulPose(Vector3f.YP.rotationDegrees(90));
+            matrices.mulPose(rotationDegrees(XP(),180));
+            matrices.mulPose(rotationDegrees(YP(),90));
 
             matrices.translate(0,-3*scaleMod+0.5,0);
             matrices.scale(2,scaleMod,scaleMod);
@@ -130,8 +135,11 @@ public class RunicElementalRenderer extends MobRenderer<RunicElementalBoss, Runi
             matrices.pushPose();
             matrices.translate(0,1.75,0);
             RenderingTools.applyMovementMatrixRotations(matrices,dirVec.yRot((float)Math.toRadians((value)*80 + pticks)));
-            matrices.mulPose(Vector3f.XP.rotationDegrees(180));
-            matrices.mulPose(Vector3f.YP.rotationDegrees(90));
+//            matrices.mulPose(Vector3f.XP.rotationDegrees(180));
+//            matrices.mulPose(Vector3f.YP.rotationDegrees(90));
+
+            matrices.mulPose(rotationDegrees(XP(),180));
+            matrices.mulPose(rotationDegrees(YP(),90));
 
             matrices.translate(0,-3*scaleMod+0.5,0);
             matrices.scale(2,scaleMod,scaleMod);
@@ -144,8 +152,12 @@ public class RunicElementalRenderer extends MobRenderer<RunicElementalBoss, Runi
             matrices.pushPose();
             matrices.translate(0,1.75,0);
             RenderingTools.applyMovementMatrixRotations(matrices,dirVec.yRot((float)Math.toRadians(80)));
-            matrices.mulPose(Vector3f.XP.rotationDegrees(180));
-            matrices.mulPose(Vector3f.YP.rotationDegrees(90));
+//            matrices.mulPose(Vector3f.XP.rotationDegrees(180));
+//            matrices.mulPose(Vector3f.YP.rotationDegrees(90));
+
+            matrices.mulPose(rotationDegrees(XP(),180));
+            matrices.mulPose(rotationDegrees(YP(),90));
+
 
             matrices.translate(0,-3*scaleMod+0.5,0);
             matrices.scale(2,scaleMod,scaleMod);
@@ -162,8 +174,10 @@ public class RunicElementalRenderer extends MobRenderer<RunicElementalBoss, Runi
         double angleX = Math.toDegrees(Math.atan2(Math.sqrt(yes.x*yes.x + yes.z*yes.z),yes.y) );
         matrices.pushPose();
         matrices.translate(0,boss.getBbHeight()/2,0);
-        matrices.mulPose(Vector3f.YP.rotationDegrees((float)angleY));
-        matrices.mulPose(Vector3f.XP.rotationDegrees((float)angleX));
+//        matrices.mulPose(Vector3f.YP.rotationDegrees((float)angleY));
+//        matrices.mulPose(Vector3f.XP.rotationDegrees((float)angleX));
+        matrices.mulPose(rotationDegrees(YP(),(float)angleY));
+        matrices.mulPose(rotationDegrees(XP(),(float)angleX));
         double length = direction.length();
         double factor = length/16;
 

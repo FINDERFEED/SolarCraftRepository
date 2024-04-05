@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.content.abilities.meteorite;
 
+import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.registries.ModelLayersRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -11,7 +12,7 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
-import com.mojang.math.Vector3f;
+
 
 
 public class MeteoriteProjectileRenderer extends EntityRenderer<MeteoriteProjectile> {
@@ -30,8 +31,10 @@ public class MeteoriteProjectileRenderer extends EntityRenderer<MeteoriteProject
 
 
         float time = (entity.level.getGameTime() + partialTicks)*2;
-        matrices.mulPose(Vector3f.XN.rotationDegrees(time%360));
-        matrices.mulPose(Vector3f.ZN.rotationDegrees(time%360));
+//        matrices.mulPose(Vector3f.XN.rotationDegrees(time%360));
+//        matrices.mulPose(Vector3f.ZN.rotationDegrees(time%360));
+        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.XN(),time%360));
+        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.ZN(),time%360));
 
         VertexConsumer vertex = buffer.getBuffer(RenderType.entityCutout(METEORITE));
         meteorite.renderToBuffer(matrices,vertex,light, OverlayTexture.NO_OVERLAY,1,1,1,1);

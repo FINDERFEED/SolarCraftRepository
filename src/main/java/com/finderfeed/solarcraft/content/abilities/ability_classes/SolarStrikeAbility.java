@@ -5,6 +5,7 @@ import com.finderfeed.solarcraft.content.abilities.AbilityHelper;
 import com.finderfeed.solarcraft.content.abilities.solar_strike.SolarStrikeEntity;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
@@ -33,7 +34,7 @@ public class SolarStrikeAbility extends AbstractAbility{
 
                 BlockPos pos = result.getBlockPos();
                 if (world.canSeeSky(pos.above())) {
-                    SolarStrikeEntity entityBolt = new SolarStrikeEntity(SolarCraft.SOLAR_STRIKE_ENTITY_REG.get(), world);
+                    SolarStrikeEntity entityBolt = new SolarStrikeEntity(SCEntityTypes.SOLAR_STRIKE_ENTITY_REG.get(), world);
                     entityBolt.setPos(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);
                     world.addFreshEntity(entityBolt);
                     AbilityHelper.spendAbilityEnergy(entity,this);

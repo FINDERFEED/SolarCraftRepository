@@ -2,26 +2,29 @@ package com.finderfeed.solarcraft.packet_handler.packets;
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.RunePattern;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.network.NetworkEvent;
-
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.function.Supplier;
 
-public class UpdateRunePattern {
+@Packet("update_rune_pattern")
+public class UpdateRunePattern extends FDPacket {
 
 
-    private final CompoundTag pattern;
-    private final boolean hideButtons;
+    private CompoundTag pattern;
+    private boolean hideButtons;
 
     public UpdateRunePattern(Player player,boolean shouldHideButtons) {
         this.pattern = player.getPersistentData().getCompound(RunePattern.PATTERN_SAVE_ID);
         this.hideButtons = shouldHideButtons;
     }
 
+
     public UpdateRunePattern(FriendlyByteBuf buf) {
-        this.pattern = buf.readAnySizeNbt();
+        this.pattern = buf.readNbt();
         this.hideButtons = buf.readBoolean();
     }
 
@@ -29,13 +32,19 @@ public class UpdateRunePattern {
         buf.writeNbt(pattern);
         buf.writeBoolean(hideButtons);
     }
+//
+//    public void handle(PlayPayloadContext ctx) {
+//            ClientHelpers.updatePlayerPattern(pattern, hideButtons);
+//
+//    }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(() -> {
-            ClientHelpers.updatePlayerPattern(pattern, hideButtons);
-        });
-        ctx.get().setPacketHandled(true);
+    @Override
+    public void clientPlayHandle(PlayPayloadContext ctx) {
+        ClientHelpers.updatePlayerPattern(pattern, hideButtons);
     }
 
-
+    @Override
+    public void write(FriendlyByteBuf friendlyByteBuf) {
+        this.toBytes(friendlyByteBuf);
+    }
 }

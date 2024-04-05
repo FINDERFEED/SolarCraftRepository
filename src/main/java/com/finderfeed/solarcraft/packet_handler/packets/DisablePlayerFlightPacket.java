@@ -1,15 +1,15 @@
 package com.finderfeed.solarcraft.packet_handler.packets;
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
-import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
+import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 
-import java.util.function.Supplier;
-
-public class DisablePlayerFlightPacket {
+@Packet("disable_player_flight_packet")
+public class DisablePlayerFlightPacket extends FDPacket {
 
     private boolean disable;
 
@@ -18,9 +18,11 @@ public class DisablePlayerFlightPacket {
         this.disable = disable;
     }
 
-    public DisablePlayerFlightPacket(FriendlyByteBuf buffer){
 
-        this.disable = buffer.readBoolean();
+
+    public DisablePlayerFlightPacket(FriendlyByteBuf buf) {
+        this.disable = buf.readBoolean();
+
     }
 
     public void toBytes(FriendlyByteBuf buf){
@@ -28,20 +30,27 @@ public class DisablePlayerFlightPacket {
         buf.writeBoolean(disable);
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(()->{
-            ClientHelpers.disableFlight(disable);
-        });
-        ctx.get().setPacketHandled(true);
+//    public void handle(DisablePlayerFlightPacket packet,PlayPayloadContext ctx){
+//
+//            ClientHelpers.disableFlight(disable);
+//
+//    }
+
+    @Override
+    public void clientPlayHandle(PlayPayloadContext ctx) {
+        ClientHelpers.disableFlight(disable);
     }
 
-
-    public static void send(ServerPlayer player,boolean disable){
+    public static void send(ServerPlayer player, boolean disable){
         player.getAbilities().mayfly = !disable;
         if (disable) {
             player.getAbilities().flying = false;
         }
-        SCPacketHandler.INSTANCE.sendTo(new DisablePlayerFlightPacket(disable),player.connection.connection,
-                NetworkDirection.PLAY_TO_CLIENT);
+        FDPacketUtil.sendToPlayer(player,new DisablePlayerFlightPacket(disable));
+    }
+
+    @Override
+    public void write(FriendlyByteBuf friendlyByteBuf) {
+        this.toBytes(friendlyByteBuf);
     }
 }

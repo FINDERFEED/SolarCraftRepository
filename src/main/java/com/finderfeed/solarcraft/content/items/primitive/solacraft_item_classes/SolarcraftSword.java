@@ -7,8 +7,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
-import net.minecraftforge.fml.util.thread.EffectiveSide;
-
+import net.neoforged.fml.util.thread.EffectiveSide;
 import java.util.function.Supplier;
 
 public class SolarcraftSword extends SwordItem implements FragmentItem {

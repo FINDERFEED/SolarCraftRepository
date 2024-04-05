@@ -1,26 +1,27 @@
 package com.finderfeed.solarcraft.content.entities.not_alive;
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarcraft.misc_things.CrystalBossBuddy;
+import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.data_serializers.FDEntityDataSerializers;
-import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.NetworkHooks;
+
 
 public class EarthquakeEntity extends Entity {
 
@@ -39,7 +40,7 @@ public class EarthquakeEntity extends Entity {
 
 
     public EarthquakeEntity(Level world,Vec3 dir,float length){
-        this(SolarcraftEntityTypes.EARTHQUAKE.get(),world);
+        this(SCEntityTypes.EARTHQUAKE.get(),world);
         this.setDirection(dir);
         setLength(length);
     }
@@ -68,10 +69,10 @@ public class EarthquakeEntity extends Entity {
                     double S = Math.sqrt(p*(p - a)*(p-b)*(p-main));
                     double H = 2*S / main;
                     if (H <= 2){
-                        e.hurt(DamageSource.MAGIC,damage);
+                        e.hurt(SCDamageSources.RUNIC_MAGIC,damage);
                     }
                 }
-                level.playSound(null,position().x,position().y,position().z, SolarcraftSounds.EARTHQUAKE.get(), SoundSource.HOSTILE,5f,1f);
+                level.playSound(null,position().x,position().y,position().z, SCSounds.EARTHQUAKE.get(), SoundSource.HOSTILE,5f,1f);
             }
             if (tickCount >= DEATH_TIME-20){
                 this.kill();
@@ -86,7 +87,7 @@ public class EarthquakeEntity extends Entity {
                     for (double g = 0;g <= between.length();g+=0.75){
                         double percentile = (g + level.random.nextDouble()*0.3) /between.length();
                         Vec3 pos = initPos.add(between.multiply(percentile,0,percentile));
-                        ClientHelpers.Particles.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                        ClientHelpers.Particles.createParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                                 pos.x,pos.y,pos.z,0,(0.1 + level.random.nextDouble()*0.05) *(1-i/4f),0,()->255,()->255,()->0,0.5f*(i/4f));
                     }
                 }
@@ -148,10 +149,10 @@ public class EarthquakeEntity extends Entity {
         CompoundNBTHelper.writeVec3("dir",entityData.get(DIRECTION_VECTOR),tag);
     }
 
-    @Override
-    public Packet<?> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
+//    @Override
+//    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+//        return NetworkHooks.getEntitySpawningPacket(this);
+//    }
 
 
 

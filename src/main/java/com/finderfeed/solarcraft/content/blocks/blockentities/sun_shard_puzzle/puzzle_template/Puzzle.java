@@ -1,11 +1,14 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_template;
 
+import com.finderfeed.solarcraft.config.PuzzlePatternsConfig;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_tiles.PuzzleTile;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_tiles.PuzzleTileType;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_tiles.PuzzleTileTypes;
 import com.finderfeed.solarcraft.helpers.Helpers;
+import com.finderfeed.solarcraft.registries.ConfigRegistry;
 import net.minecraft.nbt.CompoundTag;
 import org.jetbrains.annotations.Nullable;
+
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -47,6 +50,18 @@ public class Puzzle {
         return puzzle;
     }
 
+    public Puzzle(Puzzle puzzle){
+        this.tiles = new PuzzleTile[PUZZLE_SIZE][PUZZLE_SIZE];
+        Helpers.copyMatrixArray(puzzle.tiles,this.tiles);
+        this.templateId = puzzle.templateId;
+        this.remainingTiles = new ArrayList<>();
+        for (var tile : puzzle.remainingTiles){
+            this.remainingTiles.add(new PuzzleTile(tile));
+        }
+        this.remainingTypes = new HashMap<>(puzzle.remainingTypes);
+        this.defaultTemplate = puzzle.defaultTemplate;
+    }
+
     public static Puzzle editorPuzzle(Puzzle puzzle,int tilesAmount){
         for (PuzzleTileType tileType : PuzzleTileTypes.getAllTypes()){
             for (int i = 0; i < tilesAmount;i++) {
@@ -60,7 +75,9 @@ public class Puzzle {
     public Puzzle(String defTemplateId){
         Random random = new Random();
         this.templateId = defTemplateId;
-        PuzzleTemplateManager.TemplateInstance defaultTemplateInstance = PuzzleTemplateManager.INSTANCE.getDefaultTemplate(defTemplateId);
+        PuzzlePatternsConfig config = ConfigRegistry.PUZZLE_PATTERNS;
+
+        PuzzlePatternsConfig.TemplateInstance defaultTemplateInstance = config.getDefaultTemplate(defTemplateId);
         PuzzleTile[][] defaultTemplate = defaultTemplateInstance.template();
         this.defaultTemplate = defaultTemplate;
         this.tiles = new PuzzleTile[defaultTemplate.length][defaultTemplate.length];
@@ -105,8 +122,11 @@ public class Puzzle {
         if (templateId.equals("null")){
             return false;
         }
+
         if (remainingTiles.isEmpty() || remainingTypes.values().stream().filter(i -> i > 0).collect(Collectors.toList()).isEmpty()) {
-            PuzzleTemplateManager.TemplateInstance templateInstance = PuzzleTemplateManager.INSTANCE.getDefaultTemplate(templateId);
+            PuzzlePatternsConfig config = ConfigRegistry.PUZZLE_PATTERNS;
+
+            PuzzlePatternsConfig.TemplateInstance templateInstance = config.getDefaultTemplate(templateId);
             PuzzleTile[][] template = templateInstance.template();
             for (int x = 0; x < PUZZLE_SIZE; x++) {
                 for (int y = 0; y < PUZZLE_SIZE; y++) {
@@ -168,7 +188,8 @@ public class Puzzle {
         PuzzleTile[][] tiles = new PuzzleTile[PUZZLE_SIZE][PUZZLE_SIZE];
         int t = 0;
         String templateId = tag.getString("defaultTemplate");
-        PuzzleTile[][] defaultTemplate = PuzzleTemplateManager.INSTANCE.getDefaultTemplate(templateId).template();
+        PuzzlePatternsConfig config = ConfigRegistry.PUZZLE_PATTERNS;
+        PuzzleTile[][] defaultTemplate = config.getDefaultTemplate(templateId).template();
 
         List<PuzzleTile> remainingTiles = new ArrayList<>();
 

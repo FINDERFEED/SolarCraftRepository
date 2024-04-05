@@ -103,5 +103,6 @@
   "precipitation": "none",
   "temperature": 0.5,
   "downfall": 0.5,
-  "category": "none"
+  "category": "none",
+  "has_precipitation": false
 }

@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.content.blocks;
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.UlderaPylon;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -12,7 +12,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -35,10 +34,10 @@ public class UlderaPylonBlock extends Block implements EntityBlock {
         return SHAPE;
     }
 
-    @Override
-    public PushReaction getPistonPushReaction(BlockState p_149656_1_) {
-        return PushReaction.IGNORE;
-    }
+//    @Override
+//    public PushReaction getPistonPushReaction(BlockState p_149656_1_) {
+//        return PushReaction.IGNORE;
+//    }
 
     @Nullable
     @Override
@@ -51,6 +50,6 @@ public class UlderaPylonBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return SolarcraftTileEntityTypes.ULDERA_PYLON.get().create(blockPos,blockState);
+        return SCTileEntities.ULDERA_PYLON.get().create(blockPos,blockState);
     }
 }

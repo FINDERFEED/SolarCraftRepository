@@ -1,9 +1,9 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities;
 
-import com.finderfeed.solarcraft.events.other_events.event_handler.EventHandler;
+import com.finderfeed.solarcraft.events.other_events.event_handler.SCEventHandler;
 
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
-import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
+import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -15,9 +15,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.portal.PortalInfo;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-
-import net.minecraftforge.common.util.ITeleporter;
-
+import net.neoforged.neoforge.common.util.ITeleporter;
 import javax.annotation.Nullable;
 import java.util.function.Function;
 
@@ -46,15 +44,15 @@ public class RadiantPortalCreatorTile extends BlockEntity {
             world.getEntitiesOfClass(Entity.class,tile.TP_AABB, Entity::canChangeDimensions).forEach((entity)->{
                 if (world.getServer() != null) {
                     ServerLevel destination;
-                    if (entity.level.dimension() == Level.OVERWORLD){
-                        destination = world.getServer().getLevel(EventHandler.RADIANT_LAND_KEY);
+                    if (entity.level().dimension() == Level.OVERWORLD){
+                        destination = world.getServer().getLevel(SCEventHandler.RADIANT_LAND_KEY);
                     }else{
                         destination = world.getServer().getLevel(Level.OVERWORLD);
                     }
                     if (destination != null){
 
                         entity.changeDimension(destination, RadiantTeleporter.INSTANCE);
-                        if (destination.dimension() == EventHandler.RADIANT_LAND_KEY){
+                        if (destination.dimension() == SCEventHandler.RADIANT_LAND_KEY){
                             createWormhole(destination);
                             entity.sendSystemMessage(Component.literal("Use wormhole on 1,Y(~120),1 coordinates to return back"));
                         }
@@ -71,13 +69,13 @@ public class RadiantPortalCreatorTile extends BlockEntity {
         int yHeight = destination.getHeight(Heightmap.Types.WORLD_SURFACE,1,1);
         boolean placed = false;
         for (int i = yHeight-10; i <= 255;i++){
-            if (destination.getBlockState(BlockPos.ZERO.offset(1,0,1).above(i)).getBlock() == SolarcraftBlocks.WORMHOLE.get()){
+            if (destination.getBlockState(BlockPos.ZERO.offset(1,0,1).above(i)).getBlock() == SCBlocks.WORMHOLE.get()){
                 placed = true;
                 break;
             }
         }
         if (!placed){
-            destination.setBlockAndUpdate(BlockPos.ZERO.offset(1,0,1).above(yHeight + 50), SolarcraftBlocks.WORMHOLE.get().defaultBlockState());
+            destination.setBlockAndUpdate(BlockPos.ZERO.offset(1,0,1).above(yHeight + 50), SCBlocks.WORMHOLE.get().defaultBlockState());
         }
     }
 

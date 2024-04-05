@@ -14,7 +14,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.network.NetworkHooks;
+
 
 
 public class ModuleStation extends Block {
@@ -27,7 +27,7 @@ public class ModuleStation extends Block {
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (!world.isClientSide){
-            NetworkHooks.openScreen((ServerPlayer) player,getMenuProvider(world,pos),(buf)->buf.writeBlockPos(pos));
+            ((ServerPlayer) player).openMenu(getMenuProvider(world,pos),(buf)->buf.writeBlockPos(pos));
             return InteractionResult.CONSUME;
         }
         return InteractionResult.SUCCESS;

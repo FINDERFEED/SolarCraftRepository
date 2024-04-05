@@ -1,40 +1,53 @@
 package com.finderfeed.solarcraft.packet_handler.packets;
 
+import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.client.toasts.ProgressionToast;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.progression_tree.ProgressionTree;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.packet_handler.ClientPacketHandles;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.NetworkEvent;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.DistExecutor;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 
+@Packet("trigger_toast_packet")
+public class TriggerToastPacket extends FDPacket {
 
-import java.util.function.Supplier;
+    public String id;
 
-public class TriggerToastPacket {
+    public TriggerToastPacket(FriendlyByteBuf buf) {
+        this.id = buf.readUtf();
 
-    public final int id;
-
-    public TriggerToastPacket(FriendlyByteBuf buf){
-        this.id = buf.readInt();
     }
-    public TriggerToastPacket(int id){
-        this.id = id;
+
+    public TriggerToastPacket(String progressionId){
+        this.id = progressionId;
     }
     public void toBytes(FriendlyByteBuf buf){
-        buf.writeInt(id);
+        buf.writeUtf(id);
     }
-    public void handle(Supplier<NetworkEvent.Context> ctx){
-        ctx.get().enqueueWork(()->{
-            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> ()-> {
-                ProgressionTree tree = ProgressionTree.INSTANCE;
-                ClientHelpers.playSound(SolarcraftSounds.PROGRESSION_GAIN.get(),1,1);
-                ProgressionToast.addOrUpdate(Minecraft.getInstance().getToasts(), tree.getAchievementById(id));
-            });
+//    public void handle(PlayPayloadContext ctx){
+//
+//            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> ()-> {
+//
+//                ClientHelpers.playSound(SCSounds.PROGRESSION_GAIN.get(),1,1);
+//                ProgressionToast.addOrUpdate(Minecraft.getInstance().getToasts(), Progression.getProgressionByName(id));
+//            });
+//
+//    }
 
-        });
-        ctx.get().setPacketHandled(true);
+
+    @Override
+    public void clientPlayHandle(PlayPayloadContext ctx) {
+        ClientPacketHandles.handleTriggerToastPacket(id);
+    }
+
+    @Override
+    public void write(FriendlyByteBuf friendlyByteBuf) {
+        this.toBytes(friendlyByteBuf);
+
     }
 }

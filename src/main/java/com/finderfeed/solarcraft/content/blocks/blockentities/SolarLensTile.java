@@ -2,20 +2,22 @@ package com.finderfeed.solarcraft.content.blocks.blockentities;
 
 import com.finderfeed.solarcraft.content.items.SunShardItem;
 import com.finderfeed.solarcraft.helpers.Helpers;
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.misc_things.PhantomInventory;
 import com.finderfeed.solarcraft.content.recipe_types.solar_smelting.SolarSmeltingRecipe;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.UpdateItemTagInItemEntityPacket;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
-import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.items.SCItems;
+import com.finderfeed.solarcraft.registries.recipe_types.SCRecipeTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.item.Item;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -26,8 +28,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.PacketDistributor;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
 
@@ -43,7 +44,7 @@ public class SolarLensTile extends BlockEntity  {
     public boolean RECIPE_IN_PROGRESS = false;
 
     public SolarLensTile(BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.SOLAR_LENS_TILE.get(), p_155229_, p_155230_);
+        super(SCTileEntities.SOLAR_LENS_TILE.get(), p_155229_, p_155230_);
     }
 
 
@@ -62,7 +63,7 @@ public class SolarLensTile extends BlockEntity  {
                     } else {
                         ItemEntity entity = list.get(i);
                         ItemStack stack = entity.getItem();
-                        if (stack.getItem() == SolarcraftItems.SUN_SHARD.get()){
+                        if (stack.getItem() == SCItems.SUN_SHARD.get()){
                             shard = entity;
                             break;
                         }
@@ -81,7 +82,7 @@ public class SolarLensTile extends BlockEntity  {
                 if (world.getGameTime() % 3 == 0 && Helpers.isDay(world)) {
                     Vec3 v = Helpers.getBlockCenter(post.offset(0, -2, 0));
                     Vec3 offs = Helpers.randomVector().normalize().multiply(0.5, 0.5, 0.5);
-                    world.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), v.x + offs.x, v.y + offs.y, v.z + offs.z, 0, 0.05, 0);
+                    world.addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), v.x + offs.x, v.y + offs.y, v.z + offs.z, 0, 0.05, 0);
                 }
             }
         }
@@ -91,10 +92,14 @@ public class SolarLensTile extends BlockEntity  {
         ItemStack stack = shard.getItem();
         SunShardItem item = (SunShardItem)stack.getItem();
         if (!item.isHeated(stack)){
+            Vec3 v = Helpers.getBlockCenter(lens.getBlockPos().offset(0, -2, 0));
+            if (lens.level instanceof ServerLevel world){
+                world.sendParticles(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),v.x,v.y,v.z,1,0.05,0.05,0.05,0.05);
+            }
             int time = item.getHeatedTime(stack);
             if (time >= SunShardItem.MAX_HEATED_TIME){
                 item.setHeated(stack,true);
-                SCPacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(()->
+                PacketDistributor.NEAR.with(
                         new PacketDistributor.TargetPoint(
                                 null,
                                 lens.getBlockPos().getX(),
@@ -102,7 +107,7 @@ public class SolarLensTile extends BlockEntity  {
                                 lens.getBlockPos().getZ(),
                                 50,
                                 lens.getLevel().dimension()
-                        )),new UpdateItemTagInItemEntityPacket(shard));
+                        )).send(new UpdateItemTagInItemEntityPacket(shard));
             }else{
                 item.setHeatedTime(stack,time + 1);
             }
@@ -111,11 +116,11 @@ public class SolarLensTile extends BlockEntity  {
 
 
     public static void processRecipe(Level world, BlockPos post, BlockState blockState, SolarLensTile tile,List<ItemEntity> list){
-        Optional<SolarSmeltingRecipe> recipe = tile.level.getRecipeManager().getRecipeFor(SolarcraftRecipeTypes.SMELTING.get(),tile.INVENTORY,tile.level);
+        Optional<RecipeHolder<SolarSmeltingRecipe>> recipe = tile.level.getRecipeManager().getRecipeFor(SCRecipeTypes.SMELTING.get(),tile.INVENTORY,tile.level);
         if (recipe.isPresent() ){
-            SolarSmeltingRecipe actualRecipe = recipe.get();
+            SolarSmeltingRecipe actualRecipe = recipe.get().value();
             tile.RECIPE_IN_PROGRESS = true;
-            tile.SMELTING_TIME = recipe.get().smeltingTime;
+            tile.SMELTING_TIME = actualRecipe.smeltingTime;
             tile.CURRENT_SMELTING_TIME++;
             if (tile.CURRENT_SMELTING_TIME % 5 == 0){
                 tile.setChanged();
@@ -133,7 +138,7 @@ public class SolarLensTile extends BlockEntity  {
 
                 }
                 Vec3 pos = new Vec3(tile.worldPosition.getX()+0.5d,tile.worldPosition.getY()-1,tile.worldPosition.getZ()+0.5d);
-                ItemEntity entity = new ItemEntity(tile.level,pos.x,pos.y,pos.z,new ItemStack(recipe.get().output.getItem(),count));
+                ItemEntity entity = new ItemEntity(tile.level,pos.x,pos.y,pos.z,new ItemStack(actualRecipe.output.getItem(),count));
                 tile.level.addFreshEntity(entity);
                 tile.SMELTING_TIME = 0;
                 tile.CURRENT_SMELTING_TIME = 0;
@@ -150,7 +155,7 @@ public class SolarLensTile extends BlockEntity  {
 
     private int getMinRecipeOutput(SolarSmeltingRecipe recipe){
         List<ItemStack> recipeItems = new ArrayList<>(recipe.getStacks());
-        ItemStack output = recipe.getResultItem();
+        ItemStack output = recipe.getResultItem(level.registryAccess());
         int outputSize = output.getMaxStackSize();
         if (outputSize == 1){
             return  1;

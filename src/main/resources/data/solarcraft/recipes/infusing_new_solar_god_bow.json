@@ -1,12 +1,24 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "A": {"item": "minecraft:bow"},
-    "B": {"item": "solarcraft:qualadium_ingot"},
-    "C": {"item": "minecraft:glass"},
-    "D": {"item": "solarcraft:medium_solar_reactor"},
-    "E": {"item": "solarcraft:algadium_ingot"},
-    "F": {"item": "solarcraft:materialization_core"}
+    "A": {
+      "item": "minecraft:bow"
+    },
+    "B": {
+      "item": "solarcraft:qualadium_ingot"
+    },
+    "C": {
+      "item": "minecraft:glass"
+    },
+    "D": {
+      "item": "solarcraft:medium_solar_reactor"
+    },
+    "E": {
+      "item": "solarcraft:algadium_ingot"
+    },
+    "F": {
+      "item": "solarcraft:materialization_core"
+    }
   },
   "pattern": [
     " D ",
@@ -21,9 +33,11 @@
   "time": 1500,
   "fragment": "solar_god_bow",
   "energy": 5000,
-  "ardo": 2000,
-  "tera": 5000,
-  "urba": 1500,
-  "zeta": 3500,
-  "catalysts":"F    FF    F"
+  "catalysts": "F    FF    F",
+  "re_cost": {
+    "zeta": 3500,
+    "ardo": 2000,
+    "tera": 5000,
+    "urba": 1500
+  }
 }

@@ -3,11 +3,13 @@ package com.finderfeed.solarcraft.helpers.multiblock;
 import com.finderfeed.solarcraft.client.screens.PositionBlockStateTileEntity;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.OwnedBlock;
+import com.finderfeed.solarcraft.local_library.helpers.FDBlockStateParser;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.arguments.blocks.BlockStateParser;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -195,13 +197,7 @@ public class MultiblockStructure {
         }
 
         public Builder put(char c, String state) {
-
-            try {
-                BlockStateParser.BlockResult parser = BlockStateParser.parseForBlock(Registry.BLOCK,new StringReader(state), true);
-                stateMap.put(c, parser.blockState());
-            }catch (CommandSyntaxException e){
-                throw new RuntimeException(e);
-            }
+            stateMap.put(c,  FDBlockStateParser.parseString(state));
             return this;
         }
 

@@ -4,10 +4,46 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.phys.Vec3;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class CompoundNBTHelper {
+
+    public static void saveUUID(CompoundTag tag,@Nullable UUID uuid,String name){
+        if (uuid == null) return;
+        tag.putUUID(name,uuid);
+    }
+
+    @Nullable
+    public static UUID getUUID(CompoundTag tag,String name){
+        if (!tag.contains(name)) return null;
+        return tag.getUUID(name);
+    }
+
+    public static void saveUUIDList(CompoundTag tag,List<UUID> uuids,String name){
+        CompoundTag nbtlist = new CompoundTag();
+        nbtlist.putInt(name + "_length",uuids.size());
+        for (int i = 0; i < uuids.size();i++){
+            saveUUID(nbtlist,uuids.get(i),i+"");
+        }
+        tag.put(name,nbtlist);
+    }
+
+    public static List<UUID> loadUUIDList(CompoundTag tag,String name){
+        if (tag.contains(name)){
+            CompoundTag t = tag.getCompound(name);
+            int len = t.getInt(name+"_length");
+            List<UUID> uuids = new ArrayList<>();
+            for (int i = 0; i < len;i++){
+                uuids.add(t.getUUID(i+""));
+            }
+            return uuids;
+        }else{
+            return new ArrayList<>();
+        }
+    }
 
     public static void writeVec3(String id, Vec3 vec, CompoundTag tag){
         tag.putDouble(id+"1",vec.x);

@@ -1,25 +1,22 @@
 package com.finderfeed.solarcraft.helpers;
 
+import com.finderfeed.solarcraft.client.particles.ball_particle.BallParticleOptions;
+import com.finderfeed.solarcraft.client.screens.SolarOrbitalMissileLauncherScreen;
 import com.finderfeed.solarcraft.client.screens.ability_screen.AbilitySelectionScreen;
 import com.finderfeed.solarcraft.content.abilities.ability_classes.ToggleableAbility;
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.client.particles.SmallSolarStrikeParticle;
 import com.finderfeed.solarcraft.client.particles.SolarcraftParticle;
 import com.finderfeed.solarcraft.client.screens.CrystalEnergyVinesPuzzleScreen;
 import com.finderfeed.solarcraft.client.toasts.UnlockedEnergyTypeToast;
 import com.finderfeed.solarcraft.config.JsonFragmentsHelper;
 import com.finderfeed.solarcraft.config.SolarcraftClientConfig;
-import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.client.SunShardPuzzleScreen;
-import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_template.Puzzle;
+import com.finderfeed.solarcraft.content.blocks.primitive.ProgressionBlock;
 import com.finderfeed.solarcraft.content.entities.not_alive.BallLightningProjectile;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.RETypeSelectionScreen;
-import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.structure_check.StructureSelectionScreen;
 import com.finderfeed.solarcraft.events.RenderEventsHandler;
 import com.finderfeed.solarcraft.events.other_events.event_handler.ClientEventsHandler;
-import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
-import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarcraft.local_library.effects.LightningBoltPath;
-import com.finderfeed.solarcraft.local_library.entities.bossbar.client.ActiveBossBar;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.CrystalEnergyVinesTile;
 import com.finderfeed.solarcraft.content.blocks.blockentities.RayTrapTileEntity;
@@ -30,19 +27,22 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.Ancient
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.RunePattern;
 import com.finderfeed.solarcraft.misc_things.*;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.RequestAbilityScreenPacket;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
-import com.finderfeed.solarcraft.registries.overlays.SolarcraftOverlays;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.SCAttachmentTypes;
+import com.finderfeed.solarcraft.registries.items.SCItems;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.google.gson.JsonObject;
+import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.components.AbstractWidget;
-import net.minecraft.client.gui.components.Widget;
+
+import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -53,9 +53,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.particles.ParticleTypes;
@@ -65,16 +63,14 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
+
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.IItemHandler;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 
 public class ClientHelpers {
@@ -174,7 +170,7 @@ public class ClientHelpers {
                     for (int g = 0; g < 3;g++){
                         Vec3 posS = path.getPos(g);
                         Vec3 posE = path.getPos(g+1);
-                        Particles.line(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                        Particles.line(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                                 posS,posE,0.25f,()->70 + (int)(world.random.nextFloat()*60f),()->0,()->255,(5f-g)/3*0.3f );
                     }
                 }
@@ -182,32 +178,11 @@ public class ClientHelpers {
         }
     }
 
-    public static void handleBallLightningProjectileParticles(Vec3 pos){
-        Level level = Minecraft.getInstance().level;
-        if (level != null) {
-            Helpers.createSmallSolarStrikeParticleExplosion(
-                    level,pos,2,0.07f,1.0f
-            );
-            List<LivingEntity> living = level.getEntitiesOfClass(LivingEntity.class, BallLightningProjectile.BOX.move(pos), (l) -> !(l instanceof Player));
-            for (LivingEntity ent : living) {
-                double vecLen = ent.position().subtract(pos).length();
-                if (vecLen <= 10) {
-                    int maxDots = (int) Math.floor(vecLen / 1.5) + 2;
-                    LightningBoltPath path = LightningBoltPath.create(pos, ent.position().add(0,ent.getBbHeight()/2,0), maxDots);
-                    path.setMaxOffset(0.75);
-                    for (int i = 0; i < maxDots - 1; i++) {
-                        Vec3 iPos = path.getPos(i);
-                        Vec3 ePos = path.getPos(i + 1);
-                        Particles.line(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), iPos, ePos,
-                                0.20, () -> 220+level.random.nextInt(36), () -> 220+level.random.nextInt(36), () -> 0, 0.25f);
-                    }
-                }
-            }
-        }
-    }
+
 
     public static boolean doClientPlayerHasFragment(AncientFragment fragment){
-        return ProgressionHelper.doPlayerHasFragment(getClientPlayer(),fragment);
+        if (getClientPlayer() == null) return false;
+        return AncientFragmentHelper.doPlayerHasFragment(getClientPlayer(),fragment);
     }
 
     public static void updatePlayerPattern(CompoundTag patternData,boolean shouldHideButtons){
@@ -225,7 +200,7 @@ public class ClientHelpers {
 
     public static void updatePlayerFragments(CompoundTag fragmentData){
         if (getClientPlayer() != null){
-            getClientPlayer().getPersistentData().put(ProgressionHelper.COMPOUND_TAG_FRAGMENTS,fragmentData);
+            getClientPlayer().getPersistentData().put(AncientFragmentHelper.COMPOUND_TAG_FRAGMENTS,fragmentData);
 
         }
     }
@@ -236,7 +211,7 @@ public class ClientHelpers {
             Player player = ClientHelpers.getClientPlayer();
 
             if (player != null && !player.isCreative()) {
-                return !ProgressionHelper.doPlayerHasFragment(player, r.getNeededFragment());
+                return !AncientFragmentHelper.doPlayerHasFragment(player, r.getNeededFragment());
             } else {
                 return false;
             }
@@ -254,7 +229,7 @@ public class ClientHelpers {
                 float length = 34;
                 double offsetx = length * Math.cos(Math.toRadians(i*7.5));
                 double offsetz = length * Math.sin(Math.toRadians(i*7.5));
-                level.addParticle(SolarcraftParticleTypes.SOLAR_STRIKE_PARTICLE.get(),pos.x +offsetx,pos.y,pos.z +offsetz,0,0.05,0);
+                level.addParticle(SCParticleTypes.SOLAR_STRIKE_PARTICLE.get(),pos.x +offsetx,pos.y,pos.z +offsetz,0,0.05,0);
 
 
 
@@ -264,7 +239,7 @@ public class ClientHelpers {
                     float length = 34;
                     double offsetx = level.random.nextFloat()*length * Math.cos(Math.toRadians(i*15));
                     double offsetz = level.random.nextFloat()*length * Math.sin(Math.toRadians(i*15));
-                    level.addParticle(SolarcraftParticleTypes.SOLAR_STRIKE_PARTICLE.get(),pos.x +offsetx,pos.y,pos.z +offsetz,0,0.05,0);
+                    level.addParticle(SCParticleTypes.SOLAR_STRIKE_PARTICLE.get(),pos.x +offsetx,pos.y,pos.z +offsetz,0,0.05,0);
 
                 }
 
@@ -277,7 +252,7 @@ public class ClientHelpers {
                         double offsetx = level.random.nextFloat() * length * Math.cos(Math.toRadians(i * 60));
                         double offsetz = level.random.nextFloat() * length * Math.sin(Math.toRadians(i * 60));
                         double offsety = level.random.nextFloat() * length + h*8;
-                        level.addParticle(SolarcraftParticleTypes.SOLAR_STRIKE_PARTICLE.get(), pos.x + offsetx, pos.y +offsety, pos.z + offsetz, 0, 0.05, 0);
+                        level.addParticle(SCParticleTypes.SOLAR_STRIKE_PARTICLE.get(), pos.x + offsetx, pos.y +offsety, pos.z + offsetz, 0, 0.05, 0);
 
                     }
 
@@ -302,34 +277,51 @@ public class ClientHelpers {
     }
 
     public static void addEnergyTypeToast(String id){
-        playSound(SolarcraftSounds.PROGRESSION_GAIN.get(),1,1);
+        playSound(SCSounds.PROGRESSION_GAIN.get(),1,1);
         UnlockedEnergyTypeToast.addOrUpdate(Minecraft.getInstance().getToasts(), RunicEnergy.Type.byId(id));
     }
 
 
     public static void handleSolarWandParticles(Vec3 pos,Vec3 vel){
-        SmallSolarStrikeParticle particle = (SmallSolarStrikeParticle) Minecraft.getInstance().particleEngine.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),pos.x,pos.y,pos.z,vel.normalize().x,vel.normalize().y,vel.normalize().z);
-        particle.setLifetime((int)Math.round(vel.length()/vel.normalize().length())*5/2 );
+        Vec3 norm = vel.normalize();
+        int lifetime = (int) Math.round(vel.length());
+        Particle particle = Minecraft.getInstance().particleEngine.createParticle(
+                new BallParticleOptions(0.25f,255,255,0,lifetime,false,false)
+                ,pos.x,pos.y,pos.z,norm.x,norm.y,norm.z);
     }
 
-    public static void updateEnergyTypeOnClient(BlockPos pos,String id){
-        BlockEntity tile = Minecraft.getInstance().level.getBlockEntity(pos);
-        if (tile instanceof RuneEnergyPylonTile){
-            RuneEnergyPylonTile pylon = (RuneEnergyPylonTile) tile;
-            pylon.setType(RunicEnergy.Type.byId(id));
-        }
-    }
 
 
 
     public static void playsoundInEars(SoundEvent event,float volume,float pitch){
         Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(event,volume,pitch));
     }
+    public static SimpleSoundInstance playLoopingSoundInEars(SoundEvent event,float volume,float pitch){
+        SimpleSoundInstance i = uiLoopingSound(event,volume,pitch);
+        Minecraft.getInstance().getSoundManager().play(i);
+        return i;
+    }
+    public static SimpleSoundInstance uiLoopingSound(SoundEvent event,float volume,float pitch){
+        return new SimpleSoundInstance(
+                event.getLocation(),
+                SoundSource.MASTER,
+                volume,
+                pitch,
+                SoundInstance.createUnseededRandom(),
+                true,
+                0,
+                SoundInstance.Attenuation.NONE,
+                0.0,
+                0.0,
+                0.0,
+                true
+        );
+    }
 
     public static void playTotemAnimation( ){
         LocalPlayer ent = Minecraft.getInstance().player;
         Minecraft.getInstance().particleEngine.createTrackingEmitter(ent, ParticleTypes.TOTEM_OF_UNDYING, 30);
-        Minecraft.getInstance().gameRenderer.displayItemActivation(SolarcraftItems.TOTEM_OF_IMMORTALITY.get().getDefaultInstance());
+        Minecraft.getInstance().gameRenderer.displayItemActivation(SCItems.TOTEM_OF_IMMORTALITY.get().getDefaultInstance());
         Minecraft.getInstance().level.playLocalSound(ent.getX(), ent.getY(), ent.getZ(), SoundEvents.TOTEM_USE, ent.getSoundSource(), 1F, 0.6F, false);
     }
 
@@ -338,7 +330,7 @@ public class ClientHelpers {
 
 
     public static void playSoundAtPos(BlockPos pos,int soundID,float pitch, float volume){
-        Level world = Minecraft.getInstance().player.level;
+        Level world = Minecraft.getInstance().player.level();
 
 
         world.playSound(Minecraft.getInstance().player,pos.getX()+0.5,pos.getY()+0.5,pos.getZ()+0.5,getSoundByID(soundID),
@@ -348,22 +340,13 @@ public class ClientHelpers {
 
     public static SoundEvent getSoundByID(int id){
         if (id == 1){
-            return SolarcraftSounds.SOLAR_MORTAR_SHOOT.get();
+            return SCSounds.SOLAR_MORTAR_SHOOT.get();
         }else if(id == 2){
-            return SolarcraftSounds.SOLAR_MORTAR_PROJECTILE.get();
+            return SCSounds.SOLAR_MORTAR_PROJECTILE.get();
         }
         return null;
     }
 
-
-    public static void reloadProgression(ServerPlayer playerServer){
-
-        Player player = Minecraft.getInstance().player;
-        for (Progression a : Progression.getAllAchievements()){
-            Helpers.setProgressionCompletionStatus(a,player,Helpers.hasPlayerCompletedProgression(a,playerServer));
-
-        }
-    }
 
     /**
      * Updates RayTrapTileEntity client trigger
@@ -371,7 +354,7 @@ public class ClientHelpers {
     public static void updateIntegerLASERTRAP(BlockPos pos, int i){
         BlockEntity tile = Minecraft.getInstance().level.getBlockEntity(pos);
         if (tile instanceof RayTrapTileEntity){
-            ((RayTrapTileEntity) tile).CLIENT_TRIGGER_INTEGER = 1;
+            ((RayTrapTileEntity) tile).clientTicker = 1;
         }
     }
 
@@ -383,7 +366,7 @@ public class ClientHelpers {
     }
 
     public static Component getNameBasedOnProgression(ItemStack stack){
-        IProgressionBlock block = (IProgressionBlock) ((BlockItem)stack.getItem()).getBlock();
+        ProgressionBlock block = (ProgressionBlock) ((BlockItem)stack.getItem()).getBlock();
         Player playerEntity = getClientPlayer();
         if (playerEntity != null) {
             if (Helpers.hasPlayerCompletedProgression(block.getRequiredProgression(), playerEntity)) {
@@ -400,7 +383,7 @@ public class ClientHelpers {
     public static void updateLexiconInventory(ItemStack[] stacks){
         ItemStack stack = Minecraft.getInstance().player.getMainHandItem();
         if ((stack.getItem() instanceof SolarLexicon)){
-            IItemHandler handler = stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+            IItemHandler handler = stack.getData(SCAttachmentTypes.LEXICON_INVENTORY);
             if (handler != null){
                 for (int i = 0; i < stacks.length;i++){
                     handler.insertItem(i,stacks[i],false);
@@ -411,7 +394,7 @@ public class ClientHelpers {
     }
 
     public static void requestAbilityScreen(boolean dontOpen){
-        SCPacketHandler.INSTANCE.sendToServer(new RequestAbilityScreenPacket(dontOpen));
+        FDPacketUtil.sendToServer(new RequestAbilityScreenPacket(dontOpen));
     }
 
     public static void triggerProgressionUnlockShader(){
@@ -427,7 +410,7 @@ public class ClientHelpers {
     }
 
     public static List<AbstractWidget> getScreenButtons(Screen screen){
-        List<Widget> widgets = screen.renderables;
+        List<Renderable> widgets = screen.renderables;
         List<AbstractWidget> returnable = new ArrayList<>();
         widgets.forEach((widget)->{
             if (widget instanceof AbstractWidget){
@@ -447,11 +430,15 @@ public class ClientHelpers {
         }
     }
 
+    public static void openOrbitalMissileLauncherScreen(BlockPos tilePos){
+        Minecraft.getInstance().setScreen(new SolarOrbitalMissileLauncherScreen(tilePos));
+    }
+
 
     public static void createEffectParticle(double x, double y, double z,double xs, double ys, double zs, MobEffect effect){
 
         SmallSolarStrikeParticle particle = (SmallSolarStrikeParticle) Minecraft.getInstance().particleEngine.
-                createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),x,y,z,xs,ys,zs);
+                createParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),x,y,z,xs,ys,zs);
         int[] rgba = FDMathHelper.intToRgba(effect.getColor());
         particle.setColor((float)rgba[0]/255,(float)rgba[1]/255,(float)rgba[2]/255);
     }
@@ -675,6 +662,9 @@ public class ClientHelpers {
 
     }
 
+    public static boolean isKeyDown(int keyCode){
+        return InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(),keyCode);
+    }
 
 
 

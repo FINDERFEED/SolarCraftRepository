@@ -5,6 +5,7 @@ import com.finderfeed.solarcraft.local_library.client.screens.FDScreenComponent;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -76,23 +77,23 @@ public abstract class DefaultContainerScreen<T extends AbstractContainerMenu> ex
     }
 
     @Override
-    public boolean mouseScrolled(double mousePosX, double mousePosY, double delta) {
+    public boolean mouseScrolled(double mousePosX, double mousePosY, double delta,double what) {
         for (FDScreenComponent component : components.values()) {
-            component.mouseScrolled(mousePosX - component.x, mousePosY - component.y, delta);
+            component.mouseScrolled(mousePosX - component.x, mousePosY - component.y, what);
         }
-        return super.mouseScrolled(mousePosX, mousePosY, delta);
+        return super.mouseScrolled(mousePosX, mousePosY, delta,what);
     }
 
-    public void renderComponents(PoseStack matrices, int mx, int my, float pticks, String... ids) {
+    public void renderComponents(GuiGraphics graphics, int mx, int my, float pticks, String... ids) {
         for (String id : ids) {
             FDScreenComponent component = components.get(id);
-            component.render(matrices, mx - component.x, my - component.y, pticks);
+            component.render(graphics, mx - component.x, my - component.y, pticks);
         }
     }
 
-    public void renderAllComponents(PoseStack matrices, int mx, int my, float pticks) {
+    public void renderAllComponents(GuiGraphics graphics, int mx, int my, float pticks) {
         for (FDScreenComponent component : components.values()) {
-            component.render(matrices, mx - component.x, my - component.y, pticks);
+            component.render(graphics, mx - component.x, my - component.y, pticks);
         }
     }
 

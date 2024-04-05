@@ -1,0 +1,8 @@
+{
+  "parent": "block/orientable",
+  "textures": {
+    "top": "solarcraft:block/chiseled_magistone",
+    "side": "solarcraft:block/memory_puzzle_side",
+    "front": "solarcraft:block/memory_puzzle_side"
+  }
+}

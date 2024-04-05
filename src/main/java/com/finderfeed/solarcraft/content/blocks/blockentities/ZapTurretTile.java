@@ -7,18 +7,16 @@ import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarcraft.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.local_library.OwnedBlock;
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -38,7 +36,7 @@ public class ZapTurretTile extends BlockEntity implements OwnedBlock, IStructure
     private List<Vec3> targets = new ArrayList<>();
 
     public ZapTurretTile( BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.ZAP_TURRET_TILE.get(), p_155229_, p_155230_);
+        super(SCTileEntities.ZAP_TURRET_TILE.get(), p_155229_, p_155230_);
     }
 
 
@@ -48,33 +46,33 @@ public class ZapTurretTile extends BlockEntity implements OwnedBlock, IStructure
                 tile.attackTick = 0;
                 tile.targets.clear();
                 tile.attack = false;
-                List<LivingEntity> targets = FDMathHelper.TargetFinding.getAllValidTargetsFromVec(
-                        LivingEntity.class,
+                List<Monster> targets = FDMathHelper.TargetFinding.getAllValidTargetsFromVec(
+                        Monster.class,
                         20,
                         world,
                         FDMathHelper.TileEntityThings.getTileEntityCenter(tile),
                         (entity) -> {
-                            return !(entity instanceof Player);
+                            return true;
                         }
                 );
                 if (targets.size() != 0) {
-                    LivingEntity lastTarget = targets.get(world.random.nextInt(targets.size()));
-                    lastTarget.hurt(DamageSource.MAGIC, 5);
-                    List<LivingEntity> invalidTargets = new ArrayList<>();
+                    Monster lastTarget = targets.get(world.random.nextInt(targets.size()));
+                    lastTarget.hurt(tile.level.damageSources().magic(), 5);
+                    List<Monster> invalidTargets = new ArrayList<>();
                     invalidTargets.add(lastTarget);
                     for (int i = 0; i < 4; i++) {
-                        List<LivingEntity> secondaryTargets = FDMathHelper.TargetFinding.getAllValidTargetsFromVec(
-                                LivingEntity.class,
+                        List<Monster> secondaryTargets = FDMathHelper.TargetFinding.getAllValidTargetsFromVec(
+                                Monster.class,
                                 20,
                                 world,
                                 lastTarget.position().add(0, lastTarget.getBbHeight() * 1.1 / 2, 0),
                                 (entity) -> {
-                                    return !(entity instanceof Player) && !invalidTargets.contains(entity);
+                                    return !invalidTargets.contains(entity);
                                 }
                         );
                         if (secondaryTargets.size() != 0) {
                             lastTarget = secondaryTargets.get(world.random.nextInt(secondaryTargets.size()));
-                            lastTarget.hurt(DamageSource.MAGIC, 5);
+                            lastTarget.hurt(tile.level.damageSources().magic(), 5);
                             invalidTargets.add(lastTarget);
                         } else {
                             break;
@@ -87,7 +85,7 @@ public class ZapTurretTile extends BlockEntity implements OwnedBlock, IStructure
                         tile.targets.add(trg.position().add(0, trg.getBbHeight() / 2, 0));
                     });
 
-                    world.playSound(null,pos.getX()+0.5f,pos.getY()+0.5f,pos.getZ()+0.5f, SolarcraftSounds.ZAP_TURRET_SHOT.get(), SoundSource.AMBIENT,1f,0.7f);
+                    world.playSound(null,pos.getX()+0.5f,pos.getY()+0.5f,pos.getZ()+0.5f, SCSounds.ZAP_TURRET_SHOT.get(), SoundSource.AMBIENT,1f,0.7f);
                     tile.attack = true;
                     world.sendBlockUpdated(pos, state, state, 3);
 
@@ -104,7 +102,7 @@ public class ZapTurretTile extends BlockEntity implements OwnedBlock, IStructure
                         Vec3 normal = between.normalize().multiply(1 / multiplier, 1 / multiplier, 1 / multiplier);
                         for (float g = 1; g < between.length() * multiplier; g++) {
                             Vec3 position = tile.targets.get(i).add(normal.multiply(g, g, g));
-                            world.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), position.x, position.y, position.z, 0, 0, 0);
+                            world.addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), position.x, position.y, position.z, 0, 0, 0);
                         }
                         if (i != 0) {
                             Helpers.createSmallSolarStrikeParticleExplosion(world, tile.targets.get(i),2,0.04f,1f);

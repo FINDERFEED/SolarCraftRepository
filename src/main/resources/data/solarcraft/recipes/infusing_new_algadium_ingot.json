@@ -1,10 +1,18 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "B": {"item": "solarcraft:illidium_ingot"},
-    "C": {"item": "solarcraft:solar_dust"},
-    "K": {"item": "solarcraft:energy_dust"},
-    "D": {"item": "minecraft:iron_ingot"}
+    "B": {
+      "item": "solarcraft:illidium_ingot"
+    },
+    "C": {
+      "item": "solarcraft:solar_dust"
+    },
+    "K": {
+      "item": "solarcraft:energy_dust"
+    },
+    "D": {
+      "item": "minecraft:iron_ingot"
+    }
   },
   "pattern": [
     " K ",
@@ -13,7 +21,6 @@
     "DD",
     " K "
   ],
-
   "result": {
     "item": "solarcraft:algadium_ingot"
   },

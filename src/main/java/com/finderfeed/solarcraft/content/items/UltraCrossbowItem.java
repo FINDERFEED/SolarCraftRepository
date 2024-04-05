@@ -8,8 +8,9 @@ import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.content.entities.projectiles.UltraCrossbowProjectile;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -36,21 +37,21 @@ public class UltraCrossbowItem extends RareSolarcraftItem implements IRunicEnerg
     }
 
     @Override
-    public void onUsingTick(ItemStack stack, LivingEntity player, int count) {
-        if (!player.level.isClientSide && (player instanceof Player) ) {
+    public void onUseTick(Level level, LivingEntity living, ItemStack stack, int count) {
+        if (!living.level.isClientSide && (living instanceof Player player) ) {
             if (count % 20 == 0){
-                player.level.playSound(null,player, SolarcraftSounds.CROSSBOW_CHARGING.get(), SoundSource.AMBIENT,1f,1f);
+                player.level.playSound(null,player, SCSounds.CROSSBOW_CHARGING.get(), SoundSource.AMBIENT,1f,1f);
             }
 
             if ((float)(72000-count)/20*DAMAGE_PER_SECOND < 120) {
-                ((Player) player).displayClientMessage(Component.literal("-" + String.format("%.1f", (float) (72000 - count) / 20 * DAMAGE_PER_SECOND) + "-").withStyle(ChatFormatting.GOLD), true);
+                player.displayClientMessage(Component.literal("-" + String.format("%.1f", (float) (72000 - count) / 20 * DAMAGE_PER_SECOND) + "-").withStyle(ChatFormatting.GOLD), true);
             }else{
-                ((Player) player).displayClientMessage(Component.literal("-" + 120.0 + "-").withStyle(ChatFormatting.GOLD), true);
+                player.displayClientMessage(Component.literal("-" + 120.0 + "-").withStyle(ChatFormatting.GOLD), true);
             }
         }
-
-        super.onUsingTick(stack, player, count);
+        super.onUseTick(level, living, stack, count);
     }
+
 
     @Override
     public void releaseUsing(ItemStack stack, Level world, LivingEntity player, int remainingSeconds) {
@@ -60,17 +61,14 @@ public class UltraCrossbowItem extends RareSolarcraftItem implements IRunicEnerg
         if (!world.isClientSide){
 
             if (player instanceof Player pl && ItemRunicEnergy.spendEnergy(this.getCost(),stack,this,pl)) {
-            UltraCrossbowProjectile proj = new UltraCrossbowProjectile(SolarcraftEntityTypes.ULTRA_CROSSBOW_SHOT.get(),world);
+            UltraCrossbowProjectile proj = new UltraCrossbowProjectile(SCEntityTypes.ULTRA_CROSSBOW_SHOT.get(),world);
             proj.setOwner(pl);
             proj.setPos(player.getX() + player.getLookAngle().x,player.getY()+1.5f+player.getLookAngle().y,player.getZ()+player.getLookAngle().z);
-            player.level.playSound(null,player, SolarcraftSounds.CROSSBOW_SHOOT_SOUND.get(), SoundSource.AMBIENT,1,1);
-            proj.setYAW(player.getYRot());
-            proj.setPITCH(player.getXRot());
-            if ((float)(72000 - remainingSeconds)/20*DAMAGE_PER_SECOND < 120) {
-                proj.setDamage((float) (72000 - remainingSeconds) / 20 * DAMAGE_PER_SECOND);
-            }else {
-                proj.setDamage(120);
-            }
+            player.level.playSound(null,player, SCSounds.CROSSBOW_SHOOT_SOUND.get(), SoundSource.AMBIENT,1,1);
+
+
+            proj.setDamage(Mth.clamp((float) (72000 - remainingSeconds) / 20 * DAMAGE_PER_SECOND,0,120));
+
             proj.setDeltaMovement(player.getLookAngle().multiply(4,4,4));
             world.addFreshEntity(proj);
             }

@@ -3,7 +3,7 @@ package com.finderfeed.solarcraft.content.blocks.blockentities;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.drain_runic_enenrgy_action.IREWandDrainable;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.SolarCraftTags;
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.config.SolarcraftConfig;
 import com.finderfeed.solarcraft.content.blocks.blockentities.runic_energy.RunicEnergyGiver;
 import com.finderfeed.solarcraft.content.blocks.primitive.InscriptionStone;
@@ -13,7 +13,7 @@ import com.finderfeed.solarcraft.misc_things.*;
 
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packets.UpdateTypeOnClientPacket;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -27,7 +27,7 @@ import net.minecraft.nbt.CompoundTag;
 
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.network.PacketDistributor;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
 
@@ -36,14 +36,14 @@ import java.util.List;
 
 public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, RunicEnergyGiver,IREWandDrainable{
 
-    private RunicEnergy.Type type = null;
+    private RunicEnergy.Type type = RunicEnergy.Type.ARDO;
     private float currentEnergy = 0;
     private float energyPerTick = 0f;
     private float maxEnergy = 100000;
     private int updateTick = 40;
 
     public RuneEnergyPylonTile(BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.RUNE_ENERGY_PYLON.get(), p_155229_, p_155230_);
+        super(SCTileEntities.RUNE_ENERGY_PYLON.get(), p_155229_, p_155230_);
     }
 
 
@@ -70,9 +70,9 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
 
     public static void imbueItemsNear(RuneEnergyPylonTile tile){
         if (tile.getEnergyType() != null) {
-            AABB bb = new AABB(tile.worldPosition.offset(-8, -10, -8), tile.worldPosition.offset(8, 0, 8));
+            AABB bb = new AABB(Helpers.posToVec(tile.worldPosition.offset(-8, -10, -8)), Helpers.posToVec(tile.worldPosition.offset(8, 0, 8)));
             tile.level.getEntitiesOfClass(ItemEntity.class, bb, (entity) -> entity.getItem().getItem() instanceof IImbuableItem).forEach(entity -> {
-                if (!entity.level.isClientSide) {
+                if (!entity.level().isClientSide) {
                     IImbuableItem item = (IImbuableItem) entity.getItem().getItem();
                     if (item.imbue(entity,tile)){
                         double neededEnergy = item.getCost();
@@ -85,13 +85,13 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
                         }
                     }
                 } else {
-                    if (entity.level.getGameTime() % 5 == 1) {
+                    if (entity.level().getGameTime() % 5 == 1) {
 
-                        double rndX = entity.level.random.nextDouble() * 0.6 - 0.3;
-                        double rndY = entity.level.random.nextDouble() * 0.6 - 0.3;
-                        double rndZ = entity.level.random.nextDouble() * 0.6 - 0.3;
+                        double rndX = entity.level().random.nextDouble() * 0.6 - 0.3;
+                        double rndY = entity.level().random.nextDouble() * 0.6 - 0.3;
+                        double rndZ = entity.level().random.nextDouble() * 0.6 - 0.3;
 
-                        entity.level.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                        entity.level().addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                                 entity.position().x + rndX, entity.position().y + rndY, entity.position().z + rndZ, 0, 0.1, 0
                         );
                     }
@@ -174,7 +174,8 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
     public static void doUpdate(RuneEnergyPylonTile tile){
         tile.updateTick++;
         if (tile.updateTick >= 40){
-            SCPacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(), tile.worldPosition.getY(), tile.worldPosition.getZ(), 40, tile.level.dimension())),
+
+            PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(tile.worldPosition.getX(), tile.worldPosition.getY(), tile.worldPosition.getZ(), 40, tile.level.dimension()).get()).send(
                     new UpdateTypeOnClientPacket(tile.worldPosition, tile.type.id));
             tile.updateTick = 0;
         }
@@ -182,7 +183,7 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
 
     public static void doProgression(RuneEnergyPylonTile tile){
         if (tile.level.getGameTime() % 20 == 0) {
-            AABB box = new AABB(tile.worldPosition.offset(-4, -10, -4), tile.worldPosition.offset(4, 2, 4));
+            AABB box = new AABB(Helpers.posToVec(tile.worldPosition.offset(-4, -10, -4)), Helpers.posToVec(tile.worldPosition.offset(4, 2, 4)));
             tile.level.getEntitiesOfClass(Player.class, box).forEach((player) -> {
                 Helpers.fireProgressionEvent(player, Progression.RUNE_ENERGY_PYLON);
             });
@@ -310,7 +311,7 @@ public class RuneEnergyPylonTile extends BlockEntity implements  DebugTarget, Ru
 
     @Override
     public float drainEnergy(RunicEnergy.Type type,Player player, float amount) {
-        if (!player.level.isClientSide) {
+        if (!player.level().isClientSide && type == this.type) {
             float delta = Math.min(amount, currentEnergy);
             this.currentEnergy -= delta;
             Helpers.fireProgressionEvent(player, Progression.RUNE_ENERGY_CLAIM);

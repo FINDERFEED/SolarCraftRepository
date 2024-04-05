@@ -3,11 +3,11 @@
   "textures": {
     "particle": "block/dirt",
     "down": "block/dirt",
-    "up": "solarcraft:block/radiant_grass_top",
-    "north": "solarcraft:block/radiant_grass_side",
-    "east": "solarcraft:block/radiant_grass_side",
-    "south": "solarcraft:block/radiant_grass_side",
-    "west": "solarcraft:block/radiant_grass_side"
+    "up": "solarcraft:custom/block/radiant_grass_top",
+    "north": "solarcraft:custom/block/radiant_grass_side",
+    "east": "solarcraft:custom/block/radiant_grass_side",
+    "south": "solarcraft:custom/block/radiant_grass_side",
+    "west": "solarcraft:custom/block/radiant_grass_side"
   },
   "render_type": "cutout"
 }

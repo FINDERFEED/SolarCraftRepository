@@ -1,0 +1,12 @@
+{
+  "placement": [
+    {
+      "heightmap": "MOTION_BLOCKING",
+      "type": "minecraft:heightmap"
+    },
+    {
+      "type": "minecraft:in_square"
+    }
+  ],
+  "feature": "solarcraft:solar_flower_feature"
+}

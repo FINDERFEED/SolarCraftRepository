@@ -2,11 +2,12 @@ package com.finderfeed.solarcraft.config;
 
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.SendFragmentsToClientPacket;
 import com.google.gson.*;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.fml.loading.FMLPaths;
-import net.minecraftforge.network.NetworkDirection;
+import net.neoforged.fml.loading.FMLPaths;
+
 import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nullable;
@@ -50,6 +51,7 @@ public class JsonFragmentsHelper {
                     Fragments json IS NOT RELOADABLE!
                     Restart mc or server to apply changes.
                     Also if you removed or added a fragment delete your solar lexicon and make new (or tell player to do it).
+                    Translation key for lang files is constructed by this formula: "ancient_fragment." + unique_id
                     First of all start by
                     (// - those are comments, don't write them in json file)
                     {
@@ -58,7 +60,6 @@ public class JsonFragmentsHelper {
                     Information type format:
                     {
                         "type": "information",
-                        "translation_id": "",               //translation id that needs to be translated in lang files. Defines the name of the fragment. (String)
                         "unique_id": "",                    //unique id is the unique identifier of the fragment(ah yes logic). Should be different than all other fragments. (String)
                         "category_base": "",                //defines the category in solar lexicon where that fragment will be located. (Possible values: scroll down)
                         "sub_category_base": "",            //defines the subcategory in category where that fragment will be located. (Possible values: scroll down)
@@ -72,7 +73,6 @@ public class JsonFragmentsHelper {
                     Items type format:
                     {
                         "type": "items",
-                        "translation_id": "",               //Translation id that needs to be translated in lang files. Defines the name of the fragment. (String)
                         "unique_id": "",                    //Unique id is the unique identifier of the fragment(ah yes logic). Should be different than all other fragments. (String)
                         "category_base": "",                //Defines the category in solar lexicon where that fragment will be located. (Possible values: scroll down)
                         "sub_category_base": "",            //Defines the subcategory in category where that fragment will be located. (Possible values: scroll down)
@@ -137,7 +137,6 @@ public class JsonFragmentsHelper {
                        "fragments": [
                          {
                            "type": "items",
-                           "translation_id": "test_fragment.items",
                            "unique_id": "test_fragment_items",
                            "category_base": "exploration",
                            "sub_category_base": "beggining",
@@ -152,7 +151,6 @@ public class JsonFragmentsHelper {
                          },
                          {
                            "type": "information",
-                           "translation_id": "test_fragment.info",
                            "unique_id": "test_fragment_info",
                            "category_base": "exploration",
                            "sub_category_base": "beggining",
@@ -217,7 +215,8 @@ public class JsonFragmentsHelper {
         }else{
             o = SERVERSIDE_FRAGMENTS_JSON;
         }
-        SCPacketHandler.INSTANCE.sendTo(new SendFragmentsToClientPacket(o),serverPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+        FDPacketUtil.sendToPlayer(serverPlayer,new SendFragmentsToClientPacket(o));
+//        SCPacketHandler.INSTANCE.sendTo(new SendFragmentsToClientPacket(o),serverPlayer.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
 
     }
 

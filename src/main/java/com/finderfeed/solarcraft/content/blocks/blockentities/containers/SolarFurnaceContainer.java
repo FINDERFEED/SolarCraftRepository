@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities.containers;
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.SolarEnergyFurnaceTile;
-import com.finderfeed.solarcraft.registries.containers.SolarcraftContainers;
+import com.finderfeed.solarcraft.registries.containers.SCContainers;
 import net.minecraft.world.entity.player.Inventory;
 
 import net.minecraft.world.inventory.FurnaceResultSlot;
@@ -17,9 +17,15 @@ import java.util.Objects;
 public class SolarFurnaceContainer extends AbstractContainer<SolarEnergyFurnaceTile>{
 
     public SolarFurnaceContainer( int windowId, Inventory playerInv, SolarEnergyFurnaceTile te, ContainerData array) {
-        super(SolarcraftContainers.SOLAR_FURNACE_CONTAINER.get(), windowId, playerInv, te, array);
+        super(SCContainers.SOLAR_FURNACE_CONTAINER.get(), windowId, playerInv, te, array);
         this.addSlot(new Slot(te,0,48,35));
-        this.addSlot(new FurnaceResultSlot(playerInv.player,te,1,108,35));
+        this.addSlot(new FurnaceResultSlot(playerInv.player,te,1,108,35){
+            @Override
+            public void setChanged() {
+                super.setChanged();
+                te.setChanged();
+            }
+        });
 
                 for(int l = 0; l < 3; ++l) {
             for(int j1 = 0; j1 < 9; ++j1) {

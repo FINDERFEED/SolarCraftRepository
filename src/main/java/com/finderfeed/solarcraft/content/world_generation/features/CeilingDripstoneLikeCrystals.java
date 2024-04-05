@@ -1,7 +1,7 @@
 package com.finderfeed.solarcraft.content.world_generation.features;
 
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
-import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
+import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
@@ -12,7 +12,6 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.Tags;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -68,7 +67,7 @@ public class CeilingDripstoneLikeCrystals extends Feature<NoneFeatureConfigurati
                            double Z = (fillPos.getZ() - pos.getZ());
                            double r = Math.sqrt(X*X + Z*Z);
                            if (r <= maxRad){
-                               world.setBlock(fillPos, SolarcraftBlocks.RADIANT_CRYSTAL.get().defaultBlockState(),3);
+                               world.setBlock(fillPos, SCBlocks.RADIANT_CRYSTAL.get().defaultBlockState(),3);
                            }
                        }
                        for (int x = -maxRad; x <= maxRad; x++) {
@@ -76,7 +75,7 @@ public class CeilingDripstoneLikeCrystals extends Feature<NoneFeatureConfigurati
                                for (int z = -maxRad; z <= maxRad; z++) {
                                    BlockPos test = pos.offset(x, -y, z);
                                    if (isValidPlace(world, pos, test, crystalHeight, maxRad)) {
-                                       world.setBlock(test, SolarcraftBlocks.RADIANT_CRYSTAL.get().defaultBlockState(), 3);
+                                       world.setBlock(test, SCBlocks.RADIANT_CRYSTAL.get().defaultBlockState(), 3);
                                    }
                                }
                            }

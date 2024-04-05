@@ -3,13 +3,14 @@ package com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.c
 import com.finderfeed.solarcraft.events.other_events.OBJModels;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 
 public class ClearingRitualCrystalISTER extends BlockEntityWithoutLevelRenderer {
@@ -18,16 +19,17 @@ public class ClearingRitualCrystalISTER extends BlockEntityWithoutLevelRenderer 
     }
 
     @Override
-    public void renderByItem(ItemStack stack, ItemTransforms.TransformType transform, PoseStack matrices, MultiBufferSource src, int light, int overlay) {
+    public void renderByItem(ItemStack stack, ItemDisplayContext transform, PoseStack matrices, MultiBufferSource src, int light, int overlay) {
 
         matrices.pushPose();
         matrices.translate(0.5,0.5,0.5);
-        if (transform == ItemTransforms.TransformType.GUI){
+        if (transform == ItemDisplayContext.GUI){
             matrices.translate(0,0,1);
         }
-        if (transform != ItemTransforms.TransformType.GROUND) {
+        if (transform != ItemDisplayContext.GROUND) {
             if (Minecraft.getInstance().level != null) {
-                matrices.mulPose(Vector3f.YP.rotationDegrees(RenderingTools.getTime(Minecraft.getInstance().level, Minecraft.getInstance().getFrameTime())));
+                matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),RenderingTools.getTime(Minecraft.getInstance().level, Minecraft.getInstance().getFrameTime())));
+//                matrices.mulPose(Vector3f.YP.rotationDegrees(RenderingTools.getTime(Minecraft.getInstance().level, Minecraft.getInstance().getFrameTime())));
             }
         }
         matrices.scale(0.25f,0.25f,0.25f);

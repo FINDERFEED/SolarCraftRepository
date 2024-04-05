@@ -3,7 +3,7 @@ package com.finderfeed.solarcraft.content.blocks.primitive;
 import com.finderfeed.solarcraft.config.enchanter_config.EnchanterConfigInit;
 import com.finderfeed.solarcraft.content.blocks.blockentities.EnchanterBlockEntity;
 import com.finderfeed.solarcraft.content.blocks.blockentities.containers.EnchanterContainer;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -23,7 +23,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.network.NetworkHooks;
+
 import org.jetbrains.annotations.Nullable;
 
 public class EnchanterBlock extends RunicEnergySaverBlock implements EntityBlock {
@@ -46,7 +46,7 @@ public class EnchanterBlock extends RunicEnergySaverBlock implements EntityBlock
                     level.sendBlockUpdated(pos,state,state,3);
                     enchanter.loadConfigIfNecessary();
                     String configString = EnchanterConfigInit.SERVERSIDE_JSON.toString();
-                    NetworkHooks.openScreen((ServerPlayer) player,new EnchanterContainer.Provider(pos,configString),(buf)->{
+                    ((ServerPlayer) player).openMenu(new EnchanterContainer.Provider(pos,configString),(buf)->{
                         buf.writeBlockPos(pos);
                         buf.writeUtf(configString);
                     });
@@ -76,7 +76,7 @@ public class EnchanterBlock extends RunicEnergySaverBlock implements EntityBlock
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return SolarcraftTileEntityTypes.ENCHANTER.get().create(pos,state);
+        return SCTileEntities.ENCHANTER.get().create(pos,state);
     }
 
     @Nullable

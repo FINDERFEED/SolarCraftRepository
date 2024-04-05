@@ -1,0 +1,9 @@
+{
+  "feature": "solarcraft:fragment_ruins",
+  "placement": [
+    {
+      "type": "minecraft:rarity_filter",
+      "chance": 120
+    }
+  ]
+}

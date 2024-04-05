@@ -37,14 +37,15 @@ public class LightningAbility extends AbstractAbility{
                     LightningBolt entityBolt = new LightningBolt(EntityType.LIGHTNING_BOLT, world);
                     entityBolt.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
                     if (Helpers.isSpellGriefingEnabled(world)) {
-                        Explosion explosion = new Explosion(world, null, null, StoneDestroyerCalculator.INSTANCE_01, pos.getX(), pos.getY() - 3, pos.getZ(), 6, true, Explosion.BlockInteraction.BREAK);
+
+                        Explosion explosion = Helpers.oldExplosionConstructor(world, null, null, StoneDestroyerCalculator.INSTANCE_01, pos.getX(), pos.getY() - 3, pos.getZ(), 6, true, Explosion.BlockInteraction.DESTROY);
                         spawnFallingBlocks(world, pos.below(3), explosion);
 
-                        world.explode(entity, null, StoneDestroyerCalculator.INSTANCE_01, pos.getX(), pos.getY() - 1, pos.getZ(), 6, true, Explosion.BlockInteraction.BREAK);
-                        world.explode(entity, null, StoneDestroyerCalculator.INSTANCE_01, pos.getX(), pos.getY() - 5, pos.getZ(), 4, true, Explosion.BlockInteraction.BREAK);
+                        world.explode(entity, null, StoneDestroyerCalculator.INSTANCE_01, pos.getX(), pos.getY() - 1, pos.getZ(), 6, true, Level.ExplosionInteraction.BLOCK);
+                        world.explode(entity, null, StoneDestroyerCalculator.INSTANCE_01, pos.getX(), pos.getY() - 5, pos.getZ(), 4, true, Level.ExplosionInteraction.BLOCK);
                     }else{
-                        world.explode(entity, null, StoneDestroyerCalculator.INSTANCE_01, pos.getX(), pos.getY() - 1, pos.getZ(), 6, true, Explosion.BlockInteraction.NONE);
-                        world.explode(entity, null, StoneDestroyerCalculator.INSTANCE_01, pos.getX(), pos.getY() - 5, pos.getZ(), 4, true, Explosion.BlockInteraction.NONE);
+                        world.explode(entity, null, StoneDestroyerCalculator.INSTANCE_01, pos.getX(), pos.getY() - 1, pos.getZ(), 6, true, Level.ExplosionInteraction.BLOCK);
+                        world.explode(entity, null, StoneDestroyerCalculator.INSTANCE_01, pos.getX(), pos.getY() - 5, pos.getZ(), 4, true, Level.ExplosionInteraction.BLOCK);
                     }
                     AbilityHelper.spendAbilityEnergy(entity,this);
                     world.addFreshEntity(entityBolt);
@@ -70,6 +71,9 @@ public class LightningAbility extends AbstractAbility{
                     BlockPos offsettedPos = mainpos.offset(x,y,z);
                     Vec3 position = Helpers.getBlockCenter(offsettedPos);
                     Vec3 speed = position.subtract(center).multiply(0.3*world.random.nextDouble(),0.1*world.random.nextDouble(),0.3*world.random.nextDouble()).add(0,1.5,0);
+                    if (speed.x  == 0 && speed.z == 0){
+                        speed = speed.add(world.random.nextFloat() * 0.2 - 0.1,0,world.random.nextFloat() * 0.2 - 0.1);
+                    }
                     BlockState state = world.getBlockState(offsettedPos);
                     if (state.getExplosionResistance(world,mainpos,expl) <= 6) {
                         MyFallingBlockEntity fallingBlock = new MyFallingBlockEntity(world, position.x, position.y + 3, position.z, state);

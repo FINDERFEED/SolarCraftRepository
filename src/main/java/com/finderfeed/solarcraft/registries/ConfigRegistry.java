@@ -2,6 +2,7 @@ package com.finderfeed.solarcraft.registries;
 
 import com.finderfeed.solarcraft.config.ItemREConfig;
 import com.finderfeed.solarcraft.config.JsonConfig;
+import com.finderfeed.solarcraft.config.PuzzlePatternsConfig;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +14,7 @@ public class ConfigRegistry {
 
 
     public static final ItemREConfig ITEM_RE_CONFIG = registerPostLoadConfig(new ItemREConfig());
+    public static final PuzzlePatternsConfig PUZZLE_PATTERNS = registerPostLoadConfig(new PuzzlePatternsConfig());
 
 
     private static <T extends JsonConfig> T registerEarlyLoadConfig(T config){

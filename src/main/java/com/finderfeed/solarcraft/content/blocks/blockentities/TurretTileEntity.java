@@ -1,14 +1,15 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities;
 
+import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.TurretProjectile;
 import com.finderfeed.solarcraft.helpers.Helpers;
-import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.AbstractTurretProjectile;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
+import com.finderfeed.solarcraft.registries.items.SCItems;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.nbt.CompoundTag;
 
@@ -26,7 +27,7 @@ public class TurretTileEntity extends BlockEntity  {
     public int attackTick = 0;
 
     public TurretTileEntity( BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.TURRET_TILE_ENTITY.get(), p_155229_, p_155230_);
+        super(SCTileEntities.TURRET_TILE_ENTITY.get(), p_155229_, p_155230_);
     }
 
 
@@ -37,20 +38,21 @@ public class TurretTileEntity extends BlockEntity  {
             if (tile.attackTick >= tile.getAttackRate()){
                 tile.attackTick = 0;
                 List<LivingEntity> list = tile.level.getEntitiesOfClass(LivingEntity.class,new AABB(-10,-4,-10,10,4,10)
-                        .move(tile.worldPosition),(entity) -> !(entity instanceof Player));
+                        .move(tile.worldPosition),(entity) -> {
+                    return entity instanceof Monster;
+                });
 
                     tile.sortList(list);
                 if (!list.isEmpty()) {
 
                     LivingEntity entity = list.get(tile.level.random.nextInt(list.size()));
                     Vec3 velocity = Helpers.calculateVelocity(Helpers.getBlockCenter(tile.worldPosition), entity.position().add(0, 0.7f, 0));
-                    AbstractTurretProjectile projectile = new AbstractTurretProjectile(tile.level, new AbstractTurretProjectile.Constructor()
-                            .setDamage(tile.turretLevel * 5)
-                            .setPosition(Helpers.getBlockCenter(tile.worldPosition)
-                                    .add(velocity.multiply(0.5,0.5,0.5))
-                                    .add(0,-0.1,0))
-                            .setVelocity(velocity)
-                    );
+                    TurretProjectile projectile = new TurretProjectile(SCEntityTypes.TURRET_PROJECTILE.get(),tile.level);
+                    projectile.damage = tile.turretLevel * 5;
+                    projectile.setPos(Helpers.getBlockCenter(tile.worldPosition)
+                            .add(velocity.multiply(0.5,0.5,0.5))
+                            .add(0,-0.1,0));
+                    projectile.setDeltaMovement(velocity);
 
                     tile.level.addFreshEntity(projectile);
                 }
@@ -88,7 +90,7 @@ public class TurretTileEntity extends BlockEntity  {
     }
 
     public Item getUpgradeItem(){
-        return SolarcraftItems.CHARGED_QUALADIUM_INGOT.get();
+        return SCItems.CHARGED_QUALADIUM_INGOT.get();
     }
 
     public int getMaxTurretLevel(){

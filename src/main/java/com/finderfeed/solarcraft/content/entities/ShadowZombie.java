@@ -1,10 +1,12 @@
 package com.finderfeed.solarcraft.content.entities;
 
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -62,10 +64,16 @@ public class ShadowZombie extends Monster implements PowerableMob {
 
     @Override
     public boolean hurt(DamageSource src, float amount) {
-        if (!src.isMagic() && src != DamageSource.OUT_OF_WORLD){
+        if (src == SCDamageSources.RUNIC_MAGIC || src.is(DamageTypeTags.BYPASSES_ARMOR) ||
+                src == level.damageSources().fellOutOfWorld() ||
+                src == level.damageSources().genericKill()) {
+            if (!level.isClientSide) {
+                System.out.println(this.getHealth());
+            }
+            return super.hurt(src, amount);
+        }else{
             return super.hurt(src,0);
         }
-        return super.hurt(src, amount);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -82,12 +90,12 @@ public class ShadowZombie extends Monster implements PowerableMob {
 
     @Override
     protected SoundEvent getHurtSound(DamageSource p_33034_) {
-        return SolarcraftSounds.SHADOW_ZOMBIE_HURT.get();
+        return SCSounds.SHADOW_ZOMBIE_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SolarcraftSounds.SHADOW_ZOMBIE_HURT.get();
+        return SCSounds.SHADOW_ZOMBIE_HURT.get();
     }
 
     protected void registerGoals() {

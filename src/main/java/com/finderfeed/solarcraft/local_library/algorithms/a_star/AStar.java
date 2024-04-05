@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.local_library.algorithms.a_star;
 
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;

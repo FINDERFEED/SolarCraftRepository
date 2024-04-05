@@ -1,12 +1,24 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "A": {"item": "minecraft:crossbow"},
-    "B": {"item": "solarcraft:qualadium_ingot"},
-    "C": {"item": "minecraft:glass"},
-    "D": {"item": "solarcraft:medium_solar_reactor"},
-    "E": {"item": "solarcraft:algadium_ingot"},
-    "F": {"item": "solarcraft:materialization_core"}
+    "A": {
+      "item": "minecraft:crossbow"
+    },
+    "B": {
+      "item": "solarcraft:qualadium_ingot"
+    },
+    "C": {
+      "item": "minecraft:glass"
+    },
+    "D": {
+      "item": "solarcraft:medium_solar_reactor"
+    },
+    "E": {
+      "item": "solarcraft:algadium_ingot"
+    },
+    "F": {
+      "item": "solarcraft:materialization_core"
+    }
   },
   "pattern": [
     " D ",
@@ -21,8 +33,10 @@
   "time": 5000,
   "fragment": "solar_crossbow",
   "energy": 50000,
-  "ardo": 1500,
-  "zeta": 2000,
-  "fira": 2000,
-  "urba": 3000
+  "re_cost": {
+    "zeta": 2000,
+    "ardo": 1500,
+    "urba": 3000,
+    "fira": 2000
+  }
 }

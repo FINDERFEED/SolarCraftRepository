@@ -1,13 +1,27 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "A": {"item": "solarcraft:small_solar_reactor"},
-    "B": {"item": "solarcraft:solar_stone_bricks"},
-    "C": {"item": "solarcraft:solar_dust"},
-    "D": {"item": "solarcraft:turret_radar"},
-    "E": {"item": "solarcraft:illidium_ingot"},
-    "F": {"item": "solarcraft:zeta_crystal"},
-    "M": {"item": "solarcraft:kelda_crystal"}
+    "A": {
+      "item": "solarcraft:small_solar_reactor"
+    },
+    "B": {
+      "item": "solarcraft:solar_stone_bricks"
+    },
+    "C": {
+      "item": "solarcraft:solar_dust"
+    },
+    "D": {
+      "item": "solarcraft:turret_radar"
+    },
+    "E": {
+      "item": "solarcraft:illidium_ingot"
+    },
+    "F": {
+      "item": "solarcraft:zeta_crystal"
+    },
+    "M": {
+      "item": "solarcraft:kelda_crystal"
+    }
   },
   "pattern": [
     "FDF",

@@ -8,8 +8,8 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.containers.screens
 import com.finderfeed.solarcraft.content.recipe_types.infusing_crafting.InfusingCraftingRecipe;
 import com.finderfeed.solarcraft.content.recipe_types.infusing_new.InfusingRecipe;
 import com.finderfeed.solarcraft.content.recipe_types.solar_smelting.SolarSmeltingRecipe;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
-import com.finderfeed.solarcraft.registries.recipe_types.SolarcraftRecipeTypes;
+import com.finderfeed.solarcraft.registries.items.SCItems;
+import com.finderfeed.solarcraft.registries.recipe_types.SCRecipeTypes;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.gui.handlers.IGuiContainerHandler;
@@ -21,8 +21,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @JeiPlugin
 public class SolarcraftJeiPlugin implements IModPlugin {
@@ -35,12 +37,12 @@ public class SolarcraftJeiPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
         IModPlugin.super.registerRecipes(registration);
         ClientLevel world = Minecraft.getInstance().level;
-        List<InfusingRecipe> w = world.getRecipeManager().getAllRecipesFor(SolarcraftRecipeTypes.INFUSING.get());
-        registration.addRecipes(JeiRecipeTypes.INFUSING_RECIPE,w);
-        List<InfusingCraftingRecipe> w1 = world.getRecipeManager().getAllRecipesFor(SolarcraftRecipeTypes.INFUSING_CRAFTING.get());
-        List<SolarSmeltingRecipe> sm = world.getRecipeManager().getAllRecipesFor(SolarcraftRecipeTypes.SMELTING.get());
-        registration.addRecipes(JeiRecipeTypes.INFUSING_CRAFTING_RECIPE,w1);
-        registration.addRecipes(JeiRecipeTypes.SMELTING,sm);
+        List<RecipeHolder<InfusingRecipe>> w = world.getRecipeManager().getAllRecipesFor(SCRecipeTypes.INFUSING.get());
+        registration.addRecipes(JeiRecipeTypes.INFUSING_RECIPE,w.stream().map(r->r.value()).collect(Collectors.toList()));
+        List<RecipeHolder<InfusingCraftingRecipe>> w1 = world.getRecipeManager().getAllRecipesFor(SCRecipeTypes.INFUSING_CRAFTING.get());
+        List<RecipeHolder<SolarSmeltingRecipe>> sm = world.getRecipeManager().getAllRecipesFor(SCRecipeTypes.SMELTING.get());
+        registration.addRecipes(JeiRecipeTypes.INFUSING_CRAFTING_RECIPE,w1.stream().map(r->r.value()).collect(Collectors.toList()));
+        registration.addRecipes(JeiRecipeTypes.SMELTING,sm.stream().map(r->r.value()).collect(Collectors.toList()));
     }
 
     @Override
@@ -65,9 +67,9 @@ public class SolarcraftJeiPlugin implements IModPlugin {
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         IModPlugin.super.registerRecipeCatalysts(registration);
-        registration.addRecipeCatalyst(SolarcraftItems.INFUSER_ITEM.get().getDefaultInstance(),JeiRecipeTypes.INFUSING_RECIPE);
-        registration.addRecipeCatalyst(SolarcraftItems.SOLAR_LENS.get().getDefaultInstance(),JeiRecipeTypes.SMELTING);
-        registration.addRecipeCatalyst(SolarcraftItems.INFUSING_TABLE.get().getDefaultInstance(),JeiRecipeTypes.INFUSING_CRAFTING_RECIPE);
+        registration.addRecipeCatalyst(SCItems.INFUSER_ITEM.get().getDefaultInstance(),JeiRecipeTypes.INFUSING_RECIPE);
+        registration.addRecipeCatalyst(SCItems.SOLAR_LENS.get().getDefaultInstance(),JeiRecipeTypes.SMELTING);
+        registration.addRecipeCatalyst(SCItems.INFUSING_TABLE.get().getDefaultInstance(),JeiRecipeTypes.INFUSING_CRAFTING_RECIPE);
 
 
     }

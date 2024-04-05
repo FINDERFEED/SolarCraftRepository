@@ -4,6 +4,7 @@ import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.abilities.AbilityHelper;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
+import com.finderfeed.solarcraft.registries.effects.SCEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.server.level.ServerPlayer;
@@ -29,7 +30,7 @@ public class DisarmAbility extends AbstractAbility{
             List<Entity> list = world.getEntities(entity, new AABB(-8, -8, -8, 8, 8, 8).move(entity.position()), x -> x instanceof LivingEntity);
             for (int i = 0; i < list.size(); i++) {
                 LivingEntity ent = (LivingEntity) list.get(i);
-                ent.addEffect(new MobEffectInstance(SolarCraft.SOLAR_STUN.get(), 100, 0));
+                ent.addEffect(new MobEffectInstance(SCEffects.SOLAR_STUN.get(), 100, 0));
             }
             AbilityHelper.spendAbilityEnergy(entity,this);
         }

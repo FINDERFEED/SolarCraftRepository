@@ -1,8 +1,8 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities.projectiles;
 
 import com.finderfeed.solarcraft.misc_things.AbstractMortarProjectile;
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
-import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 
@@ -16,11 +16,11 @@ public class MortarProjectile extends AbstractMortarProjectile {
         super(p_i50173_1_, p_i50173_2_);
     }
     public MortarProjectile(EntityType<? extends MortarProjectile> p_i50174_1_, double p_i50174_2_, double p_i50174_4_, double p_i50174_6_, double p_i50174_8_, double p_i50174_10_, double p_i50174_12_, Level p_i50174_14_) {
-        super(SolarcraftEntityTypes.MORTAR_PROJECTILE.get(), p_i50174_2_, p_i50174_4_, p_i50174_6_, p_i50174_8_, p_i50174_10_, p_i50174_12_, p_i50174_14_);
+        super(SCEntityTypes.MORTAR_PROJECTILE.get(), p_i50174_2_, p_i50174_4_, p_i50174_6_, p_i50174_8_, p_i50174_10_, p_i50174_12_, p_i50174_14_);
     }
 
     public MortarProjectile(EntityType<? extends MortarProjectile> p_i50175_1_, LivingEntity p_i50175_2_, double p_i50175_3_, double p_i50175_5_, double p_i50175_7_, Level p_i50175_9_) {
-        super(SolarcraftEntityTypes.MORTAR_PROJECTILE.get(), p_i50175_2_, p_i50175_3_, p_i50175_5_, p_i50175_7_, p_i50175_9_);
+        super(SCEntityTypes.MORTAR_PROJECTILE.get(), p_i50175_2_, p_i50175_3_, p_i50175_5_, p_i50175_7_, p_i50175_9_);
     }
 
 
@@ -28,7 +28,7 @@ public class MortarProjectile extends AbstractMortarProjectile {
 
     @Override
     protected ParticleOptions getTrailParticle() {
-        return SolarcraftParticleTypes.INVISIBLE_PARTICLE.get();
+        return SCParticleTypes.INVISIBLE_PARTICLE.get();
     }
 
     @Override

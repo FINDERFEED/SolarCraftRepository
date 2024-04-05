@@ -47,7 +47,7 @@ public class TrapDungeon extends Structure {
 
     @Override
     public StructureType<?> type() {
-        return SolarcraftStructureTypes.TRAP_DUNGEON;
+        return SolarcraftStructureTypes.TRAP_DUNGEON.get();
     }
 
 }

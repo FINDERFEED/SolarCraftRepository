@@ -1,11 +1,11 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities;
 
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.structure_check.IStructureOwner;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -22,7 +22,7 @@ public class AuraHealerTile extends BlockEntity implements IStructureOwner {
     public int healTick = 0;
 
     public AuraHealerTile( BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.AURA_HEALER_TILE.get(), p_155229_, p_155230_);
+        super(SCTileEntities.AURA_HEALER_TILE.get(), p_155229_, p_155230_);
     }
 
 
@@ -39,7 +39,7 @@ public class AuraHealerTile extends BlockEntity implements IStructureOwner {
                         if (a.getHealth() != a.getMaxHealth()) {
                             a.heal(4);
                             for (int i = 10; i < 16; i++) {
-                                ((ServerLevel) tile.level).sendParticles(SolarcraftParticleTypes.HEAL_PARTICLE.get(), a.position().x, a.position().y + 1.35f, a.position().z, 5, 0, 0.3, 0, 0.02);
+                                ((ServerLevel) tile.level).sendParticles(SCParticleTypes.HEAL_PARTICLE.get(), a.position().x, a.position().y + 1.35f, a.position().z, 5, 0, 0.3, 0, 0.02);
                             }
                         }
                     }

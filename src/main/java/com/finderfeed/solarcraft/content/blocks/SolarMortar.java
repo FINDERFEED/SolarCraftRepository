@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.content.blocks;
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.MortarTileEntity;
 import com.finderfeed.solarcraft.misc_things.AbstractMortarTileEntity;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -30,7 +30,7 @@ public class SolarMortar extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return SolarcraftTileEntityTypes.MORTAR_TILE_ENTITY.get().create(blockPos,blockState);
+        return SCTileEntities.MORTAR_TILE_ENTITY.get().create(blockPos,blockState);
 
     }
 

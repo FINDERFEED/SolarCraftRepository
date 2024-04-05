@@ -6,23 +6,24 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.Item
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.ItemStackTabButton;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
-import com.finderfeed.solarcraft.client.screens.ScrollableScreen;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.ProgressionStage;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class StagesScreen extends ScrollableScreen {
+public class StagesScreen extends ScrollableLexiconScreen {
     public final Component STAGES_CMP = Component.translatable("solarcraft.stages");
     public final ResourceLocation FRAME = new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/frame.png");
     public final ResourceLocation QMARK = new ResourceLocation(SolarCraft.MOD_ID,"textures/misc/question_mark.png");
@@ -33,70 +34,85 @@ public class StagesScreen extends ScrollableScreen {
     private ArrayList<PostRender> RENDER_FRAMES = new ArrayList<>();
     private ArrayList<PostRender> RENDER_BORDERS = new ArrayList<>();
 
-    public ItemStackButton stagesPage;
+//    public ItemStackButton stagesPage;
     public InfoButton infoButton;
+    private List<AbstractWidget> moveableWidgets = new ArrayList<>();
+
+
+    public static final int DISTANCE_BETWEEN_STAGES_Y = 60;
+    public static final int STAGES_OFFSET_FROM_EDGE = 25;
+
     public StagesScreen() {
 
     }
-
-
     @Override
     protected void init() {
         super.init();
-        infoButton = new InfoButton(relX +  206 + 35,relY + 43,13,13,(btn1, matrices1, mx, my)->{
-            renderTooltip(matrices1,font.split(STAGES_CMP.copy(),200),mx,my);
+        moveableWidgets.clear();
+        infoButton = new InfoButton(relX +  206 + 37,relY + 43,13,13,(btn1, graphics, mx, my)->{
+            graphics.renderTooltip(font,font.split(STAGES_CMP.copy(),200),mx,my);
         });
-        stagesPage = new ItemStackTabButton(relX+98,relY + 18,17,17,(button)->{minecraft.setScreen(new SolarLexiconScreen());}, SolarcraftItems.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f);
-        setAsStaticWidget(stagesPage);
-        setAsStaticWidget(infoButton);
+//        stagesPage = new ItemStackTabButton(relX+98,relY + 18,17,17,(button)->{minecraft.setScreen(new SolarLexiconScreen());}, SCItems.SOLAR_FORGE_ITEM.get().getDefaultInstance(),0.7f);
+
         RENDER_QMARKS.clear();
         RENDER_QMARKS_TOOLTIPS.clear();
         RENDER_FRAMES.clear();
         RENDER_BORDERS.clear();
         for (int i = 0; i < ProgressionStage.STAGES_IN_ORDER.length;i++){
             ProgressionStage stage = ProgressionStage.STAGES_IN_ORDER[i];
-            int y = i * 60 + getRelY() + 15 +10;
+            int y = i * DISTANCE_BETWEEN_STAGES_Y + relY + STAGES_OFFSET_FROM_EDGE;
             for (int g = 0; g < stage.SELF_PROGRESSIONS.length;g++){
-                int x = g * 40 + getRelX() + 15 +10;
+                int x = g * 40 + relX + STAGES_OFFSET_FROM_EDGE;
                 Progression progression = stage.SELF_PROGRESSIONS[g];
                 if (Helpers.canPlayerUnlock(progression, Minecraft.getInstance().player)){
-                    addRenderableWidget(new ItemStackButton(x+getCurrentScrollX(),y+getCurrentScrollY(),16,16,(btn)->{},progression.icon,1,
-                            (button,matrix,mousex,mousey)->{
+                    Button b;
+                    addRenderableWidget(b = new ItemStackButton(x+getCurrentScrollX(),y+getCurrentScrollY(),16,16,(btn)->{},progression.icon,1,
+                            (button,graphics,mousex,mousey)->{
                                 if (Helpers.hasPlayerCompletedProgression(progression,Minecraft.getInstance().player)) {
-                                    renderComponentTooltip(matrix, List.of(progression.translation,Component.translatable("solarcraft.completed").withStyle(ChatFormatting.GREEN)), mousex, mousey);
+                                    graphics.renderComponentTooltip(font, List.of(progression.translation,Component.translatable("solarcraft.completed").withStyle(ChatFormatting.GREEN)), mousex, mousey);
                                 }else{
-                                    renderComponentTooltip(matrix, List.of(progression.translation,Component.translatable("solarcraft.not_completed").withStyle(ChatFormatting.RED)), mousex, mousey);
+                                    graphics.renderComponentTooltip(font, List.of(progression.translation,Component.translatable("solarcraft.not_completed").withStyle(ChatFormatting.RED)), mousex, mousey);
                                 }
                             }));
+                    this.moveableWidgets.add(b);
                 }else{
-                    RENDER_QMARKS.add(((matrices, mousex, mousey, partialTicks) -> {
-                        blit(matrices,x + getCurrentScrollX(),y + getCurrentScrollY(),0,0,16,16,16,16);
+                    RENDER_QMARKS.add(((graphics, mousex, mousey, partialTicks) -> {
+                        RenderingTools.blitWithBlend(graphics.pose(),x + getCurrentScrollX(),y + getCurrentScrollY(),0,0,16,16,16,16,0,1f);
                     }));
-                    RENDER_QMARKS_TOOLTIPS.add(((matrices, mousex, mousey, partialTicks) -> {
+                    RENDER_QMARKS_TOOLTIPS.add(((graphics, mousex, mousey, partialTicks) -> {
                         if ((mousex  >= x + getCurrentScrollX() && mousex  <= x + getCurrentScrollX()+16)
                                 && (mousey  >= y + getCurrentScrollY() && mousey <= y + 16 + getCurrentScrollY()) ) {
-                            renderComponentTooltip(matrices, List.of(progression.translation,
+                            graphics.renderComponentTooltip(font, List.of(progression.translation,
                                     Component.translatable("solarcraft.cannot_be_completed").withStyle(ChatFormatting.GRAY)), mousex , mousey );
                         }
                     }));
                 }
 
-                RENDER_FRAMES.add(((matrices, mousex, mousey, partialTicks) -> {
-                    blit(matrices,x + getCurrentScrollX() - 4,y + getCurrentScrollY() - 4,0,0,24,24,24,24);
+                RENDER_FRAMES.add(((graphics, mousex, mousey, partialTicks) -> {
+                    RenderingTools.blitWithBlend(graphics.pose(),x + getCurrentScrollX() - 4,y + getCurrentScrollY() - 4,0,0,24,24,24,24,0,1f);
                 }));
 
             }
-            int l = stage.SELF_PROGRESSIONS.length;
-            RENDER_BORDERS.add((matrices, mousex, mousey, partialTicks) -> {
-                RenderingTools.drawFancyBorder(matrices,getRelX() + getCurrentScrollX() + 25 - 13,y + getCurrentScrollY() - 13,stage.SELF_PROGRESSIONS.length * 40 + 2,42,getBlitOffset());
+            RENDER_BORDERS.add((graphics, mousex, mousey, partialTicks) -> {
+                RenderingTools.drawFancyBorder(graphics.pose(),relX + getCurrentScrollX() + 25 - 13,y + getCurrentScrollY() - 13,stage.SELF_PROGRESSIONS.length * 40 + 2,42,0);
             });
         }
 
-        addRenderableWidget(stagesPage);
+//        addRenderableWidget(stagesPage);
         addRenderableWidget(infoButton);
-        stagesPage.x = relX + 207 + 35 - 3;
-        stagesPage.y = relY + 164 - 137 - 3;
+//        stagesPage.x = relX + 207 + 35 - 3;
+//        stagesPage.y = relY + 164 - 137 - 3;
 
+    }
+
+    @Override
+    public int getScreenWidth() {
+        return 240;
+    }
+
+    @Override
+    public int getScreenHeight() {
+        return 207;
     }
 
     @Override
@@ -105,78 +121,62 @@ public class StagesScreen extends ScrollableScreen {
     }
 
     @Override
-    public void render(PoseStack matrices, int mousex, int mousey, float pticks) {
+    public void render(GuiGraphics graphics, int mousex, int mousey, float pticks) {
 
-
-        int width = minecraft.getWindow().getWidth();
-        int height = minecraft.getWindow().getHeight();
-        int scale = (int)minecraft.getWindow().getGuiScale();
+        this.renderEscapeText(graphics);
+        PoseStack matrices = graphics.pose();
         ClientHelpers.bindText(BG);
-        blit(matrices,getRelX()+ 10,getRelY()+ 10,0,0,220,188,512,512);
-        GL11.glEnable(GL11.GL_SCISSOR_TEST);
-        GL11.glScissor(width/2-((30+83)*scale),height/2-(88*scale),((188+35)*scale),187*scale);
-        List<AbstractWidget> btns = ClientHelpers.getScreenButtons(this);
-        btns.removeAll(getStaticWidgets());
+        RenderingTools.blitWithBlend(matrices,relX+ 10,relY+ 10,0,0,220,188,512,512,0,1f);
+        RenderingTools.scissor(relX + 10,relY + 10,220,187);
+        List<AbstractWidget> btns = moveableWidgets;
 
         for (AbstractWidget w : btns){
-            w.render(matrices,mousex,mousey,pticks);
+            w.render(graphics,mousex,mousey,pticks);
         }
         ClientHelpers.bindText(FRAME);
         for (PostRender xy : RENDER_FRAMES){
-            xy.doRender(matrices,mousex,mousey,pticks);
+            xy.doRender(graphics,mousex,mousey,pticks);
         }
         ClientHelpers.bindText(QMARK);
         for (PostRender xy : RENDER_QMARKS){
-            xy.doRender(matrices,mousex,mousey,pticks);
+            xy.doRender(graphics,mousex,mousey,pticks);
         }
         for (PostRender xy : RENDER_BORDERS){
-            xy.doRender(matrices,mousex,mousey,pticks);
+            xy.doRender(graphics,mousex,mousey,pticks);
         }
-        GL11.glDisable(GL11.GL_SCISSOR_TEST);
+        RenderSystem.disableScissor();
 
         ClientHelpers.bindText(MAIN_SCREEN);
-        blit(matrices,getRelX(),getRelY(),0,0,256,256);
+        RenderingTools.blitWithBlend(matrices,relX,relY ,0,0,256,256,256,256,0,1f);
 
         for (PostRender xy :RENDER_QMARKS_TOOLTIPS){
-            xy.doRender(matrices,mousex,mousey,pticks);
+            xy.doRender(graphics,mousex,mousey,pticks);
         }
 
-        stagesPage.render(matrices,mousex,mousey,pticks);
-        infoButton.render(matrices,mousex,mousey,pticks);
+//        stagesPage.render(graphics,mousex,mousey,pticks);
+        infoButton.render(graphics,mousex,mousey,pticks);
 
     }
 
     @Override
-    protected int getScrollValue() {
+    public int getScrollValue() {
         return 4;
     }
 
     @Override
-    protected int getMaxYDownScrollValue() {
-        return 600;
-    }
-
-    @Override
-    protected int getMaxXRightScrollValue() {
+    public int getXRightScroll() {
         return 100;
     }
 
     @Override
-    protected int getMaxYUpScrollValue() {
-        return 0;
+    public int getYDownScroll() {
+        return (ProgressionStage.STAGES_IN_ORDER.length - 1) * DISTANCE_BETWEEN_STAGES_Y;
     }
 
     @Override
-    protected int getMaxXLeftScrollValue() {
-        return 0;
+    public List<AbstractWidget> getMovableWidgets() {
+        return moveableWidgets;
     }
 
 
 }
-@FunctionalInterface
-interface PostRender{
-
-    void doRender(PoseStack matrices,int mousex,int mousey,float partialTicks);
-
-}
-

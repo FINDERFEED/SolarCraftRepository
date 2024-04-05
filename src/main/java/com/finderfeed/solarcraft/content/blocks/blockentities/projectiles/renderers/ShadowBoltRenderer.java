@@ -5,14 +5,14 @@ import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.content.blocks.blockentities.projectiles.ShadowBolt;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
+
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
+import org.joml.Matrix4f;
 
 public class ShadowBoltRenderer extends EntityRenderer<ShadowBolt> {
 
@@ -30,7 +30,8 @@ public class ShadowBoltRenderer extends EntityRenderer<ShadowBolt> {
 
         VertexConsumer vertex = buffer.getBuffer(RenderType.text(LOC));
         RenderingTools.applyMovementMatrixRotations(matrices,bolt.getDeltaMovement().normalize());
-        matrices.mulPose(Vector3f.YP.rotationDegrees(RenderingTools.getTime(bolt.level,pticks)*20 % 360));
+//        matrices.mulPose(Vector3f.YP.rotationDegrees(RenderingTools.getTime(bolt.level,pticks)*20 % 360));
+        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),RenderingTools.getTime(bolt.level,pticks)*20 % 360));
         Matrix4f mat = matrices.last().pose();
         int rCol = 70;
         int gCol = 0;

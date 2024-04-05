@@ -1,14 +1,30 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "B": {"item": "minecraft:iron_block"},
-    "C": {"item": "solarcraft:first_dimensional_shard"},
-    "D": {"item": "solarcraft:geminium_ingot"},
-    "F": {"item": "solarcraft:amethyst_core"},
-    "G": {"item": "solarcraft:chiseled_solar_stone"},
-    "Q": {"item": "solarcraft:runic_core"},
-    "N": {"item": "solarcraft:qualadium_ingot"},
-    "V": {"item": "solarcraft:void_core"}
+    "B": {
+      "item": "minecraft:iron_block"
+    },
+    "C": {
+      "item": "solarcraft:first_dimensional_shard"
+    },
+    "D": {
+      "item": "solarcraft:geminium_ingot"
+    },
+    "F": {
+      "item": "solarcraft:amethyst_core"
+    },
+    "G": {
+      "item": "solarcraft:chiseled_solar_stone"
+    },
+    "Q": {
+      "item": "solarcraft:runic_core"
+    },
+    "N": {
+      "item": "solarcraft:qualadium_ingot"
+    },
+    "V": {
+      "item": "solarcraft:void_core"
+    }
   },
   "pattern": [
     "GQG",
@@ -23,13 +39,15 @@
   "time": 5000,
   "fragment": "dimension_core",
   "energy": 50000,
-  "zeta": 50000,
-  "kelda": 50000,
-  "fira": 50000,
-  "tera": 50000,
-  "urba": 50000,
-  "ardo": 50000,
-  "giro": 50000,
-  "ultima": 50000,
+  "re_cost": {
+    "zeta": 50000,
+    "kelda": 50000,
+    "fira": 50000,
+    "tera": 50000,
+    "urba": 50000,
+    "ardo": 50000,
+    "giro": 50000,
+    "ultima": 50000
+  },
   "catalysts": "Z KF TR AG U"
 }

@@ -1,18 +1,18 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual;
 
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
+import com.finderfeed.solarcraft.events.other_events.event_handler.SCEventHandler;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.entities.projectiles.SummoningProjectile;
-import com.finderfeed.solarcraft.events.other_events.event_handler.EventHandler;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.ClearingRitualCrystalTile;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.clearing_ritual_main_tile.ClearingRitualMainTile;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.misc_things.RadiantTeleporter;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -86,7 +86,7 @@ public class ClearingRitual {
                             crystals.get(world.random.nextInt(crystals.size())).setCorrupted(true);
                         }
                         if (frequency == 100) {
-                            SummoningProjectile projectile = new SummoningProjectile(world, SolarcraftEntityTypes.SHADOW_ZOMBIE.get(),
+                            SummoningProjectile projectile = new SummoningProjectile(world, SCEntityTypes.SHADOW_ZOMBIE.get(),
                                     43, 0, 60);
                             double speedMult = world.random.nextDouble() * 0.2 + 0.1;
                             Vec3 rnd = new Vec3(1, 0, 0).yRot(world.random.nextFloat() * 360).multiply(speedMult, speedMult, speedMult);
@@ -110,7 +110,7 @@ public class ClearingRitual {
                 if (worldtime >= 16500 && worldtime <= 19500){
                     Vec3 pos = Helpers.getBlockCenter(tilePos).add(0,-0.25,0)
                             .add(world.random.nextDouble() * 2 - 1,world.random.nextDouble() * 0.5f - 0.25d,world.random.nextDouble() * 2 - 1);
-                    ClientHelpers.Particles.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                    ClientHelpers.Particles.createParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                             pos.x, pos.y, pos.z, 0, 0.05 * (world.random.nextDouble()*0.5 + 0.5), 0,
                             220 + world.random.nextInt(35), 220 + world.random.nextInt(35), world.random.nextInt(20),
                             0.5f);
@@ -126,7 +126,7 @@ public class ClearingRitual {
             Vec3 particleSpawnPos = center.add(rnd).add(0, -2, 0);
             Vec3 between = center.subtract(particleSpawnPos);
             Vec3 pSpeed = between.multiply(0.03, 0.03, 0.03);
-            ClientHelpers.Particles.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+            ClientHelpers.Particles.createParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                     particleSpawnPos.x, particleSpawnPos.y, particleSpawnPos.z, pSpeed.x, pSpeed.y, pSpeed.z,
                     220 + world.random.nextInt(35), 220 + world.random.nextInt(35), world.random.nextInt(20),
                     0.5f);
@@ -138,7 +138,7 @@ public class ClearingRitual {
                 double rxdoRing = world.random.nextDouble() * 0.06 - 0.03;
                 double rydoRing = world.random.nextDouble() * 0.06 - 0.03;
                 double rzdoRing = world.random.nextDouble() * 0.06 - 0.03;
-                ClientHelpers.Particles.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                ClientHelpers.Particles.createParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                         pSpawnPosOuterRing.x + rxoRing, pSpawnPosOuterRing.y + ryoRing, pSpawnPosOuterRing.z + rzoRing,
                         rxdoRing, rydoRing, rzdoRing,
                         220 + world.random.nextInt(35), 220 + world.random.nextInt(35), world.random.nextInt(20),
@@ -157,14 +157,14 @@ public class ClearingRitual {
                 double rndZ = tile.getLevel().random.nextDouble()*0.5 - 0.25;
                 double rndY = tile.getLevel().random.nextDouble()*0.2 - 0.1;
                 Vec3 p = pPos.add(rndX,rndY + i,rndZ);
-                ClientHelpers.Particles.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                ClientHelpers.Particles.createParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                         p.x,p.y,p.z,0,0,0,
                         220 + world.random.nextInt(35), 220 + world.random.nextInt(35), world.random.nextInt(20),0.25f);
             }
         }
 
         if (ClearingRitual.MAX_TIME - tile.ritual.getCurrentTime() == RAY_ANIMATION_TICKS){
-            ClientHelpers.playsoundInEars(SolarcraftSounds.RITUAL_TILE_STRIKE.get(),1f,1f);
+            ClientHelpers.playsoundInEars(SCSounds.RITUAL_TILE_STRIKE.get(),1f,1f);
         }
 
 
@@ -178,13 +178,13 @@ public class ClearingRitual {
 
     private void cleanWorld(){
         Level level = tile.getLevel();
-        if (!level.isClientSide && level.dimension() == EventHandler.RADIANT_LAND_KEY){
+        if (!level.isClientSide && level.dimension() == SCEventHandler.RADIANT_LAND_KEY){
 
             RadiantLandCleanedData data = ((ServerLevel)level).getServer().overworld()
                     .getDataStorage()
-                    .computeIfAbsent(RadiantLandCleanedData::load,()->new RadiantLandCleanedData(false),"is_radiant_land_cleaned");
+                    .computeIfAbsent(RadiantLandCleanedData.factory(false),"is_radiant_land_cleaned");
             if (!data.isCleaned()){
-                List<ServerPlayer> players = ((ServerLevel) level).getPlayers((p)->p.getLevel().dimension() == EventHandler.RADIANT_LAND_KEY);
+                List<ServerPlayer> players = ((ServerLevel) level).getPlayers((p)->p.level().dimension() == SCEventHandler.RADIANT_LAND_KEY);
                 List<ServerPlayer> allPlayers = ((ServerLevel) level).getPlayers((p)->true);
                 MinecraftServer server = level.getServer();
                 if (server != null) {
@@ -211,7 +211,7 @@ public class ClearingRitual {
         }
         RadiantLandCleanedData data = level.getServer().overworld()
                 .getDataStorage()
-                .computeIfAbsent(RadiantLandCleanedData::load,()->new RadiantLandCleanedData(false),"is_radiant_land_cleaned");
+                .computeIfAbsent(RadiantLandCleanedData.factory(false),"is_radiant_land_cleaned");
         data.setCleaned(cleaned);
         data.setDirty();
     }
@@ -219,7 +219,7 @@ public class ClearingRitual {
     public static boolean getRLState(ServerLevel level){
         RadiantLandCleanedData data = level.getServer().overworld()
                 .getDataStorage()
-                .computeIfAbsent(RadiantLandCleanedData::load,()->new RadiantLandCleanedData(false),"is_radiant_land_cleaned");
+                .computeIfAbsent(RadiantLandCleanedData.factory(false),"is_radiant_land_cleaned");
         return data.isCleaned();
     }
 

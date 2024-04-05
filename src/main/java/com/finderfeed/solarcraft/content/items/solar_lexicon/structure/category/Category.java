@@ -8,6 +8,7 @@ import com.finderfeed.solarcraft.misc_things.IScrollable;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 
 import javax.annotation.Nullable;
@@ -99,12 +100,14 @@ public class Category {
         return linesRGB;
     }
 
-    public void renderAtPos(PoseStack matrices, int x, int y){
+    public void renderAtPos(GuiGraphics graphics, int x, int y){
+        PoseStack matrices = graphics.pose();
+
         int index = 0;
         int prevSize = 0;
         for (SubCategory cat : categories.values()) {
             int xPos = x+index*(SPACING_BETWEEN_CATEGORIES) + prevSize;
-            cat.renderAtPos(matrices,xPos+5,y+SubCategory.FONT_HEIGHT);
+            cat.renderAtPos(graphics,xPos+5,y+SubCategory.FONT_HEIGHT);
             prevSize += cat.getSize()[0];
             index++;
         }
@@ -115,7 +118,7 @@ public class Category {
             scrollX = scrollable.getCurrentScrollX();
             scrollY = scrollable.getCurrentScrollY();
         }
-        Gui.drawString(matrices, Minecraft.getInstance().font,base.getTranslation(),x+scrollX,y-SubCategory.FONT_HEIGHT+scrollY,0xffffff);
+        graphics.drawString(Minecraft.getInstance().font,base.getTranslation(),x+scrollX,y-SubCategory.FONT_HEIGHT+scrollY,0xffffff);
     }
 
     public int[] getSize(){

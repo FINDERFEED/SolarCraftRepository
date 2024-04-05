@@ -1,0 +1,7 @@
+{
+  "type": "solarcraft:solarcraft_dungeon_one",
+  "biomes": "#solarcraft:has_structure/dungeon_one",
+  "spawn_overrides": {},
+  "step": "surface_structures",
+  "terrain_adaptation": "none"
+}

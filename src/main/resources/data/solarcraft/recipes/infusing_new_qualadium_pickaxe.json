@@ -1,9 +1,15 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "A": {"item": "solarcraft:miner_item"},
-    "B": {"item": "solarcraft:geminium_ingot"},
-    "C": {"item": "solarcraft:qualadium_ingot"}
+    "A": {
+      "item": "solarcraft:miner_item"
+    },
+    "B": {
+      "item": "solarcraft:geminium_ingot"
+    },
+    "C": {
+      "item": "solarcraft:qualadium_ingot"
+    }
   },
   "pattern": [
     " B ",
@@ -17,6 +23,8 @@
   },
   "time": 3000,
   "fragment": "qualadium_pickaxe",
-  "ardo": 2500,
-  "catalysts": "A A   A A   "
+  "catalysts": "A A   A A   ",
+  "re_cost": {
+    "ardo": 2500
+  }
 }

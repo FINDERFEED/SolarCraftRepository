@@ -1,33 +1,39 @@
 package com.finderfeed.solarcraft.misc_things;
 
-import com.finderfeed.solarcraft.content.blocks.blockentities.PuzzleBlockEntity;
 import com.finderfeed.solarcraft.content.blocks.blockentities.RuneEnergyPylonTile;
-import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.blockentity.SunShardPuzzleBlockEntity;
-import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.ray_puzzle.blockentities.BeamGenerator;
-import com.finderfeed.solarcraft.content.entities.OrbitalCannonExplosionEntity;
-import com.finderfeed.solarcraft.content.runic_network.repeater.RunicEnergyRepeaterTile;
+import com.finderfeed.solarcraft.content.entities.DungeonRay;
 import com.finderfeed.solarcraft.helpers.Helpers;
-import com.finderfeed.solarcraft.helpers.multiblock.StructurePatternExporter;
-import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
+import com.finderfeed.solarcraft.local_library.client.particles.particle_emitters.ParticleEmitterData;
+import com.finderfeed.solarcraft.local_library.client.particles.particle_emitters.ParticleEmmitterPacket;
+import com.finderfeed.solarcraft.local_library.client.particles.particle_emitters.particle_emitter_processors.instances.ebpe_processor.EBPEmitterProcessorData;
+import com.finderfeed.solarcraft.local_library.client.particles.particle_emitters.particle_processors.instances.random_speed.RandomSpeedProcessorData;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.Vec3;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Set;
+import java.util.UUID;
 
 public class SolarcraftDebugStick extends Item {
     public SolarcraftDebugStick(Properties p_41383_) {
@@ -39,6 +45,10 @@ public class SolarcraftDebugStick extends Item {
 
     @Override
     public void inventoryTick(ItemStack item, Level world, Entity player, int slot, boolean held) {
+        if (world instanceof ServerLevel level){
+            UUID uuid = UUID.fromString("2cb35eb4-753d-4585-b01c-4dd404ff55b8");
+//            System.out.println(level.getEntity(uuid));
+        }
         super.inventoryTick(item, world, player, slot, held);
     }
 
@@ -46,57 +56,8 @@ public class SolarcraftDebugStick extends Item {
     public InteractionResult useOn(UseOnContext ctx) {
         Level world = ctx.getLevel();
         BlockPos pos = ctx.getClickedPos();
-//        if (!world.isClientSide){
-//            StructurePatternExporter.export(world,pos,pos.offset(4,5,4));
-//        }
-        if (!world.isClientSide){
-            if (world.getBlockEntity(ctx.getClickedPos()) instanceof SunShardPuzzleBlockEntity generator){
-                Set<BlockPos> positions = new HashSet<>();
-                for (int i = -1; i <= 1;i++){
-                    for (int g = -1; g <= 1;g++){
-                        for (int k = -1; k <= 1;k++){
-                            positions.add(new BlockPos(i,g,k));
-                        }
-                    }
-                }
-                generator.destroyPositions = new ArrayList<>(positions);
-                System.out.println(generator.getPuzzle());
-                System.out.println(generator.destroyPositions);
-            }
-            OrbitalCannonExplosionEntity entity = new OrbitalCannonExplosionEntity(world,250,10,3);
-            entity.setPos(pos.getX(),pos.getY(),pos.getZ());
-            world.addFreshEntity(entity);
-        }
-
-//        if (!world.isClientSide){
-//            for (int i = 0; i <= 100;i++){
-//                BlockPos p = pos.above().offset(i*16,0,0);
-////                world.setBlock(p, SolarcraftBlocks.FIRA_RUNE_BLOCK.get().defaultBlockState(),3);
-////                world.setBlock(p.above(),SolarcraftBlocks.REPEATER.get().defaultBlockState(),3);
-//                world.getBlockState(p);
-//                System.out.println(world.isLoaded(p));
-//            }
-//        }
-
-        if (!world.isClientSide && world.getBlockEntity(pos) instanceof DebugTarget dtarget){
-            if (ctx.getPlayer().isShiftKeyDown() && dtarget instanceof RuneEnergyPylonTile pylon) {
-                   pylon.addEnergy(pylon.getEnergyType(),200);
-            }else{
-                switchPylons(pos,world);
-
-            }
-//
-//            if (dtarget instanceof RunicEnergyRepeaterTile repeater){
-//                for (BlockPos connection : repeater.getConnections()){
-//                    ((ServerLevel)world).sendParticles(ParticleTypes.FLASH,connection.getX()+0.5,connection.getY()+1.5,
-//                            connection.getZ()+0.5,1,0,0,0,0);
-//                }
-//            }
-//            for (String s : dtarget.getDebugStrings()) {
-//                ctx.getPlayer().sendSystemMessage(Component.literal(s));
-//            }
-        }
-        return InteractionResult.SUCCESS;
+        Player player = ctx.getPlayer();
+        return this.dungeonRayHandle(ctx.getHand(),world,player,ctx.getItemInHand(),pos);
     }
 
     public void switchPylons(BlockPos pos,Level world){
@@ -108,29 +69,112 @@ public class SolarcraftDebugStick extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
-//        if (!world.isClientSide){
-//            ItemStack stack = player.getItemInHand(hand);
-//            boolean mode = stack.getOrCreateTagElement("pylon_mode").getBoolean("isCyclingPylons");
-//            if (mode){
-//                stack.getOrCreateTagElement("pylon_mode").putBoolean("isCyclingPylons",false);
-//            }else{
-//                stack.getOrCreateTagElement("pylon_mode").putBoolean("isCyclingPylons",true);
-//            }
-//            SummoningProjectile bolt = new SummoningProjectile(world,SolarcraftEntityTypes.SHADOW_ZOMBIE.get(),
-//                    43,0,87);
-//            bolt.setPos(player.position().add(0,2,0));
-//            bolt.setDeltaMovement(player.getLookAngle());
-//            world.addFreshEntity(bolt);
-//        }
         if (!world.isClientSide){
-            for (int i = 0; i <= 10;i++){
-                for (int g = 0; g <= 10;g++){
-                    BlockPos pos = player.getOnPos().offset(i*10,0,g*10);
-                    world.setBlock(pos,SolarcraftBlocks.REPEATER.get().defaultBlockState(),3);
-                    world.setBlock(pos.below(),SolarcraftBlocks.FIRA_RUNE_BLOCK.get().defaultBlockState(),3);
+            DungeonRay ray = this.getRayOnSight(world,player);
+            if (hand == InteractionHand.MAIN_HAND) {
+                if (ray != null) {
+                    this.setUUID(player.getItemInHand(hand), ray.getUUID());
+                    player.sendSystemMessage(Component.literal("Changed target"));
+                } else {
+                    DungeonRay ray2 = this.getDungeonRay((ServerLevel) world, player.getItemInHand(hand));
+                    if (ray2 != null) {
+                        List<Direction> dirs = List.of(
+                                Direction.UP,
+                                Direction.DOWN,
+                                Direction.NORTH,
+                                Direction.WEST,
+                                Direction.EAST,
+                                Direction.SOUTH
+                        );
+                        Direction direction = ray2.getDirection();
+                        int index = (dirs.indexOf(direction) + 1) % dirs.size();
+                        Direction newDir = dirs.get(index);
+                        ray2.setDirection(newDir);
+                    }
+                }
+            }else{
+                if (player.isCrouching()) {
+                    ray.remove(Entity.RemovalReason.DISCARDED);
+                }
+            }
+            return InteractionResultHolder.success(player.getItemInHand(hand));
+        }
+        return super.use(world, player, hand);
+    }
+
+
+    private InteractionResult dungeonRayHandle(InteractionHand hand,Level world,Player player,ItemStack item,BlockPos clickedPos){
+        if (!world.isClientSide){
+            DungeonRay ray = this.getDungeonRay((ServerLevel) world,item);
+            Block block = world.getBlockState(clickedPos).getBlock();
+            if (block == Blocks.BEDROCK) {
+                if (ray != null){
+                    ray.setMovespeed(ray.getMovespeed() + 0.05);
+                }
+            }else if (block == Blocks.COAL_BLOCK){
+                if (ray != null){
+                    ray.setMovespeed(ray.getMovespeed() - 0.05);
+                }
+            }else{
+                if (!player.isCrouching()) {
+                    if (ray != null && hand == InteractionHand.OFF_HAND) {
+                        ray.getMovePositions().add(clickedPos);
+                    }
+                }else{
+                    if (hand == InteractionHand.OFF_HAND) {
+                        DungeonRay.summon(world, clickedPos, Direction.UP);
+                    }
                 }
             }
         }
-        return super.use(world, player, hand);
+        return InteractionResult.SUCCESS;
+    }
+
+    private UUID getUUID(ItemStack itemStack){
+        CompoundTag tag = itemStack.getOrCreateTag();
+        if (tag.contains("ray_uuid")){
+            return tag.getUUID("ray_uuid");
+        }else{
+            return null;
+        }
+    }
+
+    private void setUUID(ItemStack stack,UUID uuid){
+        CompoundTag tag = stack.getOrCreateTag();
+        if (uuid != null) {
+            tag.putUUID("ray_uuid", uuid);
+        }else{
+            tag.remove("ray_uuid");
+        }
+    }
+
+    @Nullable
+    private DungeonRay getDungeonRay(ServerLevel serverLevel,ItemStack item){
+        UUID uuid = this.getUUID(item);
+        if (uuid != null){
+            Entity entity = serverLevel.getEntity(uuid);
+            if (entity instanceof DungeonRay ray){
+                return ray;
+            }else{
+                return null;
+            }
+        }else{
+            return null;
+        }
+    }
+
+
+    @Nullable
+    private DungeonRay getRayOnSight(Level level,Player player){
+        Vec3 begin = player.position().add(0,player.getEyeHeight(),0);
+        Vec3 end = player.getLookAngle().multiply(5,5,5).add(begin);
+        EntityHitResult res = ProjectileUtil.getEntityHitResult(level,player,begin,end,new AABB(
+                begin,end
+        ),entity->entity instanceof DungeonRay);
+        if (res != null && res.getEntity() instanceof DungeonRay ray){
+            return ray;
+        }else{
+            return null;
+        }
     }
 }

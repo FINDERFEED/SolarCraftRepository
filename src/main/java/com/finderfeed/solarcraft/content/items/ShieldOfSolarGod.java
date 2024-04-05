@@ -3,6 +3,7 @@ package com.finderfeed.solarcraft.content.items;
 import com.finderfeed.solarcraft.content.items.isters.ShieldOfSolarGodISTER;
 import com.finderfeed.solarcraft.content.items.primitive.RareSolarcraftShieldItem;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
+import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
@@ -15,6 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
@@ -29,8 +31,6 @@ import java.util.function.Supplier;
 
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 
 public class ShieldOfSolarGod extends RareSolarcraftShieldItem {
 
@@ -72,7 +72,7 @@ public class ShieldOfSolarGod extends RareSolarcraftShieldItem {
                     ent.push(velocity.x*4,velocity.y*4,velocity.z*4);
                 }
 
-                ent.hurt(DamageSource.mobAttack(player).bypassArmor().setMagic(), damage);
+                ent.hurt(SCDamageSources.livingArmorPierce(player), damage);
                 ent.setSecondsOnFire(5);
                 ((ServerLevel)world).sendParticles(ParticleTypes.FLAME,ent.getX(),ent.getY()+0.5f,ent.getZ(),20,0,0.02,0,0.1);
 
@@ -100,24 +100,46 @@ public class ShieldOfSolarGod extends RareSolarcraftShieldItem {
     }
 
     @Override
-    public void onUsingTick(ItemStack stack, LivingEntity player, int count) {
-
-        float damage = 0;
-        int usingTime = (72000 - count)/20;
-        if (usingTime >= 5 && usingTime < 10){
-            damage = 3.5f;
-        }else if (usingTime >= 10 && usingTime < 15) {
-            damage = 5.5f;
-        }else if (usingTime >= 15 && usingTime < 20){
-            damage = 7.5f;
-        }else if (usingTime >= 20 && usingTime < 30){
-            damage = 9.5f;
-        }else if (usingTime >= 30){
-            damage = 12;
+    public void onUseTick(Level level, LivingEntity living, ItemStack item, int count) {
+        if (living instanceof Player player) {
+            float damage = 0;
+            int usingTime = (72000 - count) / 20;
+            if (usingTime >= 5 && usingTime < 10) {
+                damage = 3.5f;
+            } else if (usingTime >= 10 && usingTime < 15) {
+                damage = 5.5f;
+            } else if (usingTime >= 15 && usingTime < 20) {
+                damage = 7.5f;
+            } else if (usingTime >= 20 && usingTime < 30) {
+                damage = 9.5f;
+            } else if (usingTime >= 30) {
+                damage = 12;
+            }
+            player.displayClientMessage(Component.literal("-" + (int) Math.floor((float) (72000 - count) / 20) + "->" + damage + "-").withStyle(ChatFormatting.GOLD), true);
         }
-        ((Player)player).displayClientMessage(Component.literal("-"+ (int) Math.floor((float) (72000 - count) / 20) +"->"+damage+"-").withStyle(ChatFormatting.GOLD),true);
-        super.onUsingTick(stack, player, count);
+        super.onUseTick(level, living, item, count);
     }
+
+
+//    @Override
+//    public void onUsingTick(ItemStack stack, LivingEntity player, int count) {
+//
+//        float damage = 0;
+//        int usingTime = (72000 - count)/20;
+//        if (usingTime >= 5 && usingTime < 10){
+//            damage = 3.5f;
+//        }else if (usingTime >= 10 && usingTime < 15) {
+//            damage = 5.5f;
+//        }else if (usingTime >= 15 && usingTime < 20){
+//            damage = 7.5f;
+//        }else if (usingTime >= 20 && usingTime < 30){
+//            damage = 9.5f;
+//        }else if (usingTime >= 30){
+//            damage = 12;
+//        }
+//        ((Player)player).displayClientMessage(Component.literal("-"+ (int) Math.floor((float) (72000 - count) / 20) +"->"+damage+"-").withStyle(ChatFormatting.GOLD),true);
+//        super.onUsingTick(stack, player, count);
+//    }
 
     @Override
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {

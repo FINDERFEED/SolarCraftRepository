@@ -1,11 +1,21 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "A": {"item": "solarcraft:illidium_block"},
-    "B": {"item": "solarcraft:solar_dust"},
-    "C": {"item": "solarcraft:solar_stone_bricks"},
-    "D": {"item": "solarcraft:blue_gem_enriched"},
-    "E": {"item": "solarcraft:solar_energy_repeater"}
+    "A": {
+      "item": "solarcraft:illidium_block"
+    },
+    "B": {
+      "item": "solarcraft:solar_dust"
+    },
+    "C": {
+      "item": "solarcraft:solar_stone_bricks"
+    },
+    "D": {
+      "item": "solarcraft:blue_gem_enriched"
+    },
+    "E": {
+      "item": "solarcraft:solar_energy_repeater"
+    }
   },
   "pattern": [
     " D ",
@@ -20,7 +30,9 @@
   "time": 500,
   "fragment": "solar_furnace",
   "energy": 10000,
-  "fira": 2000,
-  "tera": 1500,
-  "zeta": 1500
+  "re_cost": {
+    "zeta": 1500,
+    "tera": 1500,
+    "fira": 2000
+  }
 }

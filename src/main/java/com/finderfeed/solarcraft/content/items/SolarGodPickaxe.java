@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class SolarGodPickaxe extends RareSolarcraftPickaxe implements IUpgradable {
+
+    public static final int UPGRADE_COUNT = 3;
     public SolarGodPickaxe(Tier p_i48478_1_, int p_i48478_2_, float p_i48478_3_, Properties p_i48478_4_, Supplier<AncientFragment> fragmentSupplier) {
         super(p_i48478_1_, p_i48478_2_, p_i48478_3_, p_i48478_4_,fragmentSupplier);
     }
@@ -47,34 +49,28 @@ public class SolarGodPickaxe extends RareSolarcraftPickaxe implements IUpgradabl
 
 
 
-    @Override
-    public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> stacks) {
-        if (this.allowedIn(tab)){
-//            ItemStack stack = new ItemStack(this);
-//            setItemLevel(stack,0);
-//            stacks.add(stack);
-//            ItemStack stack2 = new ItemStack(this);
-//            setItemLevel(stack2,getMaxUpgrades());
-//            stacks.add(stack2);
-            for (int i = 0; i <= getMaxUpgrades();i++){
-                ItemStack stack = new ItemStack(this);
-                setItemLevel(stack,i);
-                stacks.add(stack);
-            }
-        }
-    }
+//    @Override
+//    public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> stacks) {
+//        if (this.allowedIn(tab)){
+////            ItemStack stack = new ItemStack(this);
+////            setItemLevel(stack,0);
+////            stacks.add(stack);
+////            ItemStack stack2 = new ItemStack(this);
+////            setItemLevel(stack2,getMaxUpgrades());
+////            stacks.add(stack2);
+//            for (int i = 0; i <= getMaxUpgrades();i++){
+//                ItemStack stack = new ItemStack(this);
+//                setItemLevel(stack,i);
+//                stacks.add(stack);
+//            }
+//        }
+//    }
 
     public static void dropExpWithChance(BlockPos pos,Level world,float chance){
         if ((world.random.nextFloat() >= (1-chance/100) )) {
             world.addFreshEntity(new ExperienceOrb(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 5));
         }
     }
-
-
-
-
-
-
     public void excavate(BlockPos pos, Direction dir, float rotation, Level world, ItemStack stack, LivingEntity living){
         int level = getItemLevel(stack);
         if (living instanceof Player player) {
@@ -125,7 +121,7 @@ public class SolarGodPickaxe extends RareSolarcraftPickaxe implements IUpgradabl
 
     @Override
     public int getMaxUpgrades() {
-        return 3;
+        return UPGRADE_COUNT;
     }
 
     @Override

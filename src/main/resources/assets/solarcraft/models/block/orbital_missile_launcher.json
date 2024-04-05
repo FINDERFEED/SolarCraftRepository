@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "solarcraft:block/orbital_missile_launcher_side",
+    "down": "solarcraft:block/orbital_missile_launcher_down",
+    "up": "solarcraft:block/orbital_missile_launcher_top",
+    "north": "solarcraft:block/orbital_missile_launcher_side",
+    "east": "solarcraft:block/orbital_missile_launcher_side",
+    "south": "solarcraft:block/orbital_missile_launcher_side",
+    "west": "solarcraft:block/orbital_missile_launcher_side"
+  }
+}

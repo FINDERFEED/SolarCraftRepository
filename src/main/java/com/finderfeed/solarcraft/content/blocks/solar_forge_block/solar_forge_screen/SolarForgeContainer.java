@@ -5,7 +5,8 @@ import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.client.screens.custom_slots.InputSlot;
 import com.finderfeed.solarcraft.client.screens.custom_slots.OutputSlot;
 import com.finderfeed.solarcraft.content.blocks.solar_forge_block.SolarForgeBlockEntity;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.containers.SCContainers;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.Container;
@@ -30,7 +31,7 @@ public class SolarForgeContainer extends AbstractContainerMenu {
     private ContainerLevelAccess canInteractWithCallable;
     private ContainerData arr;
     public SolarForgeContainer(final int windowId, final Inventory playerInv, final SolarForgeBlockEntity te, ContainerData array) {
-        super(SolarCraft.SOLAR_FORGE_CONTAINER.get(), windowId);
+        super(SCContainers.SOLAR_FORGE_CONTAINER.get(), windowId);
         this.te = te;
         this.canInteractWithCallable = ContainerLevelAccess.create(te.getLevel(), te.getBlockPos());
         this.arr = array;
@@ -39,7 +40,7 @@ public class SolarForgeContainer extends AbstractContainerMenu {
 
         // Tile Entity
 
-        list.add(SolarcraftItems.SOLAR_SHARD.get().getDefaultInstance());
+        list.add(SCItems.SOLAR_SHARD.get().getDefaultInstance());
         this.addSlot(new InputSlot((Container) te, 0, 135, 33,list));
         this.addSlot(new OutputSlot((Container) te, 1, 152, 63));
 

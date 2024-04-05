@@ -6,22 +6,18 @@ import com.finderfeed.solarcraft.client.custom_tooltips.CustomTooltip;
 import com.finderfeed.solarcraft.client.custom_tooltips.ICustomTooltip;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentISTER;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraft.core.*;
 import net.minecraft.world.item.TooltipFlag;
 
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
-
-
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Consumer;
@@ -43,27 +39,27 @@ public class AncientFragmentItem extends Item implements ICustomTooltip {
 
 
 
-    @Override
-    public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> list) {
-        super.fillItemCategory(tab, list);
-        if (this.allowedIn(tab)) {
-            for (AncientFragment frag : AncientFragment.getAllFragments()) {
-                ItemStack stack = new ItemStack(this, 1);
-                stack.getOrCreateTagElement(ProgressionHelper.TAG_ELEMENT).putString(ProgressionHelper.FRAG_ID, frag.getId());
-                list.add(stack);
-            }
-        }
-
-    }
+//    @Override
+//    public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> list) {
+//        super.fillItemCategory(tab, list);
+//        if (this.allowedIn(tab)) {
+//            for (AncientFragment frag : AncientFragment.getAllFragments()) {
+//                ItemStack stack = new ItemStack(this, 1);
+//                stack.getOrCreateTagElement(ProgressionHelper.TAG_ELEMENT).putString(ProgressionHelper.FRAG_ID, frag.getId());
+//                list.add(stack);
+//            }
+//        }
+//
+//    }
 
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> texts, TooltipFlag p_77624_4_) {
-        CompoundTag nbt = stack.getTagElement(ProgressionHelper.TAG_ELEMENT);
+        CompoundTag nbt = stack.getTagElement(AncientFragmentHelper.TAG_ELEMENT);
         if (nbt == null){
             texts.add(Component.translatable("ancient_frag.no_tag").withStyle(ChatFormatting.GOLD));
         }else{
-            AncientFragment frag = AncientFragment.getFragmentByID(nbt.getString(ProgressionHelper.FRAG_ID));
+            AncientFragment frag = AncientFragment.getFragmentByID(nbt.getString(AncientFragmentHelper.FRAG_ID));
             if (frag != null){
                 if (ClientHelpers.doClientPlayerHasFragment(frag)) {
                     texts.add(Component.translatable("ancient_frag.fragment_active").withStyle(ChatFormatting.GOLD).append(frag.getTranslation()));

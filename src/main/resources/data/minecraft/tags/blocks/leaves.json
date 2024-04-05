@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "solarcraft:ash_leaves",
     "solarcraft:runic_leaves",
     "solarcraft:radiant_leaves"
   ]

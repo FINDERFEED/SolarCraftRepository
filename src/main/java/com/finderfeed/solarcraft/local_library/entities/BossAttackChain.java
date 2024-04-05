@@ -58,8 +58,8 @@ public class BossAttackChain {
                         BossAttack attack = attacksQueue.poll();
                         currentWaitTime = attack.getTime();
                         ticker = 0;
-                        attack.run();
                         currentAttack = attack;
+                        attack.run();
                     }else{
                         attackingInProgress = false;
                     }
@@ -82,6 +82,13 @@ public class BossAttackChain {
 
     public int getTicker() {
         return ticker;
+    }
+
+    /**
+     * Its either attack time or time between attacks.
+     */
+    public void setCurrentWaitTime(int currentWaitTime) {
+        this.currentWaitTime = currentWaitTime;
     }
 
     private void populateQueue(){
@@ -133,6 +140,10 @@ public class BossAttackChain {
         return attacks;
     }
 
+    public BossAttack getCurrentAttack() {
+        return currentAttack;
+    }
+
     public static class Builder{
 
         private int timeBetweenAttacks;
@@ -175,7 +186,7 @@ public class BossAttackChain {
     }
 
 
-    private static class BossAttack {
+    public static class BossAttack {
 
         private final Runnable attack;
         private final int time;

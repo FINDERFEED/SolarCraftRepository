@@ -2,7 +2,7 @@ package com.finderfeed.solarcraft.content.items.solar_wand.wand_actions;
 
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.items.solar_wand.*;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -61,6 +61,6 @@ public class DefaultWandBlockUseAction implements WandAction<EmptyWandData> {
 
     @Override
     public ItemStack getIcon() {
-        return SolarcraftItems.INFUSER_ITEM.get().getDefaultInstance();
+        return SCItems.INFUSER_ITEM.get().getDefaultInstance();
     }
 }

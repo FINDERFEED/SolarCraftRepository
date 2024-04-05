@@ -7,8 +7,7 @@ import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
+
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.culling.Frustum;
@@ -18,6 +17,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Matrix4f;
 
 public class CrystalBossRenderer extends EntityRenderer<CrystalBossEntity> {
 
@@ -35,7 +35,8 @@ public class CrystalBossRenderer extends EntityRenderer<CrystalBossEntity> {
         float time = (boss.level.getGameTime() + pticks) % 360;
         RenderingTools.renderEntityObjModel(OBJModels.CRYSTAL_BOSS,matrices,buffer,light, OverlayTexture.NO_OVERLAY,(pose)->{
             pose.translate(0,3.5f,0);
-            pose.mulPose(Vector3f.YN.rotationDegrees(time));
+//            pose.mulPose(Vector3f.YN.rotationDegrees(time));
+            pose.mulPose(RenderingTools.rotationDegrees(RenderingTools.YN(),time));
         });
         matrices.popPose();
         VertexConsumer vertex = buffer.getBuffer(BEAM);
@@ -59,17 +60,21 @@ public class CrystalBossRenderer extends EntityRenderer<CrystalBossEntity> {
         if ((rounded != CrystalBossEntity.RAY_NOT_ACTIVE) && ( rounded != CrystalBossEntity.RAY_STOPPED)) {
             matrices.pushPose();
             if (rounded != CrystalBossEntity.RAY_PREPARING){
-                matrices.mulPose(Vector3f.YP.rotationDegrees(state));
+//                matrices.mulPose(Vector3f.YP.rotationDegrees(state));
+                matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),state));
             }
 
             RenderingTools.renderRay(matrices,buffer,0.25f,boss.RAY_LENGTH+1, (matrix)->{
                 matrices.translate(-0.5,1,-0.5);
-                matrices.mulPose(Vector3f.ZN.rotationDegrees(90));
+//                matrices.mulPose(Vector3f.ZN.rotationDegrees(90));
+                matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.ZN(),90));
             },true,0.5f,pticks);
             RenderingTools.renderRay(matrices,buffer,0.25f,boss.RAY_LENGTH+1, (matrix)->{
                 matrices.translate(-0.5,1,-0.5);
-                matrices.mulPose(Vector3f.YP.rotationDegrees(180));
-                matrices.mulPose(Vector3f.ZN.rotationDegrees(90));
+                matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),180));
+//                matrices.mulPose(Vector3f.YP.rotationDegrees(180));
+                matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.ZN(),90));
+//                matrices.mulPose(Vector3f.ZN.rotationDegrees(90));
             },true,0.5f,pticks);
             matrices.popPose();
         }
@@ -92,8 +97,10 @@ public class CrystalBossRenderer extends EntityRenderer<CrystalBossEntity> {
         double angleX = Math.toDegrees(Math.atan2(Math.sqrt(yes.x*yes.x + yes.z*yes.z),yes.y) );
         matrices.pushPose();
         matrices.translate(0,boss.getBbHeight()/2,0);
-        matrices.mulPose(Vector3f.YP.rotationDegrees((float)angleY));
-        matrices.mulPose(Vector3f.XP.rotationDegrees((float)angleX));
+//        matrices.mulPose(Vector3f.YP.rotationDegrees((float)angleY));
+//        matrices.mulPose(Vector3f.XP.rotationDegrees((float)angleX));
+        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),(float)angleY));
+        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.XP(),(float)angleX));
         double length = direction.length();
         double factor = length/16;
 

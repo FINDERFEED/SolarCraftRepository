@@ -1,0 +1,9 @@
+{
+  "placement": [
+    {
+      "chance": 300,
+      "type": "minecraft:rarity_filter"
+    }
+  ],
+  "feature": "solarcraft:uldera_pylon"
+}

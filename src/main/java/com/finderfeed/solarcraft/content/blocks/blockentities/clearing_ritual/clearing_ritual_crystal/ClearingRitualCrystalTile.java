@@ -2,20 +2,19 @@ package com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.c
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.clearing_ritual_crystal.corruption_wisp.CorruptionWisp;
 import com.finderfeed.solarcraft.content.blocks.blockentities.clearing_ritual.clearing_ritual_main_tile.ClearingRitualMainTile;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
-import com.finderfeed.solarcraft.registries.sounds.SolarcraftSounds;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
+import com.finderfeed.solarcraft.registries.sounds.SCSounds;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -35,7 +34,7 @@ public class ClearingRitualCrystalTile extends BlockEntity {
     private RunicEnergy.Type type = null;
 
     public ClearingRitualCrystalTile( BlockPos pos, BlockState state) {
-        super(SolarcraftTileEntityTypes.CLEARING_RITUAL_CRYSTAL.get(), pos, state);
+        super(SCTileEntities.CLEARING_RITUAL_CRYSTAL.get(), pos, state);
     }
 
     //don't ask me
@@ -61,7 +60,7 @@ public class ClearingRitualCrystalTile extends BlockEntity {
             }else{
                 if (level.isClientSide){
                     Vec3 rnd = Helpers.randomVector().multiply(0.05,0.05,0.05);
-                    ClientHelpers.Particles.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                    ClientHelpers.Particles.createParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                             c.x,c.y,c.z,rnd.x,rnd.y,rnd.z,()->255,()->255,()->level.random.nextInt(40),0.5f);
                 }
             }
@@ -77,14 +76,14 @@ public class ClearingRitualCrystalTile extends BlockEntity {
                     for (CorruptionWisp wisp : level.getEntitiesOfClass(CorruptionWisp.class,Helpers.createAABBWithRadius(c,3,3))) {
                         wisp.kill();
                     }
-                    Helpers.collectTilesInChunks(SolarcraftTileEntityTypes.CLEARING_RITUAL_MAIN_BLOCK.get(),level,this.getBlockPos(),2)
+                    Helpers.collectTilesInChunks(SCTileEntities.CLEARING_RITUAL_MAIN_BLOCK.get(),level,this.getBlockPos(),2)
                             .forEach(ClearingRitualMainTile::notifyCrystalExploded);
                     this.explode(false);
                     return;
                 }
                 if (this.wispsCount < 3) {
                     if (this.wispSpawnTicks == 0) {
-                        CorruptionWisp wisp = new CorruptionWisp(SolarcraftEntityTypes.CORRUPTION_WISP.get(), level);
+                        CorruptionWisp wisp = new CorruptionWisp(SCEntityTypes.CORRUPTION_WISP.get(), level);
                         Vec3 p = c.add(2, 0.75 - wispsCount*0.75, 0);
                         wisp.setPos(p);
                         wisp.setFlyAroundPos(c);
@@ -106,7 +105,7 @@ public class ClearingRitualCrystalTile extends BlockEntity {
 
     private void explode(boolean throwItem){
         Vec3 c = Helpers.getBlockCenter(worldPosition);
-        level.explode(null, c.x, c.y, c.z, 7f, Explosion.BlockInteraction.DESTROY);
+        level.explode(null, c.x, c.y, c.z, 7f, Level.ExplosionInteraction.BLOCK);
         level.destroyBlock(worldPosition, throwItem);
     }
 
@@ -117,7 +116,7 @@ public class ClearingRitualCrystalTile extends BlockEntity {
     public void overload(){
         this.overloaded = true;
         Vec3 center = Helpers.getBlockCenter(worldPosition);
-        level.playSound(null,center.x,center.y,center.z, SolarcraftSounds.CLEARING_CRYSTAL_OVERLOAD.get(), SoundSource.BLOCKS,5,1);
+        level.playSound(null,center.x,center.y,center.z, SCSounds.CLEARING_CRYSTAL_OVERLOAD.get(), SoundSource.BLOCKS,5,1);
         Helpers.updateTile(this);
     }
 

@@ -1,0 +1,17 @@
+{
+  "placement": [
+    {
+      "height": {
+        "min_inclusive": {
+          "absolute": 30
+        },
+        "max_inclusive": {
+          "absolute": 100
+        },
+        "type": "minecraft:uniform"
+      },
+      "type": "minecraft:height_range"
+    }
+  ],
+  "feature": "solarcraft:ender_cracks_configured"
+}

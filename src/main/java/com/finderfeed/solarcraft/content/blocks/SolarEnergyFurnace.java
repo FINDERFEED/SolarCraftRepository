@@ -1,8 +1,8 @@
 package com.finderfeed.solarcraft.content.blocks;
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.SolarEnergyFurnaceTile;
-import com.finderfeed.solarcraft.content.items.SolarNetworkBinder;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.content.items.solar_wand.SolarWandItem;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -17,12 +17,11 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
+
 import net.minecraft.world.level.Level;
 
 
 import javax.annotation.Nullable;
-
-import net.minecraftforge.network.NetworkHooks;
 
 
 public class SolarEnergyFurnace extends GlazedTerracottaBlock implements EntityBlock {
@@ -34,16 +33,16 @@ public class SolarEnergyFurnace extends GlazedTerracottaBlock implements EntityB
 
 
     @Override
-    public InteractionResult use(BlockState p_225533_1_, Level world, BlockPos p_225533_3_, Player p_225533_4_, InteractionHand p_225533_5_, BlockHitResult p_225533_6_) {
+    public InteractionResult use(BlockState p_225533_1_, Level world, BlockPos p_225533_3_, Player player, InteractionHand p_225533_5_, BlockHitResult p_225533_6_) {
             if (!world.isClientSide && (world.getBlockEntity(p_225533_3_) instanceof SolarEnergyFurnaceTile) ){
-                if (!(p_225533_4_.getMainHandItem().getItem() instanceof SolarNetworkBinder)) {
-                    NetworkHooks.openScreen((ServerPlayer) p_225533_4_, (SolarEnergyFurnaceTile) world.getBlockEntity(p_225533_3_),
+                if (!(player.getMainHandItem().getItem() instanceof SolarWandItem)) {
+                    ((ServerPlayer) player).openMenu( (SolarEnergyFurnaceTile) world.getBlockEntity(p_225533_3_),
                             (buf) -> buf.writeBlockPos(p_225533_3_)
                     );
                     return InteractionResult.CONSUME;
                 }
             }
-        return super.use(p_225533_1_, world, p_225533_3_, p_225533_4_, p_225533_5_, p_225533_6_);
+        return super.use(p_225533_1_, world, p_225533_3_, player, p_225533_5_, p_225533_6_);
     }
 
     @Override
@@ -58,7 +57,7 @@ public class SolarEnergyFurnace extends GlazedTerracottaBlock implements EntityB
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return SolarcraftTileEntityTypes.SOLAR_FURNACE_TILE_ENTITY.get().create(blockPos,blockState);
+        return SCTileEntities.SOLAR_FURNACE_TILE_ENTITY.get().create(blockPos,blockState);
     }
 
     @Nullable

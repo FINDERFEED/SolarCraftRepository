@@ -2,7 +2,8 @@ package com.finderfeed.solarcraft.content.items.primitive;
 
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
+import com.finderfeed.solarcraft.registries.items.SCItems;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Blocks;
@@ -26,24 +27,24 @@ public class BlueGemItem extends Item {
         if (!entity.level.isClientSide){
 
             Level world = entity.level;
-            Optional<? extends Registry<Biome>> reg = world.registryAccess().registry(Registry.BIOME_REGISTRY);
+            Optional<? extends Registry<Biome>> reg = world.registryAccess().registry(Registries.BIOME);
             if (reg.isPresent()) {
-                //TODO:return this when biome can be added to overworld
-                /*(world.getBiome(entity.blockPosition()).equals(reg.get().get(FeaturesRegistry.MOLTEN_BIOME_KEY))*/
+
                 if (entity.level.getBlockState(entity.blockPosition()).is(Blocks.LAVA)) {
                     int ticks = entity.getPersistentData().getInt("transmutation_ticks")+1;
                     entity.getPersistentData().putInt("transmutation_ticks", ticks);
 
-                    if (ticks >= 1000){
+                    if (ticks >= 500){
                         for (int i = 0; i < stack.getCount();i++) {
-                            world.addFreshEntity(new ItemEntity(world, entity.getX(), entity.getY(), entity.getZ(), new ItemStack(SolarcraftItems.BLUE_GEM_ENCHANCED.get(), 1)));
+                            world.addFreshEntity(new ItemEntity(world, entity.getX(), entity.getY(), entity.getZ(), new ItemStack(SCItems.BLUE_GEM_ENCHANCED.get(), 1)));
                         }
 
-                        if (entity.getThrower() != null ){
-                            Player player = world.getPlayerByUUID(entity.getThrower());
-                            if (player != null){
+
+                        if (entity.getOwner() instanceof Player player){
+//                            Player player = world.getPlayerByUUID(entity.getThrower());
+//                            if (player != null){
                                 Helpers.fireProgressionEvent(player, Progression.TRANSMUTE_GEM);
-                            }
+//                            }
                         }
                         entity.remove(Entity.RemovalReason.KILLED);
                     }

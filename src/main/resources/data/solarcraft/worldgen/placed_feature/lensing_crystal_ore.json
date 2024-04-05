@@ -1,0 +1,30 @@
+{
+  "placement": [
+    {
+      "count": {
+        "type": "minecraft:uniform",
+        "value": {
+          "min_inclusive": 4,
+          "max_inclusive": 8
+        }
+      },
+      "type": "minecraft:count"
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "height": {
+        "min_inclusive": {
+          "absolute": 10
+        },
+        "max_inclusive": {
+          "absolute": 50
+        },
+        "type": "minecraft:uniform"
+      },
+      "type": "minecraft:height_range"
+    }
+  ],
+  "feature": "solarcraft:lensing_crystal_ore"
+}

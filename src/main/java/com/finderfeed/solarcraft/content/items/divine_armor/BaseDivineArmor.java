@@ -6,19 +6,19 @@ import com.finderfeed.solarcraft.content.items.runic_energy.ItemRunicEnergy;
 import com.finderfeed.solarcraft.content.items.primitive.solacraft_item_classes.SolarcraftArmorItem;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
-import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.ProgressionHelper;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -29,8 +29,8 @@ public abstract class BaseDivineArmor extends SolarcraftArmorItem implements IRu
 
     public static final RunicEnergyCost COST = new RunicEnergyCost().set(RunicEnergy.Type.ARDO,2);
 
-    public BaseDivineArmor(ArmorMaterial p_40386_, EquipmentSlot p_40387_, Properties p_40388_, Supplier<AncientFragment> fragmentSupplier) {
-        super(p_40386_, p_40387_, p_40388_, fragmentSupplier);
+    public BaseDivineArmor(ArmorMaterial p_40386_, ArmorItem.Type type, Properties p_40388_, Supplier<AncientFragment> fragmentSupplier) {
+        super(p_40386_, type, p_40388_, fragmentSupplier);
     }
 
     @Override
@@ -78,7 +78,7 @@ public abstract class BaseDivineArmor extends SolarcraftArmorItem implements IRu
     public boolean canEquip(ItemStack stack, EquipmentSlot armorType, Entity entity) {
 
         if (entity instanceof Player player){
-            return super.canEquip(stack,armorType,entity) && ProgressionHelper.doPlayerHasFragment(player,AncientFragment.DIVINE_ARMOR);
+            return super.canEquip(stack,armorType,entity) && AncientFragmentHelper.doPlayerHasFragment(player,AncientFragment.DIVINE_ARMOR);
         }
         return super.canEquip(stack, armorType, entity);
     }

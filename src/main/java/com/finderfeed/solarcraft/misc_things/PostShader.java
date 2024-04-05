@@ -16,5 +16,6 @@ public class PostShader {
     public void process(float t){
         this.postChainPlusUltra.updateUniforms(uniformPlusPlus);
         this.postChainPlusUltra.process(t);
+        this.postChainPlusUltra.runPostActions();
     }
 }

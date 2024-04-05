@@ -1,11 +1,21 @@
 {
   "type": "solarcraft:infusing_new",
   "items": {
-    "C": {"item": "solarcraft:amethyst_core"},
-    "D": {"item": "solarcraft:kelda_crystal"},
-    "F": {"item": "solarcraft:urba_crystal"},
-    "G": {"item": "minecraft:iron_ingot"},
-    "Q": {"item": "solarcraft:illidium_ingot"}
+    "C": {
+      "item": "solarcraft:amethyst_core"
+    },
+    "D": {
+      "item": "solarcraft:kelda_crystal"
+    },
+    "F": {
+      "item": "solarcraft:urba_crystal"
+    },
+    "G": {
+      "item": "minecraft:iron_ingot"
+    },
+    "Q": {
+      "item": "solarcraft:illidium_ingot"
+    }
   },
   "pattern": [
     " F ",
@@ -19,7 +29,9 @@
   },
   "time": 700,
   "fragment": "modules",
-  "kelda": 2000,
-  "urba": 2000,
-  "catalysts": "K KK KR RR R"
+  "catalysts": "K KK KR RR R",
+  "re_cost": {
+    "urba": 2000,
+    "kelda": 2000
+  }
 }

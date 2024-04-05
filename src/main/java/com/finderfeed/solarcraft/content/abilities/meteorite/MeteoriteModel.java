@@ -18,7 +18,7 @@ public class MeteoriteModel extends Model {
 
 
     public MeteoriteModel(ModelPart part){
-        super(RenderType::text);
+        super(RenderType::entityTranslucent);
         this.meteorite = part.getChild(METEORITE);
     }
 

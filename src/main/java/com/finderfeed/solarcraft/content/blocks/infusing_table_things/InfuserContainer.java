@@ -1,8 +1,9 @@
 package com.finderfeed.solarcraft.content.blocks.infusing_table_things;
 
+import com.finderfeed.solarcraft.content.blocks.blockentities.containers.misc.TESlotItemHandler;
 import com.finderfeed.solarcraft.helpers.Helpers;
-import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.client.screens.custom_slots.OutputSlot;
+import com.finderfeed.solarcraft.registries.containers.SCContainers;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
@@ -12,9 +13,9 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 import net.minecraft.core.BlockPos;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.SlotItemHandler;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
@@ -24,7 +25,7 @@ public class InfuserContainer extends AbstractContainerMenu {
     public ItemStackHandler inventory;
 
     public InfuserContainer(final int windowId, final Inventory playerInv, final InfuserTileEntity te) {
-        super(SolarCraft.INFUSING_TABLE_CONTAINER.get(), windowId);
+        super(SCContainers.INFUSING_TABLE_CONTAINER.get(), windowId);
         this.te = te;
         this.inventory = te.getInventory();
 
@@ -33,8 +34,15 @@ public class InfuserContainer extends AbstractContainerMenu {
         int offsx = 0;
         // Tile Entity
         //for (int kj = 0; kj <= te.getContainerSize()-1;kj++){
-            this.addSlot(new SlotItemHandler(inventory, te.inputSlot(), 120 + offsx, 34));
-            this.addSlot(new OutputSlot.ItemHandler(inventory, te.outputSlot(), 195 + offsx, -22));
+            this.addSlot(new TESlotItemHandler(te,inventory, te.inputSlot(), 120 + offsx, 34));
+            this.addSlot(new OutputSlot.ItemHandler(inventory, te.outputSlot(), 195 + offsx, -22){
+                @Override
+                public void setChanged() {
+                    super.setChanged();
+                    te.setChanged();
+                    Helpers.updateTile(te);
+                }
+            });
 
         //}
 
@@ -64,7 +72,7 @@ public class InfuserContainer extends AbstractContainerMenu {
         Objects.requireNonNull(playerInv, "Player Inventory cannot be null.");
         Objects.requireNonNull(pos, "Pos cannot be null.");
 
-        final BlockEntity te = playerInv.player.level.getBlockEntity(pos);
+        final BlockEntity te = playerInv.player.level().getBlockEntity(pos);
 
         if (te instanceof InfuserTileEntity) {
             return (InfuserTileEntity) te;
@@ -121,7 +129,7 @@ public class InfuserContainer extends AbstractContainerMenu {
         @Nullable
         @Override
         public AbstractContainerMenu createMenu(int id, Inventory playerinv, Player player) {
-            return new InfuserContainer(id,playerinv,(InfuserTileEntity) player.getLevel().getBlockEntity(pos));
+            return new InfuserContainer(id,playerinv,(InfuserTileEntity) player.level.getBlockEntity(pos));
         }
     }
 }

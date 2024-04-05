@@ -1,16 +1,17 @@
 package com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables;
 
 import com.finderfeed.solarcraft.events.other_events.OBJModels;
+import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 
@@ -23,79 +24,75 @@ public class AncientFragmentISTER extends BlockEntityWithoutLevelRenderer {
     }
 
     @Override
-    public void renderByItem(ItemStack stack, ItemTransforms.TransformType transformType, PoseStack matrices, MultiBufferSource buffer, int light, int overlay) {
-
-        if (transformType == ItemTransforms.TransformType.NONE){
+    public void renderByItem(ItemStack stack, ItemDisplayContext transformType, PoseStack matrices, MultiBufferSource buffer, int light, int overlay) {
+        if (transformType == ItemDisplayContext.NONE){
             matrices.pushPose();
             matrices.translate(0.5,0.5,0.5);
 
-            renderItem(matrices,stack, ItemTransforms.TransformType.NONE,buffer, light,OverlayTexture.NO_OVERLAY);
+            renderItem(matrices,stack, ItemDisplayContext.NONE,buffer, light,OverlayTexture.NO_OVERLAY);
             matrices.popPose();
-        }
-        if (transformType == ItemTransforms.TransformType.FIXED){
+        } else if (transformType == ItemDisplayContext.FIXED){
             matrices.pushPose();
             matrices.translate(0.5,0.5,0.5);
-            renderItem(matrices,stack, ItemTransforms.TransformType.FIXED,buffer,light,OverlayTexture.NO_OVERLAY);
+            renderItem(matrices,stack, ItemDisplayContext.FIXED,buffer,light,OverlayTexture.NO_OVERLAY);
             matrices.popPose();
-        }
-        if (transformType == ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND){
+        } else if (transformType == ItemDisplayContext.FIRST_PERSON_LEFT_HAND){
             matrices.pushPose();
             matrices.translate(0.5,0.5,0.5);
-            renderItem(matrices,stack, ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND,buffer,light,OverlayTexture.NO_OVERLAY);
+            renderItem(matrices,stack, ItemDisplayContext.FIRST_PERSON_LEFT_HAND,buffer,light,OverlayTexture.NO_OVERLAY);
             matrices.popPose();
-        }
-        if (transformType == ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND){
+        } else if (transformType == ItemDisplayContext.FIRST_PERSON_RIGHT_HAND){
             matrices.pushPose();
             matrices.translate(0.5,0.5,0.5);
-            renderItem(matrices,stack, ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND,buffer,light,OverlayTexture.NO_OVERLAY);
+            renderItem(matrices,stack, ItemDisplayContext.FIRST_PERSON_RIGHT_HAND,buffer,light,OverlayTexture.NO_OVERLAY);
             matrices.popPose();
-        }
-        if (transformType == ItemTransforms.TransformType.GROUND){
+        } else if (transformType == ItemDisplayContext.GROUND){
             matrices.pushPose();
             matrices.translate(0.5,0.5,0.5);
-            renderItem(matrices,stack, ItemTransforms.TransformType.GROUND,buffer,light,OverlayTexture.NO_OVERLAY);
+            renderItem(matrices,stack, ItemDisplayContext.GROUND,buffer,light,OverlayTexture.NO_OVERLAY);
             matrices.popPose();
-        }
-        if (transformType == ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND){
+        } else if (transformType == ItemDisplayContext.THIRD_PERSON_RIGHT_HAND){
             matrices.pushPose();
             matrices.translate(0.5,0.5,0.5);
-            renderItem(matrices,stack, ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND,buffer,light,OverlayTexture.NO_OVERLAY);
+            renderItem(matrices,stack, ItemDisplayContext.THIRD_PERSON_RIGHT_HAND,buffer,light,OverlayTexture.NO_OVERLAY);
             matrices.popPose();
-        }
-        if (transformType == ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND){
+        } else if (transformType == ItemDisplayContext.THIRD_PERSON_LEFT_HAND){
             matrices.pushPose();
             matrices.translate(0.5,0.5,0.5);
-            renderItem(matrices,stack, ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND,buffer,light,OverlayTexture.NO_OVERLAY);
+            renderItem(matrices,stack, ItemDisplayContext.THIRD_PERSON_LEFT_HAND,buffer,light,OverlayTexture.NO_OVERLAY);
             matrices.popPose();
-        }
-        if (transformType == ItemTransforms.TransformType.GUI){
+        } else  if (transformType == ItemDisplayContext.GUI){
 
 
             matrices.pushPose();
             matrices.translate(0.5,0.5,0);
             MultiBufferSource.BufferSource source = Minecraft.getInstance().renderBuffers().bufferSource();
             Lighting.setupForFlatItems();
-            renderItem(matrices,stack, ItemTransforms.TransformType.GUI,source,light,OverlayTexture.NO_OVERLAY);
+            renderItem(matrices,stack, ItemDisplayContext.GUI,source,light,OverlayTexture.NO_OVERLAY);
             matrices.popPose();
             source.endBatch();
             Lighting.setupFor3DItems();
 
-            CompoundTag nbt = stack.getTagElement(ProgressionHelper.TAG_ELEMENT);
+            CompoundTag nbt = stack.getTagElement(AncientFragmentHelper.TAG_ELEMENT);
 
             if (nbt != null) {
-                AncientFragment frag = AncientFragment.getFragmentByID(nbt.getString(ProgressionHelper.FRAG_ID));
+                AncientFragment frag = AncientFragment.getFragmentByID(nbt.getString(AncientFragmentHelper.FRAG_ID));
                 if (frag != null) {
+                    ItemStack icon = frag.getIcon().getDefaultInstance();
+                    if (icon.getItem() == SCItems.RUNE_ENERGY_PYLON.get()){
+                        icon = SCItems.RUNE_ENERGY_PYLON_ITEM_PLACEHOLDER.get().getDefaultInstance();
+                    }
                     matrices.pushPose();
                     matrices.scale(0.5f,0.5f,0.5f);
                     matrices.translate(1.5,0.5,2);
                     BakedModel model = Minecraft.getInstance().getItemRenderer()
-                            .getModel(frag.getIcon().getDefaultInstance(),Minecraft.getInstance().level, Minecraft.getInstance().player, 0);
+                            .getModel(icon,Minecraft.getInstance().level, Minecraft.getInstance().player, 0);
 
                     MultiBufferSource.BufferSource src2 = Minecraft.getInstance().renderBuffers().bufferSource();
                     if (!model.usesBlockLight()){
                         Lighting.setupForFlatItems();
                     }
-                    Minecraft.getInstance().getItemRenderer().render(frag.getIcon().getDefaultInstance(), ItemTransforms.TransformType.GUI, false, matrices, src2, light,
+                    Minecraft.getInstance().getItemRenderer().render(icon, ItemDisplayContext.GUI, false, matrices, src2, light,
                             OverlayTexture.NO_OVERLAY, model);
                     src2.endBatch();
                     if (!model.usesBlockLight()){
@@ -109,7 +106,7 @@ public class AncientFragmentISTER extends BlockEntityWithoutLevelRenderer {
         }
     }
 
-    public static void renderItem(PoseStack matrices, ItemStack stack, ItemTransforms.TransformType type,MultiBufferSource buffer,int light, int overlay){
+    public static void renderItem(PoseStack matrices, ItemStack stack, ItemDisplayContext type,MultiBufferSource buffer,int light, int overlay){
         Minecraft.getInstance().getItemRenderer().render(stack,type,false,matrices,buffer,light,overlay,
                 Minecraft.getInstance().getModelManager().getModel(OBJModels.ANCIENT_FRAGMENT_MODEL));
     }

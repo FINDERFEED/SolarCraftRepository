@@ -1,8 +1,8 @@
 package com.finderfeed.solarcraft.content.world_generation.structures.blocks;
 
 import com.finderfeed.solarcraft.content.world_generation.structures.blocks.tile_entities.KeyLockStructureTile;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.items.SCItems;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -26,7 +26,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class KeyLockBlock extends GlazedTerracottaBlock implements EntityBlock {
 
     public KeyLockBlock() {
-        super(BlockBehaviour.Properties.copy(Blocks.BEDROCK));
+        super(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK).pushReaction(PushReaction.IGNORE));
     }
 
 
@@ -34,7 +34,7 @@ public class KeyLockBlock extends GlazedTerracottaBlock implements EntityBlock {
     public InteractionResult use(BlockState p_225533_1_, Level p_225533_2_, BlockPos p_225533_3_, Player p_225533_4_, InteractionHand p_225533_5_, BlockHitResult p_225533_6_) {
 
         if (!p_225533_2_.isClientSide){
-            if (p_225533_4_.getItemInHand(p_225533_5_).getItem() == SolarcraftItems.SOLAR_KEY.get()){
+            if (p_225533_4_.getItemInHand(p_225533_5_).getItem() == SCItems.SOLAR_KEY.get()){
                 p_225533_2_.destroyBlock(p_225533_3_,false);
                 p_225533_2_.destroyBlock(p_225533_3_.below(),false);
                 p_225533_2_.destroyBlock(p_225533_3_.above(),false);
@@ -45,16 +45,16 @@ public class KeyLockBlock extends GlazedTerracottaBlock implements EntityBlock {
         return super.use(p_225533_1_, p_225533_2_, p_225533_3_, p_225533_4_, p_225533_5_, p_225533_6_);
     }
 
-    @Override
-    public PushReaction getPistonPushReaction(BlockState p_149656_1_) {
-        return PushReaction.IGNORE;
-    }
+//    @Override
+//    public PushReaction getPistonPushReaction(BlockState p_149656_1_) {
+//        return PushReaction.IGNORE;
+//    }
 
 
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return SolarcraftTileEntityTypes.KEY_LOCK_TILE.get().create(blockPos,blockState);
+        return SCTileEntities.KEY_LOCK_TILE.get().create(blockPos,blockState);
     }
 
     @Nullable

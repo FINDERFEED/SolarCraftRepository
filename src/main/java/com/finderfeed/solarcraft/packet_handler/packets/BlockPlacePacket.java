@@ -1,18 +1,18 @@
 package com.finderfeed.solarcraft.packet_handler.packets;
 
 import com.finderfeed.solarcraft.events.my_events.ClientsideBlockPlaceEvent;
-import com.finderfeed.solarcraft.helpers.ClientHelpers;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.network.NetworkEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 
-import java.util.function.Supplier;
 
-public class BlockPlacePacket {
+@Packet("block_place_packet")
+public class BlockPlacePacket extends FDPacket {
 
     private int id;
     private BlockPos pos;
@@ -21,8 +21,7 @@ public class BlockPlacePacket {
         this.pos = pos;
         this.id = Block.getId(state);
     }
-
-    public BlockPlacePacket(FriendlyByteBuf buf){
+    public BlockPlacePacket(FriendlyByteBuf buf) {
         this.id = buf.readInt();
         this.pos = buf.readBlockPos();
     }
@@ -32,11 +31,19 @@ public class BlockPlacePacket {
         buf.writeBlockPos(pos);
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(()->{
-            MinecraftForge.EVENT_BUS.post(new ClientsideBlockPlaceEvent(Block.stateById(id),pos));
-        });
-        ctx.get().setPacketHandled(true);
+//    public static void handle(BlockPlacePacket packet, PlayPayloadContext ctx) {
+//        NeoForge.EVENT_BUS.post(new ClientsideBlockPlaceEvent(Block.stateById(packet.id),packet.pos));
+//    }
+
+    @Override
+    public void clientPlayHandle(PlayPayloadContext ctx) {
+        super.clientPlayHandle(ctx);
+        NeoForge.EVENT_BUS.post(new ClientsideBlockPlaceEvent(Block.stateById(id),pos));
+
     }
 
+    @Override
+    public void write(FriendlyByteBuf friendlyByteBuf) {
+        this.toBytes(friendlyByteBuf);
+    }
 }

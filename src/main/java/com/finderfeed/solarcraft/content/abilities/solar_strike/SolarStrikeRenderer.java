@@ -1,17 +1,23 @@
 package com.finderfeed.solarcraft.content.abilities.solar_strike;
 
+import com.finderfeed.solarcraft.client.rendering.rendertypes.SCRenderTypes;
+import com.finderfeed.solarcraft.local_library.client.delayed_renderer.DelayedRenderer;
+import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.Camera;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
+import org.joml.Matrix4f;
 
+import java.util.List;
+import java.util.Random;
 
 
 public class SolarStrikeRenderer extends EntityRenderer<SolarStrikeEntity> {
@@ -21,60 +27,86 @@ public class SolarStrikeRenderer extends EntityRenderer<SolarStrikeEntity> {
         super(ctx);
     }
     @Override
-    public void render(SolarStrikeEntity entity, float p_225623_2_, float partialTicks, PoseStack matrices, MultiBufferSource buffer, int p_225623_6_) {
-        super.render(entity,p_225623_2_,partialTicks,matrices,buffer,p_225623_6_);
-        matrices.pushPose();
-        matrices.translate(0, 0.1, 0);
-        PoseStack.Pose ray_entry = matrices.last();
-
-        if (entity.getLifeTicks() <= 40) {
-
-            matrices.translate(0, 5 - ((float)entity.getLifeTicks() +partialTicks)/8, 0);
-            matrices.scale(((float)entity.getLifeTicks() + partialTicks/1.8f)/40 ,0,((float)entity.getLifeTicks()+ partialTicks/1.8f)/40);
+    public void render(SolarStrikeEntity entity, float p_225623_2_, float pticks, PoseStack matrices, MultiBufferSource buffer, int p_225623_6_) {
+        if (entity.tickCount < SolarStrikeEntity.TIME_UNTIL_EXPLOSION) {
+            this.renderRays(entity, matrices, DelayedRenderer.SRC, pticks);
+        }else{
+            this.renderStrike(entity,matrices,DelayedRenderer.SRC,pticks);
         }
 
-        float time = (entity.level.getGameTime() + partialTicks)*10 % 360;
-        matrices.mulPose(Vector3f.YP.rotationDegrees(time));
+    }
 
-        PoseStack.Pose entry = matrices.last();
-        Matrix4f matrix = entry.pose();
-        VertexConsumer vertex = buffer.getBuffer(RenderType.text(SOLAR_STRIKE));
-        int mod = 50;
-        vertex.vertex(matrix,-0.5F*mod,0,-0.5F*mod).color(255,255,255,255).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-        vertex.vertex(matrix,0.5F*mod,0,-0.5F*mod).color(255,255,255,255).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-        vertex.vertex(matrix,0.5F*mod,0,0.5F*mod).color(255,255,255,255).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-        vertex.vertex(matrix,-0.5F*mod,0,0.5F*mod).color(255,255,255,255).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-
-        vertex.vertex(matrix,-0.5F*mod,0,0.5F*mod).color(255,255,255,255).uv(1,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-        vertex.vertex(matrix,0.5F*mod,0,0.5F*mod).color(255,255,255,255).uv(1,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-        vertex.vertex(matrix,0.5F*mod,0,-0.5F*mod).color(255,255,255,255).uv(0,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-        vertex.vertex(matrix,-0.5F*mod,0,-0.5F*mod).color(255,255,255,255).uv(0,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-        VertexConsumer vertexray = buffer.getBuffer(RenderType.text(SOLAR_STRIKE_RAY));
-        //if(entity.getLifeTicks() >= 55) {
-            Matrix4f matrixray = ray_entry.pose();
-            float modray = 3;
-            float modray2 = 2;
-            vertexray.vertex(matrixray, -1F*modray, 160*modray2, 0).color(255, 255, 255, 255).uv(0, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertexray.vertex(matrixray, 1F*modray, 160*modray2, 0).color(255, 255, 255, 255).uv(0, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertexray.vertex(matrixray, 1F*modray, 0, 0).color(255, 255, 255, 255).uv(1, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertexray.vertex(matrixray, -1F*modray, 0, 0).color(255, 255, 255, 255).uv(1, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-
-            vertexray.vertex(matrixray, -1F*modray, 0, 0).color(255, 255, 255, 255)  .uv(0, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertexray.vertex(matrixray, 1F*modray, 0, 0).color(255, 255, 255, 255)   .uv(0, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertexray.vertex(matrixray, 1F*modray, 160, 0).color(255, 255, 255, 255) .uv(1, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertexray.vertex(matrixray, -1F*modray, 160, 0).color(255, 255, 255, 255).uv(1, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-
-            vertexray.vertex(matrixray, 0, 160*modray2, -1f*modray).color(255, 255, 255, 255).uv(0, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertexray.vertex(matrixray, 0, 160*modray2, 1f*modray).color(255, 255, 255, 255) .uv(0, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertexray.vertex(matrixray, 0, 0, 1f*modray).color(255, 255, 255, 255)   .uv(1, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertexray.vertex(matrixray, 0, 0, -1f*modray).color(255, 255, 255, 255)  .uv(1, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-
-            vertexray.vertex(matrixray, 0, 0, -1f*modray).color(255, 255, 255, 255)  .uv(0, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertexray.vertex(matrixray, 0, 0, 1f*modray).color(255, 255, 255, 255)   .uv(0, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertexray.vertex(matrixray, 0, 160, 1f*modray).color(255, 255, 255, 255) .uv(1, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-            vertexray.vertex(matrixray, 0, 160, -1f*modray).color(255, 255, 255, 255).uv(1, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).endVertex();
-        //}
+    private void renderStrike(SolarStrikeEntity entity,PoseStack matrices,MultiBufferSource src,float pticks){
+        float alpha = (entity.tickCount - SolarStrikeEntity.TIME_UNTIL_EXPLOSION + pticks) / (float)SolarStrikeEntity.AFTER_EXPLOSION_TIME;
+        alpha = 1 - (float)Math.pow(alpha,6);
+        matrices.pushPose();
+        Camera camera = Minecraft.getInstance().gameRenderer.getMainCamera();
+        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.ZP(),90));
+        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.XN(),camera.getYRot()));
+        for (int i = 0; i < 4;i++) {
+            Random r = new Random(entity.level.getGameTime() + i * 94034);
+            RenderingTools.Lightning2DRenderer.renderLightning(matrices, src.getBuffer(SCRenderTypes.LIGHTNING_NO_CULL), 20, 6f, 1f,
+                    Vec3.ZERO, Vec3.ZERO.add(400, 0, 0), r, 1f, 1f, 0.6f + i * 0.1f,alpha);
+        }
         matrices.popPose();
+
+        matrices.pushPose();
+        Matrix4f m = matrices.last().pose();
+        float raySize = 4f;
+        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YN(),camera.getYRot()));
+        VertexConsumer vertex = src.getBuffer(SCRenderTypes.LIGHTNING_NO_CULL);
+        vertex.vertex(m,-raySize,0,0f).color(0f,0f,0f,alpha).endVertex();
+        vertex.vertex(m,-raySize,400,0f).color(0f,0f,0f,alpha).endVertex();
+        vertex.vertex(m,0,400,0f).color(1f,1f,0f,alpha).endVertex();
+        vertex.vertex(m,0,0,0f).color(1f,1f,0f,alpha).endVertex();
+        vertex.vertex(m,raySize,0,0f).color(0f,0f,0f,alpha).endVertex();
+        vertex.vertex(m,raySize,400,0f).color(0f,0f,0f,alpha).endVertex();
+        vertex.vertex(m,0,400,0f).color(1f,1f,0f,alpha).endVertex();
+        vertex.vertex(m,0,0,0f).color(1f,1f,0f,alpha).endVertex();
+        matrices.popPose();
+    }
+
+    private void renderRays(SolarStrikeEntity entity,PoseStack matrices,MultiBufferSource src,float pticks){
+        List<Vec3> rays = entity.getRayPositions(SolarStrikeEntity.RAYS_COUNT,pticks);
+        float alpha = entity.getExplosionCompletionPercent(pticks);
+        alpha = (float) Mth.clamp(Math.sqrt(alpha)*1.5f,0,1);
+        Vec3 ePos = entity.position();
+        VertexConsumer vertex = src.getBuffer(SCRenderTypes.LIGHTNING_NO_CULL);
+        float raySize = 1f;
+        float r = 1f;
+        float g = 1f;
+        float b = 0.1f;
+        Camera camera = Minecraft.getInstance().gameRenderer.getMainCamera();
+        for (int i = 0; i < rays.size();i++){
+            Vec3 pos = rays.get(i);
+            matrices.pushPose();
+            Vec3 translation = pos.subtract(ePos);
+
+            matrices.translate(translation.x,translation.y,translation.z);
+            Matrix4f m = matrices.last().pose();
+            matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YN(),camera.getYRot()));
+
+
+            vertex.vertex(m,-raySize,0,0).color(0,0,0,alpha).endVertex();
+            vertex.vertex(m,0,0,0).color(r,g,b,alpha).endVertex();
+            vertex.vertex(m,0,400,0).color(r,g,b,alpha).endVertex();
+            vertex.vertex(m,-raySize,400,0).color(0,0,0,alpha).endVertex();
+            vertex.vertex(m,raySize,0,0).color(0,0,0,alpha).endVertex();
+            vertex.vertex(m,0,0,0).color(r,g,b,alpha).endVertex();
+            vertex.vertex(m,0,400,0).color(r,g,b,alpha).endVertex();
+            vertex.vertex(m,raySize,400,0).color(0,0,0,alpha).endVertex();
+
+            matrices.popPose();
+
+            matrices.pushPose();
+            Random rand = new Random(entity.level.getGameTime() + i * 2343L);
+            matrices.translate(translation.x,translation.y,translation.z);
+            matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.ZP(),90));
+            matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.XN(),camera.getYRot()));
+            RenderingTools.Lightning2DRenderer.renderLightning(matrices, src.getBuffer(SCRenderTypes.LIGHTNING_NO_CULL), 20, 2.5f, 1f,
+                    Vec3.ZERO, Vec3.ZERO.add(400, 0, 0),rand,1f, 1f, 0.6f,alpha);
+            matrices.popPose();
+        }
     }
 
     @Override

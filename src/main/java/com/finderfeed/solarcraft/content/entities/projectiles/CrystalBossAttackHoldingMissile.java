@@ -3,31 +3,32 @@ package com.finderfeed.solarcraft.content.entities.projectiles;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.entities.CrystalBossEntity;
 import com.finderfeed.solarcraft.misc_things.CrystalBossBuddy;
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
-import com.finderfeed.solarcraft.registries.entities.SolarcraftEntityTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
+import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
+import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.*;
-import net.minecraftforge.network.NetworkHooks;
-
 
 import java.util.List;
 import java.util.UUID;
 
-public class CrystalBossAttackHoldingMissile extends AbstractHurtingProjectile implements CrystalBossBuddy{
+public class CrystalBossAttackHoldingMissile extends OwnedProjectile implements CrystalBossBuddy{
 
     private static EntityDataAccessor<Boolean> LAUNCHED = SynchedEntityData.defineId(CrystalBossAttackHoldingMissile.class, EntityDataSerializers.BOOLEAN);
-    private UUID TARGET;
-    private float HOLDING_TIME;
+    private UUID target;
+    private float holdTime;
     private AABB findbox = new AABB(-16,-16,-16,16,16,16);
     private boolean launched = false;
     private int ticker = 0;
@@ -37,9 +38,9 @@ public class CrystalBossAttackHoldingMissile extends AbstractHurtingProjectile i
     }
 
     private CrystalBossAttackHoldingMissile(Builder builder){
-        super(SolarcraftEntityTypes.CRYSTAL_BOSS_ATTACK_HOLDING_MISSILE.get(),builder.world);
-        this.TARGET = builder.target;
-        this.HOLDING_TIME = builder.holding_time;
+        super(SCEntityTypes.CRYSTAL_BOSS_ATTACK_HOLDING_MISSILE.get(),builder.world);
+        this.target = builder.target;
+        this.holdTime = builder.holdTime;
         this.setPos(builder.position);
         this.setDeltaMovement(builder.initialSpeed);
     }
@@ -56,12 +57,12 @@ public class CrystalBossAttackHoldingMissile extends AbstractHurtingProjectile i
             List<Player> players = level.getEntitiesOfClass(Player.class,findbox.move(this.position()));
             Player targetPlayer = null;
             for (Player player : players){
-                if (player.getUUID().equals(TARGET)){
+                if (player.getUUID().equals(target)){
                     targetPlayer = player;
                 }
             }
             if (targetPlayer != null){
-                if (ticker++ >= HOLDING_TIME*20){
+                if (ticker++ >= holdTime *20){
                     if (!launched){
                         this.setDeltaMovement(targetPlayer
                                 .position()
@@ -84,7 +85,7 @@ public class CrystalBossAttackHoldingMissile extends AbstractHurtingProjectile i
             double d0 = this.getX() + vec3.x;
             double d1 = this.getY() + vec3.y;
             double d2 = this.getZ() + vec3.z;
-            this.level.addParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), d0, d1 + 0.125D, d2, 0.0D, 0.0D, 0.0D);
+            this.level.addParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(), d0, d1 + 0.125D, d2, 0.0D, 0.0D, 0.0D);
 
         }
     }
@@ -96,18 +97,18 @@ public class CrystalBossAttackHoldingMissile extends AbstractHurtingProjectile i
 
     @Override
     public void load(CompoundTag cmp) {
-        this.TARGET = cmp.getUUID("target");
+        this.target = cmp.getUUID("target");
         this.launched = cmp.getBoolean("released");
-        this.HOLDING_TIME = cmp.getFloat("hold");
+        this.holdTime = cmp.getFloat("hold");
         this.ticker = cmp.getInt("ticker");
         super.load(cmp);
     }
 
     @Override
     public boolean save(CompoundTag cmp) {
-        cmp.putUUID("target",TARGET);
+        cmp.putUUID("target", target);
         cmp.putBoolean("released",launched);
-        cmp.putFloat("hold",HOLDING_TIME);
+        cmp.putFloat("hold", holdTime);
         cmp.putInt("ticker",ticker);
         return super.save(cmp);
     }
@@ -116,7 +117,11 @@ public class CrystalBossAttackHoldingMissile extends AbstractHurtingProjectile i
     protected void onHitEntity(EntityHitResult ent) {
         if (!(ent.getEntity() instanceof CrystalBossEntity) && !(ent.getEntity() instanceof CrystalBossBuddy)){
             if (Helpers.isVulnerable(ent.getEntity())) {
-                ent.getEntity().hurt(DamageSource.MAGIC, CrystalBossEntity.MISSILE_DAMAGE);
+                if (this.getOwner() instanceof LivingEntity entity) {
+                    ent.getEntity().hurt(SCDamageSources.livingArmorPierce(entity), CrystalBossEntity.MISSILE_DAMAGE);
+                }else{
+                    ent.getEntity().hurt(level.damageSources().magic(), CrystalBossEntity.MISSILE_DAMAGE);
+                }
                 ent.getEntity().invulnerableTime = 0;
             }
             this.discard();
@@ -141,20 +146,20 @@ public class CrystalBossAttackHoldingMissile extends AbstractHurtingProjectile i
         return false;
     }
 
-    @Override
-    public Packet<?> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
+//    @Override
+//    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+//        return NetworkHooks.getEntitySpawningPacket(this);
+//    }
 
     @Override
     protected ParticleOptions getTrailParticle() {
-        return SolarcraftParticleTypes.INVISIBLE_PARTICLE.get();
+        return SCParticleTypes.INVISIBLE_PARTICLE.get();
     }
 
     public static class Builder{
         private Level world;
         private UUID target;
-        private float holding_time;
+        private float holdTime;
         private Vec3 position;
         private Vec3 initialSpeed;
 
@@ -168,7 +173,7 @@ public class CrystalBossAttackHoldingMissile extends AbstractHurtingProjectile i
         }
 
         public Builder setHoldingTime(float holding_time) {
-            this.holding_time = holding_time;
+            this.holdTime = holding_time;
             return this;
         }
         public Builder setInitialSpeed(Vec3 speed){

@@ -1,8 +1,8 @@
 package com.finderfeed.solarcraft.content.blocks.primitive;
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.TemporaryLightTile;
-import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -31,7 +31,7 @@ public class TemporaryLightBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
-        return SolarcraftTileEntityTypes.TEMPORARY_LIGHT.get().create(p_153215_,p_153216_);
+        return SCTileEntities.TEMPORARY_LIGHT.get().create(p_153215_,p_153216_);
     }
 
 
@@ -50,7 +50,7 @@ public class TemporaryLightBlock extends Block implements EntityBlock {
     }
 
     public static BlockState create(int light){
-        return SolarcraftBlocks.TEMPORARY_LIGHT.get().defaultBlockState().setValue(LIGHT_LEVEL,light);
+        return SCBlocks.TEMPORARY_LIGHT.get().defaultBlockState().setValue(LIGHT_LEVEL,light);
     }
 
     @Override

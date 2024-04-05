@@ -4,18 +4,20 @@ import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.SolarCraftTags;
 import com.finderfeed.solarcraft.client.screens.SolarCraftScreen;
 import com.finderfeed.solarcraft.content.abilities.ability_classes.AbstractAbility;
-import com.finderfeed.solarcraft.content.blocks.solar_forge_block.solar_forge_screen.SolarForgeButtonYellow;
+import com.finderfeed.solarcraft.content.blocks.solar_forge_block.solar_forge_screen.SolarCraftButton;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.InfoButton;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.SolarLexiconScreen;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.AbilityIndexSetPacket;
 import com.finderfeed.solarcraft.packet_handler.packets.BuyAbilityPacket;
 import com.finderfeed.solarcraft.packet_handler.packets.RequestAbilityScreenPacket;
 import com.finderfeed.solarcraft.registries.abilities.AbilitiesRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
@@ -81,11 +83,12 @@ public class AbilitySelectionScreen extends SolarCraftScreen {
                     100,100,
                     (btn)->{
                         if (btn instanceof AbilityScreenButton b && b.isBindingMode() && selectedAbilityId > 0 && selectedAbilityId < 5){
-                            SCPacketHandler.INSTANCE.sendToServer(new AbilityIndexSetPacket(selectedAbilityId,b.ability.id));
+                            FDPacketUtil.sendToServer(new AbilityIndexSetPacket(selectedAbilityId,b.ability.id),new RequestAbilityScreenPacket(true));
+//                            SCPacketHandler.INSTANCE.sendToServer(new AbilityIndexSetPacket(selectedAbilityId,b.ability.id));
                             for (AbilityScreenButton button1 : btns){
                                 button1.setBindingMode(false);
                             }
-                            SCPacketHandler.INSTANCE.sendToServer(new RequestAbilityScreenPacket(true));
+//                            SCPacketHandler.INSTANCE.sendToServer(new RequestAbilityScreenPacket(true));
                         }
                     });
 
@@ -108,15 +111,16 @@ public class AbilitySelectionScreen extends SolarCraftScreen {
         }
 
 
-        SolarForgeButtonYellow b = new SolarForgeButtonYellow(winX - 107,
+        SolarCraftButton b = new SolarCraftButton(winX - 107,
                 winY - 40,65,15,Component.translatable("ability.buy_ability"),(button)->{
             if (selectedAbility != null) {
-                SCPacketHandler.INSTANCE.sendToServer(new BuyAbilityPacket(selectedAbility.id));
-                SCPacketHandler.INSTANCE.sendToServer(new RequestAbilityScreenPacket(true));
+                FDPacketUtil.sendToServer(new BuyAbilityPacket(selectedAbility.id),new RequestAbilityScreenPacket(true));
+//                SCPacketHandler.INSTANCE.sendToServer(new BuyAbilityPacket(selectedAbility.id));
+//                SCPacketHandler.INSTANCE.sendToServer(new RequestAbilityScreenPacket(true));
             }
         });
-        InfoButton info = new InfoButton(135,27,12,12,(but,matrix,mx,my)->{
-           renderTooltip(matrix,
+        InfoButton info = new InfoButton(135,27,12,12,(but,graphics,mx,my)->{
+           graphics.renderTooltip(font,
                    font.split(Component.translatable("solarcraft.bind_guide"),250),
                    mx,my);
         });
@@ -155,9 +159,10 @@ public class AbilitySelectionScreen extends SolarCraftScreen {
     }
 
 
+
     @Override
-    public boolean mouseScrolled(double mousePosX, double mousePosY, double delta) {
-        if (delta > 0){
+    public boolean mouseScrolled(double mousePosX, double mousePosY, double delta,double deltaY) {
+        if (deltaY > 0){
             currentShift = Mth.clamp(currentShift - 150,0,(btns.size()-1) * 150);
             currentSelectedAbilityIndex = Mth.clamp(currentSelectedAbilityIndex - 1,0,btns.size()-1);
             value.setNewValue(currentShift);
@@ -168,7 +173,7 @@ public class AbilitySelectionScreen extends SolarCraftScreen {
         }
         ticker = 0;
         selectedAbility = btns.get(currentSelectedAbilityIndex).ability;
-        return super.mouseScrolled(mousePosX, mousePosY, delta);
+        return super.mouseScrolled(mousePosX, mousePosY, delta,deltaY);
     }
 
     @Override
@@ -181,7 +186,10 @@ public class AbilitySelectionScreen extends SolarCraftScreen {
     }
 
     @Override
-    public void render(PoseStack matrices, int mousex, int mousey, float pTicks) {
+    public void render(GuiGraphics graphics, int mousex, int mousey, float pTicks) {
+
+        PoseStack matrices = graphics.pose();
+
         double slide = slideInValue.getCurrentValue(pTicks)/(double) SLIDE_IN_TIME;
         int slideAmount = 180;
         int xShiftRight = (int)(slideAmount - slide * slideAmount);
@@ -205,32 +213,32 @@ public class AbilitySelectionScreen extends SolarCraftScreen {
         int winX = Minecraft.getInstance().getWindow().getGuiScaledWidth();
         int winY = Minecraft.getInstance().getWindow().getGuiScaledHeight();
 
-        fill(matrices,0,0,winX,winY,0xaa000000);
+        graphics.fill(0,0,winX,winY,0xaa000000);
 
         RenderingTools.renderTextField(matrices,xShiftRight + winX - 130 - 7,20 ,120,winY - 40);
         int textXStartRight = xShiftRight + winX - 69 - 7;
         int texXStartLeft = 20 + xShiftLeft;
-        drawCenteredString(matrices, minecraft.font,Component.translatable("name."+selectedAbility.id),
+        graphics.drawCenteredString( minecraft.font,Component.translatable("name."+selectedAbility.id),
                 textXStartRight,30,SolarLexiconScreen.TEXT_COLOR);
-        drawCenteredString(matrices, minecraft.font,Component.translatable("solarcraft.buy_cost")
+        graphics.drawCenteredString( minecraft.font,Component.translatable("solarcraft.buy_cost")
                         .append(": "+ selectedAbility.buyCost),
                 textXStartRight,winY - 50, SolarLexiconScreen.TEXT_COLOR);
-        drawCenteredString(matrices,font,
+        graphics.drawCenteredString(font,
                 Component.translatable("solarcraft.raw_solar_energy"),
                 textXStartRight,winY - 70,SolarLexiconScreen.TEXT_COLOR);
-        drawCenteredString(matrices,font,
+        graphics.drawCenteredString(font,
                 Component.translatable("solarcraft.yours").append(": "+ energy),
                 textXStartRight,winY - 60,SolarLexiconScreen.TEXT_COLOR);
-        RenderingTools.drawCenteredBoundedTextObfuscated(matrices,textXStartRight + 1, 50,20,
+        RenderingTools.drawCenteredBoundedTextObfuscated(graphics,textXStartRight + 1, 50,20,
                 Component.translatable("desc."+selectedAbility.id),SolarLexiconScreen.TEXT_COLOR,ticker*5);
 
         RenderingTools.renderTextField(matrices,texXStartLeft,20 ,130,27);
         RenderingTools.renderTextField(matrices,texXStartLeft,winY - 125 ,130,105);
         int iter = 0;
-        drawString(matrices,font,Component.translatable("solarcraft.cast_cost"),texXStartLeft + 6,
+        graphics.drawString(font,Component.translatable("solarcraft.cast_cost"),texXStartLeft + 6,
                 winY - 120,SolarLexiconScreen.TEXT_COLOR);
         for (RunicEnergy.Type type : RunicEnergy.Type.getAll()){
-            drawString(matrices,font,type.toString().toUpperCase(Locale.ROOT)+": " + selectedAbility.cost.get(type),
+            graphics.drawString(font,type.toString().toUpperCase(Locale.ROOT)+": " + selectedAbility.cost.get(type),
                     texXStartLeft + 6,
                     winY - 110 + iter*11,SolarLexiconScreen.TEXT_COLOR);
             iter++;
@@ -239,7 +247,7 @@ public class AbilitySelectionScreen extends SolarCraftScreen {
         matrices.popPose();
 
 
-        super.render(matrices, mousex, mousey, pTicks);
+        super.render(graphics, mousex, mousey, pTicks);
         this.runPostEntries();
     }
 

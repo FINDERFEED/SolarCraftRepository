@@ -7,6 +7,7 @@ import com.finderfeed.solarcraft.local_library.client.screens.IRenderable;
 import com.finderfeed.solarcraft.local_library.client.tooltips.animatable_omponents.FDTextComponent;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
@@ -32,9 +33,9 @@ public class TooltipBoxComponent extends FDScreenComponent {
     }
 
     @Override
-    public void render(PoseStack matrices, int mousex, int mousey, float pticks) {
+    public void render(GuiGraphics graphics, int mousex, int mousey, float pticks) {
         if (RenderingTools.isMouseInBorders(mousex,mousey,0,0,sizeX,sizeY)){
-            tooltip.render(matrices,x + mousex,y + mousey);
+            tooltip.render(graphics,x + mousex,y + mousey);
         }
     }
 

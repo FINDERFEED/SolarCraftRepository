@@ -2,6 +2,7 @@ package com.finderfeed.solarcraft.local_library.client.screens;
 
 import com.finderfeed.solarcraft.client.screens.SolarCraftScreen;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 
 public abstract class FDScreenComponent {
@@ -19,7 +20,7 @@ public abstract class FDScreenComponent {
 
     public abstract void init();
 
-    public abstract void render(PoseStack matrices,int mousex,int mousey,float pticks);
+    public abstract void render(GuiGraphics graphics, int mousex, int mousey, float pticks);
 
     public abstract void tick();
 

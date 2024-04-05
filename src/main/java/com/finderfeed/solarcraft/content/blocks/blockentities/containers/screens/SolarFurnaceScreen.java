@@ -2,11 +2,13 @@ package com.finderfeed.solarcraft.content.blocks.blockentities.containers.screen
 
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.content.blocks.blockentities.containers.SolarFurnaceContainer;
+import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.resources.ResourceLocation;
-import com.mojang.math.Vector3f;
+
 import net.minecraft.network.chat.Component;
 
 public class SolarFurnaceScreen extends AbstractContainerScreen<SolarFurnaceContainer> {
@@ -30,33 +32,35 @@ public class SolarFurnaceScreen extends AbstractContainerScreen<SolarFurnaceCont
     }
 
     @Override
-    public void render(PoseStack stack,int rouseX,int rouseY,float partialTicks){
-        this.renderBackground(stack);
-        super.render(stack,rouseX,rouseY,partialTicks);
-        this.renderTooltip(stack,rouseX,rouseY);
+    public void render(GuiGraphics graphics, int rouseX, int rouseY, float partialTicks){
+        this.renderBackground(graphics,rouseX,rouseY,partialTicks);
+        super.render(graphics,rouseX,rouseY,partialTicks);
+        this.renderTooltip(graphics,rouseX,rouseY);
 
     }
 
     @Override
-    protected void renderBg(PoseStack matrices, float partialTicks, int mousex, int mousey) {
+    protected void renderBg(GuiGraphics graphics, float partialTicks, int mousex, int mousey) {
         ClientHelpers.bindText(GUI);
 
+        PoseStack matrices = graphics.pose();
         int scale = (int) minecraft.getWindow().getGuiScale();
         int a = 1;
         if (scale == 2) {
             a = 0;
         }
-        blit(matrices, relX + 3+a, relY+26, 0, 0, 176, 256);
+        RenderingTools.blitWithBlend(matrices, relX + 3+a, relY+26, 0, 0, 176, 256,256,256,0,1f);
 
         float percent = (float)menu.getRecipeProgress()/ menu.getMaxRecipeProgress();
 
-        blit(matrices,relX+a+76,relY+47,177,0,(int)(22 * percent),256);
+        RenderingTools.blitWithBlend(matrices,relX+a+76,relY+47,177,0,(int)(22 * percent),256,256,256,0,1f);
         ClientHelpers.bindText(REQ_ENERGY);
         percent = (float)menu.getEnergy()/menu.te.getMaxSolarEnergy();
         matrices.pushPose();
         matrices.translate(relX+24+a,relY+78,0);
-        matrices.mulPose(Vector3f.ZP.rotationDegrees(180));
-        blit(matrices,0,0,0,0,16,(int)(33*percent),16,33);
+//        matrices.mulPose(Vector3f.ZP.rotationDegrees(180));
+        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.ZP(),180));
+        RenderingTools.blitWithBlend(matrices,0,0,0,0,16,(int)(33*percent),16,33,0,1f);
         matrices.popPose();
 
     }

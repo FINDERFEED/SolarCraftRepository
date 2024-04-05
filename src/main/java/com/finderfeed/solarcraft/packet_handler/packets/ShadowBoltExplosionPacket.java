@@ -3,15 +3,17 @@ package com.finderfeed.solarcraft.packet_handler.packets;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.misc_things.AbstractPacket;
 import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
+import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.PacketDistributor;
-
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
+import net.neoforged.neoforge.network.PacketDistributor;
 import java.util.function.Supplier;
 
-public class ShadowBoltExplosionPacket extends AbstractPacket {
+@Packet("shadow_bolt_explosion_packet")
+public class ShadowBoltExplosionPacket extends FDPacket {
 
 
     public Vec3 pos;
@@ -20,11 +22,12 @@ public class ShadowBoltExplosionPacket extends AbstractPacket {
         this.pos = pos;
     }
 
-    public ShadowBoltExplosionPacket(FriendlyByteBuf buffer){
+
+    public ShadowBoltExplosionPacket(FriendlyByteBuf buffer) {
         this.pos = new Vec3(buffer.readDouble(),buffer.readDouble(),buffer.readDouble());
+
     }
 
-    @Override
     public void toBytes(FriendlyByteBuf buf) {
         buf.writeDouble(pos.x);
         buf.writeDouble(pos.y);
@@ -32,16 +35,23 @@ public class ShadowBoltExplosionPacket extends AbstractPacket {
 
     }
 
+//    public void handle(PlayPayloadContext ctx) {
+//
+//            ClientHelpers.handleShadowBoltExplosion(pos);
+//
+//    }
+
     @Override
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(()->{
-            ClientHelpers.handleShadowBoltExplosion(pos);
-        });
-        ctx.get().setPacketHandled(true);
+    public void clientPlayHandle(PlayPayloadContext ctx) {
+        ClientHelpers.handleShadowBoltExplosion(pos);
     }
 
     public static void send(Level level, Vec3 pos){
-        SCPacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(
-                PacketDistributor.TargetPoint.p(pos.x,pos.y,pos.z,50,level.dimension())),new ShadowBoltExplosionPacket(pos));
+        PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(pos.x,pos.y,pos.z,50,level.dimension()).get()).send(new ShadowBoltExplosionPacket(pos));
+    }
+
+    @Override
+    public void write(FriendlyByteBuf friendlyByteBuf) {
+        this.toBytes(friendlyByteBuf);
     }
 }

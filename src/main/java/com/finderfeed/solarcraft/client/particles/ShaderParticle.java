@@ -1,9 +1,8 @@
 package com.finderfeed.solarcraft.client.particles;
 
-import com.finderfeed.solarcraft.client.rendering.rendertypes.SolarCraftRenderTypes;
+import com.finderfeed.solarcraft.client.rendering.rendertypes.SCRenderTypes;
 import com.mojang.blaze3d.vertex.*;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Quaternion;
+
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -13,6 +12,8 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Matrix4f;
+import org.joml.Quaternionf;
 
 public abstract class ShaderParticle extends Particle {
 
@@ -37,7 +38,7 @@ public abstract class ShaderParticle extends Particle {
     public void render(VertexConsumer useless, Camera cam, float pticks) {
         MultiBufferSource src = Minecraft.getInstance().renderBuffers().bufferSource();
 
-        VertexConsumer vertex = src.getBuffer(SolarCraftRenderTypes.shaderRendertype(shaderStateShard));
+        VertexConsumer vertex = src.getBuffer(SCRenderTypes.shaderRendertype(shaderStateShard));
 
         PoseStack matrices = new PoseStack();
         matrices.pushPose();
@@ -45,7 +46,7 @@ public abstract class ShaderParticle extends Particle {
         float f = (float)(Mth.lerp((double)pticks, this.xo, this.x) - vec3.x());
         float f1 = (float)(Mth.lerp((double)pticks, this.yo, this.y) - vec3.y());
         float f2 = (float)(Mth.lerp((double)pticks, this.zo, this.z) - vec3.z());
-        Quaternion quaternion = cam.rotation();
+        Quaternionf quaternion = cam.rotation();
         matrices.translate(f,f1,f2);
         matrices.mulPose(quaternion);
 

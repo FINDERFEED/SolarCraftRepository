@@ -1,15 +1,15 @@
 package com.finderfeed.solarcraft.content.blocks.blockentities;
 
-import com.finderfeed.solarcraft.client.particles.SolarcraftParticleTypes;
+import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.content.items.solar_wand.wand_actions.structure_check.IStructureOwner;
-import com.finderfeed.solarcraft.events.other_events.event_handler.EventHandler;
+import com.finderfeed.solarcraft.events.other_events.event_handler.SCEventHandler;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
-import com.finderfeed.solarcraft.registries.blocks.SolarcraftBlocks;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
 
 import net.minecraft.network.chat.Component;
@@ -30,7 +30,7 @@ public class DimensionCoreTile extends BlockEntity implements IStructureOwner {
 
 
     public DimensionCoreTile(BlockPos p_155229_, BlockState p_155230_) {
-        super(SolarcraftTileEntityTypes.DIMENSION_CORE_TILE.get(), p_155229_, p_155230_);
+        super(SCTileEntities.DIMENSION_CORE_TILE.get(), p_155229_, p_155230_);
     }
 
 
@@ -76,7 +76,7 @@ public class DimensionCoreTile extends BlockEntity implements IStructureOwner {
             double[] xz = FDMathHelper.rotatePointDegrees(x,0,rotAngle);
             x = xz[0];
             double z = xz[1];
-            ClientHelpers.Particles.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+            ClientHelpers.Particles.createParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                     portalCenter.x + x,portalCenter.y + y,portalCenter.z + z,0,0,0,r,gr,b,0.25f);
         }
         for (int i = 0; i < 8;i++){
@@ -91,7 +91,7 @@ public class DimensionCoreTile extends BlockEntity implements IStructureOwner {
                 double rz = world.random.nextDouble()*0.5 - 0.25;
                 double mx = mod * x / rad * 0.05;
                 double mz = mod * z / rad * 0.05;
-                ClientHelpers.Particles.createParticle(SolarcraftParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
+                ClientHelpers.Particles.createParticle(SCParticleTypes.SMALL_SOLAR_STRIKE_PARTICLE.get(),
                         portalCenter.x + x + rx,portalCenter.y + ry,portalCenter.z + z + rz,mx,0,mz,r,gr,b,0.25f);
             }
         }
@@ -104,15 +104,15 @@ public class DimensionCoreTile extends BlockEntity implements IStructureOwner {
             world.getEntitiesOfClass(Entity.class, box, Entity::canChangeDimensions).forEach((entity) -> {
                 if (world.getServer() != null) {
                     ServerLevel destination;
-                    if (entity.level.dimension() == Level.OVERWORLD) {
-                        destination = world.getServer().getLevel(EventHandler.RADIANT_LAND_KEY);
+                    if (entity.level().dimension() == Level.OVERWORLD) {
+                        destination = world.getServer().getLevel(SCEventHandler.RADIANT_LAND_KEY);
                     } else {
                         destination = world.getServer().getLevel(Level.OVERWORLD);
                     }
                     if (destination != null) {
 
                         entity.changeDimension(destination, RadiantTeleporter.INSTANCE);
-                        if (destination.dimension() == EventHandler.RADIANT_LAND_KEY) {
+                        if (destination.dimension() == SCEventHandler.RADIANT_LAND_KEY) {
                             createWormhole(destination);
                             entity.sendSystemMessage(Component.literal("Use wormhole on 1,Y(~120),1 coordinates to return back"));
                         }
@@ -127,13 +127,13 @@ public class DimensionCoreTile extends BlockEntity implements IStructureOwner {
         int yHeight = destination.getHeight(Heightmap.Types.WORLD_SURFACE,1,1);
         boolean placed = false;
         for (int i = yHeight-10; i <= 255;i++){
-            if (destination.getBlockState(BlockPos.ZERO.offset(1,0,1).above(i)).getBlock() == SolarcraftBlocks.WORMHOLE.get()){
+            if (destination.getBlockState(BlockPos.ZERO.offset(1,0,1).above(i)).getBlock() == SCBlocks.WORMHOLE.get()){
                 placed = true;
                 break;
             }
         }
         if (!placed){
-            destination.setBlockAndUpdate(BlockPos.ZERO.offset(1,0,1).above(yHeight + 50), SolarcraftBlocks.WORMHOLE.get().defaultBlockState());
+            destination.setBlockAndUpdate(BlockPos.ZERO.offset(1,0,1).above(yHeight + 50), SCBlocks.WORMHOLE.get().defaultBlockState());
         }
     }
 
@@ -153,10 +153,6 @@ public class DimensionCoreTile extends BlockEntity implements IStructureOwner {
         return structureCorrect;
     }
 
-    @Override
-    public AABB getRenderBoundingBox() {
-        return Helpers.createAABBWithRadius(Helpers.getBlockCenter(worldPosition).add(0,3,0),3,3);
-    }
 
     @Override
     public List<MultiblockStructure> getMultiblocks() {

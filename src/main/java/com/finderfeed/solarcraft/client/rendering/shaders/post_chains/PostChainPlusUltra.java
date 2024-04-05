@@ -1,11 +1,14 @@
 package com.finderfeed.solarcraft.client.rendering.shaders.post_chains;
 
 
+import com.finderfeed.solarcraft.registries.SCRenderTargets;
 import com.google.gson.JsonSyntaxException;
+import com.mojang.blaze3d.pipeline.RenderTarget;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.PostChain;
 import net.minecraft.client.renderer.PostPass;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 
@@ -13,6 +16,7 @@ public class PostChainPlusUltra extends PostChain {
 
 
     private UniformPlusPlus uniforms;
+    private Runnable postActions;
 
     public PostChainPlusUltra(ResourceLocation loc,UniformPlusPlus uniform) throws IOException, JsonSyntaxException {
         super(Minecraft.getInstance().textureManager,
@@ -33,8 +37,6 @@ public class PostChainPlusUltra extends PostChain {
         } else {
             this.time += p_110024_ - this.lastStamp;
         }
-//        for(this.lastStamp = p_110024_; this.time > 20.0F; this.time -= 20.0F) {
-//        }
         for(PostPass postpass : this.passes) {
 
             if(uniforms != null){
@@ -42,5 +44,26 @@ public class PostChainPlusUltra extends PostChain {
             }
             postpass.process(this.time / 20.0F);
         }
+    }
+
+    public void runPostActions(){
+        if (postActions != null){
+            this.postActions.run();
+        }
+    }
+
+    public void addPostActions(Runnable postActions) {
+        this.postActions = postActions;
+    }
+
+
+    @Nullable
+    @Override
+    public RenderTarget getRenderTarget(@Nullable String string) {
+        RenderTarget t = SCRenderTargets.getTarget(string);
+        if (t != null){
+            return t;
+        }
+        return super.getRenderTarget(string);
     }
 }

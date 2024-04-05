@@ -9,14 +9,15 @@ import com.finderfeed.solarcraft.local_library.client.screens.FDScreenComponent;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import org.joml.Matrix4f;
+
 
 public class SunShardPuzzleRemainingTilesComponent extends FDScreenComponent {
 
@@ -39,10 +40,11 @@ public class SunShardPuzzleRemainingTilesComponent extends FDScreenComponent {
     }
 
     @Override
-    public void render(PoseStack matrices, int mousex, int mousey, float pticks) {
+    public void render(GuiGraphics graphics, int mousex, int mousey, float pticks) {
         var tiles = localPuzzle.getRemainingTiles();
         ClientHelpers.bindText(REMAINING_TILES_BACKGROUND);
-        Gui.blit(matrices,x-11,y-11,0,0,66,214,66,214);
+        RenderingTools.blitWithBlend(graphics.pose(),x-11,y-11,0,0,66,214,66,214,0,1f);
+//        Gui.blit(graphics,x-11,y-11,0,0,66,214,66,214);
         RenderingTools.scissor(x,y,16*2 + frameThickness*4,192);
         for (int i = 0; i < tiles.size(); i++){
             PuzzleTile tile = tiles.get(i);
@@ -57,17 +59,19 @@ public class SunShardPuzzleRemainingTilesComponent extends FDScreenComponent {
             RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
             ClientHelpers.bindText(new ResourceLocation(SolarCraft.MOD_ID,
                     "textures/misc/solar_shard_puzzle_tiles/" + tile.getTileType().getName() + ".png"));
+            PoseStack matrices = graphics.pose();
             matrices.pushPose();
             matrices.translate(x + xi + hwidth,y + yi + hwidth,0);
-            matrices.mulPose(Vector3f.ZP.rotationDegrees(tile.getRotation()));
+//            matrices.mulPose(Vector3f.ZP.rotationDegrees(tile.getRotation()));
+            matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.ZP(),tile.getRotation()));
 
 
 
             Matrix4f m = matrices.last().pose();
-            builder.vertex(m,-8,8,screen.getBlitOffset() - 10).uv(0,1).color(1f,1,1,1).endVertex();
-            builder.vertex(m,8,8,screen.getBlitOffset() - 10).uv(1,1).color(1f,1,1,1).endVertex();
-            builder.vertex(m,8,-8,screen.getBlitOffset() - 10).uv(1,0).color(1f,1,1,1).endVertex();
-            builder.vertex(m,-8,-8,screen.getBlitOffset() - 10).uv(0,0).color(1f,1,1,1).endVertex();
+            builder.vertex(m,-8,8, 10).uv(0,1).color(1f,1,1,1).endVertex();
+            builder.vertex(m,8,8, 10).uv(1,1).color(1f,1,1,1).endVertex();
+            builder.vertex(m,8,-8, 10).uv(1,0).color(1f,1,1,1).endVertex();
+            builder.vertex(m,-8,-8, 10).uv(0,0).color(1f,1,1,1).endVertex();
             matrices.popPose();
             BufferUploader.drawWithShader(builder.end());
         }

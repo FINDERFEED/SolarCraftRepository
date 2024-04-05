@@ -1,10 +1,10 @@
 package com.finderfeed.solarcraft.content.blocks;
 
-import com.finderfeed.solarcraft.content.blocks.blockentities.InfusingTableTile;
+import com.finderfeed.solarcraft.content.blocks.blockentities.InfusingCraftingTableTile;
 import com.finderfeed.solarcraft.content.blocks.blockentities.containers.InfusingTableTileContainer;
 import com.finderfeed.solarcraft.misc_things.PhantomInventory;
-import com.finderfeed.solarcraft.registries.items.SolarcraftItems;
-import com.finderfeed.solarcraft.registries.tile_entities.SolarcraftTileEntityTypes;
+import com.finderfeed.solarcraft.registries.items.SCItems;
+import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -21,8 +21,6 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.network.NetworkHooks;
-
 
 import javax.annotation.Nullable;
 
@@ -35,7 +33,7 @@ public class InfusingTableBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return SolarcraftTileEntityTypes.INFUSING_CRAFTING_TABLE.get().create(pos,state);
+        return SCTileEntities.INFUSING_CRAFTING_TABLE.get().create(pos,state);
     }
 
     @Override
@@ -43,11 +41,11 @@ public class InfusingTableBlock extends Block implements EntityBlock {
 
         if (!level.isClientSide
                 && hand == InteractionHand.MAIN_HAND
-                && !player.getItemInHand(hand).is(SolarcraftItems.SOLAR_WAND.get())){
+                && !player.getItemInHand(hand).is(SCItems.SOLAR_WAND.get())){
             BlockEntity e = level.getBlockEntity(pos);
-            if (e instanceof  InfusingTableTile tile) {
+            if (e instanceof  InfusingCraftingTableTile tile) {
                 if (tile.getOwner() != null && (level.getPlayerByUUID(tile.getOwner()) == player)) {
-                    NetworkHooks.openScreen((ServerPlayer) player, new InfusingTableTileContainer.Provider(tile), (buf ->
+                    ((ServerPlayer) player).openMenu( new InfusingTableTileContainer.Provider(tile), (buf ->
                             buf.writeBlockPos(pos)
                     ));
                 }else {
@@ -55,7 +53,7 @@ public class InfusingTableBlock extends Block implements EntityBlock {
                 }
             }
         }
-        if (player.getItemInHand(hand).is(SolarcraftItems.SOLAR_WAND.get())){
+        if (player.getItemInHand(hand).is(SCItems.SOLAR_WAND.get())){
                return InteractionResult.FAIL;
         }else {
             return InteractionResult.SUCCESS;
@@ -66,7 +64,7 @@ public class InfusingTableBlock extends Block implements EntityBlock {
     @Override
     public void onRemove(BlockState state, Level world, BlockPos pos, BlockState state2, boolean p_51542_) {
         BlockEntity blockentity = world.getBlockEntity(pos);
-        if (blockentity instanceof InfusingTableTile tile) {
+        if (blockentity instanceof InfusingCraftingTableTile tile) {
             Containers.dropContents(world, pos,new PhantomInventory(tile.getInventory()));
             world.updateNeighbourForOutputSignal(pos, this);
         }
@@ -77,7 +75,7 @@ public class InfusingTableBlock extends Block implements EntityBlock {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
         return (level,pos,state,tile)->{
-            InfusingTableTile.tick(level,pos,state,(InfusingTableTile) tile);
+            InfusingCraftingTableTile.tick(level,pos,state,(InfusingCraftingTableTile) tile);
         };
     }
 }
