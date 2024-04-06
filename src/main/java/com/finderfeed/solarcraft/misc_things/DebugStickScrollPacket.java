@@ -15,6 +15,10 @@ public class DebugStickScrollPacket extends FDPacket {
     public DebugStickScrollPacket(boolean forward){
         this.forward = forward;
     }
+
+    public DebugStickScrollPacket(FriendlyByteBuf buf){
+        this.forward = buf.readBoolean();
+    }
     @Override
     public void write(FriendlyByteBuf buf) {
         buf.writeBoolean(forward);

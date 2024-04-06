@@ -30,20 +30,9 @@ public class DungeonRay extends Entity {
     public static boolean stop = false;
 
     public static EntityDataAccessor<Direction> DIRECTION = SynchedEntityData.defineId(DungeonRay.class, EntityDataSerializers.DIRECTION);
-    private List<BlockPos> movePos = new ArrayList<>();
-    private int currentMoveTarget = 1;
-    private double movespeed = 0.1;
-    private float rayLength = 0;
-    private boolean backward = false;
 
-    public static void summon(Level level,BlockPos summonPos,Direction direction){
-        DungeonRay ray = new DungeonRay(SCEntityTypes.DUNGEON_RAY.get(),level);
-        ray.setPos(Helpers.getBlockCenter(summonPos));
-        ray.noPhysics = true;
-        ray.movePos.add(summonPos);
-        level.addFreshEntity(ray);
-        ray.setDirection(direction);
-    }
+    private float rayLength;
+
 
     public DungeonRay(EntityType<?> type, Level level) {
         super(type, level);
@@ -55,40 +44,11 @@ public class DungeonRay extends Entity {
         this.noPhysics = true;
         this.rayLength = this.computeRayLength();
         if (!level.isClientSide){
-
-            this.processMovement();
             this.doDamage();
         }
         super.tick();
     }
 
-    private void processMovement(){
-        if (movePos.size() > 1 && !stop){
-            BlockPos ptarget = movePos.get(currentMoveTarget);
-            Vec3 target = ptarget.getCenter();
-            Vec3 c = this.position();
-            Vec3 b = target.subtract(c);
-            if (b.length() > movespeed){
-                Vec3 move = b.normalize().multiply(movespeed,movespeed,movespeed);
-                this.move(MoverType.SELF,move);
-            }else{
-                this.setPos(target.x,target.y,target.z);
-                if (!backward){
-                    currentMoveTarget++;
-                    if (currentMoveTarget >= movePos.size()){
-                        backward = true;
-                        currentMoveTarget = movePos.size() - 2;
-                    }
-                }else{
-                    currentMoveTarget--;
-                    if (currentMoveTarget < 0){
-                        backward = false;
-                        currentMoveTarget = 1;
-                    }
-                }
-            }
-        }
-    }
 
     private void doDamage(){
         List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class,this.getDamageBox());
@@ -131,17 +91,7 @@ public class DungeonRay extends Entity {
         return Math.max((float) i.length() - 0.5f,0);
     }
 
-    public void setMovespeed(double movespeed) {
-        this.movespeed = movespeed;
-    }
 
-    public double getMovespeed() {
-        return movespeed;
-    }
-
-    public List<BlockPos> getMovePositions() {
-        return movePos;
-    }
 
 
     @Override
@@ -171,20 +121,14 @@ public class DungeonRay extends Entity {
         if (tag.contains("direction")) {
             this.setDirection(Direction.byName(tag.getString("direction")));
         }
-        movePos = CompoundNBTHelper.getBlockPosList("movePos",tag);
-        currentMoveTarget = tag.getInt("moveTarget");
-        movespeed = tag.getDouble("movespeed");
-        backward = tag.getBoolean("backward");
+
     }
 
     @Override
     protected void addAdditionalSaveData(CompoundTag tag) {
         Direction d = this.getDirection();
         tag.putString("direction",d.getName());
-        tag.putInt("moveTarget",currentMoveTarget);
-        CompoundNBTHelper.writeBlockPosList("movePos",movePos,tag);
-        tag.putDouble("movespeed",movespeed);
-        tag.putBoolean("backward", backward);
+
     }
 
     @Override

@@ -52,13 +52,6 @@ public class SolarcraftDebugStick extends Item {
         super.inventoryTick(item, world, player, slot, held);
     }
 
-    @Override
-    public InteractionResult useOn(UseOnContext ctx) {
-        Level world = ctx.getLevel();
-        BlockPos pos = ctx.getClickedPos();
-        Player player = ctx.getPlayer();
-        return this.dungeonRayHandle(ctx.getHand(),world,player,ctx.getItemInHand(),pos);
-    }
 
     public void switchPylons(BlockPos pos,Level world){
         if (world.getBlockEntity(pos) instanceof RuneEnergyPylonTile tile){
@@ -69,65 +62,8 @@ public class SolarcraftDebugStick extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
-        if (!world.isClientSide){
-            DungeonRay ray = this.getRayOnSight(world,player);
-            if (hand == InteractionHand.MAIN_HAND) {
-                if (ray != null) {
-                    this.setUUID(player.getItemInHand(hand), ray.getUUID());
-                    player.sendSystemMessage(Component.literal("Changed target"));
-                } else {
-                    DungeonRay ray2 = this.getDungeonRay((ServerLevel) world, player.getItemInHand(hand));
-                    if (ray2 != null) {
-                        List<Direction> dirs = List.of(
-                                Direction.UP,
-                                Direction.DOWN,
-                                Direction.NORTH,
-                                Direction.WEST,
-                                Direction.EAST,
-                                Direction.SOUTH
-                        );
-                        Direction direction = ray2.getDirection();
-                        int index = (dirs.indexOf(direction) + 1) % dirs.size();
-                        Direction newDir = dirs.get(index);
-                        ray2.setDirection(newDir);
-                    }
-                }
-            }else{
-                if (player.isCrouching()) {
-                    ray.remove(Entity.RemovalReason.DISCARDED);
-                }
-            }
-            return InteractionResultHolder.success(player.getItemInHand(hand));
-        }
+
         return super.use(world, player, hand);
-    }
-
-
-    private InteractionResult dungeonRayHandle(InteractionHand hand,Level world,Player player,ItemStack item,BlockPos clickedPos){
-        if (!world.isClientSide){
-            DungeonRay ray = this.getDungeonRay((ServerLevel) world,item);
-            Block block = world.getBlockState(clickedPos).getBlock();
-            if (block == Blocks.BEDROCK) {
-                if (ray != null){
-                    ray.setMovespeed(ray.getMovespeed() + 0.05);
-                }
-            }else if (block == Blocks.COAL_BLOCK){
-                if (ray != null){
-                    ray.setMovespeed(ray.getMovespeed() - 0.05);
-                }
-            }else{
-                if (!player.isCrouching()) {
-                    if (ray != null && hand == InteractionHand.OFF_HAND) {
-                        ray.getMovePositions().add(clickedPos);
-                    }
-                }else{
-                    if (hand == InteractionHand.OFF_HAND) {
-                        DungeonRay.summon(world, clickedPos, Direction.UP);
-                    }
-                }
-            }
-        }
-        return InteractionResult.SUCCESS;
     }
 
     private UUID getUUID(ItemStack itemStack){

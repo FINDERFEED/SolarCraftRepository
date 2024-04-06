@@ -17,6 +17,9 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.event.InputEvent;
 
 import javax.annotation.Nullable;
+import java.lang.annotation.*;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
 import java.util.function.Consumer;
 
@@ -31,10 +34,37 @@ public abstract class DebugStick extends Item {
 
     public DebugStick(Properties props) {
         super(props);
-        this.getUseActions(useActions);
-        this.getUseOnActions(useOnActions);
+        this.collectAllActions();
         this.allActionIds.addAll(useActions.keySet());
         this.allActionIds.addAll(useOnActions.keySet());
+    }
+
+    protected void collectAllActions(){
+        Method[] methods = this.getClass().getMethods();
+        for (Method method : methods){
+            Annotation annotation;
+            if ((annotation = method.getAnnotation(UseAction.class)) != null){
+                this.useActions.put(((UseAction)annotation).value(),(ctx)->{
+                    try {
+                        method.invoke(this,ctx);
+                    } catch (IllegalAccessException e) {
+                        throw new RuntimeException(e);
+                    } catch (InvocationTargetException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            }else if ((annotation = method.getAnnotation(UseOnAction.class)) != null){
+                this.useOnActions.put(((UseOnAction)annotation).value(),(ctx)->{
+                    try {
+                        method.invoke(this,ctx);
+                    } catch (IllegalAccessException e) {
+                        throw new RuntimeException(e);
+                    } catch (InvocationTargetException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            }
+        }
     }
 
 
@@ -78,8 +108,6 @@ public abstract class DebugStick extends Item {
         item.getOrCreateTag().putInt("actionIndex",id);
     }
 
-    public abstract void getUseActions(Map<String,Consumer<UseContext>> useOnActions);
-    public abstract void getUseOnActions(Map<String,Consumer<UseOnContext>> useOnActions);
 
     public void switchMode(ItemStack item,boolean forward){
         int currentAction = this.getCurrentActionIndex(item);
@@ -104,4 +132,16 @@ public abstract class DebugStick extends Item {
 
     public record UseContext(Level level, Player player, InteractionHand hand){};
 
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.METHOD)
+    public @interface UseAction {
+
+        String value();
+
+    }
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.METHOD)
+    public @interface UseOnAction {
+        String value();
+    }
 }

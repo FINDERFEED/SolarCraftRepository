@@ -8,6 +8,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
@@ -19,9 +20,7 @@ import java.util.UUID;
 
 public class DungeonRayController extends Entity {
 
-    public static boolean DEBUG = true;
     private List<DungeonRayHandler> handlers = new ArrayList<>();
-    private List<UUID> rayIds = new ArrayList<>();
 
     public static final EntityDataAccessor<Integer> CURRENT_SELECTED_HANDLER = SynchedEntityData.defineId(DungeonRayController.class, EntityDataSerializers.INT);
 
@@ -33,26 +32,13 @@ public class DungeonRayController extends Entity {
     @Override
     public void tick() {
         super.tick();
-
-        if (!level.isClientSide){
-            if (DEBUG){
-                FDPacketUtil.sendToTrackingEntity(this,new SendHandlersToClient(this));
-            } else {
-                this.moveRays();
-            }
-        }else{
-
-        }
+        this.tickRays();
     }
 
-    private void moveRays(){
-        List<DungeonRay> rays = this.getRayEntities((ServerLevel) level);
+    private void tickRays(){
         for (int i = 0; i < handlers.size();i++){
-            DungeonRay ray = rays.get(i);
             DungeonRayHandler handler = handlers.get(i);
-            if (ray != null) {
-                handler.tickRay(this.blockPosition(), ray);
-            }
+            handler.tickRay(this.blockPosition(),this.level);
         }
     }
 
@@ -64,22 +50,17 @@ public class DungeonRayController extends Entity {
         this.handlers = handlers;
     }
 
-    public List<UUID> getRayIds() {
-        return rayIds;
-    }
 
-    public List<DungeonRay> getRayEntities(ServerLevel serverLevel){
-        List<DungeonRay> rays = new ArrayList<>();
-        for (UUID uuid : this.rayIds){
-            rays.add((DungeonRay) serverLevel.getEntity(uuid));
-        }
-        return rays;
+    @Override
+    public void startSeenByPlayer(ServerPlayer player) {
+        super.startSeenByPlayer(player);
+        FDPacketUtil.sendToPlayer(player,new SendHandlersToClient(this));
     }
 
     @Override
     public boolean save(CompoundTag tag) {
         handlersToTag(this.getHandlers(),tag);
-        CompoundNBTHelper.saveUUIDList(tag, rayIds,"rays");
+
         return super.save(tag);
     }
 
@@ -96,12 +77,7 @@ public class DungeonRayController extends Entity {
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
-        this.rayIds = CompoundNBTHelper.loadUUIDList(tag,"rays");
         this.handlers = handlersFromTag(tag);
-        for (int i = 0; i < tag.getInt("handlersLen");i++){
-            DungeonRayHandler handler = DungeonRayHandler.fromTag(tag.getCompound("handler"+i));
-            this.handlers.add(handler);
-        }
     }
 
     public static List<DungeonRayHandler> handlersFromTag(CompoundTag tag){

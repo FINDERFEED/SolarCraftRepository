@@ -83,10 +83,6 @@ public class SolarCraftCommands {
                                 .then(Commands.literal("revoke")
                                         .then(Commands.argument("ability_id",new SCAbilityArgument())
                                                 .executes(css->revokeAbility(css.getSource(),css.getArgument("ability_id",String.class))))))
-                        .then(Commands.literal("stop_dungeon_rays").executes((stack)->{
-                            DungeonRay.stop = !DungeonRay.stop;
-                            return 1;
-                        }))
 
         );
     }

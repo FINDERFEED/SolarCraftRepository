@@ -1,17 +1,24 @@
 package com.finderfeed.solarcraft.content.entities.renderers;
 
+import com.finderfeed.solarcraft.client.rendering.rendertypes.SCRenderTypes;
 import com.finderfeed.solarcraft.content.entities.dungeon_ray_controller.DungeonRayController;
 import com.finderfeed.solarcraft.content.entities.dungeon_ray_controller.DungeonRayHandler;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
+import com.finderfeed.solarcraft.local_library.helpers.ShapesRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Vec3i;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
@@ -23,11 +30,71 @@ public class DungeonRayControllerRenderer extends EntityRenderer<DungeonRayContr
 
     @Override
     public void render(DungeonRayController controller, float yaw, float pticks, PoseStack matrices, MultiBufferSource src, int light) {
-        if (DungeonRayController.DEBUG){
+        if (Minecraft.getInstance().getEntityRenderDispatcher().shouldRenderHitBoxes()){
             this.renderDebug(controller,matrices,src,pticks);
         }
+        for (DungeonRayHandler handler : controller.getHandlers()){
+            if (handler.oldPos != null) {
+                Vec3 oldPos = handler.oldPos;
+                Vec3 current = handler.currentPosition;
+                Vec3 n = new Vec3(
+                        Mth.lerp(pticks, oldPos.x, current.x),
+                        Mth.lerp(pticks, oldPos.y, current.y),
+                        Mth.lerp(pticks, oldPos.z, current.z)
+                );
 
+
+                matrices.pushPose();
+                matrices.translate(n.x, n.y, n.z);
+                this.renderRay(handler, matrices, src, pticks);
+                matrices.popPose();
+            }
+        }
     }
+
+
+    private void renderRay(DungeonRayHandler handler,PoseStack matrices,MultiBufferSource src,float pticks){
+        matrices.pushPose();
+        Direction direction = handler.rayDir;
+        float length = handler.rayLength + 0.5f;
+        Vec3i normal = direction.getNormal();
+        Vec3 vn = new Vec3(normal.getX(),normal.getY(),normal.getZ());
+        VertexConsumer v = src.getBuffer(SCRenderTypes.LIGHTNING_NO_CULL);
+        Matrix4f mat = matrices.last().pose();
+        float w = 0.125f;
+        RenderingTools.applyMovementMatrixRotations(matrices,vn);
+        for (int i = 0; i < 4;i++) {
+            matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YN(),i * 90));
+            v.vertex(mat, -w, 0, -w).color(1, 1, 0, 0.25f).endVertex();
+            v.vertex(mat, w, 0, -w).color(1, 1, 0, 0.25f).endVertex();
+            v.vertex(mat, w, length - 0.5f, -w).color(1, 1, 0, 0.25f).endVertex();
+            v.vertex(mat, -w, length - 0.5f, -w).color(1, 1, 0, 0.25f).endVertex();
+        }
+        v = src.getBuffer(RenderType.lightning());
+        matrices.popPose();
+        matrices.pushPose();
+        matrices.translate(-vn.x*0.125,-vn.y*0.125,-vn.z*0.125);
+        ShapesRenderer.renderCube(ShapesRenderer.POSITION_COLOR,v,matrices,0.125f,1,1,0,1, LightTexture.FULL_BRIGHT);
+        matrices.translate(vn.x*(length - 0.25),vn.y*(length - 0.25),vn.z*(length - 0.25));
+        ShapesRenderer.renderCube(ShapesRenderer.POSITION_COLOR,v,matrices,0.125f,1,1,0,1, LightTexture.FULL_BRIGHT);
+        matrices.popPose();
+
+        matrices.pushPose();
+        RenderingTools.applyMovementMatrixRotations(matrices,vn);
+        for (int i = 0; i < 4;i++) {
+
+            matrices.pushPose();
+            matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.YP(),90 * i));
+            matrices.translate(0.125,0.125,0);
+            ShapesRenderer.renderCube(ShapesRenderer.POSITION_COLOR, v, matrices, 0.125f, 1, 1, 0, 1, LightTexture.FULL_BRIGHT);
+            matrices.translate(0,length - 0.75f,0);
+            ShapesRenderer.renderCube(ShapesRenderer.POSITION_COLOR, v, matrices, 0.125f, 1, 1, 0, 1, LightTexture.FULL_BRIGHT);
+            matrices.popPose();
+        }
+        matrices.popPose();
+    }
+
+
 
     private void renderDebug(DungeonRayController controller,PoseStack matrices,MultiBufferSource src,float pticks){
         matrices.pushPose();
@@ -63,6 +130,9 @@ public class DungeonRayControllerRenderer extends EntityRenderer<DungeonRayContr
                 Vec3 next = list.get(i+1).getCenter().subtract(0.5,0.5,0.5);
                 this.renderLine(matrices,v,c,next,1,1,1,1);
             }
+
+            Vec3i dir = handler.rayDir.getNormal();
+            this.renderLine(matrices,v,c,c.add(dir.getX()*2,dir.getY()*2,dir.getZ()*2),1f,1f,0f,1f);
         }
 
     }
