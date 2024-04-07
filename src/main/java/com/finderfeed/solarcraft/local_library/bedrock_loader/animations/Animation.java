@@ -164,7 +164,7 @@ public class Animation {
             List<KeyFrame> scale;
             if (boneData.has("rotation")) {
                 JsonElement srotation = boneData.get("rotation");
-                rotation = KeyFrame.parseKeyFrameList(srotation,1,1,1,0,0,0);
+                rotation = KeyFrame.parseKeyFrameList(srotation,-1,-1,1,0,0,0);
             }else{
                 rotation = new ArrayList<>();
             }

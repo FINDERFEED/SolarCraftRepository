@@ -58,10 +58,7 @@ public class DungeonRayController extends Entity implements AnimatedObject {
 
     private void processGivingOut() {
         if (givingOutTicker == 60) {
-            this.manager.setAnimation("givingOut", new AnimationTicker.Builder(SCAnimations.RAY_CONTROLLER_SHAKE.get())
-                    .replaceable(true)
-                    .build()
-            );
+            this.manager.setAnimation("givingOut", new AnimationTicker.Builder(SCAnimations.RAY_CONTROLLER_SHAKE.get()).replaceable(true).build());
             this.particles();
         } else if (givingOutTicker == 7) {
             this.manager.setAnimation("givingOut", new AnimationTicker(SCAnimations.RAY_CONTROLLER_EXPLODE.get()));
@@ -218,5 +215,18 @@ public class DungeonRayController extends Entity implements AnimatedObject {
     }
 
 
+    @Override
+    public void push(Entity p_20293_) {
 
+    }
+
+    @Override
+    public void push(double p_20286_, double p_20287_, double p_20288_) {
+
+    }
+
+    @Override
+    public boolean isNoGravity() {
+        return true;
+    }
 }
