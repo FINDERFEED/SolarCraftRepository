@@ -188,7 +188,7 @@ public class SCItems {
     //public static final DeferredHolder<Item,Item> ASH_LEAVES = ITEMS.register("ash_leaves",()->new BlockItem(SCBlocks.ASH_LEAVES.get(),new Item.Properties()));
     //public static final DeferredHolder<Item,Item> BURNT_LOG = ITEMS.register("burnt_log",()->new BlockItem(SCBlocks.BURNT_LOG.get(),new Item.Properties()));
     //public static final DeferredHolder<Item,Item> DEAD_SPROUT = ITEMS.register("dead_sprout",()->new BlockItem(SCBlocks.DEAD_SPROUT.get(),new Item.Properties()));
-    public static final DeferredHolder<Item,Item> FIRST_DIMENSIONAL_SHARD = registerItem(ITEMS.register("first_dimensional_shard",()->new Item(new Item.Properties().rarity(Rarity.EPIC))),SOLAR_GROUP_MATERIALS);
+    public static final DeferredHolder<Item,Item> DIMENSIONAL_SHARD = registerItem(ITEMS.register("first_dimensional_shard",()->new Item(new Item.Properties().rarity(Rarity.EPIC))),SOLAR_GROUP_MATERIALS);
     //public static final DeferredHolder<Item,Item> ASH_ITEM = registerItem(ITEMS.register("ash",()->new AshItem(new Item.Properties())),SOLAR_GROUP);
 
     public static final DeferredHolder<Item,Item> INFO_FRAGMENT = registerItem(ITEMS.register("ancient_fragment",()->new AncientFragmentItem(new Item.Properties())),SOLAR_GROUP_FRAGMENTS);

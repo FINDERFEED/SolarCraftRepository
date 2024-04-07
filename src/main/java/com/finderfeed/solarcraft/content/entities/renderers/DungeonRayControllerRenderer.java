@@ -1,10 +1,13 @@
 package com.finderfeed.solarcraft.content.entities.renderers;
 
+import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.client.rendering.rendertypes.SCRenderTypes;
 import com.finderfeed.solarcraft.content.entities.dungeon_ray_controller.DungeonRayController;
 import com.finderfeed.solarcraft.content.entities.dungeon_ray_controller.DungeonRayHandler;
+import com.finderfeed.solarcraft.local_library.bedrock_loader.model_components.FDModel;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.local_library.helpers.ShapesRenderer;
+import com.finderfeed.solarcraft.registries.SCBedrockModels;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
@@ -14,6 +17,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
@@ -24,12 +28,25 @@ import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 public class DungeonRayControllerRenderer extends EntityRenderer<DungeonRayController> {
+
+    public static final ResourceLocation TEXTURE = new ResourceLocation(SolarCraft.MOD_ID,"textures/entities/ray_controller.png");
+
+    private FDModel model;
+
     public DungeonRayControllerRenderer(EntityRendererProvider.Context p_174008_) {
         super(p_174008_);
+        this.model = new FDModel(SCBedrockModels.RAY_CONTROLLER);
     }
 
     @Override
     public void render(DungeonRayController controller, float yaw, float pticks, PoseStack matrices, MultiBufferSource src, int light) {
+
+        controller.getAnimationManager().getAsClientManager().applyAnimations(model,pticks);
+        matrices.pushPose();
+        matrices.translate(0,-0.3,0);
+        model.render(matrices,src.getBuffer(RenderType.entityTranslucent(TEXTURE)),light, OverlayTexture.NO_OVERLAY,1,1,1,1);
+        matrices.popPose();
+
         if (Minecraft.getInstance().getEntityRenderDispatcher().shouldRenderHitBoxes()){
             this.renderDebug(controller,matrices,src,pticks);
         }
