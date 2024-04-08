@@ -43,7 +43,7 @@ public class DungeonRayControllerRenderer extends EntityRenderer<DungeonRayContr
 
         controller.getAnimationManager().getAsClientManager().applyAnimations(model,pticks);
         matrices.pushPose();
-        matrices.translate(0,-0.3,0);
+        matrices.translate(0,-0.5,0);
         model.render(matrices,src.getBuffer(RenderType.entityTranslucent(TEXTURE)),light, OverlayTexture.NO_OVERLAY,1,1,1,1);
         matrices.popPose();
 

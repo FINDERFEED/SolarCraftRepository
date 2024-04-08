@@ -53,17 +53,24 @@ public class DungeonRayControllerStick extends DebugStick {
         }
     }
 
-    @UseAction("createHandler")
-    public void createHandler(UseContext ctx){
-        Player player = ctx.player();
-        Level level = ctx.level();
-        ItemStack item = player.getItemInHand(ctx.hand());
+    @UseOnAction("createHandler")
+    public void createHandler(UseOnContext ctx){
+        Player player = ctx.getPlayer();
+        Level level = ctx.getLevel();
+        ItemStack item = player.getItemInHand(ctx.getHand());
         if (level instanceof ServerLevel serverLevel) {
             var controller = this.getDungeonRayController(serverLevel,item);
             if (controller != null) {
-                controller.getHandlers().add(new DungeonRayHandler());
+                DungeonRayHandler handler;
+                controller.getHandlers().add(handler = new DungeonRayHandler());
+
+                BlockPos epos = controller.blockPosition();
+                handler.addPos(ctx.getClickedPos().subtract(epos));
+
+                controller.getEntityData().set(DungeonRayController.CURRENT_SELECTED_HANDLER,controller.getHandlers().size() - 1);
+
                 player.sendSystemMessage(Component.literal("Created handler"));
-                controller.cycleCurrentSelectedHandler();
+
                 FDPacketUtil.sendToTrackingEntity(controller,new SendHandlersToClient(controller));
             }
         }
@@ -78,6 +85,23 @@ public class DungeonRayControllerStick extends DebugStick {
             var controller = this.getDungeonRayController(serverLevel,item);
             if (controller != null) {
                 controller.removeSelectedHandler();
+                FDPacketUtil.sendToTrackingEntity(controller,new SendHandlersToClient(controller));
+            }
+        }
+    }
+
+    @UseAction("resetRaysPositions")
+    public void setHandlersTimeToZero(UseContext ctx){
+        Player player = ctx.player();
+        Level level = ctx.level();
+        ItemStack item = player.getItemInHand(ctx.hand());
+        if (level instanceof ServerLevel serverLevel) {
+            var controller = this.getDungeonRayController(serverLevel,item);
+            if (controller != null) {
+                for (DungeonRayHandler handler : controller.getHandlers()){
+                    handler.currentPosition = handler.movePositionOffsets.get(0).getCenter().add(-0.5,-0.5,-0.5);
+                    handler.moveTarget = 1;
+                }
                 FDPacketUtil.sendToTrackingEntity(controller,new SendHandlersToClient(controller));
             }
         }

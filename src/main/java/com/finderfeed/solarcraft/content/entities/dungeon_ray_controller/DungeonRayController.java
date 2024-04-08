@@ -89,6 +89,7 @@ public class DungeonRayController extends Entity implements AnimatedObject {
         if (player instanceof ServerPlayer serverPlayer){
             if (!usedPlayers.contains(serverPlayer.getUUID())){
                 givingOutTicker = 60;
+                usedPlayers.add(serverPlayer.getUUID());
             }
         }
         return super.interactAt(player, vec, hand);
