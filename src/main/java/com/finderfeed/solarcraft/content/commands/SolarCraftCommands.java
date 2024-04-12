@@ -43,11 +43,15 @@ public class SolarCraftCommands {
 
                         .then(Commands.literal("progressions")
                                 .then(Commands.literal("help").executes((e)->progressionsHelp(e.getSource())))
-                                .then(Commands.literal("unlock")
-                                        .then(Commands.argument("progression",StringArgumentType.string())
-                                                .executes((e)->unlockProgression(e.getSource(),e.getArgument("progression",String.class)))))
-                                .then(Commands.literal("revoke").then(Commands.argument("progression",StringArgumentType.string())
-                                        .executes((e)->revokeProgression(e.getSource(),e.getArgument("progression",String.class))))))
+                                .then(
+                                        Commands.argument("target",EntityArgument.player())
+                                                .then(Commands.literal("unlock")
+                                                        .then(Commands.argument("progression",StringArgumentType.string())
+                                                                .executes((e)->unlockProgression(e.getSource(),EntityArgument.getPlayer(e,"target"),e.getArgument("progression",String.class)))))
+                                                .then(Commands.literal("revoke").then(Commands.argument("progression",StringArgumentType.string())
+                                                        .executes((e)->revokeProgression(e.getSource(),EntityArgument.getPlayer(e,"target"),e.getArgument("progression",String.class))))))
+                                )
+
 
 
                         .then(RetainFragments.register())
@@ -66,31 +70,30 @@ public class SolarCraftCommands {
         );
     }
 
-    public static int revokeProgression(CommandSourceStack src,String code) throws CommandSyntaxException {
+    public static int revokeProgression(CommandSourceStack src,ServerPlayer player,String code) throws CommandSyntaxException {
         Progression progression = Progression.getAchievementByName(code);
-        ServerPlayer pl = src.getPlayerOrException();
         if (code.equals("all")){
             for (Progression a : Progression.allProgressions){
-                Helpers.setProgressionCompletionStatus(a,src.getPlayerOrException(),false);
+                Helpers.setProgressionCompletionStatus(a,player,false);
                 src.sendSuccess(Component.translatable("solarcraft.success_revoke")
                         .append(Component.literal(" "+a.translation.getString()).withStyle(ChatFormatting.GOLD)),false);
             }
-            Helpers.updateProgression(src.getPlayerOrException());
+            Helpers.updateProgression(player);
 
         }else if (progression != null){
-            if (Helpers.hasPlayerCompletedProgression(progression,pl)){
+            if (Helpers.hasPlayerCompletedProgression(progression,player)){
                 boolean flag = true;
                 for (Progression p : ProgressionTree.INSTANCE.getProgressionChildren(progression)){
-                    if (Helpers.hasPlayerCompletedProgression(p,pl)){
+                    if (Helpers.hasPlayerCompletedProgression(p,player)){
                         flag = false;
                         break;
                     }
                 }
                 if (flag) {
-                    Helpers.setProgressionCompletionStatus(progression, pl, false);
+                    Helpers.setProgressionCompletionStatus(progression, player, false);
                     src.sendSuccess(Component.translatable("solarcraft.success_revoke")
                             .append(Component.literal(" " + progression.getProgressionCode()).withStyle(ChatFormatting.GOLD)), false);
-                    Helpers.updateProgression(src.getPlayerOrException());
+                    Helpers.updateProgression(player);
                 }else{
                     src.sendFailure(Component.translatable("solarcraft.failure_revoke"));
 
@@ -101,28 +104,27 @@ public class SolarCraftCommands {
         }else {
             src.sendFailure(Component.translatable("solarcraft.failure_revoke"));
         }
-        Helpers.forceChunksReload(src.getPlayerOrException());
+        Helpers.forceChunksReload(player);
         return 0;
     }
 
-    public static int unlockProgression(CommandSourceStack src,String code) throws CommandSyntaxException {
+    public static int unlockProgression(CommandSourceStack src,ServerPlayer player,String code) throws CommandSyntaxException {
         Progression progression = Progression.getAchievementByName(code);
-        ServerPlayer pl = src.getPlayerOrException();
         if (code.equals("all")){
             for (Progression a : Progression.allProgressions){
-                Helpers.setProgressionCompletionStatus(a,src.getPlayerOrException(),true);
+                Helpers.setProgressionCompletionStatus(a,player,true);
                 src.sendSuccess(Component.translatable("solarcraft.success_unlock")
                         .append(Component.literal(" "+a.translation.getString()).withStyle(ChatFormatting.GOLD)),false);
             }
-            Helpers.updateProgression(src.getPlayerOrException());
+            Helpers.updateProgression(player);
 
         }else if (progression != null){
-            if (Helpers.canPlayerUnlock(progression,pl)){
-                Helpers.setProgressionCompletionStatus(progression,pl,true);
+            if (Helpers.canPlayerUnlock(progression,player)){
+                Helpers.setProgressionCompletionStatus(progression,player,true);
                 src.sendSuccess(Component.translatable("solarcraft.success_unlock")
                         .append(Component.literal(" "+ progression.getProgressionCode()).withStyle(ChatFormatting.GOLD)),false);
 
-                Helpers.updateProgression(src.getPlayerOrException());
+                Helpers.updateProgression(player);
 
 
             }else {
@@ -131,7 +133,7 @@ public class SolarCraftCommands {
         }else {
             src.sendFailure(Component.translatable("solarcraft.failure_unlock"));
         }
-        Helpers.forceChunksReload(src.getPlayerOrException());
+        Helpers.forceChunksReload(player);
         return 0;
     }
 

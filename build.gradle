@@ -16,7 +16,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
 
 
-version = '3.2.0.1'
+version = '3.2.0.2'
 group = 'com.finderfeed.solarcraft' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'solarcraft'
 
@@ -128,7 +128,7 @@ dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.minecraftforge:forge:1.19.2-43.2.3'
+    minecraft 'net.minecraftforge:forge:1.19.2-43.3.0'
 
     //Include CT only on dev and AP. The runtime only thing is to test changes.
 //    compileOnly fg.deobf("com.blamejared.crafttweaker:CraftTweaker-forge-1.18.2:9.1.103")
