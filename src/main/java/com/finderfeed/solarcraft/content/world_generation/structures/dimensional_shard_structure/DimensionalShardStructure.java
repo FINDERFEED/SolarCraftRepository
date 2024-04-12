@@ -21,8 +21,8 @@ public class DimensionalShardStructure extends Structure {
     }
 
     private static void generatePieces(StructurePiecesBuilder p_197089_, GenerationContext ctx) {
-        int x = (ctx.chunkPos().x << 4) + 7;
-        int z = (ctx.chunkPos().z << 4) + 7;
+        int x = (ctx.chunkPos().x << 4) + 7 - 15;
+        int z = (ctx.chunkPos().z << 4) + 7 - 15;
 //        int surfaceY = ctx.chunkGenerator().getBaseHeight(x,z, Heightmap.Types.WORLD_SURFACE_WG,ctx.heightAccessor());
         int y = ctx.chunkGenerator().getBaseHeight(x,z, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 ctx.heightAccessor(), ctx.randomState());

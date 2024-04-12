@@ -51,22 +51,26 @@ public class DungeonRayControllerRenderer extends EntityRenderer<DungeonRayContr
         if (Minecraft.getInstance().getEntityRenderDispatcher().shouldRenderHitBoxes()){
             this.renderDebug(controller,matrices,src,pticks);
         }
-        for (DungeonRayHandler handler : controller.getHandlers()){
-            if (handler.oldPos != null) {
-                Vec3 oldPos = handler.oldPos;
-                Vec3 current = handler.currentPosition;
-                Vec3 n = new Vec3(
-                        Mth.lerp(pticks, oldPos.x, current.x),
-                        Mth.lerp(pticks, oldPos.y, current.y),
-                        Mth.lerp(pticks, oldPos.z, current.z)
-                );
+        try {
+            for (DungeonRayHandler handler : controller.getHandlers()) {
+                if (handler.oldPos != null) {
+                    Vec3 oldPos = handler.oldPos;
+                    Vec3 current = handler.currentPosition;
+                    Vec3 n = new Vec3(
+                            Mth.lerp(pticks, oldPos.x, current.x),
+                            Mth.lerp(pticks, oldPos.y, current.y),
+                            Mth.lerp(pticks, oldPos.z, current.z)
+                    );
 
 
-                matrices.pushPose();
-                matrices.translate(n.x, n.y, n.z);
-                this.renderRay(handler, matrices, src, pticks);
-                matrices.popPose();
+                    matrices.pushPose();
+                    matrices.translate(n.x, n.y, n.z);
+                    this.renderRay(handler, matrices, src, pticks);
+                    matrices.popPose();
+                }
             }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
@@ -111,16 +115,18 @@ public class DungeonRayControllerRenderer extends EntityRenderer<DungeonRayContr
         }
         matrices.popPose();
 
-        matrices.pushPose();
-        matrices.mulPose(Minecraft.getInstance().gameRenderer.getMainCamera().rotation());
-        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.ZP(),180));
-        matrices.translate(0.7,0,0);
-        matrices.scale(0.03f,0.03f,-1);
-        GuiGraphics graphics = new GuiGraphics(Minecraft.getInstance(),matrices,Minecraft.getInstance().renderBuffers().bufferSource());
+        if (Minecraft.getInstance().getEntityRenderDispatcher().shouldRenderHitBoxes()) {
+            matrices.pushPose();
+            matrices.mulPose(Minecraft.getInstance().gameRenderer.getMainCamera().rotation());
+            matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.ZP(), 180));
+            matrices.translate(0.7, 0, 0);
+            matrices.scale(0.03f, 0.03f, -1);
+            GuiGraphics graphics = new GuiGraphics(Minecraft.getInstance(), matrices, Minecraft.getInstance().renderBuffers().bufferSource());
 
-        graphics.drawCenteredString(Minecraft.getInstance().font, "%.3f".formatted(handler.movespeed),0,0,0xff1111);
+            graphics.drawCenteredString(Minecraft.getInstance().font, "%.3f".formatted(handler.movespeed), 0, 0, 0xff1111);
 
-        matrices.popPose();
+            matrices.popPose();
+        }
     }
 
 

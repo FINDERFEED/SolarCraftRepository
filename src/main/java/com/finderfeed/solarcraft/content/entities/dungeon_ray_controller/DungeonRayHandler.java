@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.content.entities.dungeon_ray_controller;
 
+import com.finderfeed.solarcraft.config.SolarcraftConfig;
 import com.finderfeed.solarcraft.content.entities.DungeonRay;
 import com.finderfeed.solarcraft.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
@@ -49,14 +50,18 @@ public class DungeonRayHandler {
                 return;
             }
             if (movePositionOffsets.size() > 1) {
-                BlockPos offs = movePositionOffsets.get(moveTarget);
-                Vec3 movePos = new Vec3(offs.getX(),offs.getY(),offs.getZ());
-                Vec3 rayPos = currentPosition;
-                Vec3 b = movePos.subtract(rayPos);
-                if (b.length() > movespeed) {
-                    currentPosition = rayPos.add(b.normalize().multiply(movespeed, movespeed, movespeed));
-                } else {
-                    currentPosition = movePos;
+                if (moveTarget < movePositionOffsets.size()) {
+                    BlockPos offs = movePositionOffsets.get(moveTarget);
+                    Vec3 movePos = new Vec3(offs.getX(), offs.getY(), offs.getZ());
+                    Vec3 rayPos = currentPosition;
+                    Vec3 b = movePos.subtract(rayPos);
+                    if (b.length() > movespeed) {
+                        currentPosition = rayPos.add(b.normalize().multiply(movespeed, movespeed, movespeed));
+                    } else {
+                        currentPosition = movePos;
+                        this.cycleNextMoveTarget();
+                    }
+                }else{
                     this.cycleNextMoveTarget();
                 }
             }else{
@@ -94,7 +99,7 @@ public class DungeonRayHandler {
     private void doDamage(Vec3 mainPos,Level level){
         List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class,this.getDamageBox(mainPos));
         for (LivingEntity entity : entities){
-            entity.hurt(SCDamageSources.RUNIC_MAGIC,10f);
+            entity.hurt(SCDamageSources.RUNIC_MAGIC, SolarcraftConfig.DUNGEON_RAY_DAMAGE.get().floatValue());
         }
     }
 

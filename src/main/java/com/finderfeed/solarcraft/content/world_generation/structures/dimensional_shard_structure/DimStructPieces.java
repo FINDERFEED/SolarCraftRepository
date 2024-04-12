@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.content.world_generation.structures.dimensional_shard_structure;
 
+import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.world_generation.structures.StructurePieces;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.Vec3i;
@@ -25,7 +26,7 @@ import java.util.Map;
 
 
 public class DimStructPieces {
-    private static final ResourceLocation DUNGEON_PIECE = new ResourceLocation("solarcraft", "dimensional_shard_structure");
+    private static final ResourceLocation DUNGEON_PIECE = new ResourceLocation(SolarCraft.MOD_ID, "jungle_dungeon");
     private static final Map<ResourceLocation, BlockPos> OFFSET = ImmutableMap.of(DUNGEON_PIECE, new BlockPos(0, 1, 0));
 
     /*
@@ -86,13 +87,13 @@ public class DimStructPieces {
 
         @Override
         protected void handleDataMarker(String func, BlockPos pos, ServerLevelAccessor world, RandomSource rnd, BoundingBox p_226910_) {
-            if ("treasure".equals(func)){
-                world.setBlock(pos, Blocks.AIR.defaultBlockState(),3);
-                BlockEntity tile = world.getBlockEntity(pos.below());
-                if (tile instanceof ChestBlockEntity){
-                    ((ChestBlockEntity) tile).setLootTable(new ResourceLocation("solarcraft","chest/dimensional_shard"),rnd.nextLong());
-                }
-            }
+//            if ("treasure".equals(func)){
+//                world.setBlock(pos, Blocks.AIR.defaultBlockState(),3);
+//                BlockEntity tile = world.getBlockEntity(pos.below());
+//                if (tile instanceof ChestBlockEntity){
+//                    ((ChestBlockEntity) tile).setLootTable(new ResourceLocation("solarcraft","chest/dimensional_shard"),rnd.nextLong());
+//                }
+//            }
         }
 
         /**
