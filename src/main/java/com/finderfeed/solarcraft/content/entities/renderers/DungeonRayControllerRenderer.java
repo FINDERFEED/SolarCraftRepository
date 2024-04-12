@@ -11,6 +11,7 @@ import com.finderfeed.solarcraft.registries.SCBedrockModels;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -108,6 +109,17 @@ public class DungeonRayControllerRenderer extends EntityRenderer<DungeonRayContr
             ShapesRenderer.renderCube(ShapesRenderer.POSITION_COLOR, v, matrices, 0.125f, 1, 1, 0, 1, LightTexture.FULL_BRIGHT);
             matrices.popPose();
         }
+        matrices.popPose();
+
+        matrices.pushPose();
+        matrices.mulPose(Minecraft.getInstance().gameRenderer.getMainCamera().rotation());
+        matrices.mulPose(RenderingTools.rotationDegrees(RenderingTools.ZP(),180));
+        matrices.translate(0.7,0,0);
+        matrices.scale(0.03f,0.03f,-1);
+        GuiGraphics graphics = new GuiGraphics(Minecraft.getInstance(),matrices,Minecraft.getInstance().renderBuffers().bufferSource());
+
+        graphics.drawCenteredString(Minecraft.getInstance().font, "%.3f".formatted(handler.movespeed),0,0,0xff1111);
+
         matrices.popPose();
     }
 

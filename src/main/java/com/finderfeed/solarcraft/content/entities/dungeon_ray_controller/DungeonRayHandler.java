@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -25,6 +26,7 @@ public class DungeonRayHandler {
     public float movespeed;
     public int moveTarget;
     public boolean backward;
+    public boolean dontTraceBack = false;
     public Direction rayDir;
     public Vec3 currentPosition;
     public Vec3 oldPos;
@@ -55,19 +57,7 @@ public class DungeonRayHandler {
                     currentPosition = rayPos.add(b.normalize().multiply(movespeed, movespeed, movespeed));
                 } else {
                     currentPosition = movePos;
-                    if (!backward) {
-                        moveTarget++;
-                        if (moveTarget >= movePositionOffsets.size()) {
-                            moveTarget = movePositionOffsets.size() - 2;
-                            backward = true;
-                        }
-                    } else {
-                        moveTarget--;
-                        if (moveTarget < 0) {
-                            moveTarget = 1;
-                            backward = false;
-                        }
-                    }
+                    this.cycleNextMoveTarget();
                 }
             }else{
                 moveTarget = 0;
@@ -77,6 +67,26 @@ public class DungeonRayHandler {
                 oldPos = currentPosition;
             }
 
+        }
+    }
+
+    public void cycleNextMoveTarget(){
+        if (dontTraceBack){
+            moveTarget = Mth.clamp((moveTarget + 1) % movePositionOffsets.size(),0,Integer.MAX_VALUE);
+        }else {
+            if (!backward) {
+                moveTarget++;
+                if (moveTarget >= movePositionOffsets.size()) {
+                    moveTarget = movePositionOffsets.size() - 2;
+                    backward = true;
+                }
+            } else {
+                moveTarget--;
+                if (moveTarget < 0) {
+                    moveTarget = 1;
+                    backward = false;
+                }
+            }
         }
     }
 
@@ -130,6 +140,7 @@ public class DungeonRayHandler {
         tag.putString("direction",rayDir.getName());
         tag.putInt("moveTarget",moveTarget);
         tag.putBoolean("backward",backward);
+        tag.putBoolean("dontTraceBack",dontTraceBack);
         tag.putFloat("movespeed",movespeed);
         CompoundNBTHelper.writeVec3("currentPosition",currentPosition,tag);
         CompoundNBTHelper.writeBlockPosList("movePositions",movePositionOffsets,tag);
@@ -139,6 +150,7 @@ public class DungeonRayHandler {
     public static DungeonRayHandler fromTag(CompoundTag tag){
         int moveTarget = tag.getInt("moveTarget");
         boolean backward = tag.getBoolean("backward");
+        boolean dontTraceBack = tag.getBoolean("dontTraceBack");
         float speed = tag.getFloat("movespeed");
         List<BlockPos> offsets = CompoundNBTHelper.getBlockPosList("movePositions",tag);
         Direction dir = Direction.UP;
@@ -153,7 +165,7 @@ public class DungeonRayHandler {
         handler.movespeed = speed;
         handler.movePositionOffsets = offsets;
         handler.rayDir = dir;
-
+        handler.dontTraceBack = dontTraceBack;
 
         return handler;
     }

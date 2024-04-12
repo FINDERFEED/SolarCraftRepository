@@ -148,6 +148,37 @@ public class DungeonRayControllerStick extends DebugStick {
 
         }
     }
+    @UseAction("setPosToNext")
+    public void setPosToNext(UseContext ctx){
+        Level l = ctx.level();
+        InteractionHand hand = ctx.hand();
+        Player player = ctx.player();
+        if (l instanceof ServerLevel level){
+            DungeonRayController controller = this.getDungeonRayController(level, player.getItemInHand(hand));
+            if (controller == null) return;
+            DungeonRayHandler handler = controller.getCurrentSelectedHandler();
+            if (handler == null) return;
+            handler.currentPosition = handler.movePositionOffsets.get(handler.moveTarget).getCenter().add(-0.5,-0.5,-0.5);
+            handler.cycleNextMoveTarget();
+            FDPacketUtil.sendToTrackingEntity(controller,new SendHandlersToClient(controller));
+
+        }
+    }
+    @UseAction("changeHandlerMode")
+    public void changeHandlerMode(UseContext ctx){
+        Level l = ctx.level();
+        InteractionHand hand = ctx.hand();
+        Player player = ctx.player();
+        if (l instanceof ServerLevel level){
+            DungeonRayController controller = this.getDungeonRayController(level, player.getItemInHand(hand));
+            if (controller == null) return;
+            DungeonRayHandler handler = controller.getCurrentSelectedHandler();
+            if (handler == null) return;
+            handler.dontTraceBack = !handler.dontTraceBack;
+            FDPacketUtil.sendToTrackingEntity(controller,new SendHandlersToClient(controller));
+
+        }
+    }
     @UseAction("changeDirection")
     public void changeDirection(UseContext ctx){
         Level l = ctx.level();
