@@ -51,11 +51,15 @@ public class SolarCraftCommands {
 
                         .then(Commands.literal("progressions")
                                 .then(Commands.literal("help").executes((e)->progressionsHelp(e.getSource())))
-                                .then(Commands.literal("unlock")
-                                        .then(Commands.argument("progression",StringArgumentType.string())
-                                                .executes((e)->unlockProgression(e.getSource(),e.getArgument("progression",String.class)))))
-                                .then(Commands.literal("revoke").then(Commands.argument("progression",StringArgumentType.string())
-                                        .executes((e)->revokeProgression(e.getSource(),e.getArgument("progression",String.class))))))
+                                .then(
+                                        Commands.argument("target",EntityArgument.player())
+                                                .then(Commands.literal("unlock")
+                                                        .then(Commands.argument("progression",StringArgumentType.string())
+                                                                .executes((e)->unlockProgression(e.getSource(),EntityArgument.getPlayer(e,"target"),e.getArgument("progression",String.class)))))
+                                                .then(Commands.literal("revoke").then(Commands.argument("progression",StringArgumentType.string())
+                                                        .executes((e)->revokeProgression(e.getSource(),EntityArgument.getPlayer(e,"target"),e.getArgument("progression",String.class))))))
+                                )
+
 
 
                         .then(RestoreFragments.register())
@@ -76,20 +80,24 @@ public class SolarCraftCommands {
                                                         stack.getArgument("animation",String.class),
                                                         stack.getArgument("ticker",String.class))))))
                         .then(Commands.literal("abilities")
-                                .then(Commands.literal("unlock")
-                                        .then(Commands.argument("ability_id",new SCAbilityArgument())
-                                                .executes(css->unlockAbility(css.getSource(),css.getArgument("ability_id",String.class)))))
-                                .then(Commands.literal("revoke")
-                                        .then(Commands.argument("ability_id",new SCAbilityArgument())
-                                                .executes(css->revokeAbility(css.getSource(),css.getArgument("ability_id",String.class))))))
+                                .then(
+                                        Commands.argument("target",EntityArgument.player())
+                                                .then(Commands.literal("unlock")
+                                                        .then(Commands.argument("ability_id",new SCAbilityArgument())
+                                                                .executes(css->unlockAbility(css.getSource(),EntityArgument.getPlayer(css,"target"),css.getArgument("ability_id",String.class)))))
+                                                .then(Commands.literal("revoke")
+                                                        .then(Commands.argument("ability_id",new SCAbilityArgument())
+                                                                .executes(css->revokeAbility(css.getSource(),EntityArgument.getPlayer(css,"target"),css.getArgument("ability_id",String.class))))))
+                                )
+
 
         );
     }
 
-    public static int revokeAbility(CommandSourceStack stack,String abilityId) throws CommandSyntaxException {
+    public static int revokeAbility(CommandSourceStack stack,ServerPlayer player,String abilityId) throws CommandSyntaxException {
         AbstractAbility ability = AbilitiesRegistry.getAbilityByID(abilityId);
         if (ability != null){
-            AbilityHelper.setAbilityUsable(stack.getPlayerOrException(), ability,false);
+            AbilityHelper.setAbilityUsable(player, ability,false);
             stack.sendSuccess(()->Component.literal("Successfully revoked ability."),true);
         }else {
             stack.sendFailure(Component.literal("No ability exists with id: " + abilityId));
@@ -98,10 +106,10 @@ public class SolarCraftCommands {
         return 1;
     }
 
-    public static int unlockAbility(CommandSourceStack stack,String abilityId) throws CommandSyntaxException {
+    public static int unlockAbility(CommandSourceStack stack,ServerPlayer player,String abilityId) throws CommandSyntaxException {
         AbstractAbility ability = AbilitiesRegistry.getAbilityByID(abilityId);
         if (ability != null){
-            AbilityHelper.setAbilityUsable(stack.getPlayerOrException(), ability,true);
+            AbilityHelper.setAbilityUsable(player, ability,true);
             stack.sendSuccess(()->Component.literal("Successfully unlocked ability."),true);
 
         }else {
@@ -139,31 +147,30 @@ public class SolarCraftCommands {
         return 1;
     }
 
-    public static int revokeProgression(CommandSourceStack src,String code) throws CommandSyntaxException {
+    public static int revokeProgression(CommandSourceStack src,ServerPlayer player,String code) throws CommandSyntaxException {
         Progression progression = Progression.getProgressionByName(code);
-        ServerPlayer pl = src.getPlayerOrException();
         if (code.equals("all")){
             for (Progression a : Progression.allProgressions){
-                Helpers.setProgressionCompletionStatus(a,src.getPlayerOrException(),false);
+                Helpers.setProgressionCompletionStatus(a,player,false);
                 src.sendSuccess(()->Component.translatable("solarcraft.success_revoke")
                         .append(Component.literal(" "+a.translation.getString()).withStyle(ChatFormatting.GOLD)),false);
             }
-            Helpers.updateProgressionsOnClient(src.getPlayerOrException());
+            Helpers.updateProgressionsOnClient(player);
 
         }else if (progression != null){
-            if (Helpers.hasPlayerCompletedProgression(progression,pl)){
+            if (Helpers.hasPlayerCompletedProgression(progression,player)){
                 boolean flag = true;
                 for (Progression p : ProgressionTree.INSTANCE.getProgressionChildren(progression)){
-                    if (Helpers.hasPlayerCompletedProgression(p,pl)){
+                    if (Helpers.hasPlayerCompletedProgression(p,player)){
                         flag = false;
                         break;
                     }
                 }
                 if (flag) {
-                    Helpers.setProgressionCompletionStatus(progression, pl, false);
+                    Helpers.setProgressionCompletionStatus(progression, player, false);
                     src.sendSuccess(()->Component.translatable("solarcraft.success_revoke")
                             .append(Component.literal(" " + progression.getProgressionCode()).withStyle(ChatFormatting.GOLD)), false);
-                    Helpers.updateProgressionsOnClient(src.getPlayerOrException());
+                    Helpers.updateProgressionsOnClient(player);
                 }else{
                     src.sendFailure(Component.translatable("solarcraft.failure_revoke"));
 
@@ -174,28 +181,27 @@ public class SolarCraftCommands {
         }else {
             src.sendFailure(Component.translatable("solarcraft.failure_revoke"));
         }
-        Helpers.forceChunksReload(src.getPlayerOrException());
+        Helpers.forceChunksReload(player);
         return 0;
     }
 
-    public static int unlockProgression(CommandSourceStack src,String code) throws CommandSyntaxException {
+    public static int unlockProgression(CommandSourceStack src,ServerPlayer player,String code) throws CommandSyntaxException {
         Progression progression = Progression.getProgressionByName(code);
-        ServerPlayer pl = src.getPlayerOrException();
         if (code.equals("all")){
             for (Progression a : Progression.allProgressions){
-                Helpers.setProgressionCompletionStatus(a,src.getPlayerOrException(),true);
+                Helpers.setProgressionCompletionStatus(a,player,true);
                 src.sendSuccess(()->Component.translatable("solarcraft.success_unlock")
                         .append(Component.literal(" "+a.translation.getString()).withStyle(ChatFormatting.GOLD)),false);
             }
-            Helpers.updateProgressionsOnClient(src.getPlayerOrException());
+            Helpers.updateProgressionsOnClient(player);
 
         }else if (progression != null){
-            if (Helpers.canPlayerUnlock(progression,pl)){
-                Helpers.setProgressionCompletionStatus(progression,pl,true);
+            if (Helpers.canPlayerUnlock(progression,player)){
+                Helpers.setProgressionCompletionStatus(progression,player,true);
                 src.sendSuccess(()->Component.translatable("solarcraft.success_unlock")
                         .append(Component.literal(" "+ progression.getProgressionCode()).withStyle(ChatFormatting.GOLD)),false);
 
-                Helpers.updateProgressionsOnClient(src.getPlayerOrException());
+                Helpers.updateProgressionsOnClient(player);
 
 
             }else {
@@ -204,7 +210,7 @@ public class SolarCraftCommands {
         }else {
             src.sendFailure(Component.translatable("solarcraft.failure_unlock"));
         }
-        Helpers.forceChunksReload(src.getPlayerOrException());
+        Helpers.forceChunksReload(player);
         return 0;
     }
 
