@@ -3,9 +3,8 @@ package com.finderfeed.solarcraft.packet_handler;
 import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.client.particles.server_data.shapes.ParticleSpawnShape;
 import com.finderfeed.solarcraft.client.toasts.ProgressionToast;
-import com.finderfeed.solarcraft.config.JsonConfig;
+import com.finderfeed.solarcraft.config.LegacyJsonConfig;
 import com.finderfeed.solarcraft.content.blocks.blockentities.RuneEnergyPylonTile;
-import com.finderfeed.solarcraft.content.blocks.blockentities.memory_puzzle.MemoryPuzzle;
 import com.finderfeed.solarcraft.content.blocks.blockentities.memory_puzzle.client.MemoryPuzzleScreen;
 import com.finderfeed.solarcraft.content.blocks.blockentities.runic_energy.AbstractRunicEnergyContainer;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.client.SunShardPuzzleScreen;
@@ -29,7 +28,7 @@ import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.manager
 import com.finderfeed.solarcraft.local_library.effects.LightningBoltPath;
 import com.finderfeed.solarcraft.local_library.entities.bossbar.client.ActiveBossBar;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.registries.ConfigRegistry;
+import com.finderfeed.solarcraft.registries.LegacyConfigRegistry;
 import com.finderfeed.solarcraft.registries.overlays.SolarcraftOverlays;
 import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import com.google.gson.JsonObject;
@@ -173,10 +172,10 @@ public class ClientPacketHandles {
             String id = strs.get(i);
             String json = strs.get(i + 1);
             JsonObject object = JsonParser.parseString(json).getAsJsonObject();
-            JsonConfig config;
-            if ((config = ConfigRegistry.EARLY_LOAD_CONFIGS.get(id)) != null){
+            LegacyJsonConfig config;
+            if ((config = LegacyConfigRegistry.EARLY_LOAD_CONFIGS.get(id)) != null){
                 config.deserialize(object);
-            }else if ((config = ConfigRegistry.POST_LOAD_CONFIGS.get(id)) != null){
+            }else if ((config = LegacyConfigRegistry.POST_LOAD_CONFIGS.get(id)) != null){
                 config.deserialize(object);
             }
         }

@@ -2,7 +2,6 @@ package com.finderfeed.solarcraft.config;
 
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -12,7 +11,7 @@ import net.minecraft.world.item.Items;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ItemREConfig extends JsonConfig {
+public class ItemREConfig extends LegacyJsonConfig {
 
 
     private static final JsonObject DEFAULT =

@@ -3,12 +3,11 @@ package com.finderfeed.solarcraft.packet_handler.packets;
 import com.finderfeed.solarcraft.packet_handler.ClientPacketHandles;
 import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
 import com.finderfeed.solarcraft.packet_handler.packet_system.Packet;
-import com.finderfeed.solarcraft.registries.ConfigRegistry;
+import com.finderfeed.solarcraft.registries.LegacyConfigRegistry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
 
 @Packet("send_configs_to_client_packet")
 public class SendConfigsToClientPacket extends FDPacket {
@@ -17,11 +16,11 @@ public class SendConfigsToClientPacket extends FDPacket {
 
     public SendConfigsToClientPacket(){
         idJson = new ArrayList<>();
-        for (var entry : ConfigRegistry.EARLY_LOAD_CONFIGS.entrySet()){
+        for (var entry : LegacyConfigRegistry.EARLY_LOAD_CONFIGS.entrySet()){
             idJson.add(entry.getKey());
             idJson.add(entry.getValue().getJson().toString());
         }
-        for (var entry : ConfigRegistry.POST_LOAD_CONFIGS.entrySet()){
+        for (var entry : LegacyConfigRegistry.POST_LOAD_CONFIGS.entrySet()){
             idJson.add(entry.getKey());
             idJson.add(entry.getValue().getJson().toString());
         }

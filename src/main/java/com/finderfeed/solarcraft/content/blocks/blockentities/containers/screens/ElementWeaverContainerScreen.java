@@ -11,9 +11,8 @@ import com.finderfeed.solarcraft.local_library.client.particles.ScreenParticlesR
 import com.finderfeed.solarcraft.local_library.client.screens.DefaultContainerScreen;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.registries.ConfigRegistry;
+import com.finderfeed.solarcraft.registries.LegacyConfigRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -184,7 +183,7 @@ public class ElementWeaverContainerScreen extends DefaultContainerScreen<Element
 
     private void setProcessingItem(ItemStack item){
         if (processingItem == null){
-            RunicEnergyCost cost = ConfigRegistry.ITEM_RE_CONFIG.getItemCost(item.getItem());
+            RunicEnergyCost cost = LegacyConfigRegistry.ITEM_RE_CONFIG.getItemCost(item.getItem());
             if (cost != null){
                 processingItem = item.getItem();
                 processingCost = cost;

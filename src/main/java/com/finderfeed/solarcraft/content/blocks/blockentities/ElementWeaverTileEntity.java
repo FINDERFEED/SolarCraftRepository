@@ -5,7 +5,7 @@ import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.registries.ConfigRegistry;
+import com.finderfeed.solarcraft.registries.LegacyConfigRegistry;
 import com.finderfeed.solarcraft.registries.SCAttachmentTypes;
 import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
@@ -14,7 +14,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.items.ItemStackHandler;
@@ -80,7 +79,7 @@ public class ElementWeaverTileEntity extends REItemHandlerBlockEntity{
             ItemStack output = tile.outputSlot();
             if (!input.isEmpty()){
                 tile.processingItem = input.getItem();
-                tile.processingItemCost = ConfigRegistry.ITEM_RE_CONFIG.getItemCost(input.getItem());
+                tile.processingItemCost = LegacyConfigRegistry.ITEM_RE_CONFIG.getItemCost(input.getItem());
                 if (output.isEmpty() || (output.getItem() == input.getItem() &&
                         output.getCount() < output.getMaxStackSize())){
                     createItems(tile,output);

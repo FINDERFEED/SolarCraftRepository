@@ -3,7 +3,7 @@ package com.finderfeed.solarcraft.content.blocks.blockentities.containers;
 import com.finderfeed.solarcraft.content.blocks.blockentities.ElementWeaverTileEntity;
 import com.finderfeed.solarcraft.content.blocks.blockentities.containers.misc.TESlotItemHandler;
 import com.finderfeed.solarcraft.helpers.Helpers;
-import com.finderfeed.solarcraft.registries.ConfigRegistry;
+import com.finderfeed.solarcraft.registries.LegacyConfigRegistry;
 import com.finderfeed.solarcraft.registries.containers.SCContainers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -35,7 +35,7 @@ public class ElementWeaverContainer extends AbstractContainerMenu {
         this.addSlot(new TESlotItemHandler(tile,this.inventory, 0, 134 + 26 - 118 + offsX, 12 + offsY){
             @Override
             public boolean mayPlace(@NotNull ItemStack stack) {
-                return ConfigRegistry.ITEM_RE_CONFIG.getItemCost(stack.getItem()) != null;
+                return LegacyConfigRegistry.ITEM_RE_CONFIG.getItemCost(stack.getItem()) != null;
             }
         });
 

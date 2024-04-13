@@ -14,7 +14,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import net.neoforged.fml.loading.FMLPaths;
 
-public abstract class JsonConfig {
+public abstract class LegacyJsonConfig {
 
     protected static final Gson GSON = new GsonBuilder()
             .setPrettyPrinting()
@@ -30,7 +30,7 @@ public abstract class JsonConfig {
      */
     private JsonObject object;
 
-    public JsonConfig(String name){
+    public LegacyJsonConfig(String name){
         this.name = name;
         this.savePath = FMLPaths.CONFIGDIR.get().resolve(SolarcraftConfig.CUSTOM_CONFIGS_FOLDER)
                 .resolve(name + ".json");
@@ -47,7 +47,7 @@ public abstract class JsonConfig {
     }
 
     private JsonObject loadFromFile(){
-        SolarCraft.LOGGER.log(Level.INFO,"Loading custom config: " + name);
+        SolarCraft.LOGGER.log(Level.INFO,"Loading legacy custom config: " + name);
         try{
             Reader reader = Files.newBufferedReader(savePath);
             JsonObject object = GSON.fromJson(reader,JsonObject.class);

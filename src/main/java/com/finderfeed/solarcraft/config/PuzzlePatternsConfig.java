@@ -15,11 +15,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
-public class PuzzlePatternsConfig extends JsonConfig{
+public class PuzzlePatternsConfig extends LegacyJsonConfig {
 
 
     private Map<String,TemplateInstance> templates;

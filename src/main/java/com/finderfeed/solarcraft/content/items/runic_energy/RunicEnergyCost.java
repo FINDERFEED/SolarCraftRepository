@@ -1,6 +1,8 @@
 package com.finderfeed.solarcraft.content.items.runic_energy;
 
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.util.ExtraCodecs;
@@ -72,4 +74,23 @@ public class RunicEnergyCost {
         this.immutable = true;
         return this;
     }
+
+
+    public static void toJson(RunicEnergyCost cost, JsonObject object){
+        for (RunicEnergy.Type type : cost.getSetTypes()){
+            object.addProperty(type.id,cost.get(type));
+        }
+    }
+
+    public static RunicEnergyCost fromJson(JsonObject object){
+        RunicEnergyCost cost = new RunicEnergyCost();
+        for (var entry : object.entrySet()){
+            String name = entry.getKey();
+            float val = entry.getValue().getAsFloat();
+            RunicEnergy.Type type = RunicEnergy.Type.byId(name);
+            cost.set(type,val);
+        }
+        return cost;
+    }
+
 }

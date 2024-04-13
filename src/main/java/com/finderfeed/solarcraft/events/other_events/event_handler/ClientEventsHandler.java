@@ -3,10 +3,8 @@ package com.finderfeed.solarcraft.events.other_events.event_handler;
 
 import com.finderfeed.solarcraft.SolarCraft;
 //import com.finderfeed.solarcraft.client.model_loaders.RadiantBlocksModelLoader;
-import com.finderfeed.solarcraft.client.rendering.radiant_texture.RadiantTextureSpriteSource;
 import com.finderfeed.solarcraft.client.tooltips.RETooltipComponent;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.InfuserTileEntity;
-import com.finderfeed.solarcraft.content.blocks.solar_forge_block.solar_forge_screen.SolarCraftButton;
 import com.finderfeed.solarcraft.content.items.ModuleItem;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
@@ -15,19 +13,11 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.SolarLexicon
 import com.finderfeed.solarcraft.content.items.solar_wand.client.WandModeSelectionScreen;
 import com.finderfeed.solarcraft.helpers.ClientHelpers;
 import com.finderfeed.solarcraft.helpers.Helpers;
-import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
-import com.finderfeed.solarcraft.local_library.screen_constructor.BasicBuildableScreen;
-import com.finderfeed.solarcraft.local_library.screen_constructor.RenderableComponentInstance;
-import com.finderfeed.solarcraft.local_library.screen_constructor.ScreenDataBuilder;
-import com.finderfeed.solarcraft.local_library.screen_constructor.WidgetInstance;
-import com.finderfeed.solarcraft.local_library.screen_constructor.renderable_component_instances.ImageComponent;
 import com.finderfeed.solarcraft.misc_things.*;
-import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
-import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
 import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.CastAbilityPacket;
 import com.finderfeed.solarcraft.packet_handler.packets.RequestLoginDataPacket;
-import com.finderfeed.solarcraft.registries.ConfigRegistry;
+import com.finderfeed.solarcraft.registries.LegacyConfigRegistry;
 import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -36,14 +26,11 @@ import com.mojang.datafixers.util.Either;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.AbstractWidget;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -62,7 +49,6 @@ import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.event.TickEvent;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.*;
@@ -155,7 +141,7 @@ public class ClientEventsHandler {
 
         if (!Helpers.hasPlayerCompletedProgression(Progression.RUNIC_ENERGY_REPEATER,Minecraft.getInstance().player)) return;
 
-        if (!item.isEmpty() && (cost = ConfigRegistry.ITEM_RE_CONFIG.getItemCost(item.getItem())) != null){
+        if (!item.isEmpty() && (cost = LegacyConfigRegistry.ITEM_RE_CONFIG.getItemCost(item.getItem())) != null){
             var list = event.getTooltipElements();
             list.add(Either.right(new RETooltipComponent(cost)));
             if (Screen.hasShiftDown()){

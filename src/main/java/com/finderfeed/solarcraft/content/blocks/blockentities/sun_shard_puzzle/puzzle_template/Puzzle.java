@@ -5,7 +5,7 @@ import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.p
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_tiles.PuzzleTileType;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_tiles.PuzzleTileTypes;
 import com.finderfeed.solarcraft.helpers.Helpers;
-import com.finderfeed.solarcraft.registries.ConfigRegistry;
+import com.finderfeed.solarcraft.registries.LegacyConfigRegistry;
 import net.minecraft.nbt.CompoundTag;
 import org.jetbrains.annotations.Nullable;
 
@@ -75,7 +75,7 @@ public class Puzzle {
     public Puzzle(String defTemplateId){
         Random random = new Random();
         this.templateId = defTemplateId;
-        PuzzlePatternsConfig config = ConfigRegistry.PUZZLE_PATTERNS;
+        PuzzlePatternsConfig config = LegacyConfigRegistry.PUZZLE_PATTERNS;
 
         PuzzlePatternsConfig.TemplateInstance defaultTemplateInstance = config.getDefaultTemplate(defTemplateId);
         PuzzleTile[][] defaultTemplate = defaultTemplateInstance.template();
@@ -124,7 +124,7 @@ public class Puzzle {
         }
 
         if (remainingTiles.isEmpty() || remainingTypes.values().stream().filter(i -> i > 0).collect(Collectors.toList()).isEmpty()) {
-            PuzzlePatternsConfig config = ConfigRegistry.PUZZLE_PATTERNS;
+            PuzzlePatternsConfig config = LegacyConfigRegistry.PUZZLE_PATTERNS;
 
             PuzzlePatternsConfig.TemplateInstance templateInstance = config.getDefaultTemplate(templateId);
             PuzzleTile[][] template = templateInstance.template();
@@ -188,7 +188,7 @@ public class Puzzle {
         PuzzleTile[][] tiles = new PuzzleTile[PUZZLE_SIZE][PUZZLE_SIZE];
         int t = 0;
         String templateId = tag.getString("defaultTemplate");
-        PuzzlePatternsConfig config = ConfigRegistry.PUZZLE_PATTERNS;
+        PuzzlePatternsConfig config = LegacyConfigRegistry.PUZZLE_PATTERNS;
         PuzzleTile[][] defaultTemplate = config.getDefaultTemplate(templateId).template();
 
         List<PuzzleTile> remainingTiles = new ArrayList<>();

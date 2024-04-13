@@ -2,7 +2,6 @@ package com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.
 
 import com.finderfeed.solarcraft.client.particles.ball_particle.BallParticleOptions;
 import com.finderfeed.solarcraft.config.PuzzlePatternsConfig;
-import com.finderfeed.solarcraft.content.blocks.blockentities.PuzzleBlockEntity;
 import com.finderfeed.solarcraft.content.blocks.blockentities.SolarcraftBlockEntity;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_template.Puzzle;
 import com.finderfeed.solarcraft.content.blocks.blockentities.sun_shard_puzzle.puzzle_tiles.PuzzleTile;
@@ -10,13 +9,10 @@ import com.finderfeed.solarcraft.content.blocks.primitive.SunShardLockBlock;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.helpers.CompoundNBTHelper;
-import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
-import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
 import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
-import com.finderfeed.solarcraft.packet_handler.packets.CloseClientScreenPacket;
 import com.finderfeed.solarcraft.packet_handler.packets.CloseSunShardScreenPacket;
 import com.finderfeed.solarcraft.packet_handler.packets.sun_shard_puzzle.SunShardPuzzleOpenScreen;
-import com.finderfeed.solarcraft.registries.ConfigRegistry;
+import com.finderfeed.solarcraft.registries.LegacyConfigRegistry;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
 import net.minecraft.core.BlockPos;
@@ -26,7 +22,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -116,7 +111,7 @@ public class SunShardPuzzleBlockEntity extends SolarcraftBlockEntity {
     public void onUse(ServerPlayer player){
         if (!level.isClientSide && !usedPlayers.contains(player.getUUID())){
             if (puzzle == null || puzzle.checkCompleted()){
-                PuzzlePatternsConfig config = ConfigRegistry.PUZZLE_PATTERNS;
+                PuzzlePatternsConfig config = LegacyConfigRegistry.PUZZLE_PATTERNS;
                 List<String> templates = new ArrayList<>(config.getAllTemplates());
                 templates.remove("template_null");
                 String template = templates.get(player.level().random.nextInt(templates.size()));

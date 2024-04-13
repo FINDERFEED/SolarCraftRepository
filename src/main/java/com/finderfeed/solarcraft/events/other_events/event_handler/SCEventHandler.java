@@ -3,9 +3,11 @@ package com.finderfeed.solarcraft.events.other_events.event_handler;
 
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.SolarCraftTags;
-import com.finderfeed.solarcraft.config.JsonConfig;
+import com.finderfeed.solarcraft.config.LegacyJsonConfig;
 import com.finderfeed.solarcraft.config.JsonFragmentsHelper;
 import com.finderfeed.solarcraft.config.enchanter_config.EnchanterConfigInit;
+import com.finderfeed.solarcraft.config.json_config.JsonConfig;
+import com.finderfeed.solarcraft.config.json_config.JsonConfigUpdatePacket;
 import com.finderfeed.solarcraft.content.items.TotemOfImmortality;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.vein_miner.IllidiumPickaxe;
@@ -28,10 +30,10 @@ import com.finderfeed.solarcraft.content.items.runic_energy.ItemRunicEnergy;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.*;
-import com.finderfeed.solarcraft.registries.ConfigRegistry;
+import com.finderfeed.solarcraft.registries.LegacyConfigRegistry;
+import com.finderfeed.solarcraft.registries.SCConfigs;
 import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
 import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.Tags;
@@ -625,16 +627,15 @@ public class SCEventHandler {
 
 
 
-//    @SubscribeEvent
-//    public static void registerReloadableResourceListeners(AddReloadListenerEvent event){
-//        event.addListener(PuzzleTemplateManager.INSTANCE);
-//    }
-
     @SubscribeEvent
     public static void onPlayerJoin(final PlayerEvent.PlayerLoggedInEvent event) {
         if (event.getEntity() != null) {
             Player player = event.getEntity();
             if (player instanceof  ServerPlayer sPlayer) {
+
+                for (JsonConfig config : SCConfigs.CONFIG_REGISTRY.values()){
+                    FDPacketUtil.sendToPlayer(sPlayer,new JsonConfigUpdatePacket(config));
+                }
 
                 if (!Helpers.getPlayerSolarcraftTag(sPlayer).getBoolean("received_lexicon")){
                     if (sPlayer.addItem(SCItems.SOLAR_LEXICON.get().getDefaultInstance())){
@@ -643,21 +644,12 @@ public class SCEventHandler {
 
                 }
 
-                for (JsonConfig config : ConfigRegistry.POST_LOAD_CONFIGS.values()){
+                for (LegacyJsonConfig config : LegacyConfigRegistry.POST_LOAD_CONFIGS.values()){
                     config.deserialize(config.getJson());
                 }
-                for (JsonConfig config : ConfigRegistry.EARLY_LOAD_CONFIGS.values()){
+                for (LegacyJsonConfig config : LegacyConfigRegistry.EARLY_LOAD_CONFIGS.values()){
                     config.deserialize(config.getJson());
                 }
-
-//                FDPacketUtil.sendToPlayer(sPlayer,new SendConfigsToClientPacket());
-//                SCPacketHandler.INSTANCE.sendTo(new SendConfigsToClientPacket(),sPlayer.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
-
-
-//                for (RunicEnergy.Type type : RunicEnergy.Type.values()) {
-//                    Helpers.updateRunicEnergyOnClient(type, RunicEnergy.getEnergy(player, type), player);
-//                }
-//                Helpers.updateProgressionsOnClient(sPlayer);
 
                 if (JsonFragmentsHelper.fragmentsShouldBeRead()) {
                     List<AncientFragment> fragsDes = AncientFragment.deserializeFragments(JsonFragmentsHelper.readFragments());
@@ -667,18 +659,11 @@ public class SCEventHandler {
                     }
                 }
 
-//                for (ToggleableAbility ability : AbilitiesRegistry.getToggleableAbilities()) {
-//                    AbilityHelper.sendTogglePacket(sPlayer,ability,ability.isToggled(sPlayer));
-//                }
 
-//                JsonFragmentsHelper.sendUpdatePacketToClient(sPlayer);
                 if (EnchanterConfigInit.shouldBeRead()) {
                     EnchanterConfigInit.readJson();
                 }
-//                Helpers.updateFragmentsOnClient(sPlayer);
-//                Helpers.updateClientRadiantLandStateForPlayer(sPlayer);
                 AncientFragment.initFragmentsMap();
-
 
                 for (AncientFragment fr : AncientFragment.ALL_FRAGMENTS){
                     fr.getReferences();
@@ -692,6 +677,11 @@ public class SCEventHandler {
 
     @SubscribeEvent
     public static void initServerConfigs(ServerStartedEvent event){
+        SolarCraft.LOGGER.log(org.apache.logging.log4j.Level.INFO,"Loading SolarCraft configs.");
+        for (JsonConfig config : SCConfigs.CONFIG_REGISTRY.values()){
+            config.loadFromDisk();
+        }
+        SolarCraft.LOGGER.log(org.apache.logging.log4j.Level.INFO,"SolarCraft configs loaded.");
         if (JsonFragmentsHelper.fragmentsShouldBeRead()){
             List<AncientFragment> fragsDes = AncientFragment.deserializeFragments(JsonFragmentsHelper.readFragments());
 
