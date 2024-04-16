@@ -9,6 +9,8 @@ import com.finderfeed.solarcraft.client.particles.fd_particle.FDScalingOptions;
 import com.finderfeed.solarcraft.client.particles.fd_particle.instances.SmokeParticleOptions;
 import com.finderfeed.solarcraft.client.particles.server_data.shapes.SendShapeParticlesPacket;
 import com.finderfeed.solarcraft.client.particles.server_data.shapes.instances.SphereParticleShape;
+import com.finderfeed.solarcraft.content.abilities.AbilityStats;
+import com.finderfeed.solarcraft.content.abilities.ability_classes.SolarStrikeAbility;
 import com.finderfeed.solarcraft.content.entities.not_alive.MyFallingBlockEntity;
 import com.finderfeed.solarcraft.events.other_events.event_handler.SCEventHandler;
 import com.finderfeed.solarcraft.helpers.Helpers;
@@ -21,6 +23,7 @@ import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.CameraShakePacket;
 import com.finderfeed.solarcraft.packet_handler.packets.misc_packets.SolarStrikeEntityDoExplosion;
+import com.finderfeed.solarcraft.registries.SCConfigs;
 import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import com.finderfeed.solarcraft.registries.sounds.SCSounds;
@@ -198,12 +201,14 @@ public class SolarStrikeEntity extends Entity {
         int depth = level.random.nextInt(RANDOM_DEPTH) + BASE_MAX_DEPTH;
         AABB damageBox = new AABB(-radius,-depth,-radius,radius,depth,radius).inflate(3).move(this.position());
         Entity owner = this.getOwner();
+        AbilityStats stats = SCConfigs.ABILITIES.solarStrikeStats;
+        float damage = stats.getStat(SolarStrikeAbility.DAMAGE);
         for (LivingEntity entity : level.getEntitiesOfClass(LivingEntity.class,damageBox)){
             if (entity != owner){
                 if (owner instanceof Player player) {
-                    entity.hurt(SCDamageSources.playerArmorPierce(player),SolarcraftConfig.SOLAR_STRIKE_DAMAGE.get().floatValue());
+                    entity.hurt(SCDamageSources.playerArmorPierce(player),damage);
                 }else{
-                    entity.hurt(level.damageSources().magic(),SolarcraftConfig.SOLAR_STRIKE_DAMAGE.get().floatValue());
+                    entity.hurt(level.damageSources().magic(),damage);
                 }
             }
         }

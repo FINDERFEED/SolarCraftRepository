@@ -9,7 +9,6 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.buttons.Info
 import com.finderfeed.solarcraft.content.items.solar_lexicon.screen.SolarLexiconScreen;
 import com.finderfeed.solarcraft.local_library.helpers.RenderingTools;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
 import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.AbilityIndexSetPacket;
 import com.finderfeed.solarcraft.packet_handler.packets.BuyAbilityPacket;
@@ -221,7 +220,7 @@ public class AbilitySelectionScreen extends SolarCraftScreen {
         graphics.drawCenteredString( minecraft.font,Component.translatable("name."+selectedAbility.id),
                 textXStartRight,30,SolarLexiconScreen.TEXT_COLOR);
         graphics.drawCenteredString( minecraft.font,Component.translatable("solarcraft.buy_cost")
-                        .append(": "+ selectedAbility.buyCost),
+                        .append(": "+ selectedAbility.getBuyCost()),
                 textXStartRight,winY - 50, SolarLexiconScreen.TEXT_COLOR);
         graphics.drawCenteredString(font,
                 Component.translatable("solarcraft.raw_solar_energy"),
@@ -238,7 +237,7 @@ public class AbilitySelectionScreen extends SolarCraftScreen {
         graphics.drawString(font,Component.translatable("solarcraft.cast_cost"),texXStartLeft + 6,
                 winY - 120,SolarLexiconScreen.TEXT_COLOR);
         for (RunicEnergy.Type type : RunicEnergy.Type.getAll()){
-            graphics.drawString(font,type.toString().toUpperCase(Locale.ROOT)+": " + selectedAbility.cost.get(type),
+            graphics.drawString(font,type.toString().toUpperCase(Locale.ROOT)+": " + selectedAbility.getCastCost().get(type),
                     texXStartLeft + 6,
                     winY - 110 + iter*11,SolarLexiconScreen.TEXT_COLOR);
             iter++;

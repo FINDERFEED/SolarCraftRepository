@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 
 /**
  * This config requires fields within it to be
@@ -19,8 +20,23 @@ import java.lang.reflect.Method;
  */
 public abstract class ReflectiveJsonConfig extends JsonConfig {
 
+    private HashMap<String,Object> defaultValues;
+
     public ReflectiveJsonConfig(String name) {
         super(name);
+        defaultValues = new HashMap<>();
+    }
+
+    public void memorizeDefaultValues(){
+        for (Field field : this.getClass().getFields()){
+            if (field.getAnnotation(ConfigValue.class) != null){
+                try {
+                    this.defaultValues.put(field.getName(),field.get(this));
+                } catch (IllegalAccessException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
     }
 
 
@@ -54,6 +70,7 @@ public abstract class ReflectiveJsonConfig extends JsonConfig {
         try {
             Object value = field.get(this);
             String name = field.getName();
+            Class<?> fieldClass = field.getType();
             if (value instanceof Integer val) {
                 field.set(this,object.get(name).getAsInt());
             }else if (value instanceof Float fl){
@@ -66,11 +83,12 @@ public abstract class ReflectiveJsonConfig extends JsonConfig {
                 field.set(this,object.get(name).getAsBoolean());
             } else if (value instanceof Character character) {
                 field.set(this,(char)object.get(name).getAsByte());
-            } else {
-                Class<?> fieldClass = field.getType();
+            } else if (ReflectiveSerializable.class.isAssignableFrom(fieldClass)){
                 Method method = fieldClass.getMethod("fromJson", JsonObject.class);
-                Object res = method.invoke(null,object.get(name).getAsJsonObject());
+                Object res = method.invoke(value,object.get(name).getAsJsonObject());
                 field.set(this,res);
+            }else{
+                throw new RuntimeException("Cannot deserialize field: " + name + ", in config " + this.getName());
             }
         }catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException e){
             throw new RuntimeException(e);
@@ -81,6 +99,7 @@ public abstract class ReflectiveJsonConfig extends JsonConfig {
         try {
             Object value = field.get(this);
             String name = field.getName();
+            Class<?> fieldClass = field.getType();
             if (value instanceof Number number) {
                 object.addProperty(name, number);
             } else if (value instanceof String string) {
@@ -89,12 +108,14 @@ public abstract class ReflectiveJsonConfig extends JsonConfig {
                 object.addProperty(name, b);
             } else if (value instanceof Character character) {
                 object.addProperty(name, character);
-            } else {
-                Class<?> fieldClass = field.getType();
+            } else if (ReflectiveSerializable.class.isAssignableFrom(fieldClass)) {
+                Object defaultVal = defaultValues.get(name);
                 Method method = fieldClass.getMethod("toJson",fieldClass, JsonObject.class);
                 JsonObject jsonified = new JsonObject();
-                method.invoke(null,value,jsonified);
+                method.invoke(value,defaultVal,jsonified);
                 object.add(name,jsonified);
+            }else{
+                throw new RuntimeException("Cannot serialize field: " + name + ", in config " + this.getName());
             }
         }catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException e){
             throw new RuntimeException(e);

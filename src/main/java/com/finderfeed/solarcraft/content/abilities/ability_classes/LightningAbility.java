@@ -1,10 +1,12 @@
 package com.finderfeed.solarcraft.content.abilities.ability_classes;
 
+import com.finderfeed.solarcraft.content.abilities.AbilityStats;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.abilities.AbilityHelper;
 import com.finderfeed.solarcraft.content.entities.not_alive.MyFallingBlockEntity;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
+import com.finderfeed.solarcraft.registries.SCConfigs;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.server.level.ServerPlayer;
@@ -17,10 +19,12 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.server.level.ServerLevel;
 
 public class LightningAbility extends AbstractAbility{
+
+    public static String EXPLOSION_POWER_TOP = "explosionPowerOnTop";
+    public static String EXPLOSION_POWER_BOTTOM = "explosionPowerBottom";
+
     public LightningAbility() {
-        super("lightning",new RunicEnergyCost()
-        .set(RunicEnergy.Type.KELDA,800)
-        .set(RunicEnergy.Type.URBA,250),30000);
+        super("lightning");
     }
 
     @Override
@@ -36,16 +40,19 @@ public class LightningAbility extends AbstractAbility{
                 if (world.canSeeSky(pos.above())) {
                     LightningBolt entityBolt = new LightningBolt(EntityType.LIGHTNING_BOLT, world);
                     entityBolt.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+                    AbilityStats stats = SCConfigs.ABILITIES.lightningAbilityStats;
+                    float top = stats.getStat(EXPLOSION_POWER_TOP);
+                    float bottom = stats.getStat(EXPLOSION_POWER_BOTTOM);
                     if (Helpers.isSpellGriefingEnabled(world)) {
 
-                        Explosion explosion = Helpers.oldExplosionConstructor(world, null, null, StoneDestroyerCalculator.INSTANCE_01, pos.getX(), pos.getY() - 3, pos.getZ(), 6, true, Explosion.BlockInteraction.DESTROY);
+                        Explosion explosion = Helpers.oldExplosionConstructor(world, null, null, StoneDestroyerCalculator.INSTANCE_01, pos.getX(), pos.getY() - 3, pos.getZ(), top, true, Explosion.BlockInteraction.DESTROY);
                         spawnFallingBlocks(world, pos.below(3), explosion);
 
-                        world.explode(entity, null, StoneDestroyerCalculator.INSTANCE_01, pos.getX(), pos.getY() - 1, pos.getZ(), 6, true, Level.ExplosionInteraction.BLOCK);
-                        world.explode(entity, null, StoneDestroyerCalculator.INSTANCE_01, pos.getX(), pos.getY() - 5, pos.getZ(), 4, true, Level.ExplosionInteraction.BLOCK);
+                        world.explode(entity, null, StoneDestroyerCalculator.INSTANCE_01, pos.getX(), pos.getY() - 1, pos.getZ(), top, true, Level.ExplosionInteraction.BLOCK);
+                        world.explode(entity, null, StoneDestroyerCalculator.INSTANCE_01, pos.getX(), pos.getY() - 5, pos.getZ(), bottom, true, Level.ExplosionInteraction.BLOCK);
                     }else{
-                        world.explode(entity, null, StoneDestroyerCalculator.INSTANCE_01, pos.getX(), pos.getY() - 1, pos.getZ(), 6, true, Level.ExplosionInteraction.BLOCK);
-                        world.explode(entity, null, StoneDestroyerCalculator.INSTANCE_01, pos.getX(), pos.getY() - 5, pos.getZ(), 4, true, Level.ExplosionInteraction.BLOCK);
+                        world.explode(entity, null, StoneDestroyerCalculator.INSTANCE_01, pos.getX(), pos.getY() - 1, pos.getZ(), top, true, Level.ExplosionInteraction.BLOCK);
+                        world.explode(entity, null, StoneDestroyerCalculator.INSTANCE_01, pos.getX(), pos.getY() - 5, pos.getZ(), bottom, true, Level.ExplosionInteraction.BLOCK);
                     }
                     AbilityHelper.spendAbilityEnergy(entity,this);
                     world.addFreshEntity(entityBolt);
@@ -59,6 +66,16 @@ public class LightningAbility extends AbstractAbility{
 
         }
 
+    }
+
+    @Override
+    public RunicEnergyCost getCastCost() {
+        return SCConfigs.ABILITIES.lightningAbilityStats.getDefaultAbilityStats().getCastCost();
+    }
+
+    @Override
+    public int getBuyCost() {
+        return SCConfigs.ABILITIES.lightningAbilityStats.getDefaultAbilityStats().getBuyCost();
     }
 
 

@@ -7,6 +7,7 @@ import com.finderfeed.solarcraft.config.LegacyJsonConfig;
 import com.finderfeed.solarcraft.config.JsonFragmentsHelper;
 import com.finderfeed.solarcraft.config.enchanter_config.EnchanterConfigInit;
 import com.finderfeed.solarcraft.config.json_config.JsonConfig;
+import com.finderfeed.solarcraft.config.json_config.reflective.ReflectiveJsonConfig;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.infusing_pool.InfusingStand;
 import com.finderfeed.solarcraft.content.items.item_tiers.SolarCraftToolTiers;
 import com.finderfeed.solarcraft.registries.LegacyConfigRegistry;
@@ -51,6 +52,11 @@ public class ModEventHandler {
     public static void commonSetupEvent(FMLCommonSetupEvent event){
 
         SCConfigs.init();
+        for (JsonConfig config : SCConfigs.CONFIG_REGISTRY.values()){
+            if (config instanceof ReflectiveJsonConfig c){
+                c.memorizeDefaultValues();
+            }
+        }
 
         JsonFragmentsHelper.setupJSON();
         EnchanterConfigInit.setupJSON();

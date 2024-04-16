@@ -10,8 +10,8 @@ public abstract class ToggleableAbility extends AbstractAbility{
 
     private final String TOGGLE_STRING;
 
-    public ToggleableAbility(String id, RunicEnergyCost constr, int buyCost) {
-        super(id, constr, buyCost);
+    public ToggleableAbility(String id) {
+        super(id);
         this.TOGGLE_STRING = "solarcraft_ability_toggle_"+id;
     }
 

@@ -1,8 +1,11 @@
 package com.finderfeed.solarcraft.events.other_events;
 
 import com.finderfeed.solarcraft.content.abilities.AbilityHelper;
+import com.finderfeed.solarcraft.content.abilities.AbilityStats;
+import com.finderfeed.solarcraft.content.abilities.ability_classes.AlchemistAbility;
 import com.finderfeed.solarcraft.content.items.runic_energy.ItemRunicEnergy;
 import com.finderfeed.solarcraft.content.items.vein_miner.IllidiumPickaxe;
+import com.finderfeed.solarcraft.registries.SCConfigs;
 import com.finderfeed.solarcraft.registries.abilities.AbilitiesRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -27,7 +30,9 @@ public class TransmutationEvents {
                     LevelAccessor world = event.getLevel();
                     BlockPos pos = event.getPos();
                     world.setBlock(event.getPos(), Blocks.AIR.defaultBlockState(), 3);
-                    world.addFreshEntity(new ExperienceOrb((Level) world, pos.getX(), pos.getY(), pos.getZ(), 10));
+                    AbilityStats stats = SCConfigs.ABILITIES.alchemistAbilityStats;
+                    int exp = (int) stats.getStat(AlchemistAbility.EXPERIENCE_PER_BLOCK);
+                    world.addFreshEntity(new ExperienceOrb((Level) world, pos.getX(), pos.getY(), pos.getZ(), exp));
                 }
             }
         }

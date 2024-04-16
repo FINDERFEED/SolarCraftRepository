@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.content.items.runic_energy;
 
+import com.finderfeed.solarcraft.config.json_config.reflective.ReflectiveSerializable;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class RunicEnergyCost {
+public class RunicEnergyCost implements ReflectiveSerializable<RunicEnergyCost> {
 
 
     public static Codec<RunicEnergyCost> CODEC = RecordCodecBuilder.create(p->p.group(
@@ -76,13 +77,15 @@ public class RunicEnergyCost {
     }
 
 
-    public static void toJson(RunicEnergyCost cost, JsonObject object){
+    @Override
+    public void toJson(RunicEnergyCost cost, JsonObject object){
         for (RunicEnergy.Type type : cost.getSetTypes()){
             object.addProperty(type.id,cost.get(type));
         }
     }
 
-    public static RunicEnergyCost fromJson(JsonObject object){
+    @Override
+    public RunicEnergyCost fromJson(JsonObject object){
         RunicEnergyCost cost = new RunicEnergyCost();
         for (var entry : object.entrySet()){
             String name = entry.getKey();

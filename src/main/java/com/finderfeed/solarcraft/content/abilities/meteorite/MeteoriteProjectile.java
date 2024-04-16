@@ -6,6 +6,8 @@ import com.finderfeed.solarcraft.client.particles.fd_particle.FDDefaultOptions;
 import com.finderfeed.solarcraft.client.particles.fd_particle.FDScalingOptions;
 import com.finderfeed.solarcraft.client.particles.fd_particle.instances.SmokeParticleOptions;
 import com.finderfeed.solarcraft.config.SolarcraftConfig;
+import com.finderfeed.solarcraft.content.abilities.AbilityStats;
+import com.finderfeed.solarcraft.content.abilities.ability_classes.MeteoriteAbility;
 import com.finderfeed.solarcraft.content.abilities.solar_strike.SolarStrikeEntity;
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.content.entities.not_alive.MyFallingBlockEntity;
@@ -19,6 +21,7 @@ import com.finderfeed.solarcraft.local_library.client.particles.particle_emitter
 import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.CameraShakePacket;
+import com.finderfeed.solarcraft.registries.SCConfigs;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.client.Minecraft;
@@ -186,11 +189,13 @@ public class MeteoriteProjectile extends AbstractHurtingProjectile {
         AABB box = new AABB(-12,-10,-12,12,10,12).move(pos);
         List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class,box);
         Entity owner = this.getOwner();
+        AbilityStats stats = SCConfigs.ABILITIES.meteoriteStats;
+        float damage = stats.getStat(MeteoriteAbility.DAMAGE);
         for (LivingEntity entity : entities){
             if (owner instanceof LivingEntity living){
-                entity.hurt(level.damageSources().mobProjectile(this,living), SolarcraftConfig.METEORITE_DAMAGE.get().floatValue());
+                entity.hurt(level.damageSources().mobProjectile(this,living), damage);
             }else{
-                entity.hurt(level.damageSources().generic(), SolarcraftConfig.METEORITE_DAMAGE.get().floatValue());
+                entity.hurt(level.damageSources().generic(), damage);
             }
             Vec3 b = entity.position().subtract(pos).multiply(1,0,1).normalize();
             b = b.multiply(5,5,5).add(

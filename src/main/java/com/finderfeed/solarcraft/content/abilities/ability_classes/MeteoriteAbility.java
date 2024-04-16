@@ -4,6 +4,7 @@ import com.finderfeed.solarcraft.content.abilities.AbilityHelper;
 import com.finderfeed.solarcraft.content.abilities.meteorite.MeteoriteProjectile;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
+import com.finderfeed.solarcraft.registries.SCConfigs;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
@@ -15,10 +16,10 @@ import net.minecraft.server.level.ServerLevel;
 import org.joml.Vector3f;
 
 public class MeteoriteAbility extends AbstractAbility {
+
+    public static String DAMAGE = "damage";
     public MeteoriteAbility() {
-        super("meteorite",new RunicEnergyCost()
-        .set(RunicEnergy.Type.ZETA,1000)
-        .set(RunicEnergy.Type.KELDA,300),50000);
+        super("meteorite");
     }
 
     @Override
@@ -52,5 +53,15 @@ public class MeteoriteAbility extends AbstractAbility {
 
         }
 
+    }
+
+    @Override
+    public RunicEnergyCost getCastCost() {
+        return SCConfigs.ABILITIES.meteoriteStats.getDefaultAbilityStats().getCastCost();
+    }
+
+    @Override
+    public int getBuyCost() {
+        return SCConfigs.ABILITIES.meteoriteStats.getDefaultAbilityStats().getBuyCost();
     }
 }

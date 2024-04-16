@@ -21,11 +21,15 @@ public class EBPEProcessor extends ParticleEmitterProcessor {
 
     @Override
     public void processEmitter(ParticleEmitter emitter) {
-        Vec3 pos = entity.position().add(0,entity.getBbHeight() / 2f,0);
-        emitter.x = pos.x;
-        emitter.y = pos.y;
-        emitter.z = pos.z;
-        if (entity.isRemoved() || (entity instanceof LivingEntity living && living.isDeadOrDying())){
+        if (entity != null) {
+            Vec3 pos = entity.position().add(0, entity.getBbHeight() / 2f, 0);
+            emitter.x = pos.x;
+            emitter.y = pos.y;
+            emitter.z = pos.z;
+            if (entity.isRemoved() || (entity instanceof LivingEntity living && living.isDeadOrDying())) {
+                emitter.removed = true;
+            }
+        }else{
             emitter.removed = true;
         }
     }

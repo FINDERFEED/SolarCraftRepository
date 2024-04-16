@@ -51,9 +51,9 @@ public class BuyAbilityPacket extends FDPacket {
         try {
             AbstractAbility ability = AbilitiesRegistry.getAbilityByID(id);
             int en = getPlayerEnergy(player);
-            if (en >= ability.buyCost){
+            if (en >= ability.getBuyCost()){
                 if (!AbilityHelper.isAbilityBought(player,ability)) {
-                    spendEnergy(player, ability.buyCost);
+                    spendEnergy(player, ability.getBuyCost());
                     AbilityHelper.setAbilityUsable(player,ability,true);
                 }
             }

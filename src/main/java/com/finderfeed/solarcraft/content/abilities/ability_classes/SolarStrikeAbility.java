@@ -5,6 +5,7 @@ import com.finderfeed.solarcraft.content.abilities.AbilityHelper;
 import com.finderfeed.solarcraft.content.abilities.solar_strike.SolarStrikeEntity;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
+import com.finderfeed.solarcraft.registries.SCConfigs;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.core.BlockPos;
@@ -15,11 +16,10 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.server.level.ServerLevel;
 
 public class SolarStrikeAbility extends AbstractAbility{
+
+    public static final String DAMAGE = "damage";
     public SolarStrikeAbility() {
-        super("solar_strike",new RunicEnergyCost()
-        .set(RunicEnergy.Type.FIRA,5000)
-        .set(RunicEnergy.Type.ARDO,2000)
-        .set(RunicEnergy.Type.KELDA,1000),100000);
+        super("solar_strike");
     }
 
     @Override
@@ -47,5 +47,15 @@ public class SolarStrikeAbility extends AbstractAbility{
             }
 
         }
+    }
+
+    @Override
+    public RunicEnergyCost getCastCost() {
+        return SCConfigs.ABILITIES.solarStrikeStats.getDefaultAbilityStats().getCastCost();
+    }
+
+    @Override
+    public int getBuyCost() {
+        return SCConfigs.ABILITIES.solarStrikeStats.getDefaultAbilityStats().getBuyCost();
     }
 }

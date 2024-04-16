@@ -3,16 +3,14 @@ package com.finderfeed.solarcraft.content.abilities.ability_classes;
 import com.finderfeed.solarcraft.content.abilities.AbilityHelper;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
+import com.finderfeed.solarcraft.registries.SCConfigs;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.server.level.ServerLevel;
 
 public class DispelAbility extends AbstractAbility{
     public DispelAbility() {
-        super("solar_dispel",new RunicEnergyCost()
-        .set(RunicEnergy.Type.FIRA,350)
-        .set(RunicEnergy.Type.ZETA,500)
-        .set(RunicEnergy.Type.KELDA,100),20000);
+        super("solar_dispel");
     }
 
     @Override
@@ -30,5 +28,15 @@ public class DispelAbility extends AbstractAbility{
 
         }
 
+    }
+
+    @Override
+    public RunicEnergyCost getCastCost() {
+        return SCConfigs.ABILITIES.dispelAbilityStats.getDefaultAbilityStats().getCastCost();
+    }
+
+    @Override
+    public int getBuyCost() {
+        return SCConfigs.ABILITIES.dispelAbilityStats.getDefaultAbilityStats().getBuyCost();
     }
 }

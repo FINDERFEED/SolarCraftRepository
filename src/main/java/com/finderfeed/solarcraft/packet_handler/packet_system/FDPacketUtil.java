@@ -15,6 +15,9 @@ public final class FDPacketUtil {
     public static void sendToPlayer(ServerPlayer player, CustomPacketPayload... packetPayload){
         PacketDistributor.PLAYER.with(player).send(packetPayload);
     }
+    public static void sendToAll(CustomPacketPayload... packetPayload){
+        PacketDistributor.ALL.noArg().send(packetPayload);
+    }
 
     public static void sendToDimension(ResourceKey<Level> dimension,CustomPacketPayload... packetPayload){
         PacketDistributor.DIMENSION.with(dimension).send(packetPayload);

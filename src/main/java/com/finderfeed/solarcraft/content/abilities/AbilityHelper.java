@@ -6,8 +6,6 @@ import com.finderfeed.solarcraft.content.abilities.ability_classes.AbstractAbili
 import com.finderfeed.solarcraft.content.abilities.ability_classes.ToggleableAbility;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
-import com.finderfeed.solarcraft.packet_handler.SCPacketHandler;
-import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacket;
 import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.ToggleableAbilityPacket;
 import com.finderfeed.solarcraft.registries.abilities.AbilitiesRegistry;
@@ -22,13 +20,13 @@ public class AbilityHelper {
 
 
     public static void sendMessages(Player player, AbstractAbility ability){
-        for (RunicEnergy.Type type : ability.getCost().getSetTypes()){
+        for (RunicEnergy.Type type : ability.getCastCost().getSetTypes()){
             float amount = RunicEnergy.getEnergy(player,type);
-            if (amount < ability.getCost().get(type)){
+            if (amount < ability.getCastCost().get(type)){
                 player.sendSystemMessage(Component.translatable("solarcraft.not_enought_runic_energy")
                         .append(Component.literal(" " + type.id.toUpperCase(Locale.ROOT) + ", "))
                         .append(Component.translatable("solarcraft.not_enought_runic_energy_needed"))
-                        .append(ability.getCost().get(type) + ""));
+                        .append(ability.getCastCost().get(type) + ""));
             }
         }
     }
@@ -36,7 +34,7 @@ public class AbilityHelper {
     public static boolean isAbilityUsable(Player player, AbstractAbility ability,boolean sendMessages){
         if (player.isCreative()) return true;
         if (isAbilityBought(player,ability)){
-            RunicEnergyCost cost = ability.cost;
+            RunicEnergyCost cost = ability.getCastCost();
             for (RunicEnergy.Type type : cost.getSetTypes()){
                 if (RunicEnergy.getEnergy(player,type) < cost.get(type)){
                     if (sendMessages) sendMessages(player,ability);
@@ -50,7 +48,7 @@ public class AbilityHelper {
 
     public static void spendAbilityEnergy(Player player,AbstractAbility ability){
         if (player.isCreative()) return;
-        RunicEnergyCost cost = ability.cost;
+        RunicEnergyCost cost = ability.getCastCost();
         for (RunicEnergy.Type type : cost.getSetTypes()){
             RunicEnergy.spendEnergy(player,cost.get(type),type);
             Helpers.updateRunicEnergyOnClient(type,RunicEnergy.getEnergy(player,type),player);
@@ -59,7 +57,7 @@ public class AbilityHelper {
 
     public static void refundEnergy(Player player,AbstractAbility ability){
         if (player.isCreative()) return;
-        RunicEnergyCost cost = ability.cost;
+        RunicEnergyCost cost = ability.getCastCost();
         for (RunicEnergy.Type type : cost.getSetTypes()){
             RunicEnergy.givePlayerEnergy(player,cost.get(type),type);
             Helpers.updateRunicEnergyOnClient(type,RunicEnergy.getEnergy(player,type),player);

@@ -7,7 +7,7 @@ import com.finderfeed.solarcraft.config.LegacyJsonConfig;
 import com.finderfeed.solarcraft.config.JsonFragmentsHelper;
 import com.finderfeed.solarcraft.config.enchanter_config.EnchanterConfigInit;
 import com.finderfeed.solarcraft.config.json_config.JsonConfig;
-import com.finderfeed.solarcraft.config.json_config.JsonConfigUpdatePacket;
+import com.finderfeed.solarcraft.config.json_config.JsonConfigUpdateAllPacket;
 import com.finderfeed.solarcraft.content.items.TotemOfImmortality;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.vein_miner.IllidiumPickaxe;
@@ -316,8 +316,8 @@ public class SCEventHandler {
                             ability.setToggled(player,false);
                             continue;
                         }
-                        for (RunicEnergy.Type type : ability.getCost().getSetTypes()){
-                            RunicEnergy.spendEnergy(player,ability.getCost().get(type),type);
+                        for (RunicEnergy.Type type : ability.getCastCost().getSetTypes()){
+                            RunicEnergy.spendEnergy(player,ability.getCastCost().get(type),type);
                             Helpers.updateRunicEnergyOnClient(type, RunicEnergy.getEnergy(player, type), player);
                         }
 
@@ -633,9 +633,7 @@ public class SCEventHandler {
             Player player = event.getEntity();
             if (player instanceof  ServerPlayer sPlayer) {
 
-                for (JsonConfig config : SCConfigs.CONFIG_REGISTRY.values()){
-                    FDPacketUtil.sendToPlayer(sPlayer,new JsonConfigUpdatePacket(config));
-                }
+                FDPacketUtil.sendToPlayer(sPlayer,new JsonConfigUpdateAllPacket());
 
                 if (!Helpers.getPlayerSolarcraftTag(sPlayer).getBoolean("received_lexicon")){
                     if (sPlayer.addItem(SCItems.SOLAR_LEXICON.get().getDefaultInstance())){

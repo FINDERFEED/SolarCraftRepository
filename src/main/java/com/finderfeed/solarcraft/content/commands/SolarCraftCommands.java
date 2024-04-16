@@ -1,6 +1,8 @@
 package com.finderfeed.solarcraft.content.commands;
 
 import com.finderfeed.solarcraft.SolarCraft;
+import com.finderfeed.solarcraft.config.json_config.JsonConfig;
+import com.finderfeed.solarcraft.config.json_config.JsonConfigUpdateAllPacket;
 import com.finderfeed.solarcraft.content.abilities.AbilityHelper;
 import com.finderfeed.solarcraft.content.abilities.ability_classes.AbstractAbility;
 import com.finderfeed.solarcraft.content.entities.DungeonRay;
@@ -15,7 +17,9 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.SolarLexicon;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.registries.SCAttachmentTypes;
+import com.finderfeed.solarcraft.registries.SCConfigs;
 import com.finderfeed.solarcraft.registries.abilities.AbilitiesRegistry;
 import com.finderfeed.solarcraft.registries.animations.AnimationReloadableResourceListener;
 import com.finderfeed.solarcraft.registries.items.SCItems;
@@ -50,6 +54,9 @@ public class SolarCraftCommands {
         LiteralCommandNode<CommandSourceStack> cmd = disp.register(
                 Commands.literal("solarcraft").requires((p)-> p.hasPermission(2))
 
+                        .then(Commands.literal("reloadConfigs").executes(src->{
+                            return reloadSolarCraftConfigs(src.getSource());
+                        }))
                         .then(Commands.literal("progressions")
                                 .then(Commands.literal("help").executes((e)->progressionsHelp(e.getSource())))
                                 .then(
@@ -212,6 +219,22 @@ public class SolarCraftCommands {
         }
         Helpers.forceChunksReload(player);
         return 0;
+    }
+
+
+    public static int reloadSolarCraftConfigs(CommandSourceStack src){
+        src.sendSystemMessage(Component.literal("Legacy configs are not affected by this command."));
+        src.sendSystemMessage(Component.literal("Reloading Solar Craft configs..."));
+        for (JsonConfig config : SCConfigs.CONFIG_REGISTRY.values()){
+            src.sendSystemMessage(Component.literal("Reloading " + config.getName()));
+            config.loadFromDisk();
+            src.sendSystemMessage(Component.literal("Reloaded: " + config.getName()));
+        }
+        src.sendSystemMessage(Component.literal("Sending configs to clients..."));
+        FDPacketUtil.sendToAll(new JsonConfigUpdateAllPacket());
+        src.sendSystemMessage(Component.literal("Sent configs to client."));
+        src.sendSystemMessage(Component.literal("Reload complete!"));
+        return 1;
     }
 
     public static int progressionsHelp(CommandSourceStack src) throws CommandSyntaxException {
