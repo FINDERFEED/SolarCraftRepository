@@ -1,7 +1,12 @@
 package com.finderfeed.solarcraft.config.json_config.reflective;
 
+import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.config.json_config.JsonConfig;
+import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.JsonOps;
+import org.apache.logging.log4j.Level;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -84,13 +89,21 @@ public abstract class ReflectiveJsonConfig extends JsonConfig {
             } else if (value instanceof Character character) {
                 field.set(this,(char)object.get(name).getAsByte());
             } else if (ReflectiveSerializable.class.isAssignableFrom(fieldClass)){
-                Method method = fieldClass.getMethod("fromJson", JsonObject.class);
-                Object res = method.invoke(value,object.get(name).getAsJsonObject());
-                field.set(this,res);
+                Codec<?> codec = ((ReflectiveSerializable<?>)value).reflectiveCodec();
+                JsonObject obj = object.getAsJsonObject(name);
+                var res = codec.parse(JsonOps.INSTANCE,obj).resultOrPartial(str->{
+                    SolarCraft.LOGGER.log(Level.ERROR,"Error while parsing field: " + name + ", in config: " + this.getName() + ", using default value.");
+                    SolarCraft.LOGGER.log(Level.ERROR,str);
+                });
+                if (res.isPresent()){
+                    field.set(this,res.get());
+                }else{
+                    field.set(this,this.defaultValues.get(name));
+                }
             }else{
                 throw new RuntimeException("Cannot deserialize field: " + name + ", in config " + this.getName());
             }
-        }catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException e){
+        }catch (IllegalAccessException e){
             throw new RuntimeException(e);
         }
     }
@@ -110,15 +123,25 @@ public abstract class ReflectiveJsonConfig extends JsonConfig {
                 object.addProperty(name, character);
             } else if (ReflectiveSerializable.class.isAssignableFrom(fieldClass)) {
                 Object defaultVal = defaultValues.get(name);
-                Method method = fieldClass.getMethod("toJson",fieldClass, JsonObject.class);
-                JsonObject jsonified = new JsonObject();
-                method.invoke(value,defaultVal,jsonified);
-                object.add(name,jsonified);
+                Codec<?> codec = ((ReflectiveSerializable<?>)value).reflectiveCodec();
+                this.hackyCodecUse(defaultVal,(Codec<? super Object>) codec,object,name);
             }else{
                 throw new RuntimeException("Cannot serialize field: " + name + ", in config " + this.getName());
             }
-        }catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException e){
+        }catch (IllegalAccessException e){
             throw new RuntimeException(e);
+        }
+    }
+
+    private <T> void hackyCodecUse(T defaultVal,Codec<T> codec,JsonObject object,String name){
+        var result = codec.encodeStart(JsonOps.INSTANCE,defaultVal).resultOrPartial(str->{
+            SolarCraft.LOGGER.log(Level.ERROR,"Error while encoding field: " + name + ", in config: " + this.getName() + ", tell mod dev that he is dumb.");
+            SolarCraft.LOGGER.log(Level.ERROR,str);
+        });
+        if (result.isPresent()){
+            object.add(name,result.get());
+        }else{
+            throw new RuntimeException("Couldn't encode field for config. See log for details.");
         }
     }
 }

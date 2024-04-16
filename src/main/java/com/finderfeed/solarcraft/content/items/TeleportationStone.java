@@ -44,12 +44,14 @@ public class TeleportationStone extends SolarcraftItem {
 
             }else{
                 Pos pos = getPos(item);
-                ServerPlayer p = (ServerPlayer) player;
-                if (pos.teleport(p)){
-                    level.playSound(null,p.getX(),p.getY(),p.getZ(), SoundEvents.RESPAWN_ANCHOR_DEPLETE.value(), SoundSource.PLAYERS,1f,1f);
-                    item.shrink(1);
-                    ((ServerLevel)level).sendParticles(ParticleTypes.PORTAL,pos.position.x,pos.position.y+p.getBbHeight()/2,pos.position.z,100,0.5,p.getBbHeight()/2,0.5,0.1);
-                    return InteractionResultHolder.consume(item);
+                if (pos != null) {
+                    ServerPlayer p = (ServerPlayer) player;
+                    if (pos.teleport(p)) {
+                        level.playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.RESPAWN_ANCHOR_DEPLETE.value(), SoundSource.PLAYERS, 1f, 1f);
+                        item.shrink(1);
+                        ((ServerLevel) level).sendParticles(ParticleTypes.PORTAL, pos.position.x, pos.position.y + p.getBbHeight() / 2, pos.position.z, 100, 0.5, p.getBbHeight() / 2, 0.5, 0.1);
+                        return InteractionResultHolder.consume(item);
+                    }
                 }
             }
         }

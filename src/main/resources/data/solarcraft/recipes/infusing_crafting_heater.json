@@ -1,0 +1,25 @@
+{
+  "type": "solarcraft:infusing_crafting",
+  "pattern": [
+    "FFF",
+    "#R#",
+    "###"
+  ],
+  "keys": {
+    "#": {
+      "item": "solarcraft:magistone_bricks"
+    },
+    "F": {
+      "item": "solarcraft:energy_dust"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "output": {
+    "item": "solarcraft:heater"
+  },
+  "count": 1,
+  "fragment": "speed_road",
+  "time": 100
+}

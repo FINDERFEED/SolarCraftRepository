@@ -3,35 +3,25 @@ package com.finderfeed.solarcraft.content.abilities;
 import com.finderfeed.solarcraft.config.json_config.reflective.ReflectiveSerializable;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 public class DefaultAbilityStats implements ReflectiveSerializable<DefaultAbilityStats> {
+
+
+    public static final Codec<DefaultAbilityStats> CODEC = RecordCodecBuilder.create(p->
+            p.group(
+                    RunicEnergyCost.CODEC.fieldOf("castCost").forGetter(stats->stats.cost),
+                    Codec.INT.fieldOf("buyCost").forGetter(stats->stats.buyCost)
+            ).apply(p,DefaultAbilityStats::new)
+    );
 
     private RunicEnergyCost cost;
     private int buyCost;
 
-    public DefaultAbilityStats(){
-
-    }
-
     public DefaultAbilityStats(RunicEnergyCost cost,int buyCost){
         this.cost = cost;
         this.buyCost = buyCost;
-    }
-
-    @Override
-    public DefaultAbilityStats fromJson(JsonObject object) {
-        RunicEnergyCost c = new RunicEnergyCost();
-        c = c.fromJson(object.getAsJsonObject("castCost"));
-        int buyCost = object.get("buyCost").getAsInt();
-        return new DefaultAbilityStats(c,buyCost);
-    }
-
-    @Override
-    public void toJson(DefaultAbilityStats value, JsonObject object) {
-        JsonObject scost = new JsonObject();
-        cost.toJson(cost,scost);
-        object.add("castCost",scost);
-        object.addProperty("buyCost",buyCost);
     }
 
     public int getBuyCost() {
@@ -40,5 +30,10 @@ public class DefaultAbilityStats implements ReflectiveSerializable<DefaultAbilit
 
     public RunicEnergyCost getCastCost() {
         return cost;
+    }
+
+    @Override
+    public Codec<DefaultAbilityStats> reflectiveCodec() {
+        return CODEC;
     }
 }

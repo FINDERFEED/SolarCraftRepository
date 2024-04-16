@@ -72,6 +72,7 @@ public class AncientFragment {
 
 
     public static final AncientFragment SPEED_ROAD = new AncientFragment("speed_road",ProgressionStage.PRE_BEGGINING.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_BLOCKS,CategoryBase.BEGINNER, ls(ItemWithRecipe.of(SCItems.SPEED_ROAD.get().getDefaultInstance(),"infusing_crafting_speed_road")), SCRecipeTypes.INFUSING_CRAFTING.get(),2);
+    public static final AncientFragment HEATER = new AncientFragment("heater",ProgressionStage.PRE_BEGGINING.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_BLOCKS,CategoryBase.BEGINNER, ls(ItemWithRecipe.of(HEATER_BLOCK.get().getDefaultInstance(),"infusing_crafting_heater")), SCRecipeTypes.INFUSING_CRAFTING.get(),2);
     public static final AncientFragment EIGHT_ELEMENTS = new AncientFragment("eight_elements",ProgressionStage.BEGGINING_2.ALL_PROGRESSIONS,SubCategoryBase.WORLD,CategoryBase.EXPLORATION,"eight_elements_lore", SCItems.SOLAR_RUNE_ARDO.get().getDefaultInstance(),1);
     public static final AncientFragment INFUSED_CRYSTALS = new AncientFragment("crystals", ProgressionStage.BEGGINING_2.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_ITEMS,CategoryBase.BEGINNER, List.of(
             ItemWithRecipe.of(SCItems.ARDO_CRYSTAL.get().getDefaultInstance(),"infusing_crafting_ardo_crystal"),ItemWithRecipe.of(SCItems.FIRA_CRYSTAL.get().getDefaultInstance(),"infusing_crafting_fira_crystal"),

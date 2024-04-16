@@ -65,7 +65,7 @@ public class SCAbilitiesConfig extends ReflectiveJsonConfig {
                     .set(RunicEnergy.Type.FIRA,5000)
                     .set(RunicEnergy.Type.ARDO,2000)
                     .set(RunicEnergy.Type.KELDA,1000),100000))
-                    .addStat(SolarStrikeAbility.DAMAGE,50f);
+                    .addStat(SolarStrikeAbility.DAMAGE,300f);
 
     public SCAbilitiesConfig() {
         super("abilities_config");

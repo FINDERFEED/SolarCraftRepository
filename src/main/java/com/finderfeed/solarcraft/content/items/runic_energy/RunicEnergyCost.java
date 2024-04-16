@@ -76,24 +76,9 @@ public class RunicEnergyCost implements ReflectiveSerializable<RunicEnergyCost> 
         return this;
     }
 
-
     @Override
-    public void toJson(RunicEnergyCost cost, JsonObject object){
-        for (RunicEnergy.Type type : cost.getSetTypes()){
-            object.addProperty(type.id,cost.get(type));
-        }
-    }
-
-    @Override
-    public RunicEnergyCost fromJson(JsonObject object){
-        RunicEnergyCost cost = new RunicEnergyCost();
-        for (var entry : object.entrySet()){
-            String name = entry.getKey();
-            float val = entry.getValue().getAsFloat();
-            RunicEnergy.Type type = RunicEnergy.Type.byId(name);
-            cost.set(type,val);
-        }
-        return cost;
+    public Codec<RunicEnergyCost> reflectiveCodec() {
+        return CODEC;
     }
 
 }

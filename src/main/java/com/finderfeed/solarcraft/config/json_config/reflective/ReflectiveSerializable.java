@@ -1,10 +1,8 @@
 package com.finderfeed.solarcraft.config.json_config.reflective;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
 
 public interface ReflectiveSerializable<T> {
-
-    T fromJson(JsonObject object);
-    void toJson(T value,JsonObject object);
+    Codec<T> reflectiveCodec();
 
 }

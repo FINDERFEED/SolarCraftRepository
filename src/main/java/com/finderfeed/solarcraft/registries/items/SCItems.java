@@ -348,7 +348,7 @@ public class SCItems {
 
     public static final DeferredHolder<Item,CorruptedShardItem> CORRUPTED_SHARD_ITEM = registerItem(ITEMS.register("corrupted_shard",()->new CorruptedShardItem(new Item.Properties().rarity(Rarity.EPIC))),SOLAR_GROUP);
     public static final DeferredHolder<Item,TeleportationStone> TELEPORTATION_STONE = registerItem(ITEMS.register("teleportation_stone",()->new TeleportationStone(new Item.Properties().stacksTo(1),()->AncientFragment.TELEPORTATION_STONE)),SOLAR_GROUP);
-    public static final DeferredHolder<Item,SolarcraftBlockItem> HEATER_BLOCK = registerItem(ITEMS.register("heater",()->new SolarcraftBlockItem(SCBlocks.HEATER_BLOCK.get(),new Item.Properties().stacksTo(1),()->null)),SOLAR_GROUP_BLOCKS);
+    public static final DeferredHolder<Item,SolarcraftBlockItem> HEATER_BLOCK = registerItem(ITEMS.register("heater",()->new SolarcraftBlockItem(SCBlocks.HEATER_BLOCK.get(),new Item.Properties(),()->AncientFragment.HEATER)),SOLAR_GROUP_BLOCKS);
 
 
     public static <T extends Item> DeferredHolder<Item,T> registerItem(DeferredHolder<Item,T> reg, DeferredHolder<CreativeModeTab,CreativeModeTab> tab){
