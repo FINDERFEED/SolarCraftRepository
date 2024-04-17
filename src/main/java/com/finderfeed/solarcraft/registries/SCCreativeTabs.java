@@ -38,7 +38,7 @@ public class SCCreativeTabs {
             .icon(()-> SCItems.SOLAR_SHARD.get().getDefaultInstance())
             .title(Component.translatable("itemGroup.solar_forge_group"))
             .withTabsImage(TABS)
-            .withScrollBarSpriteLocation(SCROLLER_ACTIVE)
+
             .displayItems((parameters,output)->{
                 var a = SCItems.itemTabs.get(SOLAR_GROUP_COPY);
                 a.forEach(regitem->output.accept(regitem.get()));
@@ -59,7 +59,7 @@ public class SCCreativeTabs {
             .icon(()-> SCItems.MAGISTONE_BRICKS.get().getDefaultInstance())
             .title(Component.translatable("itemGroup.solar_forge_group_blocks"))
             .withTabsImage(TABS)
-            .withScrollBarSpriteLocation(SCROLLER_ACTIVE)
+
 
             .withBackgroundLocation(BACKGROUND)
             .displayItems((parameters,output)->{
@@ -75,7 +75,7 @@ public class SCCreativeTabs {
             .title(Component.translatable("itemGroup.solar_forge_group_tools"))
             .withTabsImage(TABS)
             .withBackgroundLocation(BACKGROUND)
-        .withScrollBarSpriteLocation(SCROLLER_ACTIVE)
+
 
         .displayItems((parameters,output)->{
             var a = SCItems.itemTabs.get(SOLAR_GROUP_TOOLS_COPY);
@@ -95,7 +95,7 @@ public class SCCreativeTabs {
             .icon(()-> SCItems.ILLIDIUM_INGOT.get().getDefaultInstance())
             .title(Component.translatable("itemGroup.solar_group_materials"))
             .withTabsImage(TABS)
-        .withScrollBarSpriteLocation(SCROLLER_ACTIVE)
+
         .withBackgroundLocation(BACKGROUND)
             .displayItems((parameters,output)->{
                 var a = SCItems.itemTabs.get(SOLAR_GROUP_MATERIALS_COPY);
@@ -109,7 +109,7 @@ public class SCCreativeTabs {
             .icon(()-> SCItems.ILLIDIUM_SWORD.get().getDefaultInstance())
             .title(Component.translatable("itemGroup.solar_group_weapons"))
             .withTabsImage(TABS)
-        .withScrollBarSpriteLocation(SCROLLER_ACTIVE)
+
         .withBackgroundLocation(BACKGROUND)
             .displayItems((parameters,output)->{
                 var a = SCItems.itemTabs.get(SOLAR_GROUP_WEAPONS_COPY);
@@ -135,7 +135,7 @@ public class SCCreativeTabs {
             .icon(()-> SCItems.INFO_FRAGMENT.get().getDefaultInstance())
             .title(Component.translatable("itemGroup.solar_forge_group_fragments"))
             .withTabsImage(TABS)
-        .withScrollBarSpriteLocation(SCROLLER_ACTIVE)
+
         .withBackgroundLocation(BACKGROUND)
             .displayItems((parameters,output)->{
                 var a = SCItems.itemTabs.get(SOLAR_GROUP_FRAGMENTS_COPY);
