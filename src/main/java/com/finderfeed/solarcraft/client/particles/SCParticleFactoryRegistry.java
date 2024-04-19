@@ -2,6 +2,8 @@ package com.finderfeed.solarcraft.client.particles;
 
 import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.client.particles.ball_particle.BallParticle;
+import com.finderfeed.solarcraft.client.particles.fd_particle.instances.ExtendedBallParticle;
+import com.finderfeed.solarcraft.client.particles.fd_particle.instances.ExtendedBallParticleOptions;
 import com.finderfeed.solarcraft.client.particles.fd_particle.instances.SmokeParticle;
 import com.finderfeed.solarcraft.client.particles.lightning_particle.LightningParticle;
 import net.neoforged.api.distmarker.Dist;
@@ -24,6 +26,7 @@ public class SCParticleFactoryRegistry {
         event.registerSpriteSet(SCParticleTypes.SPARK_PARTICLE.get(), SparkParticle.Factory::new);
         event.registerSpriteSet(SCParticleTypes.CRYSTAL_SPARK_PARTICLE.get(), CrystalSparkParticle.Provider::new);
         event.registerSpriteSet(SCParticleTypes.BALL_PARTICLE.get(), BallParticle.Provider::new);
+        event.registerSpriteSet(SCParticleTypes.EXTENDED_BALL_PARTICLE.get(), ExtendedBallParticle.Provider::new);
         event.registerSpecial(SCParticleTypes.LIGHTNING_PARTICLE.get(), new LightningParticle.Provider());
         event.registerSpriteSet(SCParticleTypes.SMOKE_PARTICLE.get(), SmokeParticle.Provider::new);
     }

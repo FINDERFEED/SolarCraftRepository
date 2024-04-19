@@ -4,6 +4,7 @@ package com.finderfeed.solarcraft.client.particles;
 
 import com.finderfeed.solarcraft.client.particles.ball_particle.BallParticleOptions;
 import com.finderfeed.solarcraft.client.particles.fd_particle.FDTSParticleOptions;
+import com.finderfeed.solarcraft.client.particles.fd_particle.instances.ExtendedBallParticleOptions;
 import com.finderfeed.solarcraft.client.particles.fd_particle.instances.SmokeParticleOptions;
 import com.finderfeed.solarcraft.client.particles.lightning_particle.LightningParticleOptions;
 import com.mojang.serialization.Codec;
@@ -29,6 +30,13 @@ public class SCParticleTypes {
         @Override
         public Codec<SmokeParticleOptions> codec() {
             return SmokeParticleOptions.CODEC;
+        }
+    });
+    public static final DeferredHolder<ParticleType<?>, ParticleType<ExtendedBallParticleOptions>> EXTENDED_BALL_PARTICLE = PARTICLES.register("extended_ball_particle",()->
+            new ParticleType<ExtendedBallParticleOptions>(true,ExtendedBallParticleOptions.DESERIALIZER) {
+        @Override
+        public Codec<ExtendedBallParticleOptions> codec() {
+            return ExtendedBallParticleOptions.CODEC;
         }
     });
     public static final DeferredHolder<ParticleType<?>,ParticleType<BallParticleOptions>> BALL_PARTICLE = PARTICLES.register("ball_particle",()->

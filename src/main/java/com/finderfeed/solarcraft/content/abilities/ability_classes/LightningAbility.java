@@ -1,12 +1,16 @@
 package com.finderfeed.solarcraft.content.abilities.ability_classes;
 
+import com.finderfeed.solarcraft.client.particles.server_data.shapes.SendShapeParticlesPacket;
+import com.finderfeed.solarcraft.client.particles.server_data.shapes.instances.LightningAbilityParticleShape;
 import com.finderfeed.solarcraft.content.abilities.AbilityStats;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.abilities.AbilityHelper;
 import com.finderfeed.solarcraft.content.entities.not_alive.MyFallingBlockEntity;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
+import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.registries.SCConfigs;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.server.level.ServerPlayer;
@@ -34,7 +38,6 @@ public class LightningAbility extends AbstractAbility{
             Vec3 vec = entity.getLookAngle().multiply(200, 200, 200);
             ClipContext ctx = new ClipContext(entity.position().add(0, 1.5, 0), entity.position().add(0, 1.5, 0).add(vec), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, entity);
             BlockHitResult result = world.clip(ctx);
-
             if (result.getType() == HitResult.Type.BLOCK) {
                 BlockPos pos = result.getBlockPos();
                 if (world.canSeeSky(pos.above())) {
@@ -44,7 +47,6 @@ public class LightningAbility extends AbstractAbility{
                     float top = stats.getStat(EXPLOSION_POWER_TOP);
                     float bottom = stats.getStat(EXPLOSION_POWER_BOTTOM);
                     if (Helpers.isSpellGriefingEnabled(world)) {
-
                         Explosion explosion = Helpers.oldExplosionConstructor(world, null, null, StoneDestroyerCalculator.INSTANCE_01, pos.getX(), pos.getY() - 3, pos.getZ(), top, true, Explosion.BlockInteraction.DESTROY);
                         spawnFallingBlocks(world, pos.below(3), explosion);
 
@@ -56,27 +58,19 @@ public class LightningAbility extends AbstractAbility{
                     }
                     AbilityHelper.spendAbilityEnergy(entity,this);
                     world.addFreshEntity(entityBolt);
-                }/*else{*/
-//                    if (!entity.isCreative()) {
-//                        AbilityHelper.refundEnergy(entity,this);
-//                    }
-//                }
-
+                    LightningAbilityParticleShape shape = new LightningAbilityParticleShape();
+                    FDPacketUtil.sendToTrackingEntity(entityBolt,new SendShapeParticlesPacket(shape, ParticleTypes.FIREWORK,
+                            pos.getX() + 0.5,pos.getY(),pos.getZ() + 0.5,0,0,0));
+                }
             }
-
         }
+    }
+
+    private void spawnParticles(){
 
     }
 
-    @Override
-    public RunicEnergyCost getCastCost() {
-        return SCConfigs.ABILITIES.lightningAbilityStats.getDefaultAbilityStats().getCastCost();
-    }
 
-    @Override
-    public int getBuyCost() {
-        return SCConfigs.ABILITIES.lightningAbilityStats.getDefaultAbilityStats().getBuyCost();
-    }
 
 
     public void spawnFallingBlocks(Level world,BlockPos mainpos,Explosion expl){
@@ -101,6 +95,16 @@ public class LightningAbility extends AbstractAbility{
             }
         }
 
+    }
+
+    @Override
+    public RunicEnergyCost getCastCost() {
+        return SCConfigs.ABILITIES.lightningAbilityStats.getDefaultAbilityStats().getCastCost();
+    }
+
+    @Override
+    public int getBuyCost() {
+        return SCConfigs.ABILITIES.lightningAbilityStats.getDefaultAbilityStats().getBuyCost();
     }
 }
 
