@@ -6,6 +6,7 @@ import com.finderfeed.solarcraft.client.particles.ball_particle.BallParticleOpti
 import com.finderfeed.solarcraft.client.particles.fd_particle.AlphaInOutOptions;
 import com.finderfeed.solarcraft.client.particles.fd_particle.FDDefaultOptions;
 import com.finderfeed.solarcraft.client.particles.fd_particle.FDScalingOptions;
+import com.finderfeed.solarcraft.client.particles.fd_particle.instances.ExtendedBallParticleOptions;
 import com.finderfeed.solarcraft.client.particles.fd_particle.instances.SmokeParticleOptions;
 import com.finderfeed.solarcraft.client.particles.server_data.shapes.SendShapeParticlesPacket;
 import com.finderfeed.solarcraft.client.particles.server_data.shapes.instances.SphereParticleShape;
@@ -57,6 +58,7 @@ import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 
@@ -121,6 +123,14 @@ public class SolarStrikeEntity extends Entity {
     }
 
     private void particlesOnExplosion(){
+        Vec3 p = this.position();
+
+        ExtendedBallParticleOptions spark = new ExtendedBallParticleOptions(
+                new FDDefaultOptions(200f,4,1f,1f,0f,1f,0f,false,true),
+                new FDScalingOptions(0,0),
+                new AlphaInOutOptions(2,2)
+        );
+        level.addParticle(spark,true,p.x,p.y,p.z,0,0,0);
 
         for (float y = 0; y < 100;y+=1f){
             int r = level.random.nextInt(25) + 230;
@@ -149,13 +159,44 @@ public class SolarStrikeEntity extends Entity {
             int r = level.random.nextInt(25) + 230;
             int g = level.random.nextInt(25) + 230;
             int b = level.random.nextInt(30);
+            ExtendedBallParticleOptions options = new ExtendedBallParticleOptions(
+                    new FDDefaultOptions(5f + random.nextFloat() * 3,80,r/255f,g/255f,b/255f,1f,1f - radius*0.15f,false,true),
+                    new FDScalingOptions(0,80),
+                    new AlphaInOutOptions(0,0)
+            );
 
-            BallParticleOptions options = new BallParticleOptions(5f + random.nextFloat() * 3,
-                    r,g,b,80,true,false);
+            double xd = x * ((radius - 1) * 3 + random.nextFloat() * 0.2);
+            double zd = z * ((radius - 1) * 3 + random.nextFloat() * 0.2);
+
             level.addParticle(options,pos.x,pos.y,pos.z,
-                    x * (0.05 + random.nextFloat() * 0.2),
+                    xd,
                     random.nextFloat() * 0.1,
-                    z * (0.05 + random.nextFloat() * 0.2));
+                    zd
+            );
+        }
+
+
+        Random random = new Random();
+        for (int g = 0; g < 4;g++) {
+            int particles = 20 * (g + 1);
+            angle = 360f / particles;
+            for (float i = 0; i <= 360f; i+=angle){
+                double xdir = Math.cos(Math.toRadians((i + angle * ((random.nextFloat() - 0.5f) * 2f)))) * 0.15;
+                double zdir = Math.sin(Math.toRadians((i + angle * ((random.nextFloat() - 0.5f) * 2f)))) * 0.15;
+                float r = 0.9f + random.nextFloat() * 0.1f;
+                float gr = 0.9f + random.nextFloat() * 0.1f;
+                float b = 0f;
+                float friction = 0.8f + (g+1)*0.01f;
+                ExtendedBallParticleOptions particle = new ExtendedBallParticleOptions(
+                        new FDDefaultOptions(7f / g, 60, r,gr,b, 1f, friction, false, true),
+                        new FDScalingOptions(0, 60),
+                        new AlphaInOutOptions(0, 20)
+                );
+                float ySpeed = g * 1f * (random.nextFloat()+0.5f);
+                double xv = xdir * (g + 1) * (3 + random.nextFloat() * 3);
+                double zv = zdir * (g + 1) * (3 + random.nextFloat() * 3);
+                level.addParticle(particle, true, p.x, p.y, p.z, xv, ySpeed, zv);
+            }
         }
     }
 

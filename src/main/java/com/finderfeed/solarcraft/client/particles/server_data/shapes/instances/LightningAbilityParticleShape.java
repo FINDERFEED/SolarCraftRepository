@@ -33,9 +33,9 @@ public class LightningAbilityParticleShape implements ParticleSpawnShape {
     @Override
     public void placeParticles(Level level, ParticleOptions options, double posX, double posY, double posZ, double xd, double yd, double zd) {
         ExtendedBallParticleOptions spark = new ExtendedBallParticleOptions(
-                new FDDefaultOptions(100f,6,0.3f,0.8f,1f,1f,0f,false,true),
+                new FDDefaultOptions(100f,4,0.3f,0.8f,1f,1f,0f,false,true),
                 new FDScalingOptions(0,0),
-                new AlphaInOutOptions(3,3)
+                new AlphaInOutOptions(2,2)
         );
         level.addParticle(spark,true,posX,posY,posZ,xd,yd,zd);
         

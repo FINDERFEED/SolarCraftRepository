@@ -105,18 +105,6 @@ public class LightningAbility extends AbstractAbility{
                         fallingBlock.setDeltaMovement(speed);
                         fallingBlock.setNoPhysicsTime(3);
                         world.addFreshEntity(fallingBlock);
-                        FDDefaultOptions defaultOptions = new FDDefaultOptions(1.5f,20,0.3f,0.8f,1f,1f,1,false,false);
-                        ParticleEmitterData data = new ParticleEmitterData()
-                                .setPos(center.x,center.y,center.z)
-                                .setParticle(new ExtendedBallParticleOptions(
-                                        defaultOptions,
-                                        new FDScalingOptions(0,20),
-                                        new AlphaInOutOptions(0,0)
-                                ))
-                                .addParticleProcessor(new RandomSpeedProcessorData(0.025,0.025,0.025))
-                                .addParticleEmitterProcessor(new EBPEmitterProcessorData(fallingBlock.getId()));
-                        FDPacketUtil.sendToTrackingEntity(fallingBlock,new ParticleEmmitterPacket(data));
-
                     }
                 }
             }
