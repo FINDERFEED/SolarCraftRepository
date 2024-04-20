@@ -1,5 +1,10 @@
 package com.finderfeed.solarcraft.content.abilities.ability_classes;
 
+import com.finderfeed.solarcraft.client.particles.fd_particle.AlphaInOutOptions;
+import com.finderfeed.solarcraft.client.particles.fd_particle.FDDefaultOptions;
+import com.finderfeed.solarcraft.client.particles.fd_particle.FDScalingOptions;
+import com.finderfeed.solarcraft.client.particles.fd_particle.instances.ExtendedBallParticleOptions;
+import com.finderfeed.solarcraft.client.particles.fd_particle.instances.SmokeParticleOptions;
 import com.finderfeed.solarcraft.client.particles.server_data.shapes.SendShapeParticlesPacket;
 import com.finderfeed.solarcraft.client.particles.server_data.shapes.instances.LightningAbilityParticleShape;
 import com.finderfeed.solarcraft.content.abilities.AbilityStats;
@@ -7,6 +12,10 @@ import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.abilities.AbilityHelper;
 import com.finderfeed.solarcraft.content.entities.not_alive.MyFallingBlockEntity;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
+import com.finderfeed.solarcraft.local_library.client.particles.particle_emitters.ParticleEmitterData;
+import com.finderfeed.solarcraft.local_library.client.particles.particle_emitters.ParticleEmmitterPacket;
+import com.finderfeed.solarcraft.local_library.client.particles.particle_emitters.particle_emitter_processors.instances.ebpe_processor.EBPEmitterProcessorData;
+import com.finderfeed.solarcraft.local_library.client.particles.particle_emitters.particle_processors.instances.random_speed.RandomSpeedProcessorData;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.registries.SCConfigs;
@@ -41,8 +50,7 @@ public class LightningAbility extends AbstractAbility{
             if (result.getType() == HitResult.Type.BLOCK) {
                 BlockPos pos = result.getBlockPos();
                 if (world.canSeeSky(pos.above())) {
-                    LightningBolt entityBolt = new LightningBolt(EntityType.LIGHTNING_BOLT, world);
-                    entityBolt.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+
                     AbilityStats stats = SCConfigs.ABILITIES.lightningAbilityStats;
                     float top = stats.getStat(EXPLOSION_POWER_TOP);
                     float bottom = stats.getStat(EXPLOSION_POWER_BOTTOM);
@@ -57,6 +65,13 @@ public class LightningAbility extends AbstractAbility{
                         world.explode(entity, null, StoneDestroyerCalculator.INSTANCE_01, pos.getX(), pos.getY() - 5, pos.getZ(), bottom, true, Level.ExplosionInteraction.BLOCK);
                     }
                     AbilityHelper.spendAbilityEnergy(entity,this);
+                    for (int i = 0; i < 3;i++){
+                        LightningBolt entityBolt = new LightningBolt(EntityType.LIGHTNING_BOLT, world);
+                        entityBolt.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+                        world.addFreshEntity(entityBolt);
+                    }
+                    LightningBolt entityBolt = new LightningBolt(EntityType.LIGHTNING_BOLT, world);
+                    entityBolt.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
                     world.addFreshEntity(entityBolt);
                     LightningAbilityParticleShape shape = new LightningAbilityParticleShape();
                     FDPacketUtil.sendToTrackingEntity(entityBolt,new SendShapeParticlesPacket(shape, ParticleTypes.FIREWORK,
@@ -75,7 +90,6 @@ public class LightningAbility extends AbstractAbility{
 
     public void spawnFallingBlocks(Level world,BlockPos mainpos,Explosion expl){
         Vec3 center = Helpers.getBlockCenter(mainpos);
-
         for (int x = -2; x <= 2;x++){
             for (int y = -2; y <= 2;y++){
                 for (int z = -2; z <= 2;z++){
@@ -89,7 +103,20 @@ public class LightningAbility extends AbstractAbility{
                     if (state.getExplosionResistance(world,mainpos,expl) <= 6) {
                         MyFallingBlockEntity fallingBlock = new MyFallingBlockEntity(world, position.x, position.y + 3, position.z, state);
                         fallingBlock.setDeltaMovement(speed);
+                        fallingBlock.setNoPhysicsTime(3);
                         world.addFreshEntity(fallingBlock);
+                        FDDefaultOptions defaultOptions = new FDDefaultOptions(1.5f,20,0.3f,0.8f,1f,1f,1,false,false);
+                        ParticleEmitterData data = new ParticleEmitterData()
+                                .setPos(center.x,center.y,center.z)
+                                .setParticle(new ExtendedBallParticleOptions(
+                                        defaultOptions,
+                                        new FDScalingOptions(0,20),
+                                        new AlphaInOutOptions(0,0)
+                                ))
+                                .addParticleProcessor(new RandomSpeedProcessorData(0.025,0.025,0.025))
+                                .addParticleEmitterProcessor(new EBPEmitterProcessorData(fallingBlock.getId()));
+                        FDPacketUtil.sendToTrackingEntity(fallingBlock,new ParticleEmmitterPacket(data));
+
                     }
                 }
             }
