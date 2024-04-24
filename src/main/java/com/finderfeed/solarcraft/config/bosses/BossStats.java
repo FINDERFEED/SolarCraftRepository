@@ -7,6 +7,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.util.ExtraCodecs;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class BossStats implements ReflectiveSerializable<BossStats> {
@@ -21,7 +22,9 @@ public class BossStats implements ReflectiveSerializable<BossStats> {
         this.values = values;
     }
 
-    public BossStats(){}
+    public BossStats(){
+        this(new HashMap<>());
+    }
 
     public BossStats addStat(String name,Float value){
         this.values.put(name,value);
