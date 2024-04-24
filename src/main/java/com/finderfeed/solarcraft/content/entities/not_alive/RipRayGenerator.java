@@ -5,6 +5,7 @@ import com.finderfeed.solarcraft.local_library.helpers.FDMathHelper;
 import com.finderfeed.solarcraft.local_library.other.CyclingInterpolatedValue;
 import com.finderfeed.solarcraft.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
+import com.finderfeed.solarcraft.registries.SCConfigs;
 import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.nbt.CompoundTag;
@@ -92,9 +93,10 @@ public class RipRayGenerator extends PathfinderMob implements CrystalBossBuddy{
     public void attackWithRay(){
         List<LivingEntity> entities = this.level.getEntitiesOfClass(LivingEntity.class,new AABB(-0.5,-getMaxAttackHeight(),-0.5,0.5,0.5,0.5)
         .move(this.position()));
+        float damage = SCConfigs.BOSSES.crystalConstruct.getValue(CrystalBossEntity.RIP_RAY_DAMAGE_ID);
         for (LivingEntity ent : entities){
             if (!(ent instanceof CrystalBossBuddy)) {
-                ent.hurt(SCDamageSources.RUNIC_MAGIC, CrystalBossEntity.RIP_RAY_DAMAGE);
+                ent.hurt(SCDamageSources.RUNIC_MAGIC, damage);
             }
         }
     }

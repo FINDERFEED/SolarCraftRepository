@@ -22,6 +22,7 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progre
 import com.finderfeed.solarcraft.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarcraft.misc_things.NoHealthLimitMob;
 import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
+import com.finderfeed.solarcraft.registries.SCConfigs;
 import com.finderfeed.solarcraft.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
@@ -65,10 +66,15 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
 
     public static final int RAY_LENGTH = 13;
     public static final float RAY_DAMAGE = 12;
+    public static final String RAY_DAMAGE_ID = "rotatingRayDamage";
     public static final float MISSILE_DAMAGE = 1.5F;
+    public static final String MISSILE_DAMAGE_ID = "delayedProjectilesDamage";
     public static final float MINES_DAMAGE = 3F;
+    public static final String MINES_DAMAGE_ID = "minesDamage";
     public static final float AIR_STRIKE_DAMAGE = 4.5F;
+    public static final String AIR_STRIKE_DAMAGE_ID = "fallingMissilesDamage";
     public static final float RIP_RAY_DAMAGE = 5F;
+    public static final String RIP_RAY_DAMAGE_ID = "rayEntityDamage";
     public static final float UP_SPEED_MULTIPLIER_AIR_STRIKE = 0.9F;
     public static final float SIDE_SPEED_MULTIPLIER_AIR_STRIKE = 0.18F;
 
@@ -243,6 +249,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
                     this.entityData.set(RAY_STATE_FLOAT_OR_ANGLE, 0f);
                 }
             } else {
+                float damage = SCConfigs.BOSSES.crystalConstruct.getValue(RAY_DAMAGE_ID);
                 Vec3 firstPos = this.position().add(0, 0.5, 0);
                 Vec3 secondPos = firstPos.add(new Vec3(RAY_LENGTH, 0, 0).yRot((float) Math.toRadians(state)));
                 EntityHitResult res = Helpers.getHitResult(level(), firstPos, secondPos, (entity -> {
@@ -250,7 +257,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
                 }));
                 if (res != null) {
                     Entity ent = res.getEntity();
-                    ent.hurt(SCDamageSources.livingArmorPierce(this), RAY_DAMAGE);
+                    ent.hurt(SCDamageSources.livingArmorPierce(this), damage);
                 }
 
                 secondPos = firstPos.add(new Vec3(RAY_LENGTH, 0, 0).yRot((float) Math.toRadians(state+180)));
@@ -259,7 +266,7 @@ public class CrystalBossEntity extends NoHealthLimitMob implements CrystalBossBu
                 }));
                 if (res != null) {
                     Entity ent = res.getEntity();
-                    ent.hurt(SCDamageSources.livingArmorPierce(this), RAY_DAMAGE);
+                    ent.hurt(SCDamageSources.livingArmorPierce(this), damage);
                 }
                 if (state <= 1300) {
                     this.entityData.set(RAY_STATE_FLOAT_OR_ANGLE, state + 2f);

@@ -5,6 +5,7 @@ import com.finderfeed.solarcraft.content.entities.CrystalBossEntity;
 import com.finderfeed.solarcraft.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.packet_handler.packets.misc_packets.ExplosionParticlesPacket;
+import com.finderfeed.solarcraft.registries.SCConfigs;
 import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import com.finderfeed.solarcraft.registries.sounds.SCSounds;
@@ -63,20 +64,22 @@ public class MagicMissile extends AbstractHurtingProjectile implements CrystalBo
         super.onHitEntity(hit);
         if (!(hit.getEntity() instanceof CrystalBossBuddy) && !(hit.getEntity() instanceof MagicMissile)){
             if (Helpers.isVulnerable(hit.getEntity())){
-                if (damage == null) {
-                    hit.getEntity().hurt(SCDamageSources.RUNIC_MAGIC,CrystalBossEntity.AIR_STRIKE_DAMAGE);
-                    hit.getEntity().invulnerableTime = 0;
-                    this.kill();
-                }else{
-                    if (!level.isClientSide) {
-                        level.playSound(null,this.getX(),this.getY(),this.getZ(), SCSounds.SOLAR_EXPLOSION.get(), SoundSource.AMBIENT,level.random.nextFloat()*0.5f+0.5f,1f);
+                if (!level.isClientSide) {
+                    if (damage == null) {
+                        float damage = SCConfigs.BOSSES.crystalConstruct.getValue(CrystalBossEntity.AIR_STRIKE_DAMAGE_ID);
+                        hit.getEntity().hurt(SCDamageSources.RUNIC_MAGIC, damage);
+                        hit.getEntity().invulnerableTime = 0;
+                        this.kill();
+                    } else {
+                        level.playSound(null, this.getX(), this.getY(), this.getZ(), SCSounds.SOLAR_EXPLOSION.get(), SoundSource.AMBIENT, level.random.nextFloat() * 0.5f + 0.5f, 1f);
                         ExplosionParticlesPacket.send(level, position().add(getDeltaMovement()));
-                        if (Helpers.isVulnerable(hit.getEntity())){
-                            hit.getEntity().hurt(SCDamageSources.RUNIC_MAGIC,damage != null ? damage : 3);
+                        if (Helpers.isVulnerable(hit.getEntity())) {
+                            hit.getEntity().hurt(SCDamageSources.RUNIC_MAGIC, damage != null ? damage : 3);
                             hit.getEntity().invulnerableTime = 0;
+
                         }
+                        this.kill();
                     }
-                    this.kill();
                 }
 
             }
@@ -93,12 +96,14 @@ public class MagicMissile extends AbstractHurtingProjectile implements CrystalBo
 
     private void explode(){
         if (!this.level.isClientSide){
+            float bossDamage = SCConfigs.BOSSES.crystalConstruct.getValue(CrystalBossEntity.AIR_STRIKE_DAMAGE_ID);
+
             level.playSound(null,this.getX(),this.getY(),this.getZ(), SCSounds.SOLAR_EXPLOSION.get(), SoundSource.AMBIENT,level.random.nextFloat()*0.5f+0.5f,1f);
             this.level.getEntitiesOfClass(LivingEntity.class,new AABB(this.position().add(-1.5,-1.5,-1.5),this.position().add(1.5,1.5,1.5)),(living)->{
                 return !(living instanceof CrystalBossBuddy);
             }).forEach((entity)->{
                 if (Helpers.isVulnerable(entity)){
-                    entity.hurt(SCDamageSources.RUNIC_MAGIC,damage != null ? damage : 3);
+                    entity.hurt(SCDamageSources.RUNIC_MAGIC,damage != null ? damage : bossDamage);
                     entity.invulnerableTime = 0;
                 }
             });
@@ -111,7 +116,9 @@ public class MagicMissile extends AbstractHurtingProjectile implements CrystalBo
     public boolean save(CompoundTag tag) {
 
         tag.putDouble("speedD",speedDecrement);
-        tag.putFloat("dam",damage);
+        if (damage != null){
+            tag.putFloat("dam",damage);
+        }
         return super.save(tag);
     }
 
@@ -119,7 +126,11 @@ public class MagicMissile extends AbstractHurtingProjectile implements CrystalBo
     public void load(CompoundTag tag) {
 
         this.speedDecrement = tag.getDouble("speedD");
-        this.damage = tag.getFloat("dam");
+        if (tag.contains("dam")) {
+            this.damage = tag.getFloat("dam");
+        }else{
+            this.damage = null;
+        }
         super.load(tag);
     }
 

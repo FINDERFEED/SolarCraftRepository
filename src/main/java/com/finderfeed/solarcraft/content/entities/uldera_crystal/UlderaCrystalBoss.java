@@ -22,6 +22,7 @@ import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
 import com.finderfeed.solarcraft.packet_handler.packets.CameraShakePacket;
 import com.finderfeed.solarcraft.packet_handler.packets.DisablePlayerFlightPacket;
+import com.finderfeed.solarcraft.registries.SCConfigs;
 import com.finderfeed.solarcraft.registries.animations.SCAnimations;
 import com.finderfeed.solarcraft.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
@@ -97,7 +98,18 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
 
     private static final EntityDataAccessor<Integer> MISC_TICKER = SynchedEntityData.defineId(UlderaCrystalBoss.class, EntityDataSerializers.INT);
 
-
+    public static final float HOMING_STARS_DAMAGE = 5f;
+    public static final String HOMING_STARS_DAMAGE_ID = "homingStarsDamage";
+    public static final float LIGHTNING_DAMAGE = 20f;
+    public static final String LIGHTNING_DAMAGE_ID = "lightningsDamage";
+    public static final float PULL_EXPLOSION_BASE_DAMAGE = 10f;
+    public static final String PULL_EXPLOSION_BASE_DAMAGE_ID = "pullExplosionBaseDamage";
+    public static final float ELECTRIC_RAIN_PROJECTILE_DAMAGE = 6f;
+    public static final String ELECTRIC_RAIN_PROJECTILE_DAMAGE_ID = "electricRainProjectileDamage";
+    public static final float ELECTRIC_RAIN_PROJECTILE_SPAWN_FREQUENCY = 2f;
+    public static final String ELECTRIC_RAIN_PROJECTILE_SPAWN_FREQUENCY_ID = "electricRainProjectileSpawnFrequency";
+    public static final float ELECTRIC_RAIN_LIFETIME = 300f;
+    public static final String ELECTRIC_RAIN_LIFETIME_ID = "electricRainLifetime";
     private BossAttackChain bossChain = new BossAttackChain.Builder()
             .setTimeBetweenAttacks(80)
             .addAttack("homingStars",this::homingStarsRelease, 50*5 - 1,1,0)
@@ -253,13 +265,14 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
         }
 
         if (t > 20 && t <= 40){
+            float damage = SCConfigs.BOSSES.ulderaCrystal.getValue(HOMING_STARS_DAMAGE_ID);
             HomingStarProjectile projectile = new HomingStarProjectile(level);
             projectile.setPos(this.getCenterPos());
             projectile.setDeltaMovement(Helpers.randomVector().normalize().multiply(0.5f,0.5f,0.5f));
             projectile.setTarget(this.getTarget().getUUID());
             projectile.setRotationSpeed(0.075f);
             projectile.setShooter(this.getUUID());
-            projectile.setDamage(5f);
+            projectile.setDamage(damage);
             level.addFreshEntity(projectile);
         }
         ((ServerLevel)level).sendParticles(
@@ -284,13 +297,14 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
         if (this.lightningPositions.isEmpty()){
             lightningPositions.addAll(this.generateRandomLightningPositions());
         }
+        float damage = SCConfigs.BOSSES.ulderaCrystal.getValue(LIGHTNING_DAMAGE_ID);
         for (BlockPos pos : this.lightningPositions){
             UlderaLightningEntity lightning = new UlderaLightningEntity(SCEntityTypes.ULDERA_LIGHTNING.get(),level);
             lightning.setPos(pos.getX() + 0.5,pos.getY(),pos.getZ() + 0.5);
             lightning.setHeight(100);
             lightning.setLightningDelay(40);
             lightning.setOwner(this.getUUID());
-            lightning.damage = 20;
+            lightning.damage = damage;
             level.addFreshEntity(lightning);
         }
         lightningPositions.clear();
@@ -505,13 +519,10 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
         return Mth.clamp(this.bossChain.getTicker()/80f,0,1);
     }
     private void dealExplosionDamage(){
-        float baseDamage = 10;
+        float baseDamage = SCConfigs.BOSSES.ulderaCrystal.getValue(PULL_EXPLOSION_BASE_DAMAGE_ID);
         for (LivingEntity entity : this.getPullAffectedEntities()){
             Vec3 dist = entity.position().add(0,entity.getBbHeight()/2,0).subtract(this.getCenterPos());
             float damage = calculateDistanceDamage(baseDamage,(float)dist.length());
-//            if (entity instanceof Player player){
-//                player.displayClientMessage(Component.literal("Damage: " + damage + "Distance: " + dist.length()),false);
-//            }
             entity.invulnerableTime = 0;
             entity.hurt(SCDamageSources.livingAllResistanceIgnore(this),damage);
         }
@@ -594,12 +605,15 @@ public class UlderaCrystalBoss extends NoHealthLimitMob implements AnimatedObjec
                                 .setRGB(90,0,186)
                                 .build()
                 ));
+        float damage = SCConfigs.BOSSES.ulderaCrystal.getValue(ELECTRIC_RAIN_PROJECTILE_DAMAGE_ID);
+        int frequency = (int) SCConfigs.BOSSES.ulderaCrystal.getValue(ELECTRIC_RAIN_PROJECTILE_SPAWN_FREQUENCY_ID);
+        int lifetime = (int) SCConfigs.BOSSES.ulderaCrystal.getValue(ELECTRIC_RAIN_LIFETIME_ID);
         rain.setPos(v);
-        rain.setLifetime(300);
+        rain.setLifetime(lifetime);
         rain.setOwner(this.getUUID());
-        rain.setFrequency(2);
+        rain.setFrequency(frequency);
         rain.setRadius(21);
-        rain.setDamage(6);
+        rain.setDamage(damage);
         level.addFreshEntity(rain);
     }
 

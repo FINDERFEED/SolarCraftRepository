@@ -12,6 +12,7 @@ import com.finderfeed.solarcraft.content.entities.projectiles.RunicWarriorSummon
 import com.finderfeed.solarcraft.misc_things.CrystalBossBuddy;
 import com.finderfeed.solarcraft.packet_handler.packets.DisablePlayerFlightPacket;
 import com.finderfeed.solarcraft.packet_handler.packets.TeleportEntityPacket;
+import com.finderfeed.solarcraft.registries.SCConfigs;
 import com.finderfeed.solarcraft.registries.attributes.AttributesRegistry;
 import com.finderfeed.solarcraft.registries.blocks.SCBlocks;
 import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
@@ -22,8 +23,6 @@ import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -63,15 +62,21 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
 
 
     public CustomServerBossEvent BOSS_INFO = new CustomServerBossEvent(this.getDisplayName(),"runic_elemental");
-//    public ServerBossEvent BOSS_INFO = new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.NOTCHED_20);
     public static final String MAGIC_MISSILES_ATTACK = "magic_missiles";
     private BlockPos summoningPos = null;
 
     public static final float MISSILES_DAMAGE = 10f;
+    public static final String MISSILES_DAMAGE_ID = "missilesDamage";
     public static final float SUNTRIKES_DAMAGE = 20f;
+    public static final String SUNSTRIKES_DAMAGE_ID = "sunstrikesDamage";
     public static final float EARTHQUAKE_DAMAGE = 30f;
+    public static final String EARTHQUAKE_DAMAGE_ID = "earthquakeDamage";
     public static final float VARTH_DADER_DAMAGE = 3f;
+    public static final String VARTH_DADER_DAMAGE_ID = "exhaustionRayDamage";
     public static final float HAMMER_ATTACK_DAMAGE = 60f;
+    public static final String HAMMER_ATTACK_DAMAGE_ID = "hammerAttackDamage";
+    public static final float DAMAGE_AMPLIFICATION_BLOCK_BONUS = 10;
+    public static final String DAMAGE_AMPLIFICATION_BLOCK_BONUS_ID = "damageAmplificationBlockBonus";
 
     private Map<String,InterpolatedValue> ANIMATION_VALUES = new HashMap<>();
     public BossAttackChain BOSS_ATTACK_CHAIN = new BossAttackChain.Builder()
@@ -230,14 +235,14 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     public void magicMissilesAttack(){
         this.setAttackType(AttackType.MAGIC_MISSILES);
         if (BOSS_ATTACK_CHAIN.getTicker() >= 30 && BOSS_ATTACK_CHAIN.getTicker() < 205) {
-
+            float preliminaryDamage = SCConfigs.BOSSES.runicElemental.getValue(MISSILES_DAMAGE_ID);
             LivingEntity target = getTarget();
             if (target == null) return;
             float speedMod = 1.5f;
             Vec3 between = target.position().add(0,target.getEyeHeight(target.getPose())*0.8,0).subtract(position().add(0, 2, 0));
             MagicMissile missile = new MagicMissile(level,between.normalize().multiply(speedMod,speedMod,speedMod));
             missile.setSpeedDecrement(0);
-            float damage = (MISSILES_DAMAGE + getDamageBonus()) * getDamageModifier();
+            float damage = (preliminaryDamage + getDamageBonus()) * getDamageModifier();
             missile.setDamage(damage);
             missile.setPos(this.position().add(0,2,0).add(between.normalize().multiply(0.5,0.5,0.5)));
             level.addFreshEntity(missile);
@@ -259,7 +264,8 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
                 for (Player player : getPlayersAround(false)){
                     SunstrikeEntity sunstrike = new SunstrikeEntity(SCEntityTypes.SUNSTRIKE.get(),level);
                     Vec3 playerSpeed = player.getLookAngle().multiply(1f,0,1f).normalize().multiply(0.5,0,0.5);
-                    float damage = (SUNTRIKES_DAMAGE + getDamageBonus()) * getDamageModifier();
+                    float pDamage = SCConfigs.BOSSES.runicElemental.getValue(SUNSTRIKES_DAMAGE_ID);
+                    float damage = (pDamage + getDamageBonus()) * getDamageModifier();
                     sunstrike.setDamage(damage);
                     sunstrike.setPos(player.position().add(playerSpeed));
                     level.addFreshEntity(sunstrike);
@@ -281,7 +287,8 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
 
     public void earthquake(){
         this.setAttackType(AttackType.EARTHQUAKE);
-        float damage = (EARTHQUAKE_DAMAGE + getDamageBonus()) * getDamageModifier();
+        float pDamage = SCConfigs.BOSSES.runicElemental.getValue(EARTHQUAKE_DAMAGE_ID);
+        float damage = (pDamage + getDamageBonus()) * getDamageModifier();
         for (int i = 0; i < 4; i++) {
             Vec3 dir = new Vec3(level.random.nextDouble() * 2 - 1, 0, level.random.nextDouble() * 2 - 1).normalize();
             Vec3 pos = position().add(dir);
@@ -319,7 +326,8 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
             }
             if (BOSS_ATTACK_CHAIN.getTicker() % 10 == 0) {
                 List<MobEffect> toRemove = new ArrayList<>();
-                float damage = (VARTH_DADER_DAMAGE + getDamageBonus()/4f) * getDamageModifier();
+                float pDamage = SCConfigs.BOSSES.runicElemental.getValue(VARTH_DADER_DAMAGE_ID);
+                float damage = (pDamage + getDamageBonus()/4f) * getDamageModifier();
                 living.hurt(SCDamageSources.livingArmorPierce(this), damage);
                 for (MobEffectInstance effect : living.getActiveEffects()){
                     if (effect.getEffect().isBeneficial() && effect.getEffect() != SCEffects.IMMORTALITY_EFFECT.get()){
@@ -408,13 +416,14 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
             }
         }
         if (ticker == 21){
+            float pDamage = SCConfigs.BOSSES.runicElemental.getValue(HAMMER_ATTACK_DAMAGE_ID);
             for (Player player : getPlayersAround(false)){
                 Vec3 vec = player.position().subtract(this.position()).multiply(1,0,1).normalize();
                 Vec3 attackDir = getHammerAttackDirection();
                 double angleVec = Math.toDegrees(Math.atan2(vec.x,vec.z));
                 double attackDirAngle = Math.toDegrees(Math.atan2(attackDir.x,attackDir.z));
                 if (Math.abs(attackDirAngle - angleVec) <= 110 && vec.length() <= 16){
-                    float damage = (HAMMER_ATTACK_DAMAGE + getDamageBonus()) * getDamageModifier();
+                    float damage = (pDamage + getDamageBonus()) * getDamageModifier();
                     player.hurt(SCDamageSources.livingArmorPierce(this),damage);
                 }
             }
@@ -448,7 +457,8 @@ public class RunicElementalBoss extends Mob implements CrystalBossBuddy {
     }
 
     public float getDamageBonus(){
-        return level.getBlockState(getOnPos()).is(SCBlocks.DAMAGE_AMPLIFICATION_BLOCK.get()) ? 10 : 0;
+        return level.getBlockState(getOnPos()).is(SCBlocks.DAMAGE_AMPLIFICATION_BLOCK.get()) ?
+                SCConfigs.BOSSES.runicElemental.getValue(DAMAGE_AMPLIFICATION_BLOCK_BONUS_ID) : 0;
     }
 
     public float getDamageModifier(){

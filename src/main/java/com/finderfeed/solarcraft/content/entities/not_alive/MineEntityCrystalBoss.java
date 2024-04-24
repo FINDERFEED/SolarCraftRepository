@@ -3,6 +3,7 @@ package com.finderfeed.solarcraft.content.entities.not_alive;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.content.entities.CrystalBossEntity;
 import com.finderfeed.solarcraft.misc_things.CrystalBossBuddy;
+import com.finderfeed.solarcraft.registries.SCConfigs;
 import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.nbt.CompoundTag;
@@ -73,11 +74,12 @@ public class MineEntityCrystalBoss extends PathfinderMob implements CrystalBossB
             createExplosionParticles();
         }
         if (!this.level.isClientSide){
+            float damage = SCConfigs.BOSSES.crystalConstruct.getValue(CrystalBossEntity.MINES_DAMAGE_ID);
             level.playSound(null,this.getX(),this.getY(),this.getZ(), SCSounds.SOLAR_EXPLOSION.get(), SoundSource.AMBIENT,level.random.nextFloat()*0.5f+0.5f,1f);
             level.getEntitiesOfClass(LivingEntity.class,new AABB(-1.5,-1.0,-1.5,1.5,2,1.5).move(position()),(ent)->{
                 return !(ent instanceof CrystalBossBuddy);
             }).forEach((living)->{
-                living.hurt(SCDamageSources.RUNIC_MAGIC, CrystalBossEntity.MINES_DAMAGE);
+                living.hurt(SCDamageSources.RUNIC_MAGIC, damage);
             });
         }
 
