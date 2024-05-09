@@ -1,14 +1,19 @@
 package com.finderfeed.solarcraft.content.entities.dungeon_ray_controller;
 
+import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.client.particles.ball_particle.BallParticleOptions;
+import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
+import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.AnimatedObject;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.manager.AnimationManager;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.manager.AnimationTicker;
 import com.finderfeed.solarcraft.local_library.bedrock_loader.animations.manager.EntityServerAnimationManager;
 import com.finderfeed.solarcraft.local_library.helpers.CompoundNBTHelper;
 import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
+import com.finderfeed.solarcraft.registries.Tags;
 import com.finderfeed.solarcraft.registries.animations.SCAnimations;
 import com.finderfeed.solarcraft.registries.items.SCItems;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -22,8 +27,16 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.level.ExplosionEvent;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -87,6 +100,7 @@ public class DungeonRayController extends Entity implements AnimatedObject {
     @Override
     public InteractionResult interactAt(Player player, Vec3 vec, InteractionHand hand) {
         if (player instanceof ServerPlayer serverPlayer){
+            Helpers.fireProgressionEvent(serverPlayer, Progression.DIMENSIONAL_SHARD_DUNGEON);
             if (!usedPlayers.contains(serverPlayer.getUUID())){
                 givingOutTicker = 60;
                 usedPlayers.add(serverPlayer.getUUID());
@@ -229,5 +243,60 @@ public class DungeonRayController extends Entity implements AnimatedObject {
     @Override
     public boolean isNoGravity() {
         return true;
+    }
+
+    public static boolean isControllerAround(Level level,Vec3 pos){
+        AABB checkBox = new AABB(-20,-10,-20,20,10,20).move(pos);
+        if (!level.getEntitiesOfClass(DungeonRayController.class,checkBox).isEmpty()){
+            return true;
+        }
+        return false;
+    }
+
+    @Mod.EventBusSubscriber(modid = SolarCraft.MOD_ID,bus = Mod.EventBusSubscriber.Bus.FORGE)
+    public static class Listener {
+
+        @SubscribeEvent
+        public static void preventExplosions(ExplosionEvent.Detonate event){
+            Level level = event.getLevel();
+            Explosion explosion = event.getExplosion();
+            Vec3 pos = explosion.center();
+            if (!level.isClientSide){
+                if (isControllerAround(level,pos)){
+                    explosion.clearToBlow();
+                }
+            }
+        }
+
+        @SubscribeEvent
+        public static void preventBreakingBlocks(BlockEvent.BreakEvent event){
+            Player player = event.getPlayer();
+            Level level = player.level;
+            BlockPos pos = event.getPos();
+            if (!level.isClientSide && !player.isCreative()){
+                BlockState state = event.getState();
+                if (state.is(Tags.MAGISTONE) && isControllerAround(level,new Vec3(pos.getX(),pos.getY(),pos.getZ()))){
+                    event.setCanceled(true);
+                }
+            }
+        }
+        @SubscribeEvent
+        public static void preventPlacingBlocks(BlockEvent.EntityPlaceEvent event){
+            Entity entity = event.getEntity();
+            Level level = entity.level;
+            BlockPos pos = event.getPos();
+            if (!level.isClientSide && isControllerAround(level,new Vec3(pos.getX(),pos.getY(),pos.getZ()))){
+                if (!(entity instanceof Player player)) {
+                    event.setCanceled(true);
+                }else{
+                    if (!player.isCreative()){
+                        event.setCanceled(true);
+                    }
+                }
+
+            }
+        }
+
+
     }
 }

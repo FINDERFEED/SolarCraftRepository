@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "solarcraft:magistone_column",
+    "solarcraft:magistone_bricks",
+    "solarcraft:magistone_stairs",
+    "solarcraft:magistone",
+    "solarcraft:magistone_ray",
+    "solarcraft:magistone_slab",
+    "solarcraft:magistone_column",
+    "solarcraft:chiseled_magistone"
+  ]
+}

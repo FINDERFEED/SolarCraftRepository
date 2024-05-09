@@ -12,6 +12,7 @@ import com.finderfeed.solarcraft.client.particles.server_data.shapes.SendShapePa
 import com.finderfeed.solarcraft.client.particles.server_data.shapes.instances.SphereParticleShape;
 import com.finderfeed.solarcraft.content.abilities.AbilityStats;
 import com.finderfeed.solarcraft.content.abilities.ability_classes.SolarStrikeAbility;
+import com.finderfeed.solarcraft.content.entities.dungeon_ray_controller.DungeonRayController;
 import com.finderfeed.solarcraft.content.entities.not_alive.MyFallingBlockEntity;
 import com.finderfeed.solarcraft.events.other_events.event_handler.SCEventHandler;
 import com.finderfeed.solarcraft.helpers.Helpers;
@@ -253,7 +254,10 @@ public class SolarStrikeEntity extends Entity {
                 }
             }
         }
-        if (SCEventHandler.isExplosionBlockerAround(level(), Helpers.getBlockCenter(this.getOnPos())) || !Helpers.isSpellGriefingEnabled((ServerLevel) level)) return;
+        if (!Helpers.isSpellGriefingEnabled((ServerLevel) level) ||
+                DungeonRayController.isControllerAround(level,this.position()) ||
+                SCEventHandler.isExplosionBlockerAround(level(), Helpers.getBlockCenter(this.getOnPos()))
+        ) return;
 
         for (int x = -radius;x < radius;x++){
             for (int z = -radius;z < radius;z++){
