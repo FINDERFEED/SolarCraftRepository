@@ -10,7 +10,7 @@ import java.util.List;
 
 public class NotStructures {
 
-    public static List<BlockEntity> checkInfusingStandStructure(BlockPos pos, Level world){
+    public static List<BlockEntity> getInfuserPools(BlockPos pos, Level world){
         List<BlockEntity> toReturn = new ArrayList<>();
         toReturn.add(blockGet(pos.offset(-4,0,-4 ),world));
         toReturn.add(blockGet(pos.offset(0,0,-4  ),world));

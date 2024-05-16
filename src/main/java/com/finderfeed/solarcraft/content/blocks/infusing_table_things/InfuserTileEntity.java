@@ -30,8 +30,6 @@ import com.finderfeed.solarcraft.content.world_generation.structures.NotStructur
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.recipe_types.SCRecipeTypes;
 import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
-import net.minecraft.network.Connection;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -53,7 +51,7 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
-import javax.annotation.Nullable;
+
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
@@ -488,7 +486,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
 
 
     public void updateStacksInPhantomSlots(){
-        List<BlockEntity> list = NotStructures.checkInfusingStandStructure(worldPosition,level);
+        List<BlockEntity> list = NotStructures.getInfuserPools(worldPosition,level);
         for (int i = 0;i < list.size();i++){
             int iter = i;
             if (i >= 6){
@@ -503,7 +501,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
         }
     }
     public void infusingStandsRendering(boolean e){
-        List<BlockEntity> list = NotStructures.checkInfusingStandStructure(worldPosition,level);
+        List<BlockEntity> list = NotStructures.getInfuserPools(worldPosition,level);
         for (int i = 0;i < list.size();i++){
             if (list.get(i) instanceof InfusingStandTileEntity stand){
                stand.shouldRenderItem(e);
@@ -529,7 +527,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
             }
         }
 
-        NotStructures.checkInfusingStandStructure(worldPosition,level).forEach((tile)->{
+        NotStructures.getInfuserPools(worldPosition,level).forEach((tile)->{
             if (tile instanceof InfusingStandTileEntity pool){
                 if ((pool.getStackInSlot(0).getItem() != Items.AIR) && pool.getStackInSlot(0).getCount() < count.get()){
                     count.set(pool.getStackInSlot(0).getCount());
@@ -563,7 +561,7 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
 
 
     public void deleteStacksInPhantomSlots(int amount){
-        List<BlockEntity> list = NotStructures.checkInfusingStandStructure(worldPosition,level);
+        List<BlockEntity> list = NotStructures.getInfuserPools(worldPosition,level);
         for (int i = 0;i < list.size();i++){
             if (list.get(i) instanceof InfusingStandTileEntity){
                 InfusingStandTileEntity tile = (InfusingStandTileEntity) list.get(i);

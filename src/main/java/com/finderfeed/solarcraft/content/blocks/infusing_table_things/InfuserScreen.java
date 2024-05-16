@@ -98,20 +98,9 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserContainer> {
 
 
 
-//        renderItemAndTooltip(tile.getItem(1),relX+137+a,relY+58,x,y,matrices);
-//        renderItemAndTooltip(tile.getItem(2),relX+123+a,relY+19,x,y,matrices);
-//        renderItemAndTooltip(tile.getItem(3),relX+84+a,relY+5,x,y,matrices);
-//        renderItemAndTooltip(tile.getItem(4),relX+45+a,relY+19,x,y,matrices);
-//        renderItemAndTooltip(tile.getItem(5),relX+31+a,relY+58,x,y,matrices);
-//        renderItemAndTooltip(tile.getItem(6),relX+45+a,relY+97,x,y,matrices);
-//        renderItemAndTooltip(tile.getItem(7),relX+84+a,relY+111,x,y,matrices);
-//        renderItemAndTooltip(tile.getItem(8),relX+123+a,relY+97,x,y,matrices);
+
         Optional<RecipeHolder<InfusingRecipe>> recipe = minecraft.level.getRecipeManager().getRecipeFor(SCRecipeTypes.INFUSING.get(),new PhantomInventory(tile.getInventory()),minecraft.level);
 
-//        if (recipe.isPresent()){
-//            renderItemAndTooltip(recipe.get().output,relX+159+a,relY+2,x,y,matrices);
-//
-//        }
         matrices.popPose();
 
         if (tier == InfuserTileEntity.Tier.SOLAR_ENERGY) {
@@ -149,18 +138,18 @@ public class InfuserScreen extends AbstractContainerScreen<InfuserContainer> {
 
         }
 
-        renderItemAndTooltip(tile.getItem(0) , relX + 7 + a + offs + 34,    relY - 8 + a + 20,x,y,graphics);
-        renderItemAndTooltip(tile.getItem(1) , relX + 7 + a + offs + 80,    relY - 8 + a + 13,x,y,graphics);
-        renderItemAndTooltip(tile.getItem(2) , relX + 7 + a + offs + 126,   relY - 8 + a + 20,x,y,graphics);
-        renderItemAndTooltip(tile.getItem(3) , relX + 7 + a + offs + 54,    relY - 8 + a + 40,x,y,graphics);
-        renderItemAndTooltip(tile.getItem(4) , relX + 7 + a + offs + 106,   relY - 8 + a + 40,x,y,graphics);
-        renderItemAndTooltip(tile.getItem(5) , relX + 7 + a + offs + 27,    relY - 8 + a + 66,x,y,graphics);
-        renderItemAndTooltip(tile.getItem(7) , relX + 7 + a + offs + 133,   relY - 8 + a + 66,x,y,graphics);
-        renderItemAndTooltip(tile.getItem(8) , relX + 7 + a + offs + 54,    relY - 8 + a + 92,x,y,graphics);
-        renderItemAndTooltip(tile.getItem(9) , relX + 7 + a  + offs+ 106,   relY - 8 + a + 92,x,y,graphics);
-        renderItemAndTooltip(tile.getItem(10),relX +  7 + a + offs + 34,    relY - 8 + a + 112,x,y,graphics);
-        renderItemAndTooltip(tile.getItem(11),relX +  7 + a + offs + 80,    relY - 8 + a + 119,x,y,graphics);
-        renderItemAndTooltip(tile.getItem(12),relX +  7 + a + offs + 126,   relY - 8 + a + 112,x,y,graphics);
+//        renderItemAndTooltip(tile.getItem(0) , relX + 7 + a + offs + 34,    relY - 8 + a + 20,x,y,graphics);
+//        renderItemAndTooltip(tile.getItem(1) , relX + 7 + a + offs + 80,    relY - 8 + a + 13,x,y,graphics);
+//        renderItemAndTooltip(tile.getItem(2) , relX + 7 + a + offs + 126,   relY - 8 + a + 20,x,y,graphics);
+//        renderItemAndTooltip(tile.getItem(3) , relX + 7 + a + offs + 54,    relY - 8 + a + 40,x,y,graphics);
+//        renderItemAndTooltip(tile.getItem(4) , relX + 7 + a + offs + 106,   relY - 8 + a + 40,x,y,graphics);
+//        renderItemAndTooltip(tile.getItem(5) , relX + 7 + a + offs + 27,    relY - 8 + a + 66,x,y,graphics);
+//        renderItemAndTooltip(tile.getItem(7) , relX + 7 + a + offs + 133,   relY - 8 + a + 66,x,y,graphics);
+//        renderItemAndTooltip(tile.getItem(8) , relX + 7 + a + offs + 54,    relY - 8 + a + 92,x,y,graphics);
+//        renderItemAndTooltip(tile.getItem(9) , relX + 7 + a  + offs+ 106,   relY - 8 + a + 92,x,y,graphics);
+//        renderItemAndTooltip(tile.getItem(10),relX +  7 + a + offs + 34,    relY - 8 + a + 112,x,y,graphics);
+//        renderItemAndTooltip(tile.getItem(11),relX +  7 + a + offs + 80,    relY - 8 + a + 119,x,y,graphics);
+//        renderItemAndTooltip(tile.getItem(12),relX +  7 + a + offs + 126,   relY - 8 + a + 112,x,y,graphics);
 
         if (recipe.isPresent()){
             renderItemAndTooltip(recipe.get().value().output.copy(),relX+159+a + offs + 3,relY+2,x,y,graphics);

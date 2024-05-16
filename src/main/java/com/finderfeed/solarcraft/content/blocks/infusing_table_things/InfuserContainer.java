@@ -1,6 +1,8 @@
 package com.finderfeed.solarcraft.content.blocks.infusing_table_things;
 
 import com.finderfeed.solarcraft.content.blocks.blockentities.containers.misc.TESlotItemHandler;
+import com.finderfeed.solarcraft.content.blocks.infusing_table_things.infusing_pool.InfusingStandTileEntity;
+import com.finderfeed.solarcraft.content.world_generation.structures.NotStructures;
 import com.finderfeed.solarcraft.helpers.Helpers;
 import com.finderfeed.solarcraft.client.screens.custom_slots.OutputSlot;
 import com.finderfeed.solarcraft.registries.containers.SCContainers;
@@ -18,11 +20,27 @@ import net.neoforged.neoforge.items.SlotItemHandler;
 import net.minecraft.core.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Objects;
 
 public class InfuserContainer extends AbstractContainerMenu {
     public InfuserTileEntity te;
     public ItemStackHandler inventory;
+
+    public static final int[][] slotPositions = {
+            {33 + 7 + 34,  -24 + 20 - 8},
+            {33 + 7 + 80,  -24 + 13 - 8},
+            {33 + 7 + 126, -24 +  20 - 8},
+            {33 + 7 + 54,  -24 + 40 - 8},
+            {33 + 7 + 106, -24 +  40 - 8},
+            {33 + 7 + 27,  -24 + 66 - 8},
+            {33 + 7 + 133, -24 +  66 - 8},
+            {33 + 7 + 54,  -24 + 92 - 8},
+            {33 + 7 + 106, -24 +  92 - 8},
+            {33 + 7 + 34,  -24 + 112 - 8},
+            {33 + 7 + 80,  -24 + 119 - 8},
+            {33 + 7 + 126, -24 +  112 - 8},
+    };
 
     public InfuserContainer(final int windowId, final Inventory playerInv, final InfuserTileEntity te) {
         super(SCContainers.INFUSING_TABLE_CONTAINER.get(), windowId);
@@ -30,8 +48,18 @@ public class InfuserContainer extends AbstractContainerMenu {
         this.inventory = te.getInventory();
 
 
-        int i = (6 - 4) * 18;
+
         int offsx = 0;
+        List<BlockEntity> list = NotStructures.getInfuserPools(te.getBlockPos(),te.getLevel());
+
+        for (int i = 0; i < list.size();i++){
+            BlockEntity tile = list.get(i);
+            if (tile instanceof InfusingStandTileEntity stand){
+                this.addSlot(new TESlotItemHandler(stand,stand.getInventory(), 0, slotPositions[i][0], slotPositions[i][1]));
+            }
+        }
+
+
         // Tile Entity
         //for (int kj = 0; kj <= te.getContainerSize()-1;kj++){
             this.addSlot(new TESlotItemHandler(te,inventory, te.inputSlot(), 120 + offsx, 34));
