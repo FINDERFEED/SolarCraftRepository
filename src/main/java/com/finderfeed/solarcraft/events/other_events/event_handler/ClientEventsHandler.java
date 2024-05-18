@@ -5,6 +5,7 @@ import com.finderfeed.solarcraft.SolarCraft;
 //import com.finderfeed.solarcraft.client.model_loaders.RadiantBlocksModelLoader;
 import com.finderfeed.solarcraft.client.tooltips.RETooltipComponent;
 import com.finderfeed.solarcraft.content.blocks.infusing_table_things.InfuserTileEntity;
+import com.finderfeed.solarcraft.content.items.EnderRadarItem;
 import com.finderfeed.solarcraft.content.items.ModuleItem;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.progressions.Progression;
@@ -31,6 +32,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -180,8 +182,9 @@ public class ClientEventsHandler {
     public static void clientFillRenderPositions(TickEvent.ClientTickEvent event){
         LocalPlayer player = Minecraft.getInstance().player;
         if (player != null){
-            if (player.level().getGameTime() % 5 == 0){
-                if (player.getInventory().countItem(SCItems.ENDER_RADAR.get()) > 0){
+            if (player.level().getGameTime() % 10 == 0){
+
+                if (trySearchEnderRadar(player) != null){
                         fillList(player.getOnPos().above(),player.level());
                 }else{
                     ORES_RENDER_POSITIONS.clear();
@@ -192,6 +195,17 @@ public class ClientEventsHandler {
                 fillCatalystRenderPositions();
             }
         }
+    }
+
+    private static ItemStack trySearchEnderRadar(Player player){
+        Inventory inventory = player.getInventory();
+        for (int i = 0; i  < inventory.getContainerSize();i++){
+            ItemStack item = inventory.getItem(i);
+            if (item.getItem() instanceof EnderRadarItem && EnderRadarItem.isTurnedOn(item)){
+                return item;
+            }
+        }
+        return null;
     }
 
     @SubscribeEvent

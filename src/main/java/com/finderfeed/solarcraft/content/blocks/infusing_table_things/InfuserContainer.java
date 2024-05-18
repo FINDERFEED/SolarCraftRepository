@@ -14,6 +14,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
@@ -54,8 +55,21 @@ public class InfuserContainer extends AbstractContainerMenu {
 
         for (int i = 0; i < list.size();i++){
             BlockEntity tile = list.get(i);
+
             if (tile instanceof InfusingStandTileEntity stand){
-                this.addSlot(new TESlotItemHandler(stand,stand.getInventory(), 0, slotPositions[i][0], slotPositions[i][1]));
+                BlockPos pos = tile.getBlockPos();
+                Level level = tile.getLevel();
+                this.addSlot(new TESlotItemHandler(stand,stand.getInventory(), 0, slotPositions[i][0], slotPositions[i][1]){
+                    @Override
+                    public boolean mayPlace(ItemStack stack) {
+                        return level.getBlockEntity(pos) == tile;
+                    }
+
+                    @Override
+                    public boolean mayPickup(Player playerIn) {
+                        return level.getBlockEntity(pos) == tile;
+                    }
+                });
             }
         }
 

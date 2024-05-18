@@ -100,12 +100,7 @@ public class SCItems {
 
     public static final DeferredHolder<Item,Item> LENSING_CRYSTAL = registerItem(ITEMS.register("lensing_crystal",()-> new Item(new Item.Properties().rarity(Rarity.UNCOMMON))),SOLAR_GROUP_MATERIALS);
 
-    public static final DeferredHolder<Item,Item> ENDER_RADAR = registerItem(ITEMS.register("ender_radar",()-> new SolarcraftItem(new Item.Properties().rarity(Rarity.UNCOMMON).stacksTo(1),()->AncientFragment.ENDER_RADAR){
-        @Override
-        public boolean isFoil(ItemStack p_41453_) {
-            return true;
-        }
-    }),SOLAR_GROUP_TOOLS);
+    public static final DeferredHolder<Item,Item> ENDER_RADAR = registerItem(ITEMS.register("ender_radar",()-> new EnderRadarItem(new Item.Properties().rarity(Rarity.UNCOMMON).stacksTo(1),()->AncientFragment.ENDER_RADAR)),SOLAR_GROUP_TOOLS);
     public static final DeferredHolder<Item,Item> CHARGED_QUALADIUM_INGOT = registerItem(ITEMS.register("charged_qualadium_ingot",()-> new SolarcraftItem(new Item.Properties().rarity(Rarity.UNCOMMON),()->AncientFragment.CHARGED_QUALADIUM_INGOT)),SOLAR_GROUP_MATERIALS);
     public static final DeferredHolder<Item,Item> AMETHYST_CORE = registerItem(ITEMS.register("amethyst_core",()->new SolarcraftItem(new Item.Properties(),()->AncientFragment.AMETHYST_CORE)),SOLAR_GROUP_MATERIALS);
     public static final DeferredHolder<Item,Item> RUNIC_CORE = registerItem(ITEMS.register("runic_core",()->new SolarcraftItem(new Item.Properties(),()->AncientFragment.RUNIC_CORE)),SOLAR_GROUP_MATERIALS);

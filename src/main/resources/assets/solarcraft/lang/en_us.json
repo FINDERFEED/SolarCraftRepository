@@ -874,5 +874,6 @@
   "entity.solarcraft.solar_forge_meteorite_projectile": "Meteorite",
   "solarcraft.teleportation_stone": "Shift-click to set the position. Right click to teleport. Goes on cooldown if player received damage recently.",
   "solarcraft.teleportation_stone_2": "Dimension: %s, Position: %s.",
-  "solarcraft.solar_key_required": "A special key is required for this. Perhaps i could find it in another dungeon?"
+  "solarcraft.solar_key_required": "A special key is required for this. Perhaps i could find it in another dungeon?",
+  "solarcraft.item.ender_radar": "RMB to turn on/off. Current state: %s."
 }

@@ -18,6 +18,7 @@ import com.finderfeed.solarcraft.local_library.client.particles.particle_emitter
 import com.finderfeed.solarcraft.local_library.client.particles.particle_emitters.particle_processors.instances.random_speed.RandomSpeedProcessorData;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.packet_handler.packet_system.FDPacketUtil;
+import com.finderfeed.solarcraft.packet_handler.packets.CameraShakePacket;
 import com.finderfeed.solarcraft.registries.SCConfigs;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.EntityType;
@@ -76,17 +77,11 @@ public class LightningAbility extends AbstractAbility{
                     LightningAbilityParticleShape shape = new LightningAbilityParticleShape();
                     FDPacketUtil.sendToTrackingEntity(entityBolt,new SendShapeParticlesPacket(shape, ParticleTypes.FIREWORK,
                             pos.getX() + 0.5,pos.getY(),pos.getZ() + 0.5,0,0,0));
+                    FDPacketUtil.sendToTrackingEntity(entityBolt,new CameraShakePacket(0,5,5,0.9f));
                 }
             }
         }
     }
-
-    private void spawnParticles(){
-
-    }
-
-
-
 
     public void spawnFallingBlocks(Level world,BlockPos mainpos,Explosion expl){
         Vec3 center = Helpers.getBlockCenter(mainpos);

@@ -20,11 +20,11 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
-public class MoltenForestRuins extends Feature<NoneFeatureConfiguration> {
+public class FragmentRuins extends Feature<NoneFeatureConfiguration> {
     private static final ResourceLocation RUINS1 = new ResourceLocation("solarcraft:worldgen_features/ruins1");
     private static final ResourceLocation RUINS2 = new ResourceLocation("solarcraft:worldgen_features/ruins2");
     private static final ResourceLocation RUINS3 = new ResourceLocation("solarcraft:worldgen_features/ruins3");
-    public MoltenForestRuins(Codec<NoneFeatureConfiguration> p_i231953_1_) {
+    public FragmentRuins(Codec<NoneFeatureConfiguration> p_i231953_1_) {
         super(p_i231953_1_);
     }
 
