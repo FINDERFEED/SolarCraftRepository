@@ -237,7 +237,7 @@ public class SolarStrikeEntity extends Entity {
 
 
     private void explode(){
-        FDPacketUtil.sendToTrackingEntity(this,new CameraShakePacket(0,10,10,2f));
+        FDPacketUtil.sendToTrackingEntity(this,new CameraShakePacket(0,5,15,1f));
         level.playSound(null,this.getX(),this.getY(),this.getZ(),SCSounds.SOLAR_STRIKE_ATTACK.get(),SoundSource.MASTER,40f,1f);
         int radius = level.random.nextInt(RANDOM_RADIUS) + BASE_RADIUS;
         int depth = level.random.nextInt(RANDOM_DEPTH) + BASE_MAX_DEPTH;
