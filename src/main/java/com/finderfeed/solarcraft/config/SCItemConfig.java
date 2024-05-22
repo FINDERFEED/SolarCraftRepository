@@ -88,6 +88,9 @@ public class SCItemConfig extends ReflectiveJsonConfig {
     public float solarCrossbowMaxDamage = 120f;
 
     @ConfigValue
+    public float solarCrossbowRecoilStrength = 2f;
+
+    @ConfigValue
     public float solarCrossbowRunicEnergyCapacity = 5000f;
 
 

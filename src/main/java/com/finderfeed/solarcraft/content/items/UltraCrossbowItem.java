@@ -46,8 +46,8 @@ public class UltraCrossbowItem extends RareSolarcraftItem implements IRunicEnerg
 
             float damagePerSecond = SCConfigs.ITEMS.solarCrossbowDamageGain;
 
-            if ((float)(72000-count)/20*damagePerSecond < 120) {
-                player.displayClientMessage(Component.literal("-" + String.format("%.1f", (float) (72000 - count) / 20 * damagePerSecond) + "-").withStyle(ChatFormatting.GOLD), true);
+            if ((float)(this.getUseDuration(stack)-count)/20*damagePerSecond < SCConfigs.ITEMS.solarCrossbowMaxDamage) {
+                player.displayClientMessage(Component.literal("-" + String.format("%.1f", (float) (this.getUseDuration(stack) - count) / 20 * damagePerSecond) + "-").withStyle(ChatFormatting.GOLD), true);
             }else{
                 player.displayClientMessage(Component.literal("-" + "%.1f".formatted(SCConfigs.ITEMS.solarCrossbowMaxDamage) + "-").withStyle(ChatFormatting.GOLD), true);
             }
@@ -59,7 +59,8 @@ public class UltraCrossbowItem extends RareSolarcraftItem implements IRunicEnerg
     @Override
     public void releaseUsing(ItemStack stack, Level world, LivingEntity player, int remainingSeconds) {
         if (player instanceof Player pl && ItemRunicEnergy.isEnough(this.getCost(),stack,this,pl)){
-            player.push(-player.getLookAngle().x*2,-player.getLookAngle().y*2,-player.getLookAngle().z*2);
+            float recoil = SCConfigs.ITEMS.solarCrossbowRecoilStrength;
+            player.push(-player.getLookAngle().x*recoil,-player.getLookAngle().y*recoil,-player.getLookAngle().z*recoil);
         }
         if (!world.isClientSide){
 
@@ -71,7 +72,8 @@ public class UltraCrossbowItem extends RareSolarcraftItem implements IRunicEnerg
 
             float damagePerSecond = SCConfigs.ITEMS.solarCrossbowDamageGain;
 
-            proj.setDamage(Mth.clamp((float) (72000 - remainingSeconds) / 20 * damagePerSecond,0,SCConfigs.ITEMS.solarCrossbowMaxDamage));
+            proj.setDamage(Mth.clamp((float) (this.getUseDuration(stack) - remainingSeconds) / 20 * damagePerSecond,0,SCConfigs.ITEMS.solarCrossbowMaxDamage));
+
 
             proj.setDeltaMovement(player.getLookAngle().multiply(4,4,4));
             world.addFreshEntity(proj);
@@ -101,7 +103,7 @@ public class UltraCrossbowItem extends RareSolarcraftItem implements IRunicEnerg
 
     @Override
     public int getUseDuration(ItemStack p_77626_1_) {
-        return 72000;
+        return Integer.MAX_VALUE;
     }
 
 
