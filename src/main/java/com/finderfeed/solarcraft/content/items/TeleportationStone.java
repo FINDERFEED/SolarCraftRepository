@@ -22,6 +22,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
@@ -48,7 +50,9 @@ public class TeleportationStone extends SolarcraftItem {
                     ServerPlayer p = (ServerPlayer) player;
                     if (pos.teleport(p)) {
                         level.playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.RESPAWN_ANCHOR_DEPLETE.value(), SoundSource.PLAYERS, 1f, 1f);
-                        item.shrink(1);
+                        if (!item.getAllEnchantments().containsKey(Enchantments.INFINITY_ARROWS)){
+                            item.shrink(1);
+                        }
                         ((ServerLevel) level).sendParticles(ParticleTypes.PORTAL, pos.position.x, pos.position.y + p.getBbHeight() / 2, pos.position.z, 100, 0.5, p.getBbHeight() / 2, 0.5, 0.1);
                         return InteractionResultHolder.consume(item);
                     }
@@ -84,6 +88,16 @@ public class TeleportationStone extends SolarcraftItem {
                     pos.dimension.location().toString()
                     ,"%.2f %.2f %.2f".formatted(tpPos.x,tpPos.y,tpPos.z)).withStyle(ChatFormatting.GREEN));
         }
+    }
+
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+        return enchantment == Enchantments.INFINITY_ARROWS;
+    }
+
+    @Override
+    public boolean isEnchantable(ItemStack p_41456_) {
+        return true;
     }
 
     @Override

@@ -80,12 +80,12 @@ public class SCClientModEventHandler {
 
     public static final DimensionSpecialEffects RADIANT_LAND  = new RadiantLandDimEffects();
 //    public static final RadiantTextureAtlasSpriteLoader RADIANT_TEXTURE_ATLAS_SPRITE_LOADER = new RadiantTextureAtlasSpriteLoader();
-    public static final KeyMapping FIRST_ABILITY_KEY = new KeyMapping("key.fire_ability_one", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_H,"key.solarcraft.category");
-    public static final KeyMapping SECOND_ABILITY_KEY = new KeyMapping("key.fire_ability_two", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_J,"key.solarcraft.category");
-    public static final KeyMapping THIRD_ABILITY_KEY = new KeyMapping("key.fire_ability_three", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_S,"key.solarcraft.category");
-    public static final KeyMapping FORTH_ABILITY_KEY = new KeyMapping("key.fire_ability_four", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_D,"key.solarcraft.category");
-    public static final KeyMapping GUI_ABILITY_BUY_SCREEN = new KeyMapping("key.ability_buy_screen.solarcraft", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_D,"key.solarcraft.category");
-    public static final KeyMapping GUI_WAND_MODE_SELECTION = new KeyMapping("key.wand_mode_selection_screen", KeyConflictContext.UNIVERSAL, InputConstants.Type.SCANCODE, GLFW.GLFW_KEY_K,"key.solarcraft.category");
+    public static final KeyMapping FIRST_ABILITY_KEY = new KeyMapping("key.fire_ability_one", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_Z,"key.solarcraft.category");
+    public static final KeyMapping SECOND_ABILITY_KEY = new KeyMapping("key.fire_ability_two", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_X,"key.solarcraft.category");
+    public static final KeyMapping THIRD_ABILITY_KEY = new KeyMapping("key.fire_ability_three", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_C,"key.solarcraft.category");
+    public static final KeyMapping FORTH_ABILITY_KEY = new KeyMapping("key.fire_ability_four", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_D,"key.solarcraft.category");
+    public static final KeyMapping GUI_ABILITY_BUY_SCREEN = new KeyMapping("key.ability_buy_screen.solarcraft", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_0,"key.solarcraft.category");
+    public static final KeyMapping GUI_WAND_MODE_SELECTION = new KeyMapping("key.wand_mode_selection_screen", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_V,"key.solarcraft.category");
     public static final KeyMapping MEMORIZE_AND_CLOSE = new KeyMapping("key.memorize_and_close", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_C,"key.solarcraft.category");
     public static final KeyMapping CLOSE_ALL_PAGES = new KeyMapping("key.close_all_pages", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_X,"key.solarcraft.category");
 

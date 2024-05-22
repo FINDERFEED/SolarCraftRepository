@@ -74,7 +74,7 @@ public class REDrainWandAction implements WandAction<REDrainWandActionData> {
                     }else{
                         BlockPos p = result.getBlockPos();
                         Vec3 pos = new Vec3(p.getX()+0.5,p.getY()+0.5,p.getZ()+0.5);
-                        Vec3 vel = new Vec3(from.x-pos.x,from.y-pos.y,from.z-pos.z);
+                        Vec3 vel = new Vec3(from.x-pos.x,from.y-pos.y-0.2,from.z-pos.z);
                         ClientHelpers.handleSolarWandParticles(pos,vel);
                     }
                 }
