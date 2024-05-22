@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.content.items;
 
 
+import com.finderfeed.solarcraft.config.SCItemConfig;
 import com.finderfeed.solarcraft.content.items.primitive.RareSolarcraftItem;
 import com.finderfeed.solarcraft.content.items.runic_energy.IRunicEnergyUser;
 import com.finderfeed.solarcraft.content.items.runic_energy.ItemRunicEnergy;
@@ -8,6 +9,7 @@ import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.content.entities.projectiles.UltraCrossbowProjectile;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
+import com.finderfeed.solarcraft.registries.SCConfigs;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.util.Mth;
@@ -28,7 +30,6 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class UltraCrossbowItem extends RareSolarcraftItem implements IRunicEnergyUser {
-    public static double DAMAGE_PER_SECOND = 3.5d;
 
     public static final RunicEnergyCost COST = new RunicEnergyCost().set(RunicEnergy.Type.KELDA,100);
 
@@ -43,10 +44,12 @@ public class UltraCrossbowItem extends RareSolarcraftItem implements IRunicEnerg
                 player.level.playSound(null,player, SCSounds.CROSSBOW_CHARGING.get(), SoundSource.AMBIENT,1f,1f);
             }
 
-            if ((float)(72000-count)/20*DAMAGE_PER_SECOND < 120) {
-                player.displayClientMessage(Component.literal("-" + String.format("%.1f", (float) (72000 - count) / 20 * DAMAGE_PER_SECOND) + "-").withStyle(ChatFormatting.GOLD), true);
+            float damagePerSecond = SCConfigs.ITEMS.solarCrossbowDamageGain;
+
+            if ((float)(72000-count)/20*damagePerSecond < 120) {
+                player.displayClientMessage(Component.literal("-" + String.format("%.1f", (float) (72000 - count) / 20 * damagePerSecond) + "-").withStyle(ChatFormatting.GOLD), true);
             }else{
-                player.displayClientMessage(Component.literal("-" + 120.0 + "-").withStyle(ChatFormatting.GOLD), true);
+                player.displayClientMessage(Component.literal("-" + "%.1f".formatted(SCConfigs.ITEMS.solarCrossbowMaxDamage) + "-").withStyle(ChatFormatting.GOLD), true);
             }
         }
         super.onUseTick(level, living, stack, count);
@@ -66,8 +69,9 @@ public class UltraCrossbowItem extends RareSolarcraftItem implements IRunicEnerg
             proj.setPos(player.getX() + player.getLookAngle().x,player.getY()+1.5f+player.getLookAngle().y,player.getZ()+player.getLookAngle().z);
             player.level.playSound(null,player, SCSounds.CROSSBOW_SHOOT_SOUND.get(), SoundSource.AMBIENT,1,1);
 
+            float damagePerSecond = SCConfigs.ITEMS.solarCrossbowDamageGain;
 
-            proj.setDamage(Mth.clamp((float) (72000 - remainingSeconds) / 20 * DAMAGE_PER_SECOND,0,120));
+            proj.setDamage(Mth.clamp((float) (72000 - remainingSeconds) / 20 * damagePerSecond,0,SCConfigs.ITEMS.solarCrossbowMaxDamage));
 
             proj.setDeltaMovement(player.getLookAngle().multiply(4,4,4));
             world.addFreshEntity(proj);
@@ -87,7 +91,10 @@ public class UltraCrossbowItem extends RareSolarcraftItem implements IRunicEnerg
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level p_77624_2_, List<Component> components, TooltipFlag p_77624_4_) {
-        components.add(Component.translatable("solarcraft.ultra_crossbow").withStyle(ChatFormatting.GOLD));
+        components.add(Component.translatable("solarcraft.ultra_crossbow"
+        ,"%.1f".formatted(SCConfigs.ITEMS.solarCrossbowDamageGain),
+                "%.1f".formatted(SCConfigs.ITEMS.solarCrossbowShotCost)
+        ).withStyle(ChatFormatting.GOLD));
         ItemRunicEnergy.addRunicEnergyTextComponents(stack,this,components);
         super.appendHoverText(stack, p_77624_2_, components, p_77624_4_);
     }
@@ -100,7 +107,7 @@ public class UltraCrossbowItem extends RareSolarcraftItem implements IRunicEnerg
 
     @Override
     public float getMaxRunicEnergyCapacity() {
-        return 5000;
+        return SCConfigs.ITEMS.solarCrossbowRunicEnergyCapacity;
     }
 
     @Override
@@ -110,7 +117,7 @@ public class UltraCrossbowItem extends RareSolarcraftItem implements IRunicEnerg
 
     @Override
     public RunicEnergyCost getCost() {
-        return COST;
+        return new RunicEnergyCost().set(RunicEnergy.Type.KELDA,SCConfigs.ITEMS.solarCrossbowShotCost);
     }
 
     @Override

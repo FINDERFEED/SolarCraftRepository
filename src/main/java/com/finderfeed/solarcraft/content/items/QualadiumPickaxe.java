@@ -3,6 +3,7 @@ package com.finderfeed.solarcraft.content.items;
 import com.finderfeed.solarcraft.config.SolarcraftConfig;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.vein_miner.IllidiumPickaxe;
+import com.finderfeed.solarcraft.registries.SCConfigs;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -34,13 +35,11 @@ public class QualadiumPickaxe extends IllidiumPickaxe {
         super(p_i48478_1_, p_i48478_2_, p_i48478_3_, p_i48478_4_,fragmentSupplier);
     }
 
-    //world.getServer().registryAccess().registry(Registry.ITEM_REGISTRY).get().get()
-
     @Override
     public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity entity) {
         if (!world.isClientSide){
 
-            if (state.is(BlockTags.BASE_STONE_OVERWORLD) &&(world.random.nextFloat() >= 0.8) ){
+            if (state.is(BlockTags.BASE_STONE_OVERWORLD) &&(world.random.nextFloat() <= SCConfigs.ITEMS.qualadiumPickaxeRewardChance)){
                 initList(world);
                 if (!REWARDS_LIST.isEmpty()) {
                     ItemEntity ent = new ItemEntity(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5,

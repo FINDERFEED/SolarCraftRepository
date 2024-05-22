@@ -2,6 +2,7 @@ package com.finderfeed.solarcraft.content.entities.not_alive;
 
 import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
 import com.finderfeed.solarcraft.packet_handler.packets.misc_packets.BallLightningSpawnLightningParticles;
+import com.finderfeed.solarcraft.registries.SCConfigs;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.core.particles.ParticleOptions;
@@ -24,7 +25,7 @@ import java.util.List;
 
 public class BallLightningProjectile extends AbstractHurtingProjectile {
 
-    public static final AABB BOX = new AABB(-10,-10,-10,10,10,10);
+//    public static final AABB BOX = new AABB(-10,-10,-10,10,10,10);
     private int lifeTicks = 0;
 
     public BallLightningProjectile(EntityType<? extends AbstractHurtingProjectile> type, Level level) {
@@ -93,12 +94,18 @@ public class BallLightningProjectile extends AbstractHurtingProjectile {
 
 
     private void doExplosion(Vec3 position){
-        List<LivingEntity> living = this.level.getEntitiesOfClass(LivingEntity.class,BOX.move(position),(l)->!(l instanceof Player));
+
+        float rad = SCConfigs.ITEMS.ballLightningExplosionRadius;
+        AABB box = new AABB(-rad,-rad,-rad,rad,rad,rad);
+
+        List<LivingEntity> living = this.level.getEntitiesOfClass(LivingEntity.class,box.move(position),(l)->{
+            return !(l instanceof Player) && l.position().distanceTo(this.position()) <= rad;
+        });
         BallLightningSpawnLightningParticles.sendToServer(level,position);
         this.level.playSound(null,this.getX(),this.getY(),this.getZ(), SCSounds.BALL_LIGHTNING_BLOW.get(), SoundSource.PLAYERS,10,1);
         for (LivingEntity ent : living){
             if (ent.distanceTo(this) <= 10){
-                ent.hurt(level.damageSources().lightningBolt(),10);
+                ent.hurt(level.damageSources().lightningBolt(), SCConfigs.ITEMS.ballLightningDamage);
             }
         }
     }

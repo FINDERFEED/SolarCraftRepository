@@ -209,7 +209,7 @@ public class SCEventHandler {
             Player player = (Player) event.getEntity();
             int slot = findImmortalityTotem(player);
             if (slot != -10000){
-                player.addEffect(new MobEffectInstance(SCEffects.IMMORTALITY_EFFECT.get(),400,0));
+                player.addEffect(new MobEffectInstance(SCEffects.IMMORTALITY_EFFECT.get(),SCConfigs.ITEMS.totemOfImmortalityEffectTime,0));
                 player.setHealth(player.getMaxHealth());
 
                 player.getInventory().setItem(slot, ItemStack.EMPTY);
@@ -249,7 +249,7 @@ public class SCEventHandler {
             LivingEntity ent = event.getEntity();
             ent.getArmorSlots().forEach((stack)->{
                 if (stack.getItem().equals(SCItems.RADIANT_CHESTPLATE.get())){
-                    if (ent.level().random.nextFloat() <= 0.17){
+                    if (ent.level().random.nextFloat() <= SCConfigs.ITEMS.radiantChestplateEvasionChance){
                         event.setCanceled(true);
                     }
                 }

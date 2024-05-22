@@ -1,5 +1,6 @@
 package com.finderfeed.solarcraft.registries;
 
+import com.finderfeed.solarcraft.config.SCItemConfig;
 import com.finderfeed.solarcraft.config.SCAbilitiesConfig;
 import com.finderfeed.solarcraft.config.bosses.SCBossesConfig;
 import com.finderfeed.solarcraft.config.json_config.JsonConfig;
@@ -14,6 +15,7 @@ public class SCConfigs {
 
     public static SCAbilitiesConfig ABILITIES = register(new SCAbilitiesConfig());
     public static SCBossesConfig BOSSES = register(new SCBossesConfig());
+    public static SCItemConfig ITEMS = register(new SCItemConfig());
 
     public static <T extends JsonConfig> T register(T config){
         CONFIG_REGISTRY.put(config.getName(),config);

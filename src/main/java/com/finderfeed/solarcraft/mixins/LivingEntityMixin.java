@@ -3,6 +3,7 @@ package com.finderfeed.solarcraft.mixins;
 import com.finderfeed.solarcraft.content.entities.ShadowZombie;
 import com.finderfeed.solarcraft.content.items.SolarGodSword;
 import com.finderfeed.solarcraft.events.other_events.event_handler.ModuleEventsHandler;
+import com.finderfeed.solarcraft.registries.SCConfigs;
 import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import net.minecraft.server.level.ServerPlayer;
@@ -41,7 +42,7 @@ public abstract class LivingEntityMixin {
                 if (entity instanceof ShadowZombie) {
                     src = SCDamageSources.RUNIC_MAGIC;
                 }
-                actuallyHurt(src, modifier * 5);
+                actuallyHurt(src, modifier * SCConfigs.ITEMS.solarGodSwordMagicDamageBonus);
             }
         }
     }

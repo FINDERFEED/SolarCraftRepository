@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.content.items;
 
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
+import com.finderfeed.solarcraft.registries.SCConfigs;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
@@ -25,7 +26,7 @@ public class QualadiumAxe extends IllidiumAxe{
 
     @Override
     public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity player) {
-        if (state.is(BlockTags.LOGS) && (world.random.nextFloat() >= 0.8) ){
+        if (state.is(BlockTags.LOGS) && (world.random.nextFloat() <= SCConfigs.ITEMS.qualadiumAxeDuplicationChance)){
             world.addFreshEntity(new ItemEntity(world,pos.getX()+0.5,pos.getY(),pos.getZ()+0.5,state.getBlock().asItem().getDefaultInstance()));
         }
         return super.mineBlock(stack, world, state, pos, player);

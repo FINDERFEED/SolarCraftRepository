@@ -5,6 +5,7 @@ import com.finderfeed.solarcraft.SolarCraftTags;
 import com.finderfeed.solarcraft.content.items.primitive.RareSolarcraftPickaxe;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.misc_things.IUpgradable;
+import com.finderfeed.solarcraft.registries.SCConfigs;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
@@ -37,7 +38,7 @@ public class SolarGodPickaxe extends RareSolarcraftPickaxe implements IUpgradabl
 
             int level = getItemLevel(stack);
             if (level >= 1){
-               dropExpWithChance(pos,world,20);
+               dropExpWithChance(pos,world, SCConfigs.ITEMS.solarGodPickaxeExpDropChance);
             }
 
             if (level >= 3) {
@@ -46,25 +47,6 @@ public class SolarGodPickaxe extends RareSolarcraftPickaxe implements IUpgradabl
         }
         return super.mineBlock(stack, world, state, pos, player);
     }
-
-
-
-//    @Override
-//    public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> stacks) {
-//        if (this.allowedIn(tab)){
-////            ItemStack stack = new ItemStack(this);
-////            setItemLevel(stack,0);
-////            stacks.add(stack);
-////            ItemStack stack2 = new ItemStack(this);
-////            setItemLevel(stack2,getMaxUpgrades());
-////            stacks.add(stack2);
-//            for (int i = 0; i <= getMaxUpgrades();i++){
-//                ItemStack stack = new ItemStack(this);
-//                setItemLevel(stack,i);
-//                stacks.add(stack);
-//            }
-//        }
-//    }
 
     public static void dropExpWithChance(BlockPos pos,Level world,float chance){
         if ((world.random.nextFloat() >= (1-chance/100) )) {

@@ -8,6 +8,7 @@ import com.finderfeed.solarcraft.content.items.runic_energy.ItemRunicEnergy;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
+import com.finderfeed.solarcraft.registries.SCConfigs;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import net.minecraft.ChatFormatting;
@@ -26,7 +27,6 @@ import java.util.function.Supplier;
 
 public class LightningGun extends RareSolarcraftItem implements IRunicEnergyUser {
 
-    public static final RunicEnergyCost COST = new RunicEnergyCost().set(RunicEnergy.Type.KELDA,50);
 
     public LightningGun(Properties p_41383_, Supplier<AncientFragment> fragmentSupplier) {
         super(p_41383_, fragmentSupplier);
@@ -57,7 +57,9 @@ public class LightningGun extends RareSolarcraftItem implements IRunicEnergyUser
 
     @Override
     public void appendHoverText(ItemStack item, @Nullable Level p_41422_, List<Component> components, TooltipFlag p_41424_) {
-        components.add(Component.translatable("solarcraft.lightning_gun").withStyle(ChatFormatting.GOLD));
+        String radius = "%.1f".formatted(SCConfigs.ITEMS.ballLightningExplosionRadius);
+        String cost = "%.1f".formatted(SCConfigs.ITEMS.lightningEmitterCost);
+        components.add(Component.translatable("solarcraft.lightning_gun",radius,cost).withStyle(ChatFormatting.GOLD));
         ItemRunicEnergy.addRunicEnergyTextComponents(item,this,components);
         super.appendHoverText(item, p_41422_, components, p_41424_);
     }
@@ -75,7 +77,8 @@ public class LightningGun extends RareSolarcraftItem implements IRunicEnergyUser
 
     @Override
     public RunicEnergyCost getCost() {
-        return COST;
+
+        return new RunicEnergyCost().set(RunicEnergy.Type.KELDA, SCConfigs.ITEMS.lightningEmitterCost);
     }
 
     @Override

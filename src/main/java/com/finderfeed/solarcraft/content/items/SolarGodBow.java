@@ -5,6 +5,7 @@ import com.finderfeed.solarcraft.content.entities.projectiles.SolarGodBowProject
 import com.finderfeed.solarcraft.content.items.primitive.RareSolarcraftItem;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.misc_things.IUpgradable;
+import com.finderfeed.solarcraft.registries.SCConfigs;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -23,8 +24,6 @@ import java.util.function.Supplier;
 public class SolarGodBow extends RareSolarcraftItem implements IUpgradable {
 
     public static final int UPGRADE_COUNT = 5;
-
-    private static AABB aoe = new AABB(-15,-5,-15,15,5,15);
 
     public SolarGodBow(Properties p_41383_, Supplier<AncientFragment> fragmentSupplier) {
         super(p_41383_,fragmentSupplier);
@@ -55,9 +54,9 @@ public class SolarGodBow extends RareSolarcraftItem implements IUpgradable {
             int i = this.getUseDuration(stack) - remainingTime;
             float power = BowItem.getPowerForTime(i);
 
-            int damage = 10;
+            float damage = SCConfigs.ITEMS.solarGodBowDamage;
             if (lvl >= 1){
-                damage+=5;
+                damage += SCConfigs.ITEMS.solarGodBowUpgradeDamage;
             }
             damage *= power;
 
@@ -103,8 +102,8 @@ public class SolarGodBow extends RareSolarcraftItem implements IUpgradable {
     @Override
     public List<Component> getUpgradeDescriptions() {
         return List.of(
-                Component.translatable("solarcraft.god_bow_upgrade_2"),
-                Component.translatable("solarcraft.god_bow_upgrade_3"),
+                Component.translatable("solarcraft.god_bow_upgrade_2","%.1f".formatted(SCConfigs.ITEMS.solarGodBowUpgradeDamage)),
+                Component.translatable("solarcraft.god_bow_upgrade_3","%d".formatted(SCConfigs.ITEMS.solarGodBowOnFireTime)),
                 Component.translatable("solarcraft.god_bow_upgrade_4"),
                 Component.translatable("solarcraft.god_bow_upgrade_5"),
                 Component.translatable("solarcraft.god_bow_upgrade_6")

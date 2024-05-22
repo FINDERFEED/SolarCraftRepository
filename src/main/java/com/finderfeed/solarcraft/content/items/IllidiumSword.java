@@ -3,6 +3,7 @@ package com.finderfeed.solarcraft.content.items;
 import com.finderfeed.solarcraft.content.items.item_tiers.SolarCraftToolTiers;
 import com.finderfeed.solarcraft.content.items.primitive.RareSolarcraftSword;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
+import com.finderfeed.solarcraft.registries.SCConfigs;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.TooltipFlag;
@@ -32,15 +33,15 @@ public class IllidiumSword extends RareSolarcraftSword {
     }
 
     @Override
-    public boolean hurtEnemy(ItemStack p_77644_1_, LivingEntity p_77644_2_, LivingEntity p_77644_3_) {
-        if (p_77644_3_.level.random.nextDouble() > 0.9) {
-            p_77644_1_.hurt(-1, p_77644_3_.level.random, null);
+    public boolean hurtEnemy(ItemStack stack, LivingEntity entity1, LivingEntity entity) {
+        if (entity.level.random.nextDouble() <= SCConfigs.ITEMS.illidiumSwordHealChance) {
+            stack.hurt(-1, entity.level.random, null);
 
         }
 
-        p_77644_2_.setSecondsOnFire(4);
+        entity1.setSecondsOnFire(4);
 
-        return super.hurtEnemy(p_77644_1_, p_77644_2_, p_77644_3_);
+        return super.hurtEnemy(stack, entity1, entity);
     }
 
 

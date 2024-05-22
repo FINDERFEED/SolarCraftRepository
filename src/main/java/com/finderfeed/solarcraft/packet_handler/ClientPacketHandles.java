@@ -29,6 +29,7 @@ import com.finderfeed.solarcraft.local_library.effects.LightningBoltPath;
 import com.finderfeed.solarcraft.local_library.entities.bossbar.client.ActiveBossBar;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
 import com.finderfeed.solarcraft.registries.LegacyConfigRegistry;
+import com.finderfeed.solarcraft.registries.SCConfigs;
 import com.finderfeed.solarcraft.registries.overlays.SolarcraftOverlays;
 import com.finderfeed.solarcraft.registries.sounds.SCSounds;
 import com.google.gson.JsonObject;
@@ -47,6 +48,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
@@ -246,7 +248,9 @@ public class ClientPacketHandles {
             Helpers.createSmallSolarStrikeParticleExplosion(
                     level,pos,2,0.07f,1.0f
             );
-            List<LivingEntity> living = level.getEntitiesOfClass(LivingEntity.class, BallLightningProjectile.BOX.move(pos), (l) -> !(l instanceof Player));
+            float rad = SCConfigs.ITEMS.ballLightningExplosionRadius;
+            AABB box = new AABB(-rad,-rad,-rad,rad,rad,rad);
+            List<LivingEntity> living = level.getEntitiesOfClass(LivingEntity.class, box.move(pos), (l) -> !(l instanceof Player));
             for (LivingEntity ent : living) {
                 double vecLen = ent.position().subtract(pos).length();
                 if (vecLen <= 10) {

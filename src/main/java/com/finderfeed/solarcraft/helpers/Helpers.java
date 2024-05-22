@@ -70,6 +70,9 @@ import java.util.function.Predicate;
 public class Helpers {
 
 
+    public static final List<Integer> ARMOR_SLOTS = List.of(
+            36,37,38,39
+    );
 
     public static final Random RANDOM = new Random();
     public static final String FRAGMENT = "solar_forge_fragment_";

@@ -8,12 +8,14 @@ import com.finderfeed.solarcraft.content.items.solar_lexicon.structure.subcatego
 
 import com.finderfeed.solarcraft.helpers.multiblock.MultiblockStructure;
 import com.finderfeed.solarcraft.helpers.multiblock.Multiblocks;
+import com.finderfeed.solarcraft.registries.SCConfigs;
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.recipe_types.SCRecipeTypes;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.Item;
@@ -25,6 +27,7 @@ import net.minecraft.network.chat.Component;
 import static com.finderfeed.solarcraft.registries.items.SCItems.*;
 
 import java.util.*;
+import java.util.function.Supplier;
 
 public class AncientFragment {
 
@@ -177,15 +180,35 @@ public class AncientFragment {
     public static final AncientFragment SOLAR_ENERGY_REPEATER = new AncientFragment("solar_energy_repeater",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.MASTER_ENERGY,CategoryBase.MASTER, ls(ItemWithRecipe.of(SCItems.SOLAR_ENERGY_REPEATER.get().getDefaultInstance(),"infusing_crafting_solar_energy_repeater")), SCRecipeTypes.INFUSING_CRAFTING.get(),6);
 //    public static final AncientFragment SOLAR_NETWORK_BINDER = new AncientFragment(tx("solar_fragment.solar_network_binder"),"solar_network_binder",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.MASTER_ENERGY,CategoryBase.MASTER, ls(ItemWithRecipe.of(SolarcraftItems.SOLAR_NETWORK_BINDER.get().getDefaultInstance(),"solar_network_binder")),tx("solar_network_binder.lore"),RecipeType.CRAFTING,6).addReferences("solar_energy_repeater");
 
-    public static final AncientFragment RADIANT_CHESTPLATE = new AncientFragment("radiant_cuirass",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.ARMOR,CategoryBase.ARMOR,ls(ItemWithRecipe.of(SCItems.RADIANT_CHESTPLATE.get().getDefaultInstance(),"infusing_new_radiant_chestplate")), SCRecipeTypes.INFUSING.get(),8);
+    public static final AncientFragment RADIANT_CHESTPLATE = new AncientFragment("radiant_cuirass",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.ARMOR,CategoryBase.ARMOR,ls(ItemWithRecipe.of(SCItems.RADIANT_CHESTPLATE.get().getDefaultInstance(),"infusing_new_radiant_chestplate")), SCRecipeTypes.INFUSING.get(),8)
+            .setTranslatableComponentArguments(()->{
+                return List.of("%.1f".formatted(SCConfigs.ITEMS.radiantChestplateEvasionChance * 100));
+            });
     public static final AncientFragment MEDIUM_SOLAR_REACTOR = new AncientFragment("medium_solar_reactor",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.MASTER_MATERIALS,CategoryBase.MASTER,ls(ItemWithRecipe.of(SCItems.MEDIUM_SOLAR_REACTOR.get().getDefaultInstance(),"infusing_new_medium_solar_reactor")), SCRecipeTypes.INFUSING.get(),7).addReferences("small_solar_reactor");
     public static final AncientFragment ZAP_TURRET = new AncientFragment("zap_turret",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.MASTER_ITEMS,CategoryBase.MASTER,ls(ItemWithRecipe.of(SCItems.ZAP_TURRET_BLOCK.get().getDefaultInstance(),"infusing_new_zap_turret")), SCRecipeTypes.INFUSING.get(),8).addReferences("zap_turret_structure");
     public static final AncientFragment CHARGED_QUALADIUM_INGOT = new AncientFragment("charged_qualadium_ingot",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.MASTER_MATERIALS,CategoryBase.MASTER,ls(ItemWithRecipe.of(SCItems.CHARGED_QUALADIUM_INGOT.get().getDefaultInstance(),"infusing_new_charged_qualadium_ingot")), SCRecipeTypes.INFUSING.get(),7).addReferences("qualadium_ingot");
     public static final AncientFragment SOLAR_MORTAR = new AncientFragment("solar_mortar",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.MASTER_ITEMS,CategoryBase.MASTER,ls(ItemWithRecipe.of(SCItems.SOLAR_MORTAR.get().getDefaultInstance(),"infusing_new_solar_mortar_block")), SCRecipeTypes.INFUSING.get(),8).addReferences("solar_mortar_structure");
     public static final AncientFragment SOLAR_FURNACE = new AncientFragment("solar_furnace",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.MASTER_ITEMS,CategoryBase.MASTER,ls(ItemWithRecipe.of(SCItems.SOLAR_FURNACE_BLOCK.get().getDefaultInstance(),"infusing_new_solar_furnace")), SCRecipeTypes.INFUSING.get(),8).addReferences("solar_energy_repeater");
-    public static final AncientFragment  TOTEM_OF_IMMORTALITY = new AncientFragment("totem_of_immortality",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.MASTER_ITEMS,CategoryBase.MASTER,ls(ItemWithRecipe.of(SCItems.TOTEM_OF_IMMORTALITY.get().getDefaultInstance(),"infusing_new_totem_of_immortality")), SCRecipeTypes.INFUSING.get(),8);
-    public static final AncientFragment SOLAR_CROSSBOW = new AncientFragment("solar_crossbow",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.MASTER_ITEMS,CategoryBase.MASTER,ls(ItemWithRecipe.of(SCItems.ULTRA_CROSSBOW.get().getDefaultInstance(),"infusing_new_solar_crossbow")), SCRecipeTypes.INFUSING.get(),8).addReferences("re_charger");
-    public static final AncientFragment LIGHTNING_GUN = new AncientFragment("lightning_gun",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.MASTER_ITEMS,CategoryBase.MASTER,ls(ItemWithRecipe.of(SCItems.LIGHTNING_GUN.get().getDefaultInstance(),"infusing_new_lightning_emitter")), SCRecipeTypes.INFUSING.get(),8).addReferences("re_charger");
+    public static final AncientFragment  TOTEM_OF_IMMORTALITY = new AncientFragment("totem_of_immortality",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.MASTER_ITEMS,CategoryBase.MASTER,ls(ItemWithRecipe.of(SCItems.TOTEM_OF_IMMORTALITY.get().getDefaultInstance(),"infusing_new_totem_of_immortality")), SCRecipeTypes.INFUSING.get(),8)
+            .setTranslatableComponentArguments(()->{
+                return List.of("%d".formatted(SCConfigs.ITEMS.totemOfImmortalityEffectTime / 20));
+            })
+            ;
+    public static final AncientFragment SOLAR_CROSSBOW = new AncientFragment("solar_crossbow",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.MASTER_ITEMS,CategoryBase.MASTER,ls(ItemWithRecipe.of(SCItems.ULTRA_CROSSBOW.get().getDefaultInstance(),"infusing_new_solar_crossbow")), SCRecipeTypes.INFUSING.get(),8).addReferences("re_charger")
+            .setTranslatableComponentArguments(()->{
+                return List.of(
+                        "%.1f".formatted(SCConfigs.ITEMS.solarCrossbowDamageGain),
+                        "%.1f".formatted(SCConfigs.ITEMS.solarCrossbowMaxDamage)
+                );
+            });
+    public static final AncientFragment LIGHTNING_GUN = new AncientFragment("lightning_gun",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.MASTER_ITEMS,CategoryBase.MASTER,ls(ItemWithRecipe.of(SCItems.LIGHTNING_GUN.get().getDefaultInstance(),"infusing_new_lightning_emitter")), SCRecipeTypes.INFUSING.get(),8).addReferences("re_charger")
+            .setTranslatableComponentArguments(()->{
+                String radius = "%.1f".formatted(SCConfigs.ITEMS.ballLightningExplosionRadius);
+                String damage = "%.1f".formatted(SCConfigs.ITEMS.ballLightningDamage);
+                return List.of(
+                        radius,damage
+                );
+            });
     public static final AncientFragment DIMENSION_CORE = new AncientFragment("dimension_core",ProgressionStage.SOLAR_ENERGY.ALL_PROGRESSIONS,SubCategoryBase.MASTER_ITEMS,CategoryBase.MASTER,ls(ItemWithRecipe.of(SCItems.DIMENSION_CORE.get().getDefaultInstance(),"infusing_new_dimension_core")), SCRecipeTypes.INFUSING.get(),9).addReferences("dimension_structure");
 
 
@@ -269,6 +292,9 @@ public class AncientFragment {
     private String screenID;
     private String[] sReferences;
     private List<AncientFragment> references;
+    private Supplier<List<Object>> translatableComponentArguments = ()->{
+        return List.of();
+    };
 
 
 
@@ -340,6 +366,11 @@ public class AncientFragment {
         return this;
     }
 
+    private AncientFragment setTranslatableComponentArguments(Supplier<List<Object>> s){
+        this.translatableComponentArguments = s;
+        return this;
+    }
+
     /**
      * DO NOT USE BEFORE MAP INITIALIZATION!
      */
@@ -393,11 +424,15 @@ public class AncientFragment {
     }
 
     public Component getItemDescription(){
-        return (Component) itemLore.copy();
+        TranslatableContents contents = (TranslatableContents) itemLore.getContents();
+        Object[] args = this.translatableComponentArguments.get().toArray(new Object[0]);
+        return (Component) Component.translatable(contents.getKey(),args);
     }
 
     public Component getLore() {
-        return (Component) lore.copy();
+        TranslatableContents contents = (TranslatableContents) lore.getContents();
+        Object[] args = this.translatableComponentArguments.get().toArray(new Object[0]);
+        return (Component) Component.translatable(contents.getKey(),args);
     }
 
 

@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.content.entities.projectiles;
 
 import com.finderfeed.solarcraft.client.particles.SCParticleTypes;
+import com.finderfeed.solarcraft.registries.SCConfigs;
 import com.finderfeed.solarcraft.registries.damage_sources.SCDamageSources;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -56,10 +57,10 @@ public class SolarGodBowProjectile extends OwnedProjectile {
             }
 
             if (projectileLevel >= 2){
-                ent.setSecondsOnFire(8);
+                ent.setSecondsOnFire(SCConfigs.ITEMS.solarGodBowOnFireTime);
             }
             if (projectileLevel >= 3) {
-                ent.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 80, 2));
+                ent.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, SCConfigs.ITEMS.solarGodBowSlownessTime, 2));
             }
             if (projectileLevel >= 5){
                 List<LivingEntity> targets = ent.level.getEntitiesOfClass(LivingEntity.class, AOE.move(ent.position()),(target)->{

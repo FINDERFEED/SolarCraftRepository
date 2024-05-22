@@ -2,6 +2,7 @@ package com.finderfeed.solarcraft.content.items;
 
 import com.finderfeed.solarcraft.content.items.primitive.RareSolarcraftAxe;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
+import com.finderfeed.solarcraft.registries.SCConfigs;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
@@ -29,7 +30,7 @@ public class IllidiumAxe extends RareSolarcraftAxe {
 
     @Override
     public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity player) {
-        if (state.is(BlockTags.LOGS) && (world.random.nextFloat() >= 0.8)) {
+        if (state.is(BlockTags.LOGS) && (world.random.nextFloat() <= SCConfigs.ITEMS.illidiumAxeCharcoalDropChance)) {
             world.playSound(null,pos.getX(),pos.getY(),pos.getZ(), SoundEvents.GENERIC_BURN, SoundSource.AMBIENT,0.1f,1f);
             world.addFreshEntity(new ItemEntity(world,pos.getX()+0.5,pos.getY(),pos.getZ()+0.5, Items.CHARCOAL.getDefaultInstance()));
         }

@@ -7,6 +7,7 @@ import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
+import com.finderfeed.solarcraft.registries.SCConfigs;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.Tags;
@@ -84,7 +85,7 @@ public class IllidiumPickaxe extends RareSolarcraftPickaxe implements IRunicEner
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> components, TooltipFlag p_77624_4_) {
-        components.add(Component.translatable("solarcraft.veinminer").withStyle(ChatFormatting.GOLD));
+        components.add(Component.translatable("solarcraft.veinminer","%.1f".formatted(SCConfigs.ITEMS.illidiumPickaxeDigCost)).withStyle(ChatFormatting.GOLD));
         ItemRunicEnergy.addRunicEnergyTextComponents(stack,this,components);
         super.appendHoverText(stack, world, components, p_77624_4_);
     }
@@ -96,7 +97,7 @@ public class IllidiumPickaxe extends RareSolarcraftPickaxe implements IRunicEner
 
     @Override
     public float getMaxRunicEnergyCapacity() {
-        return 5000;
+        return SCConfigs.ITEMS.illidiumPickaxeEnergyCapacity;
     }
 
     @Override
@@ -106,7 +107,7 @@ public class IllidiumPickaxe extends RareSolarcraftPickaxe implements IRunicEner
 
     @Override
     public RunicEnergyCost getCost() {
-        return COST;
+        return new RunicEnergyCost().set(RunicEnergy.Type.TERA, SCConfigs.ITEMS.illidiumPickaxeDigCost);
     }
 
     @Override
