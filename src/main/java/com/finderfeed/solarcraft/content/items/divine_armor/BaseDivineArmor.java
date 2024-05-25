@@ -99,6 +99,6 @@ public abstract class BaseDivineArmor extends SolarcraftArmorItem implements IRu
 
     @Override
     public float getMaxRunicEnergyCapacity() {
-        return 100000;
+        return SCConfigs.ITEMS.divineArmorEnergyCapacity;
     }
 }

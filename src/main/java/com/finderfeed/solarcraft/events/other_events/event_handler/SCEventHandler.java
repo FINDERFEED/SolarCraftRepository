@@ -92,6 +92,8 @@ import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.level.ExplosionEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -605,24 +607,68 @@ public class SCEventHandler {
         LivingEntity entity = event.getEntity();
         if (!entity.level.isClientSide && entity instanceof Player player && !player.isCreative() && !player.isSpectator()){
             player.getCooldowns().addCooldown(SCItems.TELEPORTATION_STONE.get(),200);
-            float damageAmount = event.getAmount();
-
-            for (ItemStack stack : player.getArmorSlots()){
-                if (damageAmount <= 0) break;
-                if (stack.getItem() instanceof BaseDivineArmor armor){
-                    float energyCost = armor.getCost().get(RunicEnergy.Type.ARDO);
-                    float maxBlockedDamage = ItemRunicEnergy.getRunicEnergyFromItem(stack, RunicEnergy.Type.ARDO) / energyCost;
-
-                    float m = Math.min(maxBlockedDamage,damageAmount);
-                    ItemRunicEnergy.removeRunicEnergy(stack,armor, RunicEnergy.Type.ARDO,m*energyCost);
-
-                    damageAmount -= maxBlockedDamage;
-                }
-            }
+            float damageAmount = manageShieldsAndReturnDamage(player,event.getAmount(),true);
             event.setAmount(Math.max(0,damageAmount));
         }
     }
 
+
+    public static float manageShieldsAndReturnDamage(Player player,float damageAmount,boolean manageShields){
+        float blockCost = SCConfigs.ITEMS.divineArmorDamageBlockCost;
+        float fullBlockCost = blockCost * damageAmount;
+        var armor = getDivineArmorOnPlayer(player);
+        armor.sort(Comparator.comparingDouble(stack->{
+            BaseDivineArmor a = (BaseDivineArmor) stack.getItem();
+            return ItemRunicEnergy.getRunicEnergyFromItem(stack,a.allowedInputs().get(0));
+        }));
+        float pieceCost = fullBlockCost / armor.size();
+        int amount = armor.size();
+        for (ItemStack stack : armor){
+            BaseDivineArmor a = (BaseDivineArmor) stack.getItem();
+            RunicEnergy.Type type = a.allowedInputs().get(0);
+            float energy = ItemRunicEnergy.getRunicEnergyFromItem(stack,type);
+            float energyConsumption = pieceCost;
+            float damageBlock = pieceCost / blockCost;
+            amount--;
+            if (energy < pieceCost){
+                damageBlock = energy / blockCost;
+                float delta = pieceCost - energy;
+                energyConsumption = energy;
+                if (amount != 0) {
+                    pieceCost += delta / amount;
+                }
+            }
+            damageAmount -= damageBlock;
+            if (manageShields) {
+                ItemRunicEnergy.removeRunicEnergy(stack, a, type, energyConsumption);
+            }
+        }
+
+        return damageAmount;
+    }
+
+    private static List<ItemStack> getDivineArmorOnPlayer(Player player){
+        List<ItemStack> divineArmorOnPlayer = new ArrayList<>();
+        for (ItemStack stack : player.getArmorSlots()){
+            if (stack.getItem() instanceof BaseDivineArmor armor){
+                divineArmorOnPlayer.add(stack);
+            }
+        }
+        return divineArmorOnPlayer;
+    }
+
+//            for (ItemStack stack : player.getArmorSlots()){
+//                if (damageAmount <= 0) break;
+//                if (stack.getItem() instanceof BaseDivineArmor armor){
+//                    float energyCost = armor.getCost().get(RunicEnergy.Type.ARDO);
+//                    float maxBlockedDamage = ItemRunicEnergy.getRunicEnergyFromItem(stack, RunicEnergy.Type.ARDO) / energyCost;
+//
+//                    float m = Math.min(maxBlockedDamage,damageAmount);
+//                    ItemRunicEnergy.removeRunicEnergy(stack,armor, RunicEnergy.Type.ARDO,m*energyCost);
+//
+//                    damageAmount -= maxBlockedDamage;
+//                }
+//            }
 
 
     @SubscribeEvent
