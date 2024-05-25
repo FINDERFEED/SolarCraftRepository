@@ -8,6 +8,7 @@ import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragmentHelper;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
+import com.finderfeed.solarcraft.registries.SCConfigs;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
@@ -67,7 +68,8 @@ public abstract class BaseDivineArmor extends SolarcraftArmorItem implements IRu
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level p_41422_, List<Component> cmps, TooltipFlag p_41424_) {
-        cmps.add(Component.translatable("solarcraft.divine_armor").withStyle(ChatFormatting.GOLD));
+        String cost = "%.1f".formatted(SCConfigs.ITEMS.divineArmorDamageBlockCost);
+        cmps.add(Component.translatable("solarcraft.divine_armor",cost).withStyle(ChatFormatting.GOLD));
         if (stack.getItem() instanceof IRunicEnergyUser item){
             ItemRunicEnergy.addRunicEnergyTextComponents(stack,item,cmps);
         }
@@ -85,7 +87,9 @@ public abstract class BaseDivineArmor extends SolarcraftArmorItem implements IRu
 
     @Override
     public RunicEnergyCost getCost() {
-        return COST;
+        return new RunicEnergyCost().set(RunicEnergy.Type.ARDO,
+                SCConfigs.ITEMS.divineArmorDamageBlockCost
+        );
     }
 
     @Override

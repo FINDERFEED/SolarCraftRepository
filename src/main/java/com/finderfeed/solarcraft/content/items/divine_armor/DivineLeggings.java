@@ -1,9 +1,13 @@
 package com.finderfeed.solarcraft.content.items.divine_armor;
 
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
+import com.finderfeed.solarcraft.helpers.Helpers;
+import com.finderfeed.solarcraft.registries.SCConfigs;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
@@ -18,17 +22,24 @@ public class DivineLeggings extends BaseDivineArmor{
     }
 
 
-
     @Override
-    public void onArmorTick(ItemStack stack, Level level, Player player) {
-        super.onArmorTick(stack, level, player);
-        if (level.isClientSide || level.getGameTime() % 20 != 0) return;
-        player.addEffect(new MobEffectInstance(MobEffects.JUMP,40,2,false,false));
+    public void inventoryTick(ItemStack stack, Level level, Entity entity, int slot, boolean held) {
+        if (Helpers.ARMOR_SLOTS.contains(slot) && entity instanceof LivingEntity player){
+            if (level.isClientSide || level.getGameTime() % 20 != 0) return;
+            player.addEffect(new MobEffectInstance(MobEffects.JUMP,40,2,false,false));
+        }
     }
+
+//    @Override
+//    public void onArmorTick(ItemStack stack, Level level, Player player) {
+//        super.onArmorTick(stack, level, player);
+//        if (level.isClientSide || level.getGameTime() % 20 != 0) return;
+//        player.addEffect(new MobEffectInstance(MobEffects.JUMP,40,2,false,false));
+//    }
 
 
     @Override
     public float getMaxRunicEnergyCapacity() {
-        return 1500;
+        return SCConfigs.ITEMS.divineArmorEnergyCapacity;
     }
 }

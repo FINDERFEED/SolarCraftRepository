@@ -6,6 +6,7 @@ import com.finderfeed.solarcraft.content.items.runic_energy.ItemRunicEnergy;
 import com.finderfeed.solarcraft.content.items.runic_energy.RunicEnergyCost;
 import com.finderfeed.solarcraft.content.items.solar_lexicon.unlockables.AncientFragment;
 import com.finderfeed.solarcraft.misc_things.RunicEnergy;
+import com.finderfeed.solarcraft.registries.SCConfigs;
 import com.finderfeed.solarcraft.registries.entities.SCEntityTypes;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.player.Player;
@@ -49,7 +50,9 @@ public class SolarDiscGunItem extends SolarcraftItem implements IRunicEnergyUser
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> components, TooltipFlag flag) {
-        components.add(Component.translatable("solar_disk.launcher").withStyle(ChatFormatting.GOLD));
+        String damage = "%.1f".formatted(SCConfigs.ITEMS.theSlicerDamage);
+        String cost = "%.1f".formatted(SCConfigs.ITEMS.theSlicerCost);
+        components.add(Component.translatable("solar_disk.launcher",damage,cost).withStyle(ChatFormatting.GOLD));
         ItemRunicEnergy.addRunicEnergyTextComponents(stack,this,components);
         super.appendHoverText(stack, world, components, flag);
     }
@@ -57,7 +60,7 @@ public class SolarDiscGunItem extends SolarcraftItem implements IRunicEnergyUser
 
     @Override
     public float getMaxRunicEnergyCapacity() {
-        return 1000;
+        return SCConfigs.ITEMS.theSlicerEnergyCapacity;
     }
 
     @Override
@@ -67,7 +70,7 @@ public class SolarDiscGunItem extends SolarcraftItem implements IRunicEnergyUser
 
     @Override
     public RunicEnergyCost getCost() {
-        return COST;
+        return new RunicEnergyCost().set(RunicEnergy.Type.ULTIMA, SCConfigs.ITEMS.theSlicerCost);
     }
 
     @Override

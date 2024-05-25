@@ -479,8 +479,6 @@ public class SCEventHandler {
     public static void breakEvent(BlockEvent.BreakEvent event) {
         if (event.getPlayer() instanceof ServerPlayer serverPlayer){
             FDPacketUtil.sendToPlayer(serverPlayer,new BlockBreakPacket(event.getPos(),event.getState()));
-//            SCPacketHandler.INSTANCE.sendTo(new BlockBreakPacket(event.getPos(),event.getState()),
-//                    serverPlayer.connection.connection, PlayNetworkDirection.PLAY_TO_CLIENT);
         }
         if (event.getPlayer() instanceof ServerPlayer player) {
             if (AbilitiesRegistry.ALCHEMIST.isToggled(player) && !event.getPlayer().isDeadOrDying() ) {

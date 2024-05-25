@@ -114,7 +114,12 @@ public class AncientFragment {
 
 
     public static final AncientFragment AURA_HEALER = new AncientFragment("aura_healer",ProgressionStage.AFTER_CATALYSTS.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_BLOCKS,CategoryBase.BEGINNER,ls(ItemWithRecipe.of(SCItems.AURA_HEALER.get().getDefaultInstance(),"infusing_new_aura_healer_block")), SCRecipeTypes.INFUSING.get(),2).addReferences("aura_healer_structure");
-    public static final AncientFragment DISC_LAUNCHER = new AncientFragment("disc_launcher",ProgressionStage.AFTER_CATALYSTS.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_ITEMS,CategoryBase.BEGINNER,ls(ItemWithRecipe.of(SCItems.SOLAR_DISC_LAUNCHER.get().getDefaultInstance(),"infusing_new_solar_disc_launcher")), SCRecipeTypes.INFUSING.get(),2).addReferences("re_charger");
+    public static final AncientFragment DISC_LAUNCHER = new AncientFragment("disc_launcher",ProgressionStage.AFTER_CATALYSTS.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_ITEMS,CategoryBase.BEGINNER,ls(ItemWithRecipe.of(SCItems.SOLAR_DISC_LAUNCHER.get().getDefaultInstance(),"infusing_new_solar_disc_launcher")), SCRecipeTypes.INFUSING.get(),2).addReferences("re_charger")
+            .setTranslatableComponentArguments(()->{
+                return List.of(
+                  "%.1f".formatted(SCConfigs.ITEMS.theSlicerDamage)
+                );
+            });
     public static final AncientFragment TURRET_RADAR = new AncientFragment("turret_radar",ProgressionStage.AFTER_CATALYSTS.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_MATERIALS,CategoryBase.BEGINNER,ls(ItemWithRecipe.of(SCItems.TURRET_RADAR.get().getDefaultInstance(),"infusing_new_turret_radar")), SCRecipeTypes.INFUSING.get(),2);
     public static final AncientFragment SOLAR_TURRET = new AncientFragment("solar_turret",ProgressionStage.AFTER_CATALYSTS.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_BLOCKS,CategoryBase.BEGINNER,ls(ItemWithRecipe.of(SCItems.TURRET_BLOCK.get().getDefaultInstance(),"infusing_new_turret_block")), SCRecipeTypes.INFUSING.get(),2).addReferences("charged_qualadium_ingot");
     public static final AncientFragment GLOVES_OF_REACH = new AncientFragment("gloves_of_reach",ProgressionStage.AFTER_CATALYSTS.ALL_PROGRESSIONS,SubCategoryBase.BEGINNER_ITEMS,CategoryBase.BEGINNER,ls(ItemWithRecipe.of(SCItems.REACH_GLOVES.get().getDefaultInstance(),"infusing_new_gloves_of_reach")), SCRecipeTypes.INFUSING.get(),2);
@@ -234,7 +239,11 @@ public class AncientFragment {
     public static final AncientFragment DIVINE_ARMOR = new AncientFragment("divine_armor",ProgressionStage.RUNIC_ELEMENTAL.ALL_PROGRESSIONS,SubCategoryBase.ARMOR,CategoryBase.ARMOR,List.of(
             ItemWithRecipe.of(DIVINE_BOOTS.get().getDefaultInstance(),"infusing_divine_boots"),ItemWithRecipe.of(DIVINE_LEGGINGS.get().getDefaultInstance(),"infusing_divine_leggings"),
             ItemWithRecipe.of(DIVINE_CHESTPLATE.get().getDefaultInstance(),"infusing_divine_chestplate"),ItemWithRecipe.of(DIVINE_HELMET.get().getDefaultInstance(),"infusing_divine_helmet")
-    ), SCRecipeTypes.INFUSING.get(),9);
+    ), SCRecipeTypes.INFUSING.get(),9).setTranslatableComponentArguments(()->{
+        return List.of(
+          "%.1f".formatted(SCConfigs.ITEMS.divineArmorDamageBlockCost)
+        );
+    });
 
     public static final AncientFragment ORBITAL_MISSILE_LAUNCHER = new AncientFragment(
             "orbital_missile_launcher",ProgressionStage.RUNIC_ELEMENTAL.ALL_PROGRESSIONS,SubCategoryBase.MASTER_ITEMS,CategoryBase.MASTER,

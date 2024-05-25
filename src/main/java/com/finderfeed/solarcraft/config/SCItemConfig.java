@@ -93,6 +93,19 @@ public class SCItemConfig extends ReflectiveJsonConfig {
     @ConfigValue
     public float solarCrossbowRunicEnergyCapacity = 5000f;
 
+    @ConfigValue
+    public float divineArmorEnergyCapacity = 1500f;
+
+    @ConfigValue
+    public float divineArmorDamageBlockCost = 2f;
+
+    @ConfigValue
+    public float theSlicerCost = 5f;
+    @ConfigValue
+    public float theSlicerEnergyCapacity = 1000f;
+    @ConfigValue
+    public float theSlicerDamage = 5f;
+
 
 
     public SCItemConfig() {
