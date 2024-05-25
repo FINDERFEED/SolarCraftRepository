@@ -614,33 +614,36 @@ public class SCEventHandler {
 
 
     public static float manageShieldsAndReturnDamage(Player player,float damageAmount,boolean manageShields){
-        float blockCost = SCConfigs.ITEMS.divineArmorDamageBlockCost;
-        float fullBlockCost = blockCost * damageAmount;
         var armor = getDivineArmorOnPlayer(player);
-        armor.sort(Comparator.comparingDouble(stack->{
-            BaseDivineArmor a = (BaseDivineArmor) stack.getItem();
-            return ItemRunicEnergy.getRunicEnergyFromItem(stack,a.allowedInputs().get(0));
-        }));
-        float pieceCost = fullBlockCost / armor.size();
-        int amount = armor.size();
-        for (ItemStack stack : armor){
-            BaseDivineArmor a = (BaseDivineArmor) stack.getItem();
-            RunicEnergy.Type type = a.allowedInputs().get(0);
-            float energy = ItemRunicEnergy.getRunicEnergyFromItem(stack,type);
-            float energyConsumption = pieceCost;
-            float damageBlock = pieceCost / blockCost;
-            amount--;
-            if (energy < pieceCost){
-                damageBlock = energy / blockCost;
-                float delta = pieceCost - energy;
-                energyConsumption = energy;
-                if (amount != 0) {
-                    pieceCost += delta / amount;
+        if (!armor.isEmpty()) {
+            float blockCost = SCConfigs.ITEMS.divineArmorDamageBlockCost;
+            float fullBlockCost = blockCost * damageAmount;
+
+            armor.sort(Comparator.comparingDouble(stack -> {
+                BaseDivineArmor a = (BaseDivineArmor) stack.getItem();
+                return ItemRunicEnergy.getRunicEnergyFromItem(stack, a.allowedInputs().get(0));
+            }));
+            float pieceCost = fullBlockCost / armor.size();
+            int amount = armor.size();
+            for (ItemStack stack : armor) {
+                BaseDivineArmor a = (BaseDivineArmor) stack.getItem();
+                RunicEnergy.Type type = a.allowedInputs().get(0);
+                float energy = ItemRunicEnergy.getRunicEnergyFromItem(stack, type);
+                float energyConsumption = pieceCost;
+                float damageBlock = pieceCost / blockCost;
+                amount--;
+                if (energy < pieceCost) {
+                    damageBlock = energy / blockCost;
+                    float delta = pieceCost - energy;
+                    energyConsumption = energy;
+                    if (amount != 0) {
+                        pieceCost += delta / amount;
+                    }
                 }
-            }
-            damageAmount -= damageBlock;
-            if (manageShields) {
-                ItemRunicEnergy.removeRunicEnergy(stack, a, type, energyConsumption);
+                damageAmount -= damageBlock;
+                if (manageShields) {
+                    ItemRunicEnergy.removeRunicEnergy(stack, a, type, energyConsumption);
+                }
             }
         }
 
