@@ -517,6 +517,18 @@ public class ClientHelpers {
                 }
             }
         }
+        public static void line(ParticleOptions particle, Vec3 from, Vec3 to, double intensity,int red,int green,int blue,float maxSize){
+            Vec3 between = to.subtract(from);
+            double l = between.length();
+            for (double i = 0; i <= l;i+=intensity){
+                Vec3 pos = from.add(between.multiply(i/l,i/l,i/l));
+                Particle p = Minecraft.getInstance().particleEngine.createParticle(particle,pos.x,pos.y,pos.z,0,0,0);
+                p.setColor((float)red/255,(float)green/255,(float)blue/255);
+                if (p instanceof SolarcraftParticle pd){
+                    pd.setMaxSize(maxSize);
+                }
+            }
+        }
 
         public static void randomline(ParticleOptions particle, Vec3 from, Vec3 to, double intensity, Supplier<Integer> red,Supplier<Integer> green,Supplier<Integer> blue,float maxSize,float chance){
             Level wrl = Minecraft.getInstance().level;
@@ -529,6 +541,24 @@ public class ClientHelpers {
                     Vec3 pos = from.add(between.multiply(i / l, i / l, i / l));
                     Particle p = Minecraft.getInstance().particleEngine.createParticle(particle, pos.x, pos.y, pos.z, 0, 0, 0);
                     p.setColor((float) red.get() / 255, (float) green.get() / 255, (float) blue.get() / 255);
+                    if (p instanceof SolarcraftParticle pd) {
+                        pd.setMaxSize(maxSize);
+                    }
+                }
+            }
+        }
+
+        public static void randomline(ParticleOptions particle, Vec3 from, Vec3 to, double intensity, int red,int green,int blue,float maxSize,float chance){
+            Level wrl = Minecraft.getInstance().level;
+            if (wrl == null) return;
+
+            Vec3 between = to.subtract(from);
+            double l = between.length();
+            for (double i = 0; i <= l;i+=intensity){
+                if (wrl.random.nextFloat() <= chance) {
+                    Vec3 pos = from.add(between.multiply(i / l, i / l, i / l));
+                    Particle p = Minecraft.getInstance().particleEngine.createParticle(particle, pos.x, pos.y, pos.z, 0, 0, 0);
+                    p.setColor((float) red / 255, (float) green / 255, (float) blue / 255);
                     if (p instanceof SolarcraftParticle pd) {
                         pd.setMaxSize(maxSize);
                     }

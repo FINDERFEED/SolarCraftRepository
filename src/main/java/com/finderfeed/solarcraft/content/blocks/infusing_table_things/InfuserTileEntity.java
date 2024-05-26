@@ -1,6 +1,7 @@
 package com.finderfeed.solarcraft.content.blocks.infusing_table_things;
 
 
+import com.finderfeed.solarcraft.client.particles.ball_particle.BallParticleOptions;
 import com.finderfeed.solarcraft.config.SolarcraftConfig;
 import com.finderfeed.solarcraft.content.blocks.solar_energy.Bindable;
 import com.finderfeed.solarcraft.content.blocks.solar_energy.SolarEnergyContainer;
@@ -30,8 +31,7 @@ import com.finderfeed.solarcraft.content.world_generation.structures.NotStructur
 import com.finderfeed.solarcraft.registries.items.SCItems;
 import com.finderfeed.solarcraft.registries.recipe_types.SCRecipeTypes;
 import com.finderfeed.solarcraft.registries.tile_entities.SCTileEntities;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.TieredItem;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -39,7 +39,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.sounds.SoundSource;
@@ -47,6 +46,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.items.IItemHandler;
@@ -241,10 +241,56 @@ public class InfuserTileEntity extends REItemHandlerBlockEntity implements Solar
             //}
 
         }else{
+
+           tile.catalystParticles();
+
             recipeFinalizationParticles(tile,pos,world);
             doParticlesAnimation(world,tile);
         }
 
+    }
+
+    private void catalystParticles(){
+        if (level.getGameTime() % 20 == 0) {
+            AABB box = new AABB(
+                    -10, -2, -10, 10, 2, 10
+            ).move(this.getBlockPos());
+            List<Player> players = level.getEntitiesOfClass(Player.class, box, (player) -> {
+                Item item = player.getMainHandItem().getItem();
+                if (item instanceof BlockItem blockitem) {
+                    Block block = blockitem.getBlock();
+                    return
+                            block == SCBlocks.ARDO_RUNE_BLOCK.get() ||
+                                    block == SCBlocks.ZETA_RUNE_BLOCK.get() ||
+                                    block == SCBlocks.KELDA_RUNE_BLOCK.get() ||
+                                    block == SCBlocks.URBA_RUNE_BLOCK.get() ||
+                                    block == SCBlocks.FIRA_RUNE_BLOCK.get() ||
+                                    block == SCBlocks.GIRO_RUNE_BLOCK.get() ||
+                                    block == SCBlocks.ULTIMA_RUNE_BLOCK.get() ||
+                                    block == SCBlocks.TERA_RUNE_BLOCK.get();
+                }
+                return false;
+            });
+            Vec3 center = this.getBlockPos().getCenter();
+            BallParticleOptions options = new BallParticleOptions(0.25f, 255, 255, 20, 60, true, false);
+            for (Player player : players) {
+                boolean completed = Helpers.hasPlayerCompletedProgression(Progression.CATALYSTS,player);
+                if (!completed) {
+                    Vec3 v = player.position().add(0, 1f, 0);
+                    Vec3 between = v.subtract(center);
+                    double len = between.length();
+
+                    between = between.normalize();
+                    for (float i = 0; i <= len; i += 0.5f) {
+                        Vec3 p = center.add(between.multiply(i, i, i));
+                        double xsp = this.level.random.nextFloat() * 0.04f - 0.02f;
+                        double ysp = this.level.random.nextFloat() * 0.04f - 0.02f;
+                        double zsp = this.level.random.nextFloat() * 0.04f - 0.02f;
+                        this.level.addParticle(options, true, p.x, p.y, p.z, xsp, ysp, zsp);
+                    }
+                }
+            }
+        }
     }
 
     public EaseIn getRotationValue() {
