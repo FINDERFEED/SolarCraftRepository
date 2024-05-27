@@ -72,7 +72,7 @@ public class SCBlocks {
     public  static  final DeferredHolder<Block,Block> ENERGIZED_STONE = BLOCKS.register("energized_stone",()-> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)));
     public  static  final DeferredHolder<Block,Block> KEY_LOCK_BLOCK = BLOCKS.register("key_lock_block",()-> new KeyLockBlock());
     public  static  final DeferredHolder<Block,Block> INVINCIBLE_STONE = BLOCKS.register("invincible_solar_stone",()-> new InvincibleStone());
-    public  static  final DeferredHolder<Block,Block> COLD_STAR_INFUSER = BLOCKS.register("cold_star_charger",()-> new ColdStarInfuser(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
+    public  static  final DeferredHolder<Block,Block> COLD_STAR_INFUSER = BLOCKS.register("cold_star_charger",()-> new ColdStarInfuser(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK)));
     public  static  final DeferredHolder<Block,Block> KEY_DEFENDER = BLOCKS.register("defence_trap_block",()-> new KeyDefender(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
     public  static  final DeferredHolder<Block,Block> SPEED_ROAD = BLOCKS.register("speed_road",()-> new SpeedRoadBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
     public  static  final DeferredHolder<Block,Block> SOLAR_LENS = BLOCKS.register("solar_lens",()-> new SolarLensBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).sound(SoundType.GLASS).noOcclusion()));
