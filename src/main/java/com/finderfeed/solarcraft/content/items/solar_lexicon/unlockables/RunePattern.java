@@ -4,6 +4,8 @@ import com.finderfeed.solarcraft.helpers.Helpers;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 
+import java.util.Arrays;
+
 public class RunePattern {
 
 
@@ -30,6 +32,7 @@ public class RunePattern {
             pattern = null;
         }
         int[] arr = tag.getIntArray("patternRow0");
+        arr = Arrays.copyOf(arr,arr.length);
         if (arr.length == 0){
             pattern = null;
         }else{
@@ -39,9 +42,12 @@ public class RunePattern {
             pattern[0] = arr;
 
             for (int i = 1; i < height; i++) {
-                pattern[i] = tag.getIntArray("patternRow" + i);
+                int[] ar = tag.getIntArray("patternRow" + i);
+                pattern[i] = Arrays.copyOf(ar,ar.length);
             }
-            xyPositions = tag.getIntArray("xypos");
+            int[] ar = tag.getIntArray("xypos");
+
+            xyPositions = Arrays.copyOf(ar,ar.length);
 
         }
     }

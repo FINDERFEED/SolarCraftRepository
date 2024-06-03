@@ -2,6 +2,9 @@ package com.finderfeed.solarcraft.local_library.client.particles;
 
 
 import com.finderfeed.solarcraft.SolarCraft;
+import com.mojang.blaze3d.platform.Lighting;
+import com.mojang.blaze3d.platform.Window;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleRenderType;
@@ -9,6 +12,8 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.TickEvent;
+import org.joml.Matrix4f;
+
 import java.util.*;
 
 @Mod.EventBusSubscriber(modid = SolarCraft.MOD_ID,bus = Mod.EventBusSubscriber.Bus.FORGE,value = Dist.CLIENT)
@@ -35,8 +40,34 @@ public class ScreenParticlesRenderHandler {
 
     @SubscribeEvent
     public static void renderParticles(TickEvent.RenderTickEvent event){
-
         if (Minecraft.getInstance().level == null || event.phase == TickEvent.Phase.START) return;
+        Window window = Minecraft.getInstance().getWindow();
+        Matrix4f proj = new Matrix4f(RenderSystem.getProjectionMatrix());
+        VertexSorting sorting = RenderSystem.getVertexSorting();
+
+        Matrix4f matrix4f = new Matrix4f()
+                .setOrtho(
+                        0.0F,
+                        (float)((double)window.getWidth() / window.getGuiScale()),
+                        (float)((double)window.getHeight() / window.getGuiScale()),
+                        0.0F,
+                        1000.0F,
+                        net.neoforged.neoforge.client.ClientHooks.getGuiFarPlane()
+                );
+        RenderSystem.setProjectionMatrix(matrix4f, VertexSorting.ORTHOGRAPHIC_Z);
+        PoseStack posestack = RenderSystem.getModelViewStack();
+        posestack.pushPose();
+        posestack.setIdentity();
+        posestack.translate(0.0D, 0.0D, 10000F - net.neoforged.neoforge.client.ClientHooks.getGuiFarPlane());
+        RenderSystem.applyModelViewMatrix();
+        Lighting.setupFor3DItems();
+        renderAllParticles();
+        posestack.popPose();
+        RenderSystem.applyModelViewMatrix();
+        RenderSystem.setProjectionMatrix(proj,sorting);
+    }
+
+    public static void renderAllParticles(){
         BufferBuilder builder = TESSELATOR.getBuilder();
         for (Map.Entry<ParticleRenderType,List<ScreenParticle>> entry : PARTICLES.entrySet()){
             ParticleRenderType type = entry.getKey();
@@ -46,8 +77,6 @@ public class ScreenParticlesRenderHandler {
             }
             type.end(TESSELATOR);
         }
-
-
     }
 
 
