@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/cube_column_horizontal",
   "textures": {
-    "end": "solarcraft:block/solar_stone_vertical_collumn_top",
+    "end": "solarcraft:block/stone_collumn_top",
     "side": "solarcraft:block/solar_stone_vertical_collumn"
   }
 }

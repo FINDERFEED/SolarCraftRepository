@@ -202,7 +202,8 @@ public class InfusingCraftingRecipeScreen extends LexiconScreen {
         if (itemRators != null){
             for (ItemRator[] itemRators : itemRators){
                 for (ItemRator itemRator : itemRators){
-                    if (i % 30 == 0) {
+                    if (i % 30 == 0 && itemRator != null) {
+                        //2nd null check to prevent crashes on certain infusion crafting recipes
                         itemRator.next();
                     }
                 }
