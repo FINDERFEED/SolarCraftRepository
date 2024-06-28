@@ -1,8 +1,14 @@
 {
   "variants": {
-    "facing=south": { "model": "solarcraft:block/magistone_ray" },
-    "facing=west": { "model": "solarcraft:block/magistone_ray", "y": 90 },
-    "facing=north": { "model": "solarcraft:block/magistone_ray", "y": 180 },
-    "facing=east": { "model": "solarcraft:block/magistone_ray", "y": 270 }
+    "axis=x": {
+      "model": "solarcraft:block/magistone_ray"
+    },
+    "axis=y": {
+      "model": "solarcraft:block/magistone_ray_y"
+    },
+    "axis=z": {
+      "model": "solarcraft:block/magistone_ray",
+      "y": 90
+    }
   }
 }

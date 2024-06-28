@@ -1,8 +1,14 @@
 {
   "variants": {
-    "facing=south": { "model": "solarcraft:block/solar_stone_collumn_horizontal" },
-    "facing=west": { "model": "solarcraft:block/solar_stone_collumn_horizontal", "y": 90 },
-    "facing=north": { "model": "solarcraft:block/solar_stone_collumn_horizontal", "y": 180 },
-    "facing=east": { "model": "solarcraft:block/solar_stone_collumn_horizontal", "y": 270 }
+    "axis=x": {
+      "model": "solarcraft:block/solar_stone_collumn_horizontal"
+    },
+    "axis=y": {
+      "model": "solarcraft:block/solar_stone_collumn_horizontal_y"
+    },
+    "axis=z": {
+      "model": "solarcraft:block/solar_stone_collumn_horizontal",
+      "y": 90
+    }
   }
 }
