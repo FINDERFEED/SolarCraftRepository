@@ -202,7 +202,7 @@ public class InfusingCraftingRecipeScreen extends LexiconScreen {
         if (itemRators != null){
             for (ItemRator[] itemRators : itemRators){
                 for (ItemRator itemRator : itemRators){
-                    if (i % 30 == 0) {
+                    if (i % 30 == 0 && itemRator != null) {
                         itemRator.next();
                     }
                 }
