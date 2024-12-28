@@ -5,6 +5,7 @@ import com.finderfeed.solarcraft.SolarCraft;
 import com.finderfeed.solarcraft.SolarCraftTags;
 import com.finderfeed.solarcraft.config.LegacyJsonConfig;
 import com.finderfeed.solarcraft.config.JsonFragmentsHelper;
+import com.finderfeed.solarcraft.config.SolarcraftConfig;
 import com.finderfeed.solarcraft.config.enchanter_config.EnchanterConfigInit;
 import com.finderfeed.solarcraft.config.json_config.JsonConfig;
 import com.finderfeed.solarcraft.config.json_config.JsonConfigUpdateAllPacket;
@@ -682,11 +683,12 @@ public class SCEventHandler {
 
                 FDPacketUtil.sendToPlayer(sPlayer,new JsonConfigUpdateAllPacket());
 
-                if (!Helpers.getPlayerSolarcraftTag(sPlayer).getBoolean("received_lexicon")){
-                    if (sPlayer.addItem(SCItems.SOLAR_LEXICON.get().getDefaultInstance())){
-                        Helpers.getPlayerSolarcraftTag(sPlayer).putBoolean("received_lexicon",true);
+                if (SolarcraftConfig.SHOULD_GIVE_LEXICON_UPON_WORLD_JOIN.get()) {
+                    if (!Helpers.getPlayerSolarcraftTag(sPlayer).getBoolean("received_lexicon")) {
+                        if (sPlayer.addItem(SCItems.SOLAR_LEXICON.get().getDefaultInstance())) {
+                            Helpers.getPlayerSolarcraftTag(sPlayer).putBoolean("received_lexicon", true);
+                        }
                     }
-
                 }
 
                 for (LegacyJsonConfig config : LegacyConfigRegistry.POST_LOAD_CONFIGS.values()){

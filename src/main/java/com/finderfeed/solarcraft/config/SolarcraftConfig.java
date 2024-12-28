@@ -25,6 +25,7 @@ public final class SolarcraftConfig {
     public static final ModConfigSpec.ConfigValue<Double> RUNIC_ENERGY_PER_RUNE_CHARGER;
     public static final ModConfigSpec.ConfigValue<Integer> ENERGY_PYLON_SPAWN_CHANCE;
     public static final ModConfigSpec.ConfigValue<Boolean> SHOULD_ULDERA_CRYSTAL_REGENERATE;
+    public static final ModConfigSpec.ConfigValue<Boolean> SHOULD_GIVE_LEXICON_UPON_WORLD_JOIN;
     public static final ModConfigSpec.ConfigValue<List<String>> ISLAND_ORES;
     public static final ModConfigSpec.ConfigValue<List<String>> PROHIBITED_DIMENSIONS_FOR_TELEPORTATION_STONE;
 
@@ -32,6 +33,8 @@ public final class SolarcraftConfig {
     static {
         BUILDER.push("SolarCraft config");
 
+        SHOULD_GIVE_LEXICON_UPON_WORLD_JOIN = BUILDER.comment("Should Solar Craft give player Solar Lexicon upon joining the world for the first time")
+                .define("value",true);
         List<String> DEFAULT_TREASURES = new ArrayList<>();
         DEFAULT_TREASURES.addAll(List.of("minecraft:diamond", "minecraft:coal", "minecraft:gold_nugget", "minecraft:iron_nugget"));
         PICKAXE_TREASURES = BUILDER.comment("Treasure items for qualadium pickaxe")
